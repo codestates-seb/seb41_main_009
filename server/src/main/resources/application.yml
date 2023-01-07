@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: "jdbc:h2:mem:hobby;MODE=MYSQL"
+    password:
+    username: admin
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
