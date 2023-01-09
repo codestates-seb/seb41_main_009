@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 
-// TODO: return STATUS.NO_CONTENT if has no content
-
 @RestController
 @RequestMapping
 @RequiredArgsConstructor
