@@ -22,7 +22,7 @@ import com.codestates.hobby.domain.post.entity.PostComment;
 import com.codestates.hobby.domain.series.entity.Series;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
-import com.codestates.hobby.domain.subscribe.entity.Subscribe;
+import com.codestates.hobby.domain.subscription.entity.Subscription;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -68,7 +68,7 @@ public class Member extends BaseEntity {
 	private List<Notification> notifications;
 
 	@OneToMany(mappedBy = "target")
-	private List<Subscribe> subscribes;
+	private List<Subscription> subscriptions;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinTable(name = "MEMBER_IMAGE",
