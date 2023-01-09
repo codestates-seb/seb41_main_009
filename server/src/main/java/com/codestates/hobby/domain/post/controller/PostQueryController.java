@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/posts")
+@RequestMapping
 public class PostQueryController {
     @GetMapping("/{post-id}")
     public ResponseEntity<?> get(@PathVariable("post-id") long postId) {
@@ -20,15 +20,22 @@ public class PostQueryController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{category-id}")
-    public ResponseEntity<?> getAllByCategory(@PathVariable("category-id") long categoryId,
+    @GetMapping("/categories/{category-name}/posts")
+    public ResponseEntity<?> getAllByCategory(@PathVariable("category-name") String categoryName,
                                               @RequestParam int page,
                                               @RequestParam int size) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{member-id}")
+    @GetMapping("/members/{member-id}/posts")
     public ResponseEntity<?> getAllByMember(@PathVariable("member-id") long memberId,
+                                            @RequestParam int page,
+                                            @RequestParam int size) {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/series/{series-id}/posts")
+    public ResponseEntity<?> getAllBySeries(@PathVariable("series-id") long seriesId,
                                             @RequestParam int page,
                                             @RequestParam int size) {
         return new ResponseEntity<>(HttpStatus.OK);
