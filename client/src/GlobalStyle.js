@@ -73,7 +73,33 @@ const GlobalStyled = createGlobalStyle`
       --orange-700: #784B28;
       --orange-800: #63442E;
       --orange-900: #4E3C35;
-    }
+
+      /* font-display */
+      --display-l: 96px;
+      --display-m: 52px;
+      --display-s: 44px;
+      --display-xs: 36px;
+
+      /* font-heading */
+      --heading-xxl: 40px;
+      --heading-xl: 36px;
+      --heading-l: 32px;
+      --heading-m: 28px;
+      --heading-s: 24px;
+      --heading-xs: 20px;
+    
+      /* font-label */
+      --label-l: 18px;
+      --label-m: 16px;
+      --label-s: 14px;
+      --label-xs: 12px;
+      
+      /* font-paragraph */
+      --paragraph-l: 18px;
+      --paragraph-m: 16px;
+      --paragraph-s: 14px;
+      --paragraph-xs: 12px;  
+  }
   `;
 
 export default GlobalStyled;
