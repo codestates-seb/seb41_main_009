@@ -18,7 +18,7 @@ const Body = styled.div`
   background-color: white;
 `;
 
-const Singin = () => {
+const Signin = () => {
   return (
     <Container>
       <Body>
@@ -29,4 +29,4 @@ const Singin = () => {
   );
 };
 
-export default Singin;
+export default Signin;

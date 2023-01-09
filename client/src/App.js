@@ -1,6 +1,6 @@
 import { Reset } from 'styled-reset';
 import './App.css';
-import Singin from './components/templates/Signin';
+import Signin from './components/templates/Signin';
 import Navigator from './components/organisms/Navigator';
 
 const App = () => {
@@ -8,7 +8,7 @@ const App = () => {
     <>
       <Reset />
       <Navigator />
-      <Singin />
+      <Signin />
     </>
   );
 };
