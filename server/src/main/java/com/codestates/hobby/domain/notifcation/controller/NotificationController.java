@@ -12,23 +12,23 @@ import lombok.RequiredArgsConstructor;
 // TODO: return Status.NO_CONTENT if has no contents
 
 @RestController
-@RequestMapping
 @RequiredArgsConstructor
+@RequestMapping("/notifications")
 public class NotificationController {
-	// 알람 개수만 조회
-	@GetMapping("/notifications/counts")
-	public ResponseEntity<?> getCounts() {
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
 	// 알람 목록 조회
-	@GetMapping("/notifications")
+	@GetMapping
 	public ResponseEntity<?> getAll() {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+	// 알람 개수만 조회
+	@GetMapping("/counts")
+	public ResponseEntity<?> getCounts() {
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 	// 알람 개별 조회
-	@GetMapping("/notifications/{notification-id}")
+	@GetMapping("/{notification-id}")
 	public ResponseEntity<?> get(@PathVariable("notification-id") long notificationId) {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
