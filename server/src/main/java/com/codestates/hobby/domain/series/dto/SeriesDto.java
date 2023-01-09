@@ -36,8 +36,21 @@ public class SeriesDto {
         private String category;
         private int views;
         private String thumbnailUrl;
-        private MemberDto.Response member;
+        private MemberDto.SimpleResponse member;
         private PostDto.Response post;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class SimpleResponse {
+        private long id;
+        private String title;
+        private String content;
+        private int views;
+        private MemberDto.SimpleResponse member;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }

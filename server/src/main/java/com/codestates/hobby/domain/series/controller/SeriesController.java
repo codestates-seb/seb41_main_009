@@ -1,10 +1,14 @@
 package com.codestates.hobby.domain.series.controller;
 
+import com.codestates.hobby.domain.member.dto.MemberDto;
+import com.codestates.hobby.domain.series.dto.SeriesDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -12,14 +16,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping
 
 public class SeriesController {
-    @PostMapping("/series")
-    public ResponseEntity postSeries() {
+    @PostMapping(value = "/series", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity postSeries(@RequestPart SeriesDto.Post post,
+                                     @RequestPart MultipartFile thumbnail) {
         log.info("\n\n--시리즈 생성--\n");
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PatchMapping("/series/{series-id}")
-    public ResponseEntity patchSeries(@PathVariable("series-id") long seriesId) {
+    @PatchMapping(value = "/series/{series-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity patchSeries(@PathVariable("series-id") long seriesId,
+                                      @RequestBody SeriesDto.Patch patch,
+                                      @RequestPart MultipartFile thumbnail) {
         log.info("\n\n--시리즈 수정--\n");
         return new ResponseEntity(HttpStatus.OK);
     }
