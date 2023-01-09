@@ -1,4 +1,4 @@
-package com.codestates.hobby.domain.subscribe.entity;
+package com.codestates.hobby.domain.subscription.entity;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Subscribe {
+public class Subscription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -39,7 +39,7 @@ public class Subscribe {
 	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	public Subscribe(Member subscriber, Member target) {
+	public Subscription(Member subscriber, Member target) {
 		this.subscriber = subscriber;
 		this.target = target;
 	}
