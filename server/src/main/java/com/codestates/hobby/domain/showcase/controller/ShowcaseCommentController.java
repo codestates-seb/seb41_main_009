@@ -14,14 +14,19 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/showcases")
+@RequestMapping("/showcases/{showcase-id}/comments")
 public class ShowcaseCommentController {
-	@PostMapping("/{showcase-id}/comments")
+	@GetMapping
+	public ResponseEntity<?> getAll(@PathVariable("showcase-id") long showcaseId) {
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	@PostMapping
 	public ResponseEntity<?> post(@PathVariable("showcase-id") long showcaseId) {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@PatchMapping("/{showcase-id}/comments/{comment-id}")
+	@PatchMapping("/{comment-id}")
 	public ResponseEntity<?> patch(
 		@PathVariable("showcase-id") long showcaseId,
 		@PathVariable("comment-id") long commentId
@@ -29,16 +34,11 @@ public class ShowcaseCommentController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@DeleteMapping("/{showcase-id}/comments/{comment-id}")
+	@DeleteMapping("/{comment-id}")
 	public ResponseEntity<?> delete(
 		@PathVariable("showcase-id") long showcaseId,
 		@PathVariable("comment-id") long commentId
 	) {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	@GetMapping("/{showcase-id}/comments")
-	public ResponseEntity<?> getAll(@PathVariable("showcase-id") long showcaseId) {
-		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
