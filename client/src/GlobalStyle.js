@@ -1,9 +1,79 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyled = () => {
-  const GlobalStyled = createGlobalStyle`
-
+const GlobalStyled = createGlobalStyle`
+    :root {
+      /* color */
+      --gray-50: #EFEFEF;
+      --gray-100: #DFDFDF;
+      --gray-200: #CFCFCF;
+      --gray-300: #BFBFBF;
+      --gray-400: #AFAFAF;
+      --gray-500: #757575;
+      --gray-600: #545454;
+      --gray-700: #333333;
+      --gray-800: #1F1F1F;
+      --gray-900: #141414;
+      --purplegray-50: #E9E0F2;
+      --purplegray-100: #DDD9E3;
+      --purplegray-200: #D5CFDC;
+      --purplegray-300: #C2BFC5;
+      --purplegray-400: #97959A;
+      --purplegray-500: #87838C;
+      --purplegray-600: #6F6977;
+      --purplegray-700: #50465B;
+      --purplegray-800: #40354D;
+      --purplegray-900: #30233F;
+      --purple-50: #E0CCF5;
+      --purple-100: #C099EB;
+      --purple-200: #A166E2;
+      --purple-300: #8133D8;
+      --purple-400: #6200CE;
+      --purple-500: #560DA7;
+      --purple-600: #4F1490;
+      --purple-700: #461F71;
+      --purple-800: #412462;
+      --purple-900: #3C2952;
+      --blue-50: #CED8F8;
+      --blue-100: #9EB1F1;
+      --blue-200: #6D89EB;
+      --blue-300: #3D62E4;
+      --blue-400: #0C3BDD;
+      --blue-500: #1238B6;
+      --blue-600: #16369F;
+      --blue-700: #1A3380;
+      --blue-800: #1D3271;
+      --blue-900: #1F3161;
+      --green-50: #CDE7DA;
+      --green-100: #9BCFB6;
+      --green-200: #68B891;
+      --green-300: #36A06D;
+      --green-400: #048848;
+      --green-500: #107343;
+      --green-600: #176640;
+      --green-700: #20553B;
+      --green-800: #254D39;
+      --green-900: #2A4437;
+      --red-50: #F9D1CC;
+      --red-100: #F3A399;
+      --red-200: #ED7566;
+      --red-300: #E74733;
+      --red-400: #E11900;
+      --red-500: #B21E10;
+      --red-600: #95211A;
+      --red-700: #702628;
+      --red-800: #5D282E;
+      --red-900: #4A2A35;
+      --orange-50: #FDE4CC;
+      --orange-100: #FBC899;
+      --orange-200: #FAAD66;
+      --orange-300: #F89133;
+      --orange-400: #F67600;
+      --orange-500: #C26410;
+      --orange-600: #A2591A;
+      --orange-700: #784B28;
+      --orange-800: #63442E;
+      --orange-900: #4E3C35;
+    }
   `;
-};
 
 export default GlobalStyled;
