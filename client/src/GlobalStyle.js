@@ -99,6 +99,15 @@ const GlobalStyled = createGlobalStyle`
       --paragraph-m: 16px;
       --paragraph-s: 14px;
       --paragraph-xs: 12px;  
+
+      /* elevation */
+      --elevation-00: ;
+      --elevation-01: 0px 0px 1px rgba(40, 41, 61, 0.08), 0px 0.5px 2px rgba(96, 97, 112, 0.16);
+      --elevation-02: 0px 0px 1px rgba(40, 41, 61, 0.04), 0px 2px 4px rgba(96, 97, 112, 0.16);
+      --elevation-03: 0px 0px 2px rgba(40, 41, 61, 0.04), 0px 4px 8px rgba(96, 97, 112, 0.16);
+      --elevation-04: 0px 2px 4px rgba(40, 41, 61, 0.04), 0px 8px 16px rgba(96, 97, 112, 0.16);
+      --elevation-05: 0px 2px 8px rgba(40, 41, 61, 0.04), 0px 16px 24px rgba(96, 97, 112, 0.16);
+      --elevation-06: 0px 2px 8px rgba(40, 41, 61, 0.08), 0px 20px 32px rgba(96, 97, 112, 0.24);
   }
   `;
 
