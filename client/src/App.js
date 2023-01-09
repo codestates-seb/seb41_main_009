@@ -1,14 +1,21 @@
 import { Reset } from 'styled-reset';
 import './App.css';
-import Singin from './components/templates/Signin';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Signin from './components/templates/Signin';
 import Navigator from './components/organisms/Navigator';
+import PostList from './components/templates/PostList';
 
 const App = () => {
   return (
     <>
       <Reset />
       <Navigator />
-      <Singin />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/posts" element={<PostList />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };
