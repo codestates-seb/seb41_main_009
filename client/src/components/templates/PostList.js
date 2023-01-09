@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PostListHeaderContainer from '../organisms/postlist/PostListHeader';
+import FilterContainer from '../organisms/postlist/PostListFilter';
 
 const Container = styled.div`
   display: flex;
@@ -9,13 +10,6 @@ const Container = styled.div`
   padding-top: 100px;
   justify-content: center;
   align-items: center;
-`;
-
-const FilterContainer = styled.div`
-  display: flex;
-  width: inherit;
-  height: 50px;
-  background-color: moccasin;
 `;
 
 const PostListContainer = styled.div`
@@ -37,10 +31,7 @@ const PostList = () => {
   return (
     <Container>
       <PostListHeaderContainer />
-      <FilterContainer>
-        <div>Post</div>
-        <div>Series</div>
-      </FilterContainer>
+      <FilterContainer />
       <PostListContainer>
         <div />
       </PostListContainer>
