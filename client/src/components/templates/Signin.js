@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import SocialLogin from '../organisms/SocialLogin';
-import Login from '../organisms/Loginbox';
+import Openidbox from '../organisms/Openidbox';
+import Loginbox from '../organisms/Loginbox';
 
 const Container = styled.div`
   display: flex;
@@ -22,8 +22,8 @@ const Signin = () => {
   return (
     <Container>
       <Body>
-        <SocialLogin />
-        <Login />
+        <Openidbox />
+        <Loginbox />
       </Body>
     </Container>
   );
