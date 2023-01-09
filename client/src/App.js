@@ -1,22 +1,16 @@
 import { Reset } from 'styled-reset';
-import logo from './logo.svg';
 import './App.css';
+import Singin from './components/templates/Signin';
+import Navigator from './components/organisms/Navigator';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
+    <>
       <Reset />
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Navigator />
+      <Singin />
+    </>
   );
-}
+};
 
 export default App;
