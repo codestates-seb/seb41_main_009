@@ -29,7 +29,7 @@ public class ShowcaseCommentService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<ShowcaseComment> findAll(int page, int size) {
+	public Page<ShowcaseComment> findAll(long showcaseId, int page, int size) {
 		return null;
 	}
 }
