@@ -37,4 +37,13 @@ public class MemberDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    public static class SimpleResponse {
+        private long id;
+        private String nickname;
+        private String profileImageUrl;
+    }
 }
