@@ -15,7 +15,7 @@ public class PostCommentController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     // 선택 - 내용
-    @PatchMapping("comments/{comment-id}")
+    @PatchMapping("/comments/{comment-id}")
     public ResponseEntity<?> patch(
             @PathVariable("post-id") long postId,
             @PathVariable("comment-id") long commentId
@@ -23,7 +23,7 @@ public class PostCommentController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("comments/{comment-id}")
+    @DeleteMapping("/comments/{comment-id}")
     public ResponseEntity<?> delete(
             @PathVariable("post-id") long postId,
             @PathVariable("comment-id") long commentId
