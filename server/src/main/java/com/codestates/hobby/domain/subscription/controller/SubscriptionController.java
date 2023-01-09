@@ -38,18 +38,4 @@ public class SubscriptionController {
 	public ResponseEntity<?> getSubscribers() {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
-	// TODO: 각각 showcase, post controller로 옮겨야 하는지 헷갈림
-
-	// 회원이 구독중인 회원들의 쇼케이스 리스트
-	@GetMapping("/subscriptions/showcases")
-	public ResponseEntity<?> getShowcases() {
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	// 구독중인 회원들의 포스트 리스트
-	@GetMapping("/subscriptions/posts")
-	public ResponseEntity<?> getPosts() {
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
 }
