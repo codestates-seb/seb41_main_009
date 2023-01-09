@@ -9,7 +9,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react'],
+  plugins: ['react', 'prettier'],
   rules: {
     // js 파일에서 jsx 문법 사용시 발생하는 문제에서 .js 확장명 허용
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
@@ -17,5 +17,8 @@ module.exports = {
     'linebreak-style': 0,
     // 'React' must be in scope when using JSX, jsx 사용시 React 스코프 내에서 사용되야 하는 에러 무시
     'react/react-in-jsx-scope': 'off',
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    // 함수형 컴포넌트의 정의 방식을 지정
+    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
   },
 };
