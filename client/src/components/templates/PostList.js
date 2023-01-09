@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PostListHeaderContainer from '../organisms/postlist/PostListHeader';
 
 const Container = styled.div`
   display: flex;
@@ -8,15 +9,6 @@ const Container = styled.div`
   padding-top: 100px;
   justify-content: center;
   align-items: center;
-`;
-
-const ListHeaderContainer = styled.div`
-  display: flex;
-  width: inherit;
-  height: 100px;
-  background-color: aqua;
-  align-items: center;
-  justify-content: center;
 `;
 
 const FilterContainer = styled.div`
@@ -44,10 +36,7 @@ const PaginationContainer = styled.div`
 const PostList = () => {
   return (
     <Container>
-      <ListHeaderContainer>
-        <h1>POST IN CATEGORY</h1>
-        <button type="button">Create Post</button>
-      </ListHeaderContainer>
+      <PostListHeaderContainer />
       <FilterContainer>
         <div>Post</div>
         <div>Series</div>
