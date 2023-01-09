@@ -17,7 +17,7 @@ const OAuthButton = styled.div`
   background-color: #eee;
 `;
 
-const SocialLogin = () => {
+const Openidbox = () => {
   return (
     <Container>
       <OAuthButton> Github Login </OAuthButton>
@@ -27,4 +27,4 @@ const SocialLogin = () => {
   );
 };
 
-export default SocialLogin;
+export default Openidbox;
