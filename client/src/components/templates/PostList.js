@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import PostListHeaderContainer from '../organisms/postlist/PostListHeader';
 import FilterContainer from '../organisms/postlist/PostListFilter';
 import PaginationContainer from '../organisms/postlist/PostListPagination';
+import PostListContainer from '../organisms/postlist/PostListContainer';
 
 const Container = styled.div`
   display: flex;
@@ -13,20 +14,12 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const PostListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: inherit;
-`;
-
 const PostList = () => {
   return (
     <Container>
       <PostListHeaderContainer />
       <FilterContainer />
-      <PostListContainer>
-        <div />
-      </PostListContainer>
+      <PostListContainer />
       <PaginationContainer />
     </Container>
   );
