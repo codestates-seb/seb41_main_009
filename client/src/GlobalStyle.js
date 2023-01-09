@@ -1,7 +1,9 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
-export function GlobalStyled() {
+const GlobalStyled = () => {
   const GlobalStyled = createGlobalStyle`
-        
-`;
-}
+
+  `;
+};
+
+export default GlobalStyled;
