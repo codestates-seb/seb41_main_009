@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PostHeaderContainer from '../organisms/posts/PostHeaderContainer';
+import PostSubHeaderContainer from '../organisms/posts/PostSubHeaderContainer';
 
 const Container = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ const PostPage = () => {
   return (
     <Container>
       <PostHeaderContainer />
+      <PostSubHeaderContainer />
       <div>asdfasdf</div>
     </Container>
   );
