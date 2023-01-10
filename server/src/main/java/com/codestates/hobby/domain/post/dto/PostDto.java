@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.post.dto;
 
 import com.codestates.hobby.domain.member.dto.MemberDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,9 @@ public class PostDto {
     @Getter
     @Setter
     @NoArgsConstructor
-    public static class post {
+    public static class Post {
+        @JsonIgnore
+        private Long memberId;
         private String title;
         private String content;
         private String category;
@@ -24,7 +27,9 @@ public class PostDto {
     @Getter
     @Setter
     @NoArgsConstructor
-    public static class patch {
+    public static class Patch {
+        private Long memberId;
+        private Long postId;
         private String title;
         private String content;
         private String category;
@@ -44,11 +49,7 @@ public class PostDto {
         private boolean isItWriter;
         private boolean isItTemp;
         private PostCommentDto.Response comments;
-<<<<<<< HEAD
-//        private MemberDto.SimpleResponse writer;
-=======
         private MemberDto.SimpleResponse memberInfo;
->>>>>>> dev
         private List<SimpleResponse> categoryPosts;
         private LocalDateTime createdDate;
         private LocalDateTime modifiedDate;
@@ -67,7 +68,6 @@ public class PostDto {
         private long seriesId;
         private boolean isTemp;
         private String representImg;
-//        private MemberDto.SimpleResponse memberInfo;
         private MemberDto.SimpleResponse memberInfo;
         private LocalDateTime createdDate;
         private LocalDateTime modifiedDate;
