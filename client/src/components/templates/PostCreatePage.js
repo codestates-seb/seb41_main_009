@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PostCreateHeader from '../organisms/postcreate/PostCreateHeader';
 
 const Container = styled.div`
   display: flex;
@@ -12,7 +13,11 @@ const Container = styled.div`
 `;
 
 const PostCreatePage = () => {
-  return <Container>총 댓글</Container>;
+  return (
+    <Container>
+      <PostCreateHeader />
+    </Container>
+  );
 };
 
 export default PostCreatePage;
