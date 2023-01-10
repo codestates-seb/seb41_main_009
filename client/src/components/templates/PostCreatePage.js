@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PostCreateDescription from '../organisms/postcreate/PostCreateDescription';
 import PostCreateHeader from '../organisms/postcreate/PostCreateHeader';
+import PostCreateIndex from '../organisms/postcreate/PostCreateIndex';
 
 const Container = styled.div`
   display: flex;
@@ -18,6 +19,7 @@ const PostCreatePage = () => {
     <Container>
       <PostCreateHeader />
       <PostCreateDescription />
+      <PostCreateIndex />
     </Container>
   );
 };
