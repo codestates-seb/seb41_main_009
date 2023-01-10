@@ -7,6 +7,7 @@ import PostList from './components/templates/PostList';
 import Sidebar from './components/organisms/Sidebar';
 import SeriseList from './components/templates/SeriesList';
 import PostPage from './components/templates/PostPage';
+import PostCreatePage from './components/templates/PostCreatePage';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/signin" element={<Signin />} />
           <Route path="/posts" element={<PostList />} />
           <Route path="/posts/:id" element={<PostPage />} />
+          <Route path="/posts/new" element={<PostCreatePage />} />
           <Route path="/series" element={<SeriseList />} />
         </Routes>
       </BrowserRouter>
