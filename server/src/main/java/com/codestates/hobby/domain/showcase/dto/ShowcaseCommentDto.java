@@ -2,6 +2,8 @@ package com.codestates.hobby.domain.showcase.dto;
 
 import java.time.LocalDateTime;
 
+import com.codestates.hobby.domain.member.dto.MemberDto;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +18,6 @@ public class ShowcaseCommentDto {
 		private boolean isItWriter;
 		private LocalDateTime createdAt;
 		private LocalDateTime lastModifiedAt;
-
-		// TODO: Writer(nickname, profileImageUrl)
+		private MemberDto.SimpleResponse writer;
 	}
 }
