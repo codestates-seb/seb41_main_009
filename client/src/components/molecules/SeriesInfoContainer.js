@@ -10,7 +10,7 @@ const Container = styled.div`
   background-color: royalblue;
 `;
 
-const PostHeader = () => {
+const SeriesInfoContainer = () => {
   return (
     <Container>
       <div>
@@ -27,4 +27,4 @@ const PostHeader = () => {
   );
 };
 
-export default PostHeader;
+export default SeriesInfoContainer;
