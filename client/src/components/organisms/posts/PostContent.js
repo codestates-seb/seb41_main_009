@@ -6,6 +6,7 @@ const Container = styled.div`
   width: 874px;
   height: 500px;
   gap: 10px;
+  margin-bottom: 72px;
   background-color: lightpink;
 `;
 
