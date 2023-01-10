@@ -3,13 +3,13 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   width: inherit;
-  height: 100px;
+  height: 116px;
   background-color: aqua;
   align-items: center;
   justify-content: space-around;
 `;
 
-const PostListHeaderContainer = () => {
+const ListHeaderContainer = () => {
   return (
     <Container>
       <h1>Post In Category</h1>
@@ -18,4 +18,4 @@ const PostListHeaderContainer = () => {
   );
 };
 
-export default PostListHeaderContainer;
+export default ListHeaderContainer;

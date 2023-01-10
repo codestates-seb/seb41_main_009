@@ -2,27 +2,29 @@ import styled from 'styled-components';
 import ListHeaderContainer from '../organisms/listcontents/ListHeader';
 import FilterContainer from '../organisms/listcontents/ListFilter';
 import PaginationContainer from '../organisms/listcontents/ListPagination';
-import PostListContainer from '../organisms/listcontents/PostListContainer';
+import SeriesListContainer from '../organisms/listcontents/SeriesListContainer';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1024px;
+  width: 1060px;
   margin: 0 auto;
   padding-top: 100px;
   justify-content: center;
   align-items: center;
 `;
 
-const PostList = () => {
+const SeriseList = () => {
   return (
     <Container>
       <ListHeaderContainer />
       <FilterContainer />
-      <PostListContainer />
+      <SeriesListContainer />
+      <SeriesListContainer />
+      <SeriesListContainer />
       <PaginationContainer />
     </Container>
   );
 };
 
-export default PostList;
+export default SeriseList;

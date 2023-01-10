@@ -3,9 +3,10 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   width: inherit;
-  height: 50px;
+  height: 54px;
   justify-content: space-around;
   align-items: center;
+  margin-bottom: 30px;
   background-color: moccasin;
 `;
 
