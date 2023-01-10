@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Container = styled.div`
+  box-sizing: border-box;
   display: flex;
   width: 1056px;
   height: 100px;

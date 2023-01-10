@@ -3,6 +3,7 @@ import PostHeader from '../../molecules/PostHeader';
 import PostUserInfo from '../../molecules/PostUserInfo';
 
 const Container = styled.div`
+  box-sizing: border-box;
   display: flex;
   width: 1056px;
   height: 193px;
