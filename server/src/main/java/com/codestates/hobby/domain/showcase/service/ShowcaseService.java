@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.showcase.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,22 +44,22 @@ public class ShowcaseService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findByQuery(String query, int page, int size) {
+	public Page<Showcase> findAll(PageRequest pageRequest, boolean sortByNewest) {
 		return null;
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findAll(int page, int size, boolean isNewest) {
+	public Page<Showcase> findAllByMember(long memberId, PageRequest pageRequest, boolean sortByNewest) {
 		return null;
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findAllByMember(long memberId, int page, int size, boolean isNewest) {
+	public Page<Showcase> findAllByCategory(String categoryName, PageRequest pageRequest, boolean sortByNewest) {
 		return null;
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findAllByCategory(String categoryName, int page, int size, boolean isNewest) {
+	public Page<Showcase> search(String query, PageRequest pageRequest) {
 		return null;
 	}
 }

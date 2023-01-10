@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.service.ShowcaseService;
+import com.codestates.hobby.global.config.support.CustomPageRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,38 +31,38 @@ public class ShowcaseQueryController {
 
 	@GetMapping("/showcases")
 	public ResponseEntity<?> getAll(
+		@RequestParam(defaultValue = "NEWEST") String sort,
 		@AuthenticationPrincipal Long memberId,
-		@RequestParam(defaultValue = "1") int page,
-		@RequestParam(defaultValue = "1") int size,
-		@RequestParam(defaultValue = "NEWEST") String sort
+		CustomPageRequest pageRequest
 	) {
-		Page<Showcase> showcases = showcaseService.findAll(page, size, sort.equalsIgnoreCase("NEWEST"));
+		Page<Showcase> showcases =
+			showcaseService.findAll(pageRequest.to(), sort.equalsIgnoreCase("NEWEST"));
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/categories/{category-name}/showcases")
 	public ResponseEntity<?> getAllByCategory(
-		@AuthenticationPrincipal Long memberId,
-		@RequestParam(defaultValue = "1") int page,
-		@RequestParam(defaultValue = "1") int size,
 		@RequestParam(defaultValue = "NEWEST") String sort,
-		@PathVariable("category-name") String category
+		@PathVariable("category-name") String category,
+		@AuthenticationPrincipal Long memberId,
+		CustomPageRequest pageRequest
 	) {
-		Page<Showcase> showcases = showcaseService.findAllByCategory(category, page, size, sort.equalsIgnoreCase("NEWEST"));
+		Page<Showcase> showcases =
+			showcaseService.findAllByCategory(category, pageRequest.to(), sort.equalsIgnoreCase("NEWEST"));
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("/members/{member-id}/showcases")
 	public ResponseEntity<?> getAllByMember(
+		@RequestParam(defaultValue = "NEWEST") String sort,
 		@AuthenticationPrincipal Long authMemberId,
 		@PathVariable("member-id") long memberId,
-		@RequestParam(defaultValue = "1") int page,
-		@RequestParam(defaultValue = "1") int size,
-		@RequestParam(defaultValue = "NEWEST") String sort
+		CustomPageRequest pageRequest
 	) {
-		Page<Showcase> showcases = showcaseService.findAllByMember(memberId, page, size, sort.equalsIgnoreCase("NEWEST"));
+		Page<Showcase> showcases =
+			showcaseService.findAllByMember(memberId, pageRequest.to(), sort.equalsIgnoreCase("NEWEST"));
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

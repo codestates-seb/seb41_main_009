@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
 import com.codestates.hobby.domain.showcase.service.ShowcaseCommentService;
+import com.codestates.hobby.global.config.support.CustomPageRequest;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,11 +30,10 @@ public class ShowcaseCommentController {
 	@GetMapping
 	public ResponseEntity<?> getAll(
 		@PathVariable("showcase-id") long showcaseId,
-		@RequestParam(defaultValue = "1") int page,
-		@RequestParam(defaultValue = "10") int size,
-		@AuthenticationPrincipal Long memberId
+		@AuthenticationPrincipal Long memberId,
+		CustomPageRequest pageRequest
 	) {
-		Page<ShowcaseComment> comments = commentService.findAll(showcaseId, page, size);
+		Page<ShowcaseComment> comments = commentService.findAll(showcaseId, pageRequest.to());
 
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
