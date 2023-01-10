@@ -7,7 +7,7 @@ import PostListContainer from '../organisms/listcontents/PostListContainer';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1024px;
+  width: 1060px;
   margin: 0 auto;
   padding-top: 100px;
   justify-content: center;

@@ -3,18 +3,18 @@ import styled from 'styled-components';
 const Container = styled.div`
   display: flex;
   width: inherit;
-  height: 180px;
+  height: 255px;
   margin-bottom: 30px;
   background-color: lightcoral;
   border: 1px solid black;
 `;
 
-const Post = () => {
+const Series = () => {
   return (
     <Container>
-      <div>Post</div>
+      <div>Series</div>
     </Container>
   );
 };
 
-export default Post;
+export default Series;

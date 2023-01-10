@@ -4,8 +4,8 @@ import Post from '../../molecules/Post';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: inherit;
-  background-color: lightcoral;
+  width: 874px;
+  margin-bottom: 50px;
 `;
 
 const PostListContainer = () => {

@@ -1,19 +1,21 @@
 import styled from 'styled-components';
+import Series from '../../molecules/Series';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 874px;
-  height: 255px;
-  background-color: lightcoral;
-  border: 1px solid black;
-  margin-bottom: 30px;
+  width: 1056px;
+  margin-bottom: 50px;
 `;
 
 const SeriesListContainer = () => {
   return (
     <Container>
-      <div>Series</div>
+      <Series />
+      <Series />
+      <Series />
+      <Series />
+      <Series />
     </Container>
   );
 };

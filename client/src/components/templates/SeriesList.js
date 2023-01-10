@@ -20,8 +20,6 @@ const SeriseList = () => {
       <ListHeaderContainer />
       <FilterContainer />
       <SeriesListContainer />
-      <SeriesListContainer />
-      <SeriesListContainer />
       <PaginationContainer />
     </Container>
   );
