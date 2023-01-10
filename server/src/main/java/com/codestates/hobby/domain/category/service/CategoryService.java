@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.category.service;
 
-import org.springframework.data.domain.Page;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,15 +18,15 @@ public class CategoryService {
 		return null;
 	}
 
-	public Page<Category> findAll(int page, int size) {
+	public List<Category> findAll() {
 		return null;
 	}
 
-	public Page<Category> findAllByGroup(String group, int page, int size) {
+	public List<Category> findAllByGroup(String group) {
 		return null;
 	}
 
-	public Page<Category> findAllGroups(int page, int size) {
+	public List<Category> findAllGroups() {
 		return null;
 	}
 }
