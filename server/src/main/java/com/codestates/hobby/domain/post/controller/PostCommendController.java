@@ -16,10 +16,10 @@ public class PostCommendController {
     public ResponseEntity<?> post() {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    @PostMapping(value = "이미지 업로드 경로",
+    @PostMapping(value = "/{post-id}/files",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> upload(MultipartFile file){
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     // 이미지 Patch 시 delete는 url String 삭제로, 새 이미지 upload는 upload 메서드를 통해 진행.
     // 선택 - 제목,내용,카테고리,이미지,시리즈

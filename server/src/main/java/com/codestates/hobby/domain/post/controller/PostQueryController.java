@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping
 public class PostQueryController {
-    @GetMapping("/{post-id}")
+    @GetMapping("/posts/{post-id}")
     public ResponseEntity<?> get(@PathVariable("post-id") long postId) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/posts")
     public ResponseEntity<?> getAll(@RequestParam int page,
                                     @RequestParam int size) {
         return new ResponseEntity<>(HttpStatus.OK);

@@ -40,9 +40,10 @@ public class PostDto {
         private int views;
         private String category;
         private long seriesId;
-        private boolean isTemp;
+        private boolean isItWriter;
+        private boolean isItTemp;
         private PostCommentDto.Response comments;
-//        private MemberDto.SimpleResponse memberInfo;
+//        private MemberDto.SimpleResponse writer;
         private List<SimpleResponse> categoryPosts;
         private LocalDateTime createdDate;
         private LocalDateTime modifiedDate;
