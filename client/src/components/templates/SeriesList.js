@@ -14,7 +14,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const SeriseList = () => {
+const SeriesList = () => {
   return (
     <Container>
       <ListHeaderContainer />
@@ -25,4 +25,4 @@ const SeriseList = () => {
   );
 };
 
-export default SeriseList;
+export default SeriesList;

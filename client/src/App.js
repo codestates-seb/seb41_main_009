@@ -5,7 +5,7 @@ import Signin from './components/templates/Signin';
 import Navigator from './components/organisms/Navigator';
 import PostList from './components/templates/PostList';
 import Sidebar from './components/organisms/Sidebar';
-import SeriseList from './components/templates/SeriesList';
+import SeriesList from './components/templates/SeriesList';
 
 const App = () => {
   return (
@@ -17,7 +17,7 @@ const App = () => {
         <Routes>
           <Route path="/signin" element={<Signin />} />
           <Route path="/posts" element={<PostList />} />
-          <Route path="/series" element={<SeriseList />} />
+          <Route path="/series" element={<SeriesList />} />
         </Routes>
       </BrowserRouter>
     </>
