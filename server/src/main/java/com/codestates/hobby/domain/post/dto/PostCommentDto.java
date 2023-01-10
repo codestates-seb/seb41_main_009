@@ -16,5 +16,6 @@ public class PostCommentDto {
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime lastModifiedAt;
+        //        private MemberDto.SimpleResponse memberInfo;
     }
 }
