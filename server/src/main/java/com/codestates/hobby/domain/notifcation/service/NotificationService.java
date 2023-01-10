@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.notifcation.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,7 @@ public class NotificationService {
 		return null;
 	}
 
-	public Page<Notification> findAllByMember(long memberId, int page, int size) {
+	public Page<Notification> findAllByMember(long memberId, PageRequest pageRequest) {
 		return null;
 	}
 
