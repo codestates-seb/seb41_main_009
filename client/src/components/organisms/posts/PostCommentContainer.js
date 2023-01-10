@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import CommentHeader from '../../molecules/comments/CommentHeader';
+import CommentInputContainer from '../../molecules/comments/CommentInputContainer';
 
 const Container = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ const PostCommentContainer = () => {
   return (
     <Container>
       <CommentHeader />
+      <CommentInputContainer />
     </Container>
   );
 };
