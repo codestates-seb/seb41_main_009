@@ -5,12 +5,14 @@ import Signin from './components/templates/Signin';
 import Navigator from './components/organisms/Navigator';
 import PostList from './components/templates/PostList';
 import Showcase from './components/templates/Showcase';
+import Sidebar from './components/organisms/Sidebar';
 
 const App = () => {
   return (
     <>
       <Reset />
       <Navigator />
+      <Sidebar />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Showcase />} />
