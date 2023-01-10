@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import Showcasebox from '../organisms/Showcase/Showcasebox';
+import Showcasebox from '../organisms/showcase/Showcasebox';
+import ShowcaseModal from '../organisms/showcase/ShowcaseModal';
 
 const Container = styled.div`
   display: flex;
@@ -42,6 +43,7 @@ const CaseContainer = styled.div`
 const Showcase = () => {
   return (
     <Container>
+      <ShowcaseModal isModalOn />
       <Header> Header </Header>
       <Body>
         <CaseContainer>
