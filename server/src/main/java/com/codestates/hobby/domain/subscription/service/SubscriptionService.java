@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.subscription.service;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,22 +33,22 @@ public class SubscriptionService {
 		return 0;
 	}
 
-	public Page<Subscription> findSubscriptions(long memberId, int page, int size) {
+	public Page<Subscription> findSubscriptions(long memberId, PageRequest pageRequest) {
 		// 사용자가 구독중인 회원 목록
 		return null;
 	}
 
-	public Page<Member> findSubscribers(long memberId, int page, int size) {
+	public Page<Member> findSubscribers(long memberId, PageRequest pageRequest) {
 		// 사용자를 구독하는 회원 목록
 		return null;
 	}
 
 	// TODO: SORTING TYPE TO ENUM
-	public Page<Post> findPostsBySubscription(int page, int size, String sortingTYpe) {
+	public Page<Post> findPostsBySubscription(PageRequest pageRequest, String sortingTYpe) {
 		return null;
 	}
 
-	public Page<Showcase> findShowcasesBySubscription(int page, int size, String sortingTYpe) {
+	public Page<Showcase> findShowcasesBySubscription(PageRequest pageRequest, String sortingTYpe) {
 		return null;
 	}
 }
