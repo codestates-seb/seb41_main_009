@@ -43,7 +43,7 @@ const CaseContainer = styled.div`
 const Showcase = () => {
   return (
     <Container>
-      <ShowcaseModal isModalOn />
+      <ShowcaseModal />
       <Header> Header </Header>
       <Body>
         <CaseContainer>
