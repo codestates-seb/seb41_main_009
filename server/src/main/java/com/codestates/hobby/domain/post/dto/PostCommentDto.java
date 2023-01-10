@@ -12,6 +12,7 @@ public class PostCommentDto {
     @NoArgsConstructor
     public static class Response{
         private long id;
+        private long memberId;
         private String content;
         private LocalDateTime createdAt;
         private LocalDateTime lastModifiedAt;
