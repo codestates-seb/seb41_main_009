@@ -11,8 +11,8 @@ const Container = styled.div`
   background-color: #eee;
 `;
 
-const Loginbox = () => {
-  return <Container>Login Box</Container>;
+const Signupbox = () => {
+  return <Container>Signup Box</Container>;
 };
 
-export default Loginbox;
+export default Signupbox;
