@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-
-// isWriter??
-//프론트 Post 목업 제공받기
+import java.util.List;
 
 public class PostDto {
     @Getter
@@ -30,7 +28,6 @@ public class PostDto {
         private String content;
         private String category;
         private long seriesId;
-
     }
 
     @Getter
@@ -45,6 +42,8 @@ public class PostDto {
         private long seriesId;
         private boolean isTemp;
         private PostCommentDto.Response comments;
+//        private MemberDto.SimpleResponse memberInfo;
+        private List<SimpleResponse> categoryPosts;
         private LocalDateTime createdDate;
         private LocalDateTime modifiedDate;
     }
@@ -59,7 +58,8 @@ public class PostDto {
         private String category;
         private long seriesId;
         private boolean isTemp;
-        private String representUrl;
+        private String representImg;
+//        private MemberDto.SimpleResponse memberInfo;
         private LocalDateTime createdDate;
         private LocalDateTime modifiedDate;
     }
