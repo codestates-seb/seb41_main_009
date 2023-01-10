@@ -1,6 +1,5 @@
 package com.codestates.hobby.domain.category.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -30,7 +29,10 @@ public class Category {
 	private Long id;
 
 	@Column(nullable = false, unique = true)
-	private String name;
+	private String korName;
+
+	@Column(nullable = false, unique = true)
+	private String engName;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "parent_id")
@@ -48,17 +50,18 @@ public class Category {
 	@OneToMany(mappedBy = "category")
 	private List<Showcase> showcases;
 
-	private Category(String name, Category parent) {
-		this.name = name;
+	private Category(String korName, String engName, Category parent) {
+		this.korName = korName;
+		this.engName = engName;
 		this.parent = parent;
 	}
 
-	public static Category createParent(String name) {
-		return new Category(name, null);
+	public static Category createParent(String korName, String engName) {
+		return new Category(korName, engName, null);
 	}
 
-	public static Category createChild(String name, Category parent) {
-		return new Category(name, parent);
+	public static Category createChild(String korName, String engName, Category parent) {
+		return new Category(korName, engName, parent);
 	}
 
 	public boolean isParent() {
