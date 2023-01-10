@@ -6,19 +6,16 @@ const Container = styled.div`
   height: 50px;
   align-items: center;
   justify-content: space-between;
-  background-color: gainsboro;
+  background-color: greenyellow;
   margin-bottom: 50px;
 `;
 
-const PostCreateHeader = () => {
+const PostCreateDescription = () => {
   return (
     <Container>
-      <input value="Input title" />
-      <select name="Category">
-        <option value="abc">Category</option>
-      </select>
+      <input value="Input description" />
     </Container>
   );
 };
 
-export default PostCreateHeader;
+export default PostCreateDescription;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PostCreateDescription from '../organisms/postcreate/PostCreateDescription';
 import PostCreateHeader from '../organisms/postcreate/PostCreateHeader';
 
 const Container = styled.div`
@@ -16,6 +17,7 @@ const PostCreatePage = () => {
   return (
     <Container>
       <PostCreateHeader />
+      <PostCreateDescription />
     </Container>
   );
 };
