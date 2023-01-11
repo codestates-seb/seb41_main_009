@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codestates.hobby.domain.category.dto.CategoryDto;
 import com.codestates.hobby.domain.category.entity.Category;
+import com.codestates.hobby.domain.category.mapper.CategoryMapper;
 import com.codestates.hobby.domain.category.service.CategoryService;
 import com.codestates.hobby.global.dto.MultiResponseDto;
 
@@ -21,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/categories")
 public class CategoryController {
 	private final CategoryService categoryService;
+	private final CategoryMapper mapper;
 
 	// 카테고리 그룹 목록을 조회한다.
 	@GetMapping("/groups")
@@ -44,6 +47,7 @@ public class CategoryController {
 	}
 
 	private MultiResponseDto<?> toResponseDto(List<Category> categories) {
-		return new MultiResponseDto<>(new PageImpl<>(categories));
+		List<CategoryDto.Response> responses = mapper.categoriesToResponses(categories);
+		return new MultiResponseDto<>(new PageImpl<>(responses));
 	}
 }

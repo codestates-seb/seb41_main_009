@@ -35,11 +35,11 @@ public class Category {
 	private String engName;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "parent_id")
-	private Category parent;
+	@JoinColumn(name = "group_id")
+	private Category group;
 
-	@OneToMany(mappedBy = "parent")
-	private List<Category> children;
+	@OneToMany(mappedBy = "group")
+	private List<Category> categories;
 
 	@OneToMany(mappedBy = "category")
 	private List<Series> series;
@@ -50,10 +50,10 @@ public class Category {
 	@OneToMany(mappedBy = "category")
 	private List<Showcase> showcases;
 
-	private Category(String korName, String engName, Category parent) {
+	private Category(String korName, String engName, Category group) {
 		this.korName = korName;
 		this.engName = engName;
-		this.parent = parent;
+		this.group = group;
 	}
 
 	public static Category createParent(String korName, String engName) {
@@ -64,7 +64,7 @@ public class Category {
 		return new Category(korName, engName, parent);
 	}
 
-	public boolean isParent() {
-		return parent != null;
+	public boolean isGroup() {
+		return group != null;
 	}
 }
