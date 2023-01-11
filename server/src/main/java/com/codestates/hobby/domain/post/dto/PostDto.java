@@ -2,10 +2,7 @@ package com.codestates.hobby.domain.post.dto;
 
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,7 +45,7 @@ public class PostDto {
         private long seriesId;
         private boolean isItWriter;
         private boolean isItTemp;
-        private PostCommentDto.Response comments;
+        private List<PostCommentDto.Response> comments;
         private MemberDto.SimpleResponse memberInfo;
         private List<SimpleResponse> categoryPosts;
         private LocalDateTime createdDate;
@@ -66,7 +63,6 @@ public class PostDto {
         private int views;
         private int comments;
         private long seriesId;
-        private boolean isTemp;
         private String representImg;
         private MemberDto.SimpleResponse memberInfo;
         private LocalDateTime createdDate;

@@ -9,26 +9,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PostService {
     @Transactional
-    public void post(PostDto.Post postDto){
+    public Post post(Post post){
         /*
         1.verifyExist를 통한 검증
         2.포스트 저장
          */
+        return post;
     }
 
     @Transactional
-    public void update(PostDto.Patch patchDto){
+    public Post update(Post post){
         /*
         1.find를 통해 포스트 불러오기
         2.Optional를 통해 null값 확인
         3.변경사항 저장
          */
+        return post;
     }
     @Transactional
     public void delete(long postId, long memberId){
         /*
         1.포스트 삭제
-        2.원격 저장소 이미지 삭제?
          */
     }
 
