@@ -18,7 +18,7 @@ public class GCSConfig {
 		GoogleCredentials credentials =
 			GoogleCredentials.fromStream(getClass().getResourceAsStream("/intorest-ea8d5b9d1484.json"));
 
-		return StorageOptions.newBuilder().setProjectId("nosell")
+		return StorageOptions.newBuilder().setProjectId("intorest")
 			.setCredentials(credentials)
 			.build().getService();
 	}
