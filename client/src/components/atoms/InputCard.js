@@ -12,8 +12,18 @@ const Container = styled.div`
   margin: 50px;
 `;
 
-const InputCard = () => {
-  return <Container />;
+const Input = styled.input`
+  border: none;
+  width: ${props => (props.width ? props.width : '')};
+  height: ${props => (props.height ? props.height : '')};
+`;
+
+const InputCard = ({ width, height, inputWidth, inputHeight }) => {
+  return (
+    <Container width={width} height={height}>
+      <Input placeholder="Input Here" width={inputWidth} height={inputHeight} />
+    </Container>
+  );
 };
 
 export default InputCard;
