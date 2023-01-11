@@ -8,8 +8,6 @@ const Container = styled.div`
   gap: 10px;
   border: 2px solid black;
   box-shadow: var(--boxShadow-02) black;
-
-  margin: 50px;
 `;
 
 const Input = styled.input`
