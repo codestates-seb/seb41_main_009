@@ -14,8 +14,6 @@ public class CategoryDto {
 		private long id;
 		private String korName;
 		private String engName;
-		private boolean isGroup;
-		private Response group;	// entity -> dto 매핑할 때 순환참조 조심해야됨
 		private List<Response> categories;
 	}
 }
