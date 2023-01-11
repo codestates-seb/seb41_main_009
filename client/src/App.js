@@ -7,6 +7,7 @@ import PostList from './components/templates/PostList';
 import Showcase from './components/templates/Showcase';
 import Sidebar from './components/organisms/Sidebar';
 import SeriesList from './components/templates/SeriesList';
+import PostPage from './components/templates/PostPage';
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
 
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/" element={<PublicRoute component={<Showcase />} />} />
           <Route path="/signin" element={<PublicRoute component={<Signin />} />} />
           <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
+          <Route path="/posts/:id" element={<PublicRoute component={<PostPage />} />} />
           <Route path="/series" element={<PublicRoute component={<SeriesList />} />} />
         </Routes>
       </BrowserRouter>
