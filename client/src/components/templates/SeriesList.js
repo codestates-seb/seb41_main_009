@@ -7,14 +7,14 @@ import SeriesListContainer from '../organisms/listcontents/SeriesListContainer';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1060px;
+  width: 100%;
   margin: 0 auto;
   padding-top: 100px;
   justify-content: center;
   align-items: center;
 `;
 
-const SeriseList = () => {
+const SeriesList = () => {
   return (
     <Container>
       <ListHeaderContainer />
@@ -25,4 +25,4 @@ const SeriseList = () => {
   );
 };
 
-export default SeriseList;
+export default SeriesList;

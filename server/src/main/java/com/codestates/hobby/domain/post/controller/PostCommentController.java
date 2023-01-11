@@ -1,38 +1,51 @@
 package com.codestates.hobby.domain.post.controller;
 
+import com.codestates.hobby.domain.post.service.PostCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/posts/{post-id}")
+@RequestMapping("/posts/{post-id}/comments")
 public class PostCommentController {
-    // 필수 - 내용
-    @PostMapping("/comments")
-    public ResponseEntity<?> post(@PathVariable("post-id") long postId) {
+    private final PostCommentService postCommentService;
+    @PostMapping
+    public ResponseEntity<?> post(@PathVariable("post-id") long postId,
+                                  @RequestBody String content,
+                                  @AuthenticationPrincipal Long memberId) {
+        postCommentService.post(memberId, postId, content);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    // 선택 - 내용
-    @PatchMapping("/comments/{comment-id}")
+
+    @PatchMapping("/{comment-id}")
     public ResponseEntity<?> patch(
             @PathVariable("post-id") long postId,
-            @PathVariable("comment-id") long commentId
+            @PathVariable("comment-id") long commentId,
+            @RequestBody String content,
+            @AuthenticationPrincipal Long memberId
     ) {
+        postCommentService.update(memberId, postId, commentId, content);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/comments/{comment-id}")
+    @DeleteMapping("/{comment-id}")
     public ResponseEntity<?> delete(
             @PathVariable("post-id") long postId,
-            @PathVariable("comment-id") long commentId
+            @PathVariable("comment-id") long commentId,
+            @AuthenticationPrincipal Long memberId
     ) {
+        postCommentService.delete(memberId, postId, commentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/comments")
-    public ResponseEntity<?> getAll(@PathVariable("post-id") long postId) {
+    @GetMapping
+    public ResponseEntity<?> getAll(@PathVariable("post-id") long postId,
+                                    @RequestParam(defaultValue = "1") int page,
+                                    @RequestParam(defaultValue = "1") int size) {
+        postCommentService.findAll(postId, page, size);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

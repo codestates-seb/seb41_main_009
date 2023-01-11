@@ -7,7 +7,7 @@ import PostCommentContainer from '../organisms/posts/PostCommentContainer';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1056px;
+  width: inherit;
   margin: 0 auto;
   padding-top: 100px;
   justify-content: center;
