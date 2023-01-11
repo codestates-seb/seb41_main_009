@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Icon } from '@iconify/react';
+import Sticker from './icons';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -10,7 +10,7 @@ const Container = styled.div`
   align-items: center;
   padding: 10px 20px 10px 40px;
   gap: 10px;
-  width: ${props => (props.width ? props.width : '172px')};
+  width: ${props => (props.width ? props.width : 'fit-content')};
   height: ${props => (props.height ? props.height : '44px')};
 
   background: #ffffff;
@@ -25,15 +25,43 @@ const Label = styled.div`
   font-weight: 800;
   font-size: 18px;
   line-height: 24px;
+
+  color: #333333;
 `;
 
-const StickerLabel = ({ width, height }) => {
+const StickerNicknameBoy = ({ width, height, message }) => {
   return (
     <Container width={width} height={height}>
-      <Icon icon="mdi:face-man-shimmer" />
-      <Label> asd</Label>
+      <Sticker src="https://api.iconify.design/mdi/face-man-shimmer.svg" />
+      <Label> {message || 'Nickname'}</Label>
+    </Container>
+  );
+};
+const StickerNicknameGirl = ({ width, height, message }) => {
+  return (
+    <Container width={width} height={height}>
+      <Sticker src="https://api.iconify.design/mdi/face-woman-shimmer.svg" />
+      <Label> {message || 'Nickname'}</Label>
     </Container>
   );
 };
 
-export default StickerLabel;
+const StickerEmail = ({ width, height, message }) => {
+  return (
+    <Container width={width} height={height}>
+      <Sticker src="https://api.iconify.design/mdi/face-woman-shimmer.svg" />
+      <Label> {message || 'Email'}</Label>
+    </Container>
+  );
+};
+
+const StickerCreatedAt = ({ width, height, message }) => {
+  return (
+    <Container width={width} height={height}>
+      <Sticker src="https://api.iconify.design/mdi/face-woman-shimmer.svg" />
+      <Label> {message || 'CreatedAt'}</Label>
+    </Container>
+  );
+};
+
+export { StickerNicknameBoy, StickerNicknameGirl, StickerEmail, StickerCreatedAt };
