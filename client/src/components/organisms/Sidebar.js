@@ -2,26 +2,29 @@ import styled from 'styled-components';
 import Menu from '../molecules/SidebarMenu';
 
 const Container = styled.div`
-  position: fixed;
-  left: 0;
-  top: 100px;
-  z-index: 1;
-  height: 100%;
-  display: flex;
-  justify-content: flex-start;
-  border: 1px solid #333;
-  flex-direction: column;
+  width: var(--sidebar-width);
+  height: auto;
   background-color: salmon;
+`;
+
+const MenuList = styled.div`
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  justify-content: flex-start;
+  flex-direction: column;
 `;
 
 const Sidebar = () => {
   return (
     <Container>
-      <Menu />
-      <Menu />
-      <Menu />
-      <Menu />
-      <Menu />
+      <MenuList>
+        <Menu />
+        <Menu />
+        <Menu />
+        <Menu />
+        <Menu />
+      </MenuList>
     </Container>
   );
 };
