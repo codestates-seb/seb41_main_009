@@ -8,8 +8,8 @@ const WhiteButton = styled.a`
   align-items: center;
   justify-content: center;
   padding: 10px 30px;
-  background: #ffffff;
-  border: 1px solid #545454;
+  background-color: #ffffff;
+  border: 1px solid var(--gray-600);
   text-decoration: none;
 
   &:visited {
@@ -17,4 +17,13 @@ const WhiteButton = styled.a`
   }
 `;
 
-export default WhiteButton;
+const BlackButton = styled(WhiteButton)`
+  color: white;
+  background-color: var(--gray-700);
+
+  &:visited {
+    color: white;
+  }
+`;
+
+export { WhiteButton, BlackButton };

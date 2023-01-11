@@ -6,11 +6,13 @@ import Navigator from './components/organisms/Navigator';
 import PostList from './components/templates/PostList';
 import Showcase from './components/templates/Showcase';
 import Sidebar from './components/organisms/Sidebar';
+import GlobalStyled from './GlobalStyle';
 
 const App = () => {
   return (
     <>
       <Reset />
+      <GlobalStyled />
       <Navigator />
       <Sidebar />
       <BrowserRouter>
