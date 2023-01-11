@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   display: flex;
-  width: inherit;
+  width: 100%;
   height: 30px;
   align-items: center;
   background-color: cadetblue;

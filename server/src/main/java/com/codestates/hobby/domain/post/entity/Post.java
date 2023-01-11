@@ -44,6 +44,10 @@ public class Post extends BaseEntity {
 	@ColumnDefault("0")
 	private int views;
 
+	@Column
+	@ColumnDefault("false")
+	private boolean isTemp;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;

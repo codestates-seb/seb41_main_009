@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   box-sizing: border-box;
   display: flex;
-  width: 1056px;
+  width: 100%;
   height: 100px;
   margin: 0 auto;
   justify-content: space-between;

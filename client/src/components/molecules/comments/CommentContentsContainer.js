@@ -4,7 +4,7 @@ import Comment from './Comment';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: inherit;
+  width: 100%;
   background-color: darkmagenta;
 `;
 

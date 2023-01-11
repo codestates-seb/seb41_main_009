@@ -6,7 +6,7 @@ import CommentInputContainer from '../../molecules/comments/CommentInputContaine
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 874px;
+  width: 83%;
   background-color: blanchedalmond;
 `;
 
