@@ -1,5 +1,6 @@
 package com.codestates.hobby.domain.post.dto;
 
+import com.codestates.hobby.domain.member.dto.MemberDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,8 +14,9 @@ public class PostCommentDto {
     public static class Response{
         private long id;
         private String content;
+        private boolean isItWriter;
         private LocalDateTime createdAt;
         private LocalDateTime lastModifiedAt;
-        //        private MemberDto.SimpleResponse memberInfo;
+        private MemberDto.SimpleResponse writer;
     }
 }

@@ -1,22 +1,20 @@
 import styled from 'styled-components';
-import Post from '../../molecules/Post';
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
   width: inherit;
+  height: 255px;
+  margin-bottom: 30px;
   background-color: lightcoral;
+  border: 1px solid black;
 `;
 
-const PostListContainer = () => {
+const Series = () => {
   return (
     <Container>
-      <Post />
-      <Post />
-      <Post />
-      <Post />
+      <div>Series</div>
     </Container>
   );
 };
 
-export default PostListContainer;
+export default Series;

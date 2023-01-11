@@ -2,16 +2,7 @@ package com.codestates.hobby.domain.series.entity;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -54,11 +45,11 @@ public class Series extends BaseEntity {
 	@OneToMany(mappedBy = "series")
 	private List<Post> posts;
 
-	@OneToMany
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinTable(name = "SERIES_IMAGE",
 		joinColumns = @JoinColumn(name = "SERIES_ID"),
 		inverseJoinColumns = @JoinColumn(name = "FILE_INFO_ID"))
-	private List<FileInfo> fileInfos;
+	private FileInfo thumbnail;
 
 	public Series(Member member, String title, Category category, String content) {
 		this.title = title;

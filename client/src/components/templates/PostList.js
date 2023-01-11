@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import PostListHeaderContainer from '../organisms/postlist/PostListHeader';
-import FilterContainer from '../organisms/postlist/PostListFilter';
-import PaginationContainer from '../organisms/postlist/PostListPagination';
-import PostListContainer from '../organisms/postlist/PostListContainer';
+import ListHeaderContainer from '../organisms/listcontents/ListHeader';
+import FilterContainer from '../organisms/listcontents/ListFilter';
+import PaginationContainer from '../organisms/listcontents/ListPagination';
+import PostListContainer from '../organisms/listcontents/PostListContainer';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1024px;
+  width: 1060px;
   margin: 0 auto;
   padding-top: 100px;
   justify-content: center;
@@ -17,7 +17,7 @@ const Container = styled.div`
 const PostList = () => {
   return (
     <Container>
-      <PostListHeaderContainer />
+      <ListHeaderContainer />
       <FilterContainer />
       <PostListContainer />
       <PaginationContainer />
