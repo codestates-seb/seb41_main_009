@@ -19,30 +19,27 @@ const Input = styled.input`
 `;
 
 const Message = styled.div`
-  display: ${props => (props.display ? 'block' : 'none')};
   color: ${props => (props.color ? props.color : 'black')};
   font-size: var(--label-xs);
   margin-top: 5px;
   margin-left: 3px;
 `;
 
-const InputCard = ({
-  width,
-  height,
-  type,
-  inputWidth,
-  inputHeight,
-  onChange,
-  messageDisplay,
-  messageColor,
-  message,
-}) => {
+/**
+ * props 설명
+ * width, height: Input Card 컨테이너에 대한 높이, 너비 지정
+ * type: Input type 지정 (password 등)
+ * inputWidth, inputHeight: Input에 대한 높이, 너비 지정
+ * placeholder: Input에 대한 placeholder 지정
+ * onChange: Input에 onChange 함수 설정
+ * messageColor, message: Input 하단의 메시지 div 설정
+ */
+
+const InputCard = ({ width, height, type, inputWidth, inputHeight, placeholder, onChange, messageColor, message }) => {
   return (
     <Container width={width} height={height}>
-      <Input type={'' || type} placeholder="Input Here" width={inputWidth} height={inputHeight} onChange={onChange} />
-      <Message display={messageDisplay} color={messageColor}>
-        {'' || message}
-      </Message>
+      <Input type={'' || type} placeholder={placeholder} width={inputWidth} height={inputHeight} onChange={onChange} />
+      <Message color={messageColor}>{'' || message}</Message>
     </Container>
   );
 };
