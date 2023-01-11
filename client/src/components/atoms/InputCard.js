@@ -31,12 +31,33 @@ const Message = styled.div`
  * placeholder: Input에 대한 placeholder 지정
  * onChange: Input에 onChange 함수 설정
  * messageColor, message: Input 하단의 메시지 div 설정
+ * asideInput: Input 옆에 추가적인 컴포넌트 렌더 가능
  */
 
-const InputCard = ({ width, height, type, inputWidth, inputHeight, placeholder, onChange, messageColor, message }) => {
+const InputCard = ({
+  width,
+  height,
+  type,
+  inputWidth,
+  inputHeight,
+  placeholder,
+  onChange,
+  messageColor,
+  message,
+  asideInput,
+}) => {
   return (
     <Container width={width} height={height}>
-      <Input type={'' || type} placeholder={placeholder} width={inputWidth} height={inputHeight} onChange={onChange} />
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Input
+          type={'' || type}
+          placeholder={placeholder}
+          width={inputWidth}
+          height={inputHeight}
+          onChange={onChange}
+        />
+        {asideInput || ''}
+      </div>
       <Message color={messageColor}>{'' || message}</Message>
     </Container>
   );
