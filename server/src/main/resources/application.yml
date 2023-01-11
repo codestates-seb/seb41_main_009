@@ -4,7 +4,10 @@ spring:
     password:
     username: admin
     driver-class-name: org.h2.Driver
-
+  h2:
+    console:
+      enabled: true
+      path: /h2
   jpa:
     show-sql: true
     hibernate:
@@ -12,10 +15,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
-h2:
-  console:
-    enabled: true
-    path: /h2
+  servlet:
+    multipart:
+      max-file-size: 5MB      # 파일당 최대크기
+      max-request-size: 50MB  # 요청당 최대크기
 
 logging:
   level:
