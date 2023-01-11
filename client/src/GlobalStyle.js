@@ -110,9 +110,9 @@ const GlobalStyled = createGlobalStyle`
       --elevation-06: 0px 2px 8px rgba(40, 41, 61, 0.08), 0px 20px 32px rgba(96, 97, 112, 0.24);
 
       /* boxShadow */
-      --boxShadow-00: 10px 10px 0px;
+      --boxShadow-00: 3px 3px 0px;
       --boxShadow-01: 5px 5px 0px;
-      --boxShadow-02: 3px 3px 0px;
+      --boxShadow-02: 10px 10px 0px;
   }
   `;
 
