@@ -13,8 +13,6 @@ const Container = styled.div`
   border: 5px solid var(--gray-700);
   border-radius: 15px;
   box-shadow: var(--boxShadow-01) var(--gray-700);
-
-  margin: 500px;
 `;
 
 const TextContainer = styled.div`
