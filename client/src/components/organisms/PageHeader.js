@@ -4,7 +4,7 @@ const Container = styled.div`
   display: flex;
   box-sizing: border-box;
   width: 100%;
-  height: 116px;
+  height: ${props => (props.width ? props.width : '116px')};
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -20,9 +20,9 @@ const TextContainer = styled.div`
   flex-direction: column;
 `;
 
-const ListHeaderContainer = ({ headerTitle, asideHeader }) => {
+const PageHeader = ({ headerTitle, asideHeader, width }) => {
   return (
-    <Container>
+    <Container width={width}>
       <TextContainer>
         <div style={{ fontSize: 'var(--display-s)', fontWeight: '700' }}>{headerTitle}</div>
       </TextContainer>
@@ -31,4 +31,4 @@ const ListHeaderContainer = ({ headerTitle, asideHeader }) => {
   );
 };
 
-export default ListHeaderContainer;
+export default PageHeader;
