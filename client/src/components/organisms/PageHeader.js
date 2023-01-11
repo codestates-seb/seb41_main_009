@@ -4,7 +4,7 @@ const Container = styled.div`
   display: flex;
   box-sizing: border-box;
   width: 100%;
-  height: ${props => (props.width ? props.width : '116px')};
+  height: ${props => (props.height ? props.height : '116px')};
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -20,9 +20,16 @@ const TextContainer = styled.div`
   flex-direction: column;
 `;
 
-const PageHeader = ({ headerTitle, asideHeader, width }) => {
+/**
+ * props 설명
+ * headerTitle: Header 왼쪽 타이틀
+ * asideHeader: Header 오른쪽 추가 컴포넌트
+ * height: Header 외부 컨테이너의 높이
+ */
+
+const PageHeader = ({ headerTitle, asideHeader, height }) => {
   return (
-    <Container width={width}>
+    <Container height={height}>
       <TextContainer>
         <div style={{ fontSize: 'var(--display-s)', fontWeight: '700' }}>{headerTitle}</div>
       </TextContainer>
