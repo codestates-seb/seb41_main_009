@@ -17,11 +17,18 @@ const Container = styled.div`
   margin: 500px;
 `;
 
-const ListHeaderContainer = () => {
+const TextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ListHeaderContainer = ({ headerTitle, asideHeader }) => {
   return (
     <Container>
-      <h1>Post In Category</h1>
-      <button type="button">Create Post</button>
+      <TextContainer>
+        <div style={{ fontSize: 'var(--display-s)', fontWeight: '700' }}>{headerTitle}</div>
+      </TextContainer>
+      {asideHeader || null}
     </Container>
   );
 };
