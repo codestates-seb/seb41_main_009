@@ -54,7 +54,6 @@ public class ShowcaseDto {
 		private long id;
 		private String content;
 		private String category;
-		private int views;
 		private boolean isItWriter;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
@@ -72,7 +71,6 @@ public class ShowcaseDto {
 		private long id;
 		private String content;
 		private String category;
-		private int views;
 		private int comments;
 		private boolean isItWriter;
 		private String thumbnailUrl;
