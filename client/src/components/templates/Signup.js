@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Openidbox from '../organisms/Openidbox';
-import Loginbox from '../organisms/Loginbox';
+import Signupbox from '../organisms/Signupbox';
 
 const Container = styled.div`
   display: flex;
@@ -18,15 +18,15 @@ const Body = styled.div`
   background-color: white;
 `;
 
-const Signin = () => {
+const Signup = () => {
   return (
     <Container>
       <Body>
         <Openidbox />
-        <Loginbox />
+        <Signupbox />
       </Body>
     </Container>
   );
 };
 
-export default Signin;
+export default Signup;

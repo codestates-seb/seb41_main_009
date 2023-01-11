@@ -7,23 +7,25 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/posts/{post-id}")
+@RequestMapping("/posts/{post-id}/comments")
 public class PostCommentController {
     // 필수 - 내용
-    @PostMapping("/comments")
-    public ResponseEntity<?> post(@PathVariable("post-id") long postId) {
+    @PostMapping
+    public ResponseEntity<?> post(@PathVariable("post-id") long postId,
+                                  @RequestBody String content) {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     // 선택 - 내용
-    @PatchMapping("/comments/{comment-id}")
+    @PatchMapping("/{comment-id}")
     public ResponseEntity<?> patch(
             @PathVariable("post-id") long postId,
-            @PathVariable("comment-id") long commentId
+            @PathVariable("comment-id") long commentId,
+            @RequestBody String content
     ) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping("/comments/{comment-id}")
+    @DeleteMapping("/{comment-id}")
     public ResponseEntity<?> delete(
             @PathVariable("post-id") long postId,
             @PathVariable("comment-id") long commentId
@@ -31,7 +33,7 @@ public class PostCommentController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/comments")
+    @GetMapping
     public ResponseEntity<?> getAll(@PathVariable("post-id") long postId) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
