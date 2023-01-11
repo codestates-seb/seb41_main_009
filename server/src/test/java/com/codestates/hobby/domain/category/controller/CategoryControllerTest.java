@@ -10,32 +10,18 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import com.codestates.hobby.domain.category.dto.CategoryDto;
 import com.codestates.hobby.domain.category.mapper.CategoryMapper;
 import com.codestates.hobby.domain.category.service.CategoryService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.codestates.hobby.utils.ControllerTest;
 
-@AutoConfigureMockMvc(addFilters = false)
-@MockBean(JpaMetamodelMappingContext.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @WebMvcTest(value = CategoryController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
-class CategoryControllerTest {
-	@Autowired
-	MockMvc mvc;
-
-	@Autowired
-	ObjectMapper om;
-
+class CategoryControllerTest extends ControllerTest {
 	@MockBean
 	CategoryService service;
 
