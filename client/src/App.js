@@ -1,6 +1,8 @@
 import { Reset } from 'styled-reset';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import styled from 'styled-components';
+
 import Signin from './components/templates/Signin';
 import Navigator from './components/organisms/Navigator';
 import PostList from './components/templates/PostList';
@@ -16,17 +18,25 @@ const App = () => {
       <Reset />
       <GlobalStyled />
       <Navigator />
-      <Sidebar />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<PublicRoute component={<Showcase />} />} />
-          <Route path="/signin" element={<PublicRoute component={<Signin />} />} />
-          <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
-          <Route path="/series" element={<PublicRoute component={<SeriesList />} />} />
-        </Routes>
-      </BrowserRouter>
+      <Main>
+        <Sidebar />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<PublicRoute component={<Showcase />} />} />
+            <Route path="/signin" element={<PublicRoute component={<Signin />} />} />
+            <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
+            <Route path="/series" element={<PublicRoute component={<SeriesList />} />} />
+          </Routes>
+        </BrowserRouter>
+      </Main>
     </>
   );
 };
 
 export default App;
+
+const Main = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: var(--header-height);
+`;
