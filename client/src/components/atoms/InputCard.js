@@ -18,10 +18,31 @@ const Input = styled.input`
   height: ${props => (props.height ? props.height : '')};
 `;
 
-const InputCard = ({ width, height, inputWidth, inputHeight }) => {
+const Message = styled.div`
+  display: ${props => (props.display ? 'block' : 'none')};
+  color: ${props => (props.color ? props.color : 'black')};
+  font-size: var(--label-xs);
+  margin-top: 5px;
+  margin-left: 3px;
+`;
+
+const InputCard = ({
+  width,
+  height,
+  type,
+  inputWidth,
+  inputHeight,
+  onChange,
+  messageDisplay,
+  messageColor,
+  message,
+}) => {
   return (
     <Container width={width} height={height}>
-      <Input placeholder="Input Here" width={inputWidth} height={inputHeight} />
+      <Input type={'' || type} placeholder="Input Here" width={inputWidth} height={inputHeight} onChange={onChange} />
+      <Message display={messageDisplay} color={messageColor}>
+        {'' || message}
+      </Message>
     </Container>
   );
 };
