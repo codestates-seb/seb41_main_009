@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.series.dto;
 
 import com.codestates.hobby.domain.member.dto.MemberDto;
+import com.codestates.hobby.domain.post.dto.PostDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
