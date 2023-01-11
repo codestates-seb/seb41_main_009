@@ -13,17 +13,15 @@ import org.springframework.stereotype.Service;
 import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
+import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.HttpMethod;
 import com.google.cloud.storage.Storage;
 
-import lombok.RequiredArgsConstructor;
-
 @Service
 @Profile("gcs")
-@RequiredArgsConstructor
-public class GCSFileInfoService implements FileInfoService {
+public class GCSFileInfoService extends FileInfoService {
 	private final Storage storage;
 
 	@Value("${cloud.storage.gcs.bucket-name}")
@@ -34,6 +32,11 @@ public class GCSFileInfoService implements FileInfoService {
 
 	@Value("${cloud.storage.gcs.duration}")
 	private int duration;
+
+	public GCSFileInfoService(FileInfoRepository fileInfoRepository, Storage storage) {
+		super(fileInfoRepository);
+		this.storage = storage;
+	}
 
 	@Override
 	public SignedURL generateSignedURL(ImageType imageType, String basePath) {
@@ -59,9 +62,10 @@ public class GCSFileInfoService implements FileInfoService {
 				"FileInfo [" + fileInfo.getId() + "] was not deleted. (url: " + fileInfo.getFileURL() + ")";
 			throw new RuntimeException(message);
 		}
+
+		super.delete(fileInfo);
 	}
 
-	@Override
 	public void delete(List<FileInfo> fileInfos) {
 		fileInfos.forEach(this::delete);
 	}
