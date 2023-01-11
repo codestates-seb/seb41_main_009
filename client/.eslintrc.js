@@ -22,5 +22,7 @@ module.exports = {
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     // prop-types validation check 비활성화
     'react/prop-types': 0,
+    // props spreading 금지 비활성화
+    'react/jsx-props-no-spreading': 'off',
   },
 };
