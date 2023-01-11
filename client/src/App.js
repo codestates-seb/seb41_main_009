@@ -6,18 +6,21 @@ import Navigator from './components/organisms/Navigator';
 import PostList from './components/templates/PostList';
 import Showcase from './components/templates/Showcase';
 import Sidebar from './components/organisms/Sidebar';
+import GlobalStyled from './GlobalStyle';
+import PublicRoute from './routes/PublicRoute';
 
 const App = () => {
   return (
     <>
       <Reset />
+      <GlobalStyled />
       <Navigator />
       <Sidebar />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Showcase />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/posts" element={<PostList />} />
+          <Route path="/" element={<PublicRoute component={<Showcase />} />} />
+          <Route path="/signin" element={<PublicRoute component={<Signin />} />} />
+          <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
         </Routes>
       </BrowserRouter>
     </>
