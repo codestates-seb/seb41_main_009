@@ -15,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codestates.hobby.domain.showcase.dto.ShowcaseCommentDto;
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
+import com.codestates.hobby.domain.showcase.mapper.ShowcaseCommentMapper;
 import com.codestates.hobby.domain.showcase.service.ShowcaseCommentService;
 import com.codestates.hobby.global.config.support.CustomPageRequest;
+import com.codestates.hobby.global.dto.MultiResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/showcases/{showcase-id}/comments")
 public class ShowcaseCommentController {
 	private final ShowcaseCommentService commentService;
+	private final ShowcaseCommentMapper mapper;
 
 	@GetMapping
 	public ResponseEntity<?> getAll(
@@ -33,20 +37,25 @@ public class ShowcaseCommentController {
 		@AuthenticationPrincipal Long memberId,
 		CustomPageRequest pageRequest
 	) {
-		Page<ShowcaseComment> comments = commentService.findAll(showcaseId, pageRequest.to());
+		Page<ShowcaseCommentDto.Response> comments
+			= commentService.findAll(showcaseId, pageRequest.to()).map(mapper::entityToResponse);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		comments.forEach(response -> mapper.setProperties(response, memberId));
+
+		return new ResponseEntity<>(new MultiResponseDto<>(comments), HttpStatus.OK);
 	}
 
 	@PostMapping
 	public ResponseEntity<?> post(
 		@PathVariable("showcase-id") long showcaseId,
 		@AuthenticationPrincipal Long memberId,
-		@RequestBody @NotBlank String content
+		@RequestBody ShowcaseCommentDto.Post post
 	) {
-		commentService.post(memberId, showcaseId, content);
+		post.setProperties(showcaseId, memberId);
 
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		ShowcaseComment comment = commentService.comment(post);
+
+		return new ResponseEntity<>(comment.getId(), HttpStatus.CREATED);
 	}
 
 	@PatchMapping("/{comment-id}")
@@ -54,11 +63,13 @@ public class ShowcaseCommentController {
 		@PathVariable("showcase-id") long showcaseId,
 		@PathVariable("comment-id") long commentId,
 		@AuthenticationPrincipal Long memberId,
-		@RequestBody @NotBlank String content
+		@RequestBody ShowcaseCommentDto.Patch patch
 	) {
-		commentService.update(memberId, showcaseId, commentId, content);
+		patch.setProperties(memberId, showcaseId, commentId);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		ShowcaseComment comment = commentService.update(patch);
+
+		return new ResponseEntity<>(comment.getId(), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{comment-id}")

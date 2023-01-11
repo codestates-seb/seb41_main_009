@@ -5,18 +5,19 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.codestates.hobby.domain.showcase.dto.ShowcaseCommentDto;
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
 
 @Service
 public class ShowcaseCommentService {
 	@Transactional
-	public void post(long memberId, long showcaseId, String content) {
-
+	public ShowcaseComment comment(ShowcaseCommentDto.Post post) {
+		return null;
 	}
 
 	@Transactional
-	public void update(long memberId, long showcaseId, long commentId, String content) {
-
+	public ShowcaseComment update(ShowcaseCommentDto.Patch patch) {
+		return null;
 	}
 
 	@Transactional
