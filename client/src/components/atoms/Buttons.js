@@ -11,6 +11,9 @@ const WhiteButton = styled.a`
   background-color: #ffffff;
   border: 1px solid var(--gray-600);
   text-decoration: none;
+  font-size: var(--label-l);
+  font-weight: 500;
+  color: black;
 
   &:visited {
     color: black;
@@ -26,4 +29,19 @@ const BlackButton = styled(WhiteButton)`
   }
 `;
 
-export { WhiteButton, BlackButton };
+const WhiteShadowButton = styled(WhiteButton)`
+  box-shadow: var(--boxShadow-02);
+`;
+
+const BlackShadowButton = styled(BlackButton)`
+  box-shadow: var(--boxShadow-02);
+`;
+
+const BlueShadowButton = styled(BlackShadowButton)`
+  background-color: var(--blue-400);
+  border-color: var(--blue-400);
+  color: white;
+  box-shadow: 3px 3px 0px var(--orange-400);
+`;
+
+export { WhiteButton, BlackButton, WhiteShadowButton, BlackShadowButton, BlueShadowButton };
