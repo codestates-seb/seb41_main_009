@@ -22,6 +22,7 @@ const WhiteButton = styled.a`
 
 const BlackButton = styled(WhiteButton)`
   color: white;
+  border: 1px solid var(--gray-700);
   background-color: var(--gray-700);
 
   &:visited {
@@ -29,19 +30,28 @@ const BlackButton = styled(WhiteButton)`
   }
 `;
 
+const OrangeButton = styled(WhiteButton)`
+  color: var(--orange-400);
+  border: 1px solid var(--orange-400);
+
+  &:visited {
+    color: var(--orange-400);
+  }
+`;
+
 const WhiteShadowButton = styled(WhiteButton)`
-  box-shadow: var(--boxShadow-02);
+  box-shadow: var(--boxShadow-02) var(--gray-700);
 `;
 
 const BlackShadowButton = styled(BlackButton)`
-  box-shadow: var(--boxShadow-02);
+  box-shadow: var(--boxShadow-02) var(--gray-600);
 `;
 
 const BlueShadowButton = styled(BlackShadowButton)`
   background-color: var(--blue-400);
   border-color: var(--blue-400);
   color: white;
-  box-shadow: 3px 3px 0px var(--orange-400);
+  box-shadow: var(--boxShadow-02) var(--orange-400);
 `;
 
-export { WhiteButton, BlackButton, WhiteShadowButton, BlackShadowButton, BlueShadowButton };
+export { WhiteButton, BlackButton, OrangeButton, WhiteShadowButton, BlackShadowButton, BlueShadowButton };
