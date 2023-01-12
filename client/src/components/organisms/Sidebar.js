@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Menu from '../molecules/SidebarMenu';
+import { TextButton } from '../atoms/Buttons';
 
 const Container = styled.div`
   width: var(--sidebar-width);
@@ -19,7 +20,10 @@ const Sidebar = () => {
   return (
     <Container>
       <MenuList>
-        <Menu />
+        <TextButton href="/">Home</TextButton>
+        <TextButton href="/">Showcase</TextButton>
+        <TextButton href="/">All</TextButton>
+
         <Menu />
         <Menu />
         <Menu />

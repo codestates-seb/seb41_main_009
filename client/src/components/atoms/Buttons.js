@@ -54,4 +54,20 @@ const BlueShadowButton = styled(BlackShadowButton)`
   box-shadow: var(--boxShadow-02) var(--orange-400);
 `;
 
-export { WhiteButton, BlackButton, OrangeButton, WhiteShadowButton, BlackShadowButton, BlueShadowButton };
+const TextButton = styled.a`
+  display: flex;
+  width: ${props => (props.width ? props.width : '100px')};
+  height: ${props => (props.height ? props.height : '30px')};
+  align-items: center;
+  text-decoration: none;
+
+  &:visited {
+    color: black;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export { WhiteButton, BlackButton, OrangeButton, WhiteShadowButton, BlackShadowButton, BlueShadowButton, TextButton };

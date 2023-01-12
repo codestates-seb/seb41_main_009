@@ -1,14 +1,25 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { TextButton } from '../atoms/Buttons';
+import SidebarTagsContainer from './SidebarTagsContainer';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   width: 150px;
-  height: 30px;
-  align-items: center;
+  min-height: 30px;
+  justify-content: flex-start;
 `;
 
-const Menu = () => {
-  return <Container>Home</Container>;
+const Menu = ({ category }) => {
+  const [isClicked, setIsClicked] = useState(false);
+
+  return (
+    <Container>
+      <TextButton onClick={() => setIsClicked(!isClicked)}>{category || 'Category'}</TextButton>
+      <SidebarTagsContainer isClicked={isClicked} />
+    </Container>
+  );
 };
 
 export default Menu;
