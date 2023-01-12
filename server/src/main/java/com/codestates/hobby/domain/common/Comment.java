@@ -1,5 +1,7 @@
 package com.codestates.hobby.domain.common;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,6 +35,14 @@ public abstract class Comment extends BaseEntity {
 	protected Comment(String content, Member member) {
 		this.content = content;
 		this.member = member;
+	}
+
+	public boolean isWrittenBy(Long memberId) {
+		return Objects.equals(member.getId(), memberId);
+	}
+
+	public void update(String content) {
+		this.content = content;
 	}
 }
 
