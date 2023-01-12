@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.post.dto;
 
 import com.codestates.hobby.domain.member.dto.MemberDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,37 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 public class PostCommentDto {
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @JsonIgnoreProperties({"postId", "memberId"})
+    public static class Post {
+        private Long postId;
+        private Long memberId;
+        private String content;
+
+        public void setProperties(Long postId, Long memberId) {
+            this.postId = postId;
+            this.memberId = memberId;
+        }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @JsonIgnoreProperties({"memberId", "postId", "commentId"})
+    public static class Patch {
+        private Long postId;
+        private Long commentId;
+        private Long memberId;
+        private String content;
+
+        public void setProperties(Long memberId, Long postId, Long commentId) {
+            this.postId = postId;
+            this.commentId = commentId;
+            this.memberId = memberId;
+        }
+    }
     @Getter
     @Setter
     @NoArgsConstructor

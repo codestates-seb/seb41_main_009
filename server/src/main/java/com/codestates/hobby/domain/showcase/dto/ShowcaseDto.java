@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
@@ -53,15 +54,14 @@ public class ShowcaseDto {
 		private long id;
 		private String content;
 		private String category;
-		private int views;
 		private boolean isItWriter;
-		private List<String> imageUrls;
-		private ShowcaseCommentDto.Response comments;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
+		private List<String> imageUrls;
+		private List<ShowcaseCommentDto.Response> comments;
+		private MemberDto.SimpleResponse writer;
 
-		// TODO: Writer(nickname, profileImageUrl)
-		//     : 이미지의 순서 정보가 있어야됨
+		// TODO: 이미지의 순서 정보가 있어야됨
 	}
 
 	@Getter
@@ -71,13 +71,11 @@ public class ShowcaseDto {
 		private long id;
 		private String content;
 		private String category;
-		private int views;
 		private int comments;
 		private boolean isItWriter;
 		private String thumbnailUrl;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
-
-		// TODO: Writer(nickname, profileImageUrl)
+		private MemberDto.SimpleResponse writer;
 	}
 }
