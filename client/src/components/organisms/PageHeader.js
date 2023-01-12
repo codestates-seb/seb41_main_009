@@ -22,16 +22,18 @@ const TextContainer = styled.div`
 
 /**
  * props 설명
- * headerTitle: Header 왼쪽 타이틀
+ * headerTitle: Header 왼쪽 하단 타이틀
+ * headerSubTitle: Header 왼쪽 상단 타이틀
  * asideHeader: Header 오른쪽 추가 컴포넌트
  * height: Header 외부 컨테이너의 높이
  */
 
-const PageHeader = ({ headerTitle, asideHeader, height }) => {
+const PageHeader = ({ headerTitle, headerSubTitle, asideHeader, height }) => {
   return (
     <Container height={height}>
       <TextContainer>
-        <div style={{ fontSize: 'var(--display-s)', fontWeight: '700' }}>{headerTitle}</div>
+        <div style={{ fontSize: 'var(--label-l)', fontWeight: '500' }}>{headerSubTitle || 'Subtitle'}</div>
+        <div style={{ fontSize: 'var(--display-s)', fontWeight: '700' }}>{headerTitle || 'TITLE'}</div>
       </TextContainer>
       {asideHeader || null}
     </Container>
