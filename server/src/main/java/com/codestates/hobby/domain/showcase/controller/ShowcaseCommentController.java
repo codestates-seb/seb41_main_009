@@ -1,5 +1,7 @@
 package com.codestates.hobby.domain.showcase.controller;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,9 +67,9 @@ public class ShowcaseCommentController {
 	) {
 		patch.setProperties(memberId, showcaseId, commentId);
 
-		commentService.update(patch);
+		ShowcaseComment comment = commentService.update(patch);
 
-		return new ResponseEntity<>(commentId, HttpStatus.OK);
+		return new ResponseEntity<>(comment.getId(), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{comment-id}")
