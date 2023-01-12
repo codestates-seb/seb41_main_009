@@ -5,7 +5,7 @@ const SidebarTagsContainer = ({ isClicked, tags = ['발라드', '클래식', '�
   return (
     <Container isClicked={isClicked} tags={tags}>
       {tags.map(tag => {
-        return <TextButton>{tag}</TextButton>;
+        return <TextButton key={tag}>{tag}</TextButton>;
       })}
     </Container>
   );

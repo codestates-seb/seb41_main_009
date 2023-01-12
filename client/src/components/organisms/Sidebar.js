@@ -5,7 +5,6 @@ import { TextButton } from '../atoms/Buttons';
 const Container = styled.div`
   width: var(--sidebar-width);
   height: auto;
-  background-color: salmon;
 `;
 
 const MenuList = styled.div`
@@ -22,7 +21,7 @@ const Sidebar = () => {
       <MenuList>
         <TextButton href="/">Home</TextButton>
         <TextButton href="/">Showcase</TextButton>
-        <TextButton href="/">All</TextButton>
+        <TextButton href="/posts">All</TextButton>
         <Menu />
         <Menu />
         <Menu />
