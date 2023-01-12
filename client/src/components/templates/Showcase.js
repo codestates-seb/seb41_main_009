@@ -9,7 +9,6 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
-  background-color: gray;
 `;
 
 const Header = styled.div`
@@ -23,7 +22,6 @@ const Body = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 20px;
-  background-color: yellow;
   width: 100%;
   height: auto;
 `;
@@ -32,7 +30,7 @@ const CaseContainer = styled.div`
   display: flex;
   flex-grow: 1;
   flex-direction: column;
-  padding-right: 20px;
+  padding-right: 32px;
 
   &:last-child {
     padding-right: 0px;
