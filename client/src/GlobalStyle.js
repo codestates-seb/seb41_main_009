@@ -115,6 +115,12 @@ const GlobalStyled = createGlobalStyle`
       --boxShadow-02: 10px 10px 0px;
       --boxShadow-07: 7px 7px 0px;
       --boxShadow-08: 8px 8px 0px;
+
+      /* layout-size */
+      --header-height: 100px;
+      --body-width: 1440px;
+      --sidebar-width: 159px;
+      --content-width: 1056px;
   }
   `;
 
