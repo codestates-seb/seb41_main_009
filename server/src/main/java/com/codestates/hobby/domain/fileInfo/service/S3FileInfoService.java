@@ -1,22 +1,31 @@
 package com.codestates.hobby.domain.fileInfo.service;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.codestates.hobby.domain.fileInfo.dto.ImageType;
-
-import lombok.RequiredArgsConstructor;
+import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
+import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
+import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 
 @Service
 @Profile("aws")
-@RequiredArgsConstructor
-public class S3FileInfoService implements FileInfoService {
+public class S3FileInfoService extends FileInfoService {
 	// https://docs.aws.amazon.com/ko_kr/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html
 
+	public S3FileInfoService(FileInfoRepository fileInfoRepository) {
+		super(fileInfoRepository);
+	}
+
 	@Override
-	public Map<String, String> generateSignedURL(ImageType type, String basePath) {
+	public SignedURL generateSignedURL(ImageType type, String basePath) {
 		return null;
+	}
+
+	@Override
+	public void delete(List<FileInfo> fileInfos) {
+
 	}
 }

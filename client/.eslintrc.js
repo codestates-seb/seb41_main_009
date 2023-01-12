@@ -24,5 +24,7 @@ module.exports = {
     'react/prop-types': 0,
     // props spreading 금지 비활성화
     'react/jsx-props-no-spreading': 'off',
+    // import 오류
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
   },
 };

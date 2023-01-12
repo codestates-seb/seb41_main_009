@@ -20,6 +20,13 @@ spring:
       max-file-size: 5MB      # 파일당 최대크기
       max-request-size: 50MB  # 요청당 최대크기
 
+cloud:
+  storage:
+    gcs:
+      domain: https://console.cloud.google.com
+      duration: 15
+      bucket-name: intorest-images
+
 logging:
   level:
     org:
