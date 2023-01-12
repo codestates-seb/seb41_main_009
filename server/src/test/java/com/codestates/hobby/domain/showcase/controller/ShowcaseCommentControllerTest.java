@@ -33,4 +33,3 @@ class ShowcaseCommentControllerTest extends ControllerTest {
 	void delete() {
 	}
 }
-
