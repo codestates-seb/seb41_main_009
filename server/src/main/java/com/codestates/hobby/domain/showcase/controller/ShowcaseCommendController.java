@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
+import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.service.ShowcaseService;
 
 import lombok.RequiredArgsConstructor;
@@ -36,9 +37,9 @@ public class ShowcaseCommendController {
 	) {
 		post.setProperties(memberId, imgFiles);
 
-		showcaseService.post(post);
+		Showcase showcase = showcaseService.post(post);
 
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(showcase.getId(), HttpStatus.CREATED);
 	}
 
 	@PatchMapping(
@@ -52,9 +53,9 @@ public class ShowcaseCommendController {
 	) {
 		patch.setProperties(memberId, showcaseId, imgFiles);
 
-		showcaseService.update(patch);
+		Showcase showcase = showcaseService.update(patch);
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		return new ResponseEntity<>(showcase.getId(), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{showcase-id}")

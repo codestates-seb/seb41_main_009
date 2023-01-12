@@ -115,7 +115,6 @@ const GlobalStyled = createGlobalStyle`
       --boxShadow-02: 10px 10px 0px;
       --boxShadow-07: 7px 7px 0px;
       --boxShadow-08: 8px 8px 0px;
-
   }
   `;
 
