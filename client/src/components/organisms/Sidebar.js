@@ -23,7 +23,6 @@ const Sidebar = () => {
         <TextButton href="/">Home</TextButton>
         <TextButton href="/">Showcase</TextButton>
         <TextButton href="/">All</TextButton>
-
         <Menu />
         <Menu />
         <Menu />

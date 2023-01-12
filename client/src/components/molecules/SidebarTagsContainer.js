@@ -1,11 +1,20 @@
 import styled from 'styled-components';
+import { TextButton } from '../atoms/Buttons';
 
-const SidebarTagsContainer = ({ isClicked }) => {
-  return <Container isClicked={isClicked}>Abc</Container>;
+const SidebarTagsContainer = ({ isClicked, tags = ['발라드', '클래식', '댄스'] }) => {
+  return (
+    <Container isClicked={isClicked} tags={tags}>
+      {tags.map(tag => {
+        return <TextButton>{tag}</TextButton>;
+      })}
+    </Container>
+  );
 };
 
 const Container = styled.div`
-  display: ${props => (props.isClicked ? 'flex' : 'none')};
+  height: ${props => (props.isClicked ? `${props.tags.length * 30}px` : '0px')};
+  overflow: hidden;
+  transition: height 200ms ease-out;
 `;
 
 export default SidebarTagsContainer;

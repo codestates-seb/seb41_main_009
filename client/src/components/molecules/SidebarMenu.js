@@ -11,13 +11,13 @@ const Container = styled.div`
   justify-content: flex-start;
 `;
 
-const Menu = ({ category }) => {
+const Menu = ({ category, tags }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   return (
     <Container>
       <TextButton onClick={() => setIsClicked(!isClicked)}>{category || 'Category'}</TextButton>
-      <SidebarTagsContainer isClicked={isClicked} />
+      <SidebarTagsContainer isClicked={isClicked} tags={tags} />
     </Container>
   );
 };
