@@ -12,6 +12,8 @@ import User from './components/templates/User';
 import UserEdit from './components/templates/UserEdit';
 import SeriesList from './components/templates/SeriesList';
 import PostPage from './components/templates/PostPage';
+import Search from './components/templates/Search';
+
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
 
@@ -32,6 +34,7 @@ const App = () => {
             <Route path="/series" element={<PublicRoute component={<SeriesList />} />} />
             <Route path="/user" element={<PublicRoute component={<User />} />} />
             <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />
+            <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
           </Routes>
         </BrowserRouter>
       </Main>
