@@ -35,3 +35,7 @@ public abstract class Comment extends BaseEntity {
 		this.member = member;
 	}
 }
+
+
+
+
