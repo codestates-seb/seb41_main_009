@@ -50,7 +50,7 @@ const StickerEmail = ({ width, height, message }) => {
   return (
     <Container width={width} height={height}>
       <Sticker src="https://api.iconify.design/mdi/at.svg" />
-      <Label> {message || 'Email'}</Label>
+      <Label> {message || 'email@email.com'}</Label>
     </Container>
   );
 };
