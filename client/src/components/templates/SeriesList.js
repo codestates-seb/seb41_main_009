@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ListHeaderContainer from '../organisms/listcontents/ListHeader';
+import PageHeader from '../organisms/PageHeader';
 import FilterContainer from '../organisms/listcontents/ListFilter';
 import PaginationContainer from '../organisms/listcontents/ListPagination';
 import SeriesListContainer from '../organisms/listcontents/SeriesListContainer';
@@ -17,7 +17,7 @@ const Container = styled.div`
 const SeriesList = () => {
   return (
     <Container>
-      <ListHeaderContainer />
+      <PageHeader />
       <FilterContainer />
       <SeriesListContainer />
       <PaginationContainer />
