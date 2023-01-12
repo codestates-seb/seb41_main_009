@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.fileInfo.entity;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class FileInfo {
 
 	@ColumnDefault(value = "CURRENT_TIMESTAMP")
 	@Column(nullable = false, updatable = false)
-	private LocalDateTime createdAt;
+	private LocalDateTime createdAt = LocalDateTime.now();
 
 	public FileInfo(String fileURL) {
 		this.fileURL = fileURL;
@@ -39,5 +40,22 @@ public class FileInfo {
 
 	public String getFilename() {
 		return fileURL.substring(fileURL.indexOf('/') + 1);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+
+		FileInfo fileInfo = (FileInfo)o;
+
+		return Objects.equals(id, fileInfo.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
 	}
 }

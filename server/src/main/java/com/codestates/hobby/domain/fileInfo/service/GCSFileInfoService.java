@@ -42,6 +42,12 @@ public class GCSFileInfoService extends FileInfoService {
 	@Override
 	public SignedURL generateSignedURL(ImageType imageType, BasePath basePath) {
 		String savedFilename = generateRandomFilename(imageType, basePath.toString());
+		String fileUrl;
+
+		do {
+			fileUrl = String.join("/", domain, bucketName, savedFilename);
+		} while (!fileInfoRepository.existsByFileURL(fileUrl));
+
 		BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, savedFilename)).build();
 		Map<String, String> headers = Collections.singletonMap("Content-Type", imageType.toContentType());
 
@@ -53,7 +59,7 @@ public class GCSFileInfoService extends FileInfoService {
 			Storage.SignUrlOption.withExtHeaders(headers),
 			Storage.SignUrlOption.withV4Signature());
 
-		return new SignedURL(url.toString(), String.join("/", domain, bucketName, savedFilename), imageType);
+		return new SignedURL(url.toString(), fileUrl, imageType);
 	}
 
 	@Override
