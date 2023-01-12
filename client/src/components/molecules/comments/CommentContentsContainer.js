@@ -7,9 +7,10 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const CommentContentsContainer = () => {
+const CommentContentsContainer = ({ comments }) => {
   return (
     <Container>
+      {comments?.map()}
       <Comment />
       <Comment />
       <Comment />
