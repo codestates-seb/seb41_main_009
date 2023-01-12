@@ -21,18 +21,14 @@ public class CategoryService {
 			.orElseThrow(() -> new IllegalArgumentException("Not found category for " + categoryId));
 	}
 
-	public Category findHobbyByName(String categoryName, boolean isKorean) {
-		return (isKorean
-			? categoryRepository.findByGroupIsNotNullAndKorName(categoryName)
-			: categoryRepository.findByGroupIsNotNullAndEngName(categoryName.toLowerCase())
-		).orElseThrow(() -> new IllegalArgumentException("Not found category for " + categoryName));
+	public Category findHobbyByName(String name) {
+		return categoryRepository.findByGroupIsNotNullAndName(name.toUpperCase())
+			.orElseThrow(() -> new IllegalArgumentException("Not found category for " + name));
 	}
 
-	public Category findGroupByName(String categoryName, boolean isKorean) {
-		return (isKorean
-			? categoryRepository.findByGroupIsNullAndKorName(categoryName)
-			: categoryRepository.findByGroupIsNullAndEngName(categoryName.toLowerCase())
-		).orElseThrow(() -> new IllegalArgumentException("Not found category for " + categoryName));
+	public Category findGroupByName(String name) {
+		return categoryRepository.findByGroupIsNullAndName(name.toUpperCase())
+			.orElseThrow(() -> new IllegalArgumentException("Not found category for " + name));
 	}
 
 	public List<Category> findAll() {
@@ -44,6 +40,6 @@ public class CategoryService {
 	}
 
 	public List<Category> findAllByGroup(String group) {
-		return categoryRepository.findAllByGroup(findGroupByName(group, false));
+		return categoryRepository.findAllByGroup(findGroupByName(group));
 	}
 }
