@@ -17,7 +17,6 @@ import Search from './components/templates/Search';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
-import Test from './components/templates/Test';
 
 const App = () => {
   return (
@@ -38,7 +37,6 @@ const App = () => {
             <Route path="/user" element={<PublicRoute component={<User />} />} />
             <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />
             <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
-            <Route path="/test" element={<PublicRoute component={<Test />} />} />
           </Routes>
         </BrowserRouter>
       </Main>
