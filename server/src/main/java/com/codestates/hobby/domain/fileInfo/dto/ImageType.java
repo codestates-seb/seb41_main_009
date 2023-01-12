@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ImageType {
-	PNG, JPEG, WEBP, GIF;
+	PNG, JPEG, JPG, WEBP, GIF;
 
 	private final String lowerCase;
 
