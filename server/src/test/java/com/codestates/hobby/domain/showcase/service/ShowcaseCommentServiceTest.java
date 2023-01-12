@@ -2,33 +2,14 @@ package com.codestates.hobby.domain.showcase.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import com.codestates.hobby.domain.showcase.repository.ShowcaseCommentRepository;
-import com.codestates.hobby.domain.showcase.repository.ShowcaseRepository;
+import com.codestates.hobby.utils.ControllerTest;
 
-@SpringBootTest
-class ShowcaseCommentServiceTest {
-	@Autowired
-	ShowcaseCommentRepository repository;
-
-	@Autowired
-	ShowcaseCommentService service;
-
-	@Autowired
-	ShowcaseRepository showcaseRepository;
-
-	// @Autowired
-	// MemberRepository memberRepository;
-
+class ShowcaseCommentServiceTest extends ControllerTest {
 	@Nested
 	@DisplayName("쇼케이스 댓글 등록")
 	class Post {
-		@Test
 		void 댓글을_등록한다() {
-
 		}
 	}
 
