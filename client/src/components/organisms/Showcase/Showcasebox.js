@@ -18,12 +18,22 @@ import Input from '../../atoms/Input';
  * @param {string} commentContent - 첫댓글작성 내용
  * @returns {JSX.Element} - 메인페이지 쇼케이스박스 컴포넌트
  */
-const Showcasebox = ({ thumnail, tagId, tagName, userImg, userName, summary, commentUserName, commentContent }) => {
+const Showcasebox = ({
+  thumnail,
+  tagId,
+  tagName,
+  userImg,
+  userId,
+  userName,
+  summary,
+  commentUserName,
+  commentContent,
+}) => {
   return (
     <Container>
       <ImageCard thumnail={thumnail} id={tagId} name={tagName} />
       <Box>
-        <UserInfo id={userName} image={userImg} />
+        <UserInfo id={userId} name={userName} image={userImg} />
         <ContentSummary>{summary}</ContentSummary>
       </Box>
       <Box>
