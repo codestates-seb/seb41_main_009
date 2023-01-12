@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import com.codestates.hobby.domain.fileInfo.dto.BasePath;
 import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
@@ -39,8 +40,8 @@ public class GCSFileInfoService extends FileInfoService {
 	}
 
 	@Override
-	public SignedURL generateSignedURL(ImageType imageType, String basePath) {
-		String savedFilename = generateRandomFilename(imageType, basePath);
+	public SignedURL generateSignedURL(ImageType imageType, BasePath basePath) {
+		String savedFilename = generateRandomFilename(imageType, basePath.toString());
 		BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, savedFilename)).build();
 		Map<String, String> headers = Collections.singletonMap("Content-Type", imageType.toContentType());
 
@@ -52,7 +53,7 @@ public class GCSFileInfoService extends FileInfoService {
 			Storage.SignUrlOption.withExtHeaders(headers),
 			Storage.SignUrlOption.withV4Signature());
 
-		return new SignedURL(url.toString(), String.join(domain, bucketName, savedFilename));
+		return new SignedURL(url.toString(), String.join("/", domain, bucketName, savedFilename), imageType);
 	}
 
 	@Override
