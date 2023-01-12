@@ -9,6 +9,7 @@ import Sidebar from './components/organisms/Sidebar';
 import SeriesList from './components/templates/SeriesList';
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
+import Test from './components/templates/Test';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/signin" element={<PublicRoute component={<Signin />} />} />
           <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
           <Route path="/series" element={<PublicRoute component={<SeriesList />} />} />
+          <Route path="/test" element={<PublicRoute component={<Test />} />} />
         </Routes>
       </BrowserRouter>
     </>
