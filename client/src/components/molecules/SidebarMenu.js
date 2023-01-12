@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { TextButton } from '../atoms/Buttons';
+import { SidebarMainButton } from '../atoms/Buttons';
 import SidebarTagsContainer from './SidebarTagsContainer';
 
 const Container = styled.div`
@@ -11,13 +11,13 @@ const Container = styled.div`
   justify-content: flex-start;
 `;
 
-const Menu = ({ category, tags }) => {
+const Menu = ({ category, tags, onClick, selectedTab }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   return (
     <Container>
-      <TextButton onClick={() => setIsClicked(!isClicked)}>{category || 'Category'}</TextButton>
-      <SidebarTagsContainer isClicked={isClicked} tags={tags} />
+      <SidebarMainButton onClick={() => setIsClicked(!isClicked)}>{category[1] || 'Category'}</SidebarMainButton>
+      <SidebarTagsContainer isClicked={isClicked} tags={tags} onClick={onClick} selectedTab={selectedTab} />
     </Container>
   );
 };

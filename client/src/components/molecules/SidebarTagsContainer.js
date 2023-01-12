@@ -1,20 +1,37 @@
 import styled from 'styled-components';
-import { TextButton } from '../atoms/Buttons';
-
-const SidebarTagsContainer = ({ isClicked, tags = ['발라드', '클래식', '댄스'] }) => {
-  return (
-    <Container isClicked={isClicked} tags={tags}>
-      {tags.map(tag => {
-        return <TextButton key={tag}>{tag}</TextButton>;
-      })}
-    </Container>
-  );
-};
+import { SidebarTagsButton } from '../atoms/Buttons';
 
 const Container = styled.div`
   height: ${props => (props.isClicked ? `${props.tags.length * 30}px` : '0px')};
   overflow: hidden;
   transition: height 200ms ease-out;
 `;
+
+const SelectedButton = styled(SidebarTagsButton)`
+  color: var(--orange-400);
+
+  &:visited {
+    color: var(--orange-400);
+  }
+`;
+
+const SidebarTagsContainer = ({ isClicked, tags, onClick, selectedTab }) => {
+  return (
+    <Container isClicked={isClicked} tags={tags}>
+      {tags.map(tag => {
+        const [enName, krName] = tag;
+        return selectedTab === krName ? (
+          <SelectedButton to={`/posts/${enName}`} key={enName} onClick={onClick}>
+            {krName}
+          </SelectedButton>
+        ) : (
+          <SidebarTagsButton to={`/posts/${enName}`} key={enName} onClick={onClick}>
+            {krName}
+          </SidebarTagsButton>
+        );
+      })}
+    </Container>
+  );
+};
 
 export default SidebarTagsContainer;
