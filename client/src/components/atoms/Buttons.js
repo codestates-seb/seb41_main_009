@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { LabelLarge } from '../../styles/typo';
 
 const WhiteButton = styled.a`
   width: ${props => (props.width ? props.width : '116px')};
@@ -11,9 +12,8 @@ const WhiteButton = styled.a`
   background-color: #ffffff;
   border: 1px solid var(--gray-600);
   text-decoration: none;
-  font-size: var(--label-l);
-  font-weight: 600;
   color: black;
+  ${LabelLarge}
 
   &:visited {
     color: black;
@@ -60,6 +60,7 @@ const TextButton = styled.a`
   height: ${props => (props.height ? props.height : '30px')};
   align-items: center;
   text-decoration: none;
+  ${LabelLarge}
 
   &:visited {
     color: black;
