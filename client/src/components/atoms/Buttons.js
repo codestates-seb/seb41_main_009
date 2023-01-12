@@ -12,7 +12,7 @@ const WhiteButton = styled.a`
   border: 1px solid var(--gray-600);
   text-decoration: none;
   font-size: var(--label-l);
-  font-weight: 500;
+  font-weight: 600;
   color: black;
 
   &:visited {
