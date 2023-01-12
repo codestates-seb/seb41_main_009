@@ -8,4 +8,5 @@ import lombok.Getter;
 public class SignedURL {
 	private String signedURL;
 	private String fileURL;
+	private ImageType type;
 }
