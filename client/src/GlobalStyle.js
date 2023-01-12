@@ -125,7 +125,7 @@ const GlobalStyled = createGlobalStyle`
   }
   
   body { 
-    font-family: 'Roboto';
+    font-family: 'Roboto', 'Noto Sans KR', sans-serif;
     font-style: normal;
   }
   `;
