@@ -14,13 +14,9 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 	@Query("select c from Category c where c.group is null and (c.korName = ?1 or c.engName = ?1)")
 	Optional<Category> findByGroupIsNullAndName(String name);
-	Optional<Category> findByGroupIsNullAndKorName(String korName);
-	Optional<Category> findByGroupIsNullAndEngName(String engName);
 
 	@Query("select c from Category c where c.group is not null and (c.korName = ?1 or c.engName = ?1)")
 	Optional<Category> findByGroupIsNotNullAndName(String name);
-	Optional<Category> findByGroupIsNotNullAndKorName(String korName);
-	Optional<Category> findByGroupIsNotNullAndEngName(String engName);
 
 	List<Category> findAllByGroupIsNull();
 

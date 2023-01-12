@@ -62,8 +62,8 @@ class CategoryServiceTest {
 
 	@Test
 	void 이름으로_조회한다() {
-		Category cat = assertDoesNotThrow(() -> service.findHobbyByName("취미1", true));
-		Category group = assertDoesNotThrow(() -> service.findGroupByName("그룹1", true));
+		Category cat = assertDoesNotThrow(() -> service.findHobbyByName("취미1"));
+		Category group = assertDoesNotThrow(() -> service.findGroupByName("그룹1"));
 
 		assertNotNull(cat.getGroup());
 		assertNull(group.getGroup());
@@ -72,12 +72,12 @@ class CategoryServiceTest {
 
 	@Test
 	void 취미로_그룹을_조회하면_실패한다() {
-		assertThrows(IllegalArgumentException.class, () -> service.findGroupByName("HOBBY1", false));
+		assertThrows(IllegalArgumentException.class, () -> service.findGroupByName("HOBBY1"));
 	}
 
 	@Test
 	void 그룹으로_취미를_조회하면_실패한다() {
-		assertThrows(IllegalArgumentException.class, () -> service.findHobbyByName("그룹1", true));
+		assertThrows(IllegalArgumentException.class, () -> service.findHobbyByName("그룹1"));
 	}
 
 	@Test
