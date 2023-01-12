@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Selected from '../../styles/Selected';
 import { SidebarTagsButton } from '../atoms/Buttons';
 
 const Container = styled.div`
@@ -8,11 +9,7 @@ const Container = styled.div`
 `;
 
 const SelectedButton = styled(SidebarTagsButton)`
-  color: var(--orange-400);
-
-  &:visited {
-    color: var(--orange-400);
-  }
+  ${Selected}
 `;
 
 const SidebarTagsContainer = ({ isClicked, tags, onClick, selectedTab }) => {

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { MAIN, CATEGORIES } from '../../constants/Categories';
 import Menu from '../molecules/SidebarMenu';
 import { SidebarMainButton } from '../atoms/Buttons';
+import Selected from '../../styles/Selected';
 
 const Container = styled.div`
   width: var(--sidebar-width);
@@ -18,11 +19,7 @@ const MenuList = styled.div`
 `;
 
 const SelectedButton = styled(SidebarMainButton)`
-  color: var(--orange-400);
-
-  &:visited {
-    color: var(--orange-400);
-  }
+  ${Selected}
 `;
 
 const Sidebar = () => {
