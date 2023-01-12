@@ -2,6 +2,7 @@ package com.codestates.hobby.domain.fileInfo.service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
@@ -17,6 +18,8 @@ public abstract class FileInfoService {
 
 	abstract public SignedURL generateSignedURL(ImageType type, String basePath);
 
+	abstract public void delete(List<FileInfo> fileInfos);
+
 	public FileInfo save(FileInfo fileInfo) {
 		return fileInfoRepository.save(fileInfo);
 	}
@@ -25,7 +28,16 @@ public abstract class FileInfoService {
 		return fileInfoRepository.saveAll(fileInfos);
 	}
 
-	void delete(FileInfo fileInfo) {
+	public FileInfo saveByUrl(String url) {
+		return save(new FileInfo(url));
+	}
+
+	public List<FileInfo> saveAllByUrls(List<String> urls) {
+		List<FileInfo> infos = urls.stream().map(FileInfo::new).collect(Collectors.toList());
+		return save(infos);
+	}
+
+	public void delete(FileInfo fileInfo) {
 		fileInfoRepository.delete(fileInfo);
 	}
 
