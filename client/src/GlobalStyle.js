@@ -121,6 +121,12 @@ const GlobalStyled = createGlobalStyle`
       --body-width: 1440px;
       --sidebar-width: 159px;
       --content-width: 1056px;
+      
+  }
+  
+  body { 
+    font-family: 'Roboto';
+    font-style: normal;
   }
   `;
 
