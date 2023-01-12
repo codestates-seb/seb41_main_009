@@ -12,7 +12,6 @@ const MenuList = styled.div`
   position: fixed;
   z-index: 1;
   justify-content: flex-start;
-  border: 1px solid #333;
   flex-direction: column;
 `;
 
