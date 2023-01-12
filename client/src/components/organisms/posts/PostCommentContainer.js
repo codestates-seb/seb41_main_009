@@ -9,7 +9,6 @@ const Container = styled.div`
   box-sizing: border-box;
   padding: 22px 92px;
   width: 100%;
-  background-color: blanchedalmond;
 `;
 
 const PostCommentContainer = () => {
