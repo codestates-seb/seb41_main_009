@@ -3,32 +3,34 @@ package com.codestates.hobby.domain.post.service;
 import com.codestates.hobby.domain.post.dto.PostDto;
 import com.codestates.hobby.domain.post.entity.Post;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostService {
     @Transactional
-    public void post(PostDto.Post postDto){
+    public Post post(PostDto.Post postDto){
         /*
         1.verifyExist를 통한 검증
         2.포스트 저장
          */
+        return null;
     }
 
     @Transactional
-    public void update(PostDto.Patch patchDto){
+    public Post update(PostDto.Patch patch){
         /*
         1.find를 통해 포스트 불러오기
         2.Optional를 통해 null값 확인
         3.변경사항 저장
          */
+        return null;
     }
     @Transactional
     public void delete(long postId, long memberId){
         /*
         1.포스트 삭제
-        2.원격 저장소 이미지 삭제?
          */
     }
 
@@ -42,27 +44,27 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Post> findByQuery(String query, int page, int size) {
+    public Page<Post> findByQuery(String query, PageRequest pageRequest) {
         return null;
     }
 
     @Transactional(readOnly = true)
-    public Page<Post> findAll(int page, int size, boolean isNewest) {
+    public Page<Post> findAll(PageRequest pageRequest) {
         return null;
     }
 
     @Transactional(readOnly = true)
-    public Page<Post> findAllByMember(long memberId, int page, int size, boolean isNewest) {
+    public Page<Post> findAllByMember(long memberId, PageRequest pageRequest) {
         return null;
     }
 
     @Transactional(readOnly = true)
-    public Page<Post> findAllByCategory(String categoryName, int page, int size, boolean isNewest) {
+    public Page<Post> findAllByCategory(String categoryName, PageRequest pageRequest) {
         return null;
     }
 
     @Transactional(readOnly = true)
-    public Page<Post> findAllBySeries(long seriesId, int page, int size, boolean isNewest) {
+    public Page<Post> findAllBySeries(long seriesId, PageRequest pageRequest) {
         return null;
     }
 }
