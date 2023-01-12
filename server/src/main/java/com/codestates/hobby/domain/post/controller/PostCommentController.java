@@ -1,7 +1,13 @@
 package com.codestates.hobby.domain.post.controller;
 
+import com.codestates.hobby.domain.post.dto.PostCommentDto;
+import com.codestates.hobby.domain.post.entity.PostComment;
+import com.codestates.hobby.domain.post.mapper.PostCommentMapper;
 import com.codestates.hobby.domain.post.service.PostCommentService;
+import com.codestates.hobby.global.config.support.CustomPageRequest;
+import com.codestates.hobby.global.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,22 +18,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/posts/{post-id}/comments")
 public class PostCommentController {
     private final PostCommentService postCommentService;
+    private final PostCommentMapper mapper;
     @PostMapping
     public ResponseEntity<?> post(@PathVariable("post-id") long postId,
-                                  @RequestBody String content,
+                                  @RequestBody PostCommentDto.Post postDto,
                                   @AuthenticationPrincipal Long memberId) {
-        postCommentService.post(memberId, postId, content);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        postDto.setProperties(postId, memberId);
+        PostComment postComment = postCommentService.post(postDto);
+        return new ResponseEntity<>(postComment.getId(), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{comment-id}")
     public ResponseEntity<?> patch(
             @PathVariable("post-id") long postId,
             @PathVariable("comment-id") long commentId,
-            @RequestBody String content,
+            @RequestBody PostCommentDto.Patch patchDto,
             @AuthenticationPrincipal Long memberId
     ) {
-        postCommentService.update(memberId, postId, commentId, content);
+        patchDto.setProperties(memberId, postId, commentId);
+        PostComment postComment = postCommentService.update(patchDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -43,9 +52,10 @@ public class PostCommentController {
 
     @GetMapping
     public ResponseEntity<?> getAll(@PathVariable("post-id") long postId,
-                                    @RequestParam(defaultValue = "1") int page,
-                                    @RequestParam(defaultValue = "1") int size) {
-        postCommentService.findAll(postId, page, size);
-        return new ResponseEntity<>(HttpStatus.OK);
+                                    @AuthenticationPrincipal Long memberId,
+                                    CustomPageRequest pageRequest) {
+        Page<PostCommentDto.Response> postComments = postCommentService.findAll(postId,pageRequest.to()).map(mapper::postCommentToPostCommentResponse);
+        postComments.forEach(response -> mapper.setProperties(response, memberId));
+        return new ResponseEntity<>(new MultiResponseDto<>(postComments), HttpStatus.OK);
     }
 }

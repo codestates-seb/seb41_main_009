@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.ResultActions;
 
 import com.codestates.hobby.domain.category.dto.CategoryDto;
 import com.codestates.hobby.domain.category.mapper.CategoryMapper;
@@ -37,34 +36,38 @@ class CategoryControllerTest extends ControllerTest {
 
 	@Test
 	void getGroups() throws Exception {
-		// given
-		given(service.findAllGroups()).willReturn(List.of());
-		given(mapper.categoriesToResponses(anyList())).willReturn(response);
+		CategoryDto.Response response = groupResponse();
+		response.setCategories(null);
+		givens(List.of(response));
 
-		// when
-		ResultActions actions = mvc.perform(get("/categories/groups"));
-
-		// then
-		actions
-			.andDo(print())
-			.andExpect(status().isOk());
+		mvc
+			.perform(get("/categories/groups"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.data..categories").doesNotExist());
 	}
 
 	@Test
 	void getCategories() throws Exception {
-		// given
+		givens(response.get(0).getCategories());
 
-		// when
-
-		// then
+		mvc
+			.perform(get("/categories/groups/exercise"))
+			.andDo(print())
+			.andExpect(jsonPath("$.data..categories").doesNotExist());
 	}
 
 	@Test
 	void getAll() throws Exception {
-		// given
+		givens(response);
 
-		// when
+		mvc
+			.perform(get("/categories"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.data..categories").exists());
+	}
 
-		// then
+	private void givens(List<CategoryDto.Response> categories) {
+		given(service.findAllGroups()).willReturn(List.of());
+		given(mapper.categoriesToResponses(anyList())).willReturn(categories);
 	}
 }
