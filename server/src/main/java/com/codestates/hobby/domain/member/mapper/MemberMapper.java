@@ -1,5 +1,6 @@
 package com.codestates.hobby.domain.member.mapper;
 
+import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.codestates.hobby.domain.member.entity.Member;
 import org.mapstruct.Mapper;

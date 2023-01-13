@@ -2,17 +2,7 @@ package com.codestates.hobby.domain.member.entity;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 import com.codestates.hobby.domain.common.BaseEntity;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
@@ -24,9 +14,12 @@ import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
 import com.codestates.hobby.domain.subscription.entity.Subscription;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Entity
@@ -45,6 +38,7 @@ public class Member extends BaseEntity {
 	@Column(nullable = false)
 	private String password;
 
+	@Column
 	private String introduction;
 
 	private boolean isOauth2;
@@ -70,17 +64,47 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "target")
 	private List<Subscription> subscriptions;
 
+	@JsonManagedReference(value ="member")
+	@Enumerated(value = EnumType.STRING)
+	@Column
+	@ColumnDefault("MEMBER_ACTIVE")
+	@Setter
+	private MemberStatus memberStatus;
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinTable(name = "MEMBER_IMAGE",
 		joinColumns = @JoinColumn(name = "member_id"),
-		inverseJoinColumns = @JoinColumn(name = "file_info_id"),
+		inverseJoinColumns = @JoinColumn(name = "file_info_id"), foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (file_info_id) references file_info ON DELETE CASCADE"),
 		uniqueConstraints = @UniqueConstraint(name = "unq_member_profile", columnNames = "member_id"))
-	private FileInfo profileImage;
+	private FileInfo fileInfo;
 
-	public Member(String email, String nickname, String password, boolean isOauth2) {
+	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, FileInfo fileInfo) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
+		this.introduction = introduction;
 		this.isOauth2 = isOauth2;
+		this.fileInfo = fileInfo;
+	}
+
+	public void edit(String nickname, String password, String introduction, FileInfo fileInfo) {
+		this.nickname = nickname;
+		this.password = password;
+		this.introduction = introduction;
+		this.fileInfo = fileInfo;
+	}
+
+	public enum MemberStatus {
+		MEMBER_ACTIVE("활동중"),
+		MEMBER_QUIT("탈퇴 상태"),
+		MEMBER_LOGIN("로그인"),
+		MEMBER_LOGOUT("로그아웃");
+
+		@Getter
+		private String status;
+
+		MemberStatus(String status) {
+			this.status = status;
+		}
 	}
 }
