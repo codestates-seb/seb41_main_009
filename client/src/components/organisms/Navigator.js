@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { LabelMedium } from '../../styles/typo';
+import { TextButton } from '../atoms/Buttons';
 import SearchInput from '../molecules/SearchInput';
 
 const Container = styled.div`
@@ -25,10 +27,14 @@ const Logo = styled.img`
 
 const ButtonList = styled.div`
   display: flex;
+  width: 150px;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const UserButton = styled.button`
-  width: 100px;
+const UserButton = styled(TextButton)`
+  width: 70px;
+  ${LabelMedium}
 `;
 
 const Navigator = () => {
@@ -38,8 +44,18 @@ const Navigator = () => {
         <Logo src="/image/logo.svg" alt="logo" />
         <SearchInput height="40px" />
         <ButtonList>
-          <UserButton>LOGIN</UserButton>
-          <UserButton>SignUp</UserButton>
+          {/* Session에 따라 변경되도록 수정 예정 */}
+          {true ? (
+            <>
+              <UserButton to="/signin">Log In</UserButton>
+              <UserButton to="/signup">Sign Up</UserButton>
+            </>
+          ) : (
+            <>
+              <UserButton to="/user">My Page</UserButton>
+              <UserButton to="/">Log Out</UserButton>
+            </>
+          )}
         </ButtonList>
       </Body>
     </Container>
