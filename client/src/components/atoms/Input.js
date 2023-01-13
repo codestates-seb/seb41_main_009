@@ -8,7 +8,6 @@ const Input = styled.input`
   border-radius: 3px;
   width: ${props => props.width};
   height: ${props => props.height};
-
   &:focus {
     outline: none !important;
     border-color: rgb(89, 164, 222);
