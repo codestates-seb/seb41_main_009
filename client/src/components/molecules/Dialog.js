@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BlackButton, WhiteButton } from '../atoms/Buttons';
+import { LabelListTitle } from '../../styles/typo';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -30,17 +31,7 @@ const MessageArea = styled.div`
 
   width: 402px;
   height: 148px;
-`;
-
-const Label = styled.div`
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 800;
-  font-size: 18px;
-  line-height: 24px;
-  width: 285px;
-
-  color: #333333;
+  ${LabelListTitle}
 `;
 
 const ButtonArea = styled.div`
@@ -55,9 +46,7 @@ const ButtonArea = styled.div`
 const Dialog = ({ message, background }) => {
   return (
     <Container background={background}>
-      <MessageArea>
-        <Label> {message || 'Dialog Message'}</Label>
-      </MessageArea>
+      <MessageArea>{message || 'Dialog Message'}</MessageArea>
       <ButtonArea>
         <WhiteButton width="fit-content">Cancel</WhiteButton>
         <BlackButton width="fit-content"> OK</BlackButton>
