@@ -115,6 +115,8 @@ const GlobalStyled = createGlobalStyle`
       --boxShadow-02: 10px 10px 0px;
       --boxShadow-07: 7px 7px 0px;
       --boxShadow-08: 8px 8px 0px;
+      --boxShadow-stack: 2px 2px 0px #FFFFFF, 5px 5px 0px #000000, 7px 7px 0px #FFFFFF, 10px 10px 0px #000000;
+
 
       /* layout-size */
       --header-height: 100px;
