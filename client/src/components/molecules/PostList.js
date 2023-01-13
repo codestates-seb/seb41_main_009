@@ -3,7 +3,7 @@ import { LabelListTitle, ParagraphMedium } from '../../styles/typo';
 
 const Container = styled.div`
   box-sizing: border-box;
-  width: 874px;
+  width: fit-content;
   height: 180px;
 
   display: flex;
@@ -86,15 +86,16 @@ const UserBox = styled.div`
   height: 36px;
 `;
 const Title = styled.div`
-  width: 534px;
+  width: ${props => props.width || '534px'};
   height: 48px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   ${LabelListTitle}
 `;
 const Paragraph = styled.div`
-  width: 534px;
+  width: ${props => props.width || '534px'};
   height: 42px;
   overflow: hidden;
-
   text-overflow: ellipsis;
 
   ${ParagraphMedium}
@@ -105,18 +106,21 @@ const ImageLayer = styled.img`
   height: 180px;
 
   background: var(--gray-800);
-  backdrop-filter: blur(30px);
+  display: block;
+  object-fit: cover;
 `;
 
-const PostList = ({ boxShadow }) => {
+const PostList = ({ boxShadow, width }) => {
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
         <TextLayer>
-          <Title>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</Title>
-          <Paragraph>
+          <Title width={width}>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</Title>
+          <Paragraph width={width}>
             Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim
-            velit mollit. Exercitation veniam consequat sunt nostrud amet.
+            velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sit
+            aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat
+            sunt nostrud ame.
           </Paragraph>
         </TextLayer>
         <ContextLayer>
@@ -128,15 +132,17 @@ const PostList = ({ boxShadow }) => {
   );
 };
 
-const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)' }) => {
+const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px' }) => {
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
         <TextLayer>
-          <Title>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</Title>
-          <Paragraph>
+          <Title width={width}>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</Title>
+          <Paragraph width={width}>
             Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim
-            velit mollit. Exercitation veniam consequat sunt nostrud amet.
+            velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sit
+            aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat
+            sunt nostrud ame.
           </Paragraph>
         </TextLayer>
         <ContextLayer>
