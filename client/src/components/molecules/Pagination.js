@@ -61,7 +61,7 @@ const Pagination = ({ totalPages }) => {
   // const handleClick = (e) => {};
 
   return (
-    <div className="m-[24px]">
+    <div>
       <PageButton
         onClick={() => {
           setCurPage(curPage - 1);
