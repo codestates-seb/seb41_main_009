@@ -15,6 +15,7 @@ import PostPage from './components/templates/PostPage';
 import PostCreatePage from './components/templates/PostCreatePage';
 import Search from './components/templates/Search';
 import SeriesPage from './components/templates/SeriesPage';
+import Signup from './components/templates/Signup';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
@@ -24,13 +25,14 @@ const App = () => {
     <>
       <Reset />
       <GlobalStyled />
-      <Navigator />
-      <Main>
-        <BrowserRouter>
+      <BrowserRouter>
+        <Navigator />
+        <Main>
           <Sidebar />
           <Routes>
             <Route path="/" element={<PublicRoute component={<Showcase />} />} />
             <Route path="/signin" element={<PublicRoute component={<Signin />} />} />
+            <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
             <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
             <Route path="/posts/:id" element={<PublicRoute component={<PostPage />} />} />
             <Route path="/posts/new" element={<PublicRoute component={<PostCreatePage />} />} />
@@ -40,8 +42,8 @@ const App = () => {
             <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />
             <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
           </Routes>
-        </BrowserRouter>
-      </Main>
+        </Main>
+      </BrowserRouter>
     </>
   );
 };

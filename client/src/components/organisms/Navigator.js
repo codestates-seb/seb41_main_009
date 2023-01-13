@@ -1,4 +1,8 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { LabelMedium } from '../../styles/typo';
+import { TextButton } from '../atoms/Buttons';
+import SearchInput from '../molecules/SearchInput';
 
 const Container = styled.div`
   position: fixed;
@@ -15,36 +19,49 @@ const Body = styled.div`
   display: flex;
   width: 1440px;
   justify-content: space-between;
+  align-items: center;
 `;
 
-const Logo = styled.h1`
-  font-size: 20px;
-  color: white;
-  background-color: red;
-`;
-
-const Searchbar = styled.div`
-  width: 300px;
-  border: 2px solid #333;
+const Logo = styled(Link)`
+  width: 160px;
+  height: 50px;
+  background-image: url('/image/logo.svg');
+  background-repeat: no-repeat;
+  background-size: 160px 53px;
 `;
 
 const ButtonList = styled.div`
   display: flex;
+  width: 150px;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const UserButton = styled.button`
-  width: 100px;
+const UserButton = styled(TextButton)`
+  width: 70px;
+  justify-content: center;
+  ${LabelMedium}
 `;
 
 const Navigator = () => {
   return (
     <Container>
       <Body>
-        <Logo>IntoREST</Logo>
-        <Searchbar />
+        <Logo to="/" alt="logo" />
+        <SearchInput height="40px" />
         <ButtonList>
-          <UserButton>LOGIN</UserButton>
-          <UserButton>SignUp</UserButton>
+          {/* Session에 따라 변경되도록 수정 예정 */}
+          {true ? (
+            <>
+              <UserButton to="/signin">Log In</UserButton>
+              <UserButton to="/signup">Sign Up</UserButton>
+            </>
+          ) : (
+            <>
+              <UserButton to="/user">My Page</UserButton>
+              <UserButton to="/">Log Out</UserButton>
+            </>
+          )}
         </ButtonList>
       </Body>
     </Container>
