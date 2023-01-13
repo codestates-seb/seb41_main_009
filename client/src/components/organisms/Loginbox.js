@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { INVALIDEMAIL } from '../../constants/Messages';
-import { isValidEmail } from '../../functions/isValid';
+import { INVALIDEMAIL, INVALIDPASSWORD } from '../../constants/Messages';
+import { isValidEmail, isValidPassword } from '../../functions/isValid';
 import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
 import InputCard from '../molecules/InputCard';
@@ -16,7 +16,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const LoginInput = ({ height, type, placeholder, onChange, messageColor, message, asideInput }) => {
+const LoginInput = ({ height, type, placeholder, onChange, message, asideInput }) => {
   return (
     <InputCard
       width="512px"
@@ -29,7 +29,7 @@ const LoginInput = ({ height, type, placeholder, onChange, messageColor, message
       onChange={onChange}
       asideInput={asideInput}
       message={message}
-      messageColor={messageColor}
+      messageColor="red"
     />
   );
 };
@@ -51,12 +51,13 @@ const Label = styled.div`
 const Loginbox = () => {
   const [email, setEmail] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState('');
 
   const onEmailInput = e => {
     const emailValue = e.target.value;
 
     setEmail(emailValue);
-    console.log(email);
 
     if (isValidEmail(emailValue) || emailValue.length === 0) {
       setEmailMessage('');
@@ -65,18 +66,46 @@ const Loginbox = () => {
     }
   };
 
+  const onPasswordInput = e => {
+    const passwordValue = e.target.value;
+
+    setPassword(passwordValue);
+
+    if (isValidPassword(passwordValue) || passwordValue.length === 0) {
+      setPasswordMessage('');
+    } else {
+      setPasswordMessage(INVALIDPASSWORD);
+    }
+  };
+
+  const onLoginClick = () => {
+    if (!email || !password || emailMessage || passwordMessage) {
+      return;
+    }
+
+    console.log(email);
+    console.log(password);
+  };
+
   return (
     <Container>
       <Box>
         <Label>Email</Label>
-        <LoginInput placeholder="Enter Your Email" onChange={onEmailInput} message={emailMessage} messageColor="red" />
+        <LoginInput placeholder="Enter Your Email" onChange={onEmailInput} message={emailMessage} />
       </Box>
       <Box>
         <Label>Password</Label>
-        <LoginInput type="password" placeholder="Enter Your Password" />
+        <LoginInput
+          type="password"
+          placeholder="Enter Your Password"
+          onChange={onPasswordInput}
+          message={passwordMessage}
+        />
       </Box>
       <Box>
-        <BlackShadowButton width="512px">Log In</BlackShadowButton>
+        <BlackShadowButton width="512px" onClick={onLoginClick}>
+          Log In
+        </BlackShadowButton>
         <SignUpMessage />
       </Box>
     </Container>
