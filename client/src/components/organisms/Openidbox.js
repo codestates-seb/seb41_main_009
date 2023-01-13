@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { WhiteShadowButton } from '../atoms/Buttons';
 
 const Container = styled.div`
   display: flex;
@@ -9,20 +10,19 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const OAuthButton = styled.div`
-  width: 80%;
-  height: 30px;
-  margin-top: 15px;
-  text-align: center;
-  background-color: #eee;
-`;
+const OAuthButton = ({ children }) => {
+  return (
+    <Container>
+      <WhiteShadowButton width="512px">{children}</WhiteShadowButton>
+    </Container>
+  );
+};
 
 const Openidbox = () => {
   return (
     <Container>
-      <OAuthButton> Github Login </OAuthButton>
-      <OAuthButton> Naver Login </OAuthButton>
-      <OAuthButton> Google Login </OAuthButton>
+      <OAuthButton> Log in with Google </OAuthButton>
+      <OAuthButton> Log in with GitHub </OAuthButton>
     </Container>
   );
 };
