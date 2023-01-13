@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
 import InputCard from '../molecules/InputCard';
+import { SignUpMessage } from '../molecules/SignUpMessage';
 
 const Container = styled.div`
   display: flex;
@@ -12,10 +13,10 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const LoginInput = ({ width, height, type, placeholder, onChange, messageColor, message, asideInput }) => {
+const LoginInput = ({ height, type, placeholder, onChange, messageColor, message, asideInput }) => {
   return (
     <InputCard
-      width={width}
+      width="512px"
       height={height}
       boxShadow="var(--boxShadow-00) black"
       type={'' || type}
@@ -31,7 +32,11 @@ const LoginInput = ({ width, height, type, placeholder, onChange, messageColor, 
 };
 
 const Box = styled.div`
-  margin: 15px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
 `;
 
 const Label = styled.div`
@@ -52,8 +57,8 @@ const Loginbox = () => {
         <LoginInput type="password" placeholder="Enter Your Password" />
       </Box>
       <Box>
-        <BlackShadowButton>Log In</BlackShadowButton>
-        {/* <SignUpMessage /> */}
+        <BlackShadowButton width="512px">Log In</BlackShadowButton>
+        <SignUpMessage />
       </Box>
     </Container>
   );
