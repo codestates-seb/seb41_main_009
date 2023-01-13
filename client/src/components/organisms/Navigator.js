@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import SearchInput from '../molecules/SearchInput';
 
 const Container = styled.div`
   position: fixed;
@@ -15,17 +16,11 @@ const Body = styled.div`
   display: flex;
   width: 1440px;
   justify-content: space-between;
+  align-items: center;
 `;
 
-const Logo = styled.h1`
-  font-size: 20px;
-  color: white;
-  background-color: red;
-`;
-
-const Searchbar = styled.div`
-  width: 300px;
-  border: 2px solid #333;
+const Logo = styled.img`
+  height: 50px;
 `;
 
 const ButtonList = styled.div`
@@ -40,8 +35,8 @@ const Navigator = () => {
   return (
     <Container>
       <Body>
-        <Logo>IntoREST</Logo>
-        <Searchbar />
+        <Logo src="/image/logo.svg" alt="logo" />
+        <SearchInput height="40px" />
         <ButtonList>
           <UserButton>LOGIN</UserButton>
           <UserButton>SignUp</UserButton>
