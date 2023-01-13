@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { TextButton } from '../atoms/Buttons';
-import { LabelMedium } from '../../styles/typo';
+import { LabelSmall } from '../../styles/typo';
 
 const Container = styled.div`
   display: flex;
@@ -10,6 +10,7 @@ const Container = styled.div`
 
 const MoveLink = styled(TextButton)`
   color: var(--orange-400);
+  ${LabelSmall}
 
   &:visited {
     color: var(--orange-400);
@@ -17,14 +18,14 @@ const MoveLink = styled(TextButton)`
 `;
 
 const Message = styled.span`
-  ${LabelMedium}
+  ${LabelSmall}
   margin-right: 10px;
 `;
 
 const SignUpMessage = () => {
   return (
     <Container>
-      <Message>계정이 아직 없으신가요?</Message>
+      <Message>아직 계정이 없으신가요?</Message>
       <MoveLink to="/signup">Sign Up</MoveLink>
     </Container>
   );
@@ -39,4 +40,13 @@ const LoginMessage = () => {
   );
 };
 
-export { SignUpMessage, LoginMessage };
+const FindPasswordMessage = () => {
+  return (
+    <Container>
+      <Message>비밀번호를 잊으셨나요?</Message>
+      <MoveLink to="/findpassword">Find Password</MoveLink>
+    </Container>
+  );
+};
+
+export { SignUpMessage, LoginMessage, FindPasswordMessage };

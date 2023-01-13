@@ -5,7 +5,7 @@ import { isValidEmail, isValidPassword } from '../../functions/isValid';
 import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
 import InputCard from '../molecules/InputCard';
-import { SignUpMessage } from '../molecules/SignUpMessage';
+import { FindPasswordMessage, SignUpMessage } from '../molecules/SignUpMessage';
 
 const Container = styled.div`
   display: flex;
@@ -107,6 +107,7 @@ const Loginbox = () => {
           Log In
         </BlackShadowButton>
         <SignUpMessage />
+        <FindPasswordMessage />
       </Box>
     </Container>
   );
