@@ -5,12 +5,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: darkmagenta;
 `;
 
-const CommentContentsContainer = () => {
+const CommentContentsContainer = ({ comments }) => {
   return (
     <Container>
+      {comments?.map()}
       <Comment />
       <Comment />
       <Comment />

@@ -25,8 +25,8 @@ const App = () => {
       <GlobalStyled />
       <Navigator />
       <Main>
-        <Sidebar />
         <BrowserRouter>
+          <Sidebar />
           <Routes>
             <Route path="/" element={<PublicRoute component={<Showcase />} />} />
             <Route path="/signin" element={<PublicRoute component={<Signin />} />} />
