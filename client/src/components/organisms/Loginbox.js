@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { INVALIDEMAIL } from '../../constants/Messages';
+import { isValidEmail } from '../../functions/isValid';
 import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
 import InputCard from '../molecules/InputCard';
@@ -46,11 +49,27 @@ const Label = styled.div`
 `;
 
 const Loginbox = () => {
+  const [email, setEmail] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
+
+  const onEmailInput = e => {
+    const emailValue = e.target.value;
+
+    setEmail(emailValue);
+    console.log(email);
+
+    if (isValidEmail(emailValue) || emailValue.length === 0) {
+      setEmailMessage('');
+    } else {
+      setEmailMessage(INVALIDEMAIL);
+    }
+  };
+
   return (
     <Container>
       <Box>
         <Label>Email</Label>
-        <LoginInput placeholder="Enter Your Email" />
+        <LoginInput placeholder="Enter Your Email" onChange={onEmailInput} message={emailMessage} messageColor="red" />
       </Box>
       <Box>
         <Label>Password</Label>
