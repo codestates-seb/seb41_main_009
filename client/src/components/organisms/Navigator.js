@@ -54,7 +54,7 @@ const Navigator = () => {
           {/* Session에 따라 변경되도록 수정 예정 */}
           {true ? (
             <>
-              <UserButton to="/signin">Log In</UserButton>
+              <UserButton to="/login">Log In</UserButton>
               <UserButton to="/signup">Sign Up</UserButton>
             </>
           ) : (
