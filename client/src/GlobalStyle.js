@@ -123,7 +123,10 @@ const GlobalStyled = createGlobalStyle`
       --body-width: 1440px;
       --sidebar-width: 159px;
       --content-width: 1056px;
-      
+
+
+      /* Blur */
+      --blur-30: blur(30px);      
   }
   
   body { 
