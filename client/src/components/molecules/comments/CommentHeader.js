@@ -5,7 +5,7 @@ const Container = styled.div`
   width: 100%;
   height: 30px;
   align-items: center;
-  background-color: cadetblue;
+  font-size: var(--label-m);
 `;
 
 const CommentHeader = () => {
