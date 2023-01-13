@@ -22,7 +22,12 @@ const Body = styled.div`
 const LogIn = () => {
   return (
     <Container>
-      <SplashProfileStickerLabel />
+      <SplashProfileStickerLabel
+        boyMessage="Log"
+        girlMessage="IntoRest"
+        emailMessage="And Share"
+        createdAtMessage="Interests"
+      />
       <Body>
         <Loginbox />
         <Openidbox />

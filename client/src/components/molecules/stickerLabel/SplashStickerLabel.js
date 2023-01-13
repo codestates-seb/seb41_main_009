@@ -26,7 +26,7 @@ const ProfileContainer = styled.div`
 
 const ProfileInfoText = styled.div`
   position: absolute;
-  width: 200px;
+  width: 180px;
   height: 80px;
   left: 46px;
   top: 43px;
@@ -65,6 +65,10 @@ const SplashProfileStickerLabel = ({
   height = '32px',
   left = '-150px',
   top = '380px',
+  boyMessage,
+  girlMessage,
+  emailMessage,
+  createdAtMessage,
 }) => {
   return (
     <ProfileContainer background={background} boxShadow={boxShadow}>
@@ -73,7 +77,16 @@ const SplashProfileStickerLabel = ({
         <ProfileInfoTextEmphasizeA>,</ProfileInfoTextEmphasizeA> And Dive
         <ProfileInfoTextEmphasizeA> IntoRest</ProfileInfoTextEmphasizeA>
       </ProfileInfoText>
-      <TiltedContainer width={width} height={height} left={left} top={top} />
+      <TiltedContainer
+        width={width}
+        height={height}
+        left={left}
+        top={top}
+        boyMessage={boyMessage}
+        girlMessage={girlMessage}
+        emailMessage={emailMessage}
+        createdAtMessage={createdAtMessage}
+      />
     </ProfileContainer>
   );
 };
