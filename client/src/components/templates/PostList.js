@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ListHeaderContainer from '../organisms/listcontents/ListHeader';
+import PageHeader from '../organisms/PageHeader';
 import FilterContainer from '../organisms/listcontents/ListFilter';
 import PaginationContainer from '../organisms/listcontents/ListPagination';
 import PostListContainer from '../organisms/listcontents/PostListContainer';
@@ -9,7 +9,6 @@ const Container = styled.div`
   flex-direction: column;
   width: 1060px;
   margin: 0 auto;
-  padding-top: 100px;
   justify-content: center;
   align-items: center;
 `;
@@ -17,7 +16,7 @@ const Container = styled.div`
 const PostList = () => {
   return (
     <Container>
-      <ListHeaderContainer />
+      <PageHeader />
       <FilterContainer />
       <PostListContainer />
       <PaginationContainer />

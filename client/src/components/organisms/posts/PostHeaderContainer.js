@@ -5,7 +5,7 @@ import PostUserInfo from '../../molecules/PostUserInfo';
 const Container = styled.div`
   box-sizing: border-box;
   display: flex;
-  width: 1056px;
+  width: 100%;
   height: 193px;
   margin: 0 auto;
   flex-direction: column;

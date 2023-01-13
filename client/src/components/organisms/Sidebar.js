@@ -1,27 +1,52 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { MAIN, CATEGORIES } from '../../constants/Categories';
 import Menu from '../molecules/SidebarMenu';
+import { SidebarMainButton } from '../atoms/Buttons';
+import Selected from '../../styles/Selected';
 
 const Container = styled.div`
-  position: fixed;
-  left: 0;
-  top: 100px;
-  z-index: 1;
-  height: 100%;
+  width: var(--sidebar-width);
+  height: auto;
+`;
+
+const MenuList = styled.div`
   display: flex;
+  position: fixed;
+  z-index: 1;
   justify-content: flex-start;
-  border: 1px solid #333;
   flex-direction: column;
-  background-color: salmon;
+`;
+
+const SelectedButton = styled(SidebarMainButton)`
+  ${Selected}
 `;
 
 const Sidebar = () => {
+  const [selectedTab, setSelectedTab] = useState('Home');
+
+  const onClick = e => setSelectedTab(e.target.textContent);
+
   return (
     <Container>
-      <Menu />
-      <Menu />
-      <Menu />
-      <Menu />
-      <Menu />
+      <MenuList>
+        {MAIN.map(mainArr => {
+          const [path, name] = mainArr;
+          return selectedTab === name ? (
+            <SelectedButton key={name} to={path} onClick={onClick}>
+              {name}
+            </SelectedButton>
+          ) : (
+            <SidebarMainButton key={name} to={path} onClick={onClick}>
+              {name}
+            </SidebarMainButton>
+          );
+        })}
+        {CATEGORIES.map(categoryArr => {
+          const [category, ...tags] = categoryArr;
+          return <Menu key={category} category={category} tags={tags} onClick={onClick} selectedTab={selectedTab} />;
+        })}
+      </MenuList>
     </Container>
   );
 };

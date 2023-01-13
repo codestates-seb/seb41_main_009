@@ -4,13 +4,13 @@ import Comment from './Comment';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: inherit;
-  background-color: darkmagenta;
+  width: 100%;
 `;
 
-const CommentContentsContainer = () => {
+const CommentContentsContainer = ({ comments }) => {
   return (
     <Container>
+      {comments?.map()}
       <Comment />
       <Comment />
       <Comment />

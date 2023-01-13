@@ -1,18 +1,8 @@
 package com.codestates.hobby.domain.post.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -28,7 +18,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class Post extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +34,16 @@ public class Post extends BaseEntity {
 	@ColumnDefault("0")
 	private int views;
 
+	@Column
+	@ColumnDefault("false")
+	private boolean isTemp;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinTable(name = "POST_IMAGE",
+			joinColumns = @JoinColumn(name = "POST_ID"),
+			inverseJoinColumns = @JoinColumn(name = "FILE_INFO_ID"))
+	private FileInfo thumbnail;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
@@ -55,12 +55,6 @@ public class Post extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "series_id", nullable = false)
 	private Series series;
-
-	@OneToMany
-	@JoinTable(name = "POST_IMAGE",
-		joinColumns = @JoinColumn(name = "post_id"),
-		inverseJoinColumns = @JoinColumn(name = "file_info_id"))
-	private List<FileInfo> fileInfos;
 
 	@OneToMany(mappedBy = "post")
 	private List<PostComment> comments;
@@ -75,9 +69,5 @@ public class Post extends BaseEntity {
 		this.member = member;
 		this.category = category;
 		this.series = series;
-	}
-
-	public void addFile(FileInfo info) {
-		this.fileInfos.add(info);
 	}
 }
