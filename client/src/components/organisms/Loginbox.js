@@ -54,6 +54,12 @@ const Loginbox = () => {
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
 
+  /**
+   *
+   * @param {Event} e
+   * @returns {void}
+   */
+
   const onEmailInput = e => {
     const emailValue = e.target.value;
 

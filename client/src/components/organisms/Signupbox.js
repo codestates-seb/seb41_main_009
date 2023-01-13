@@ -56,6 +56,12 @@ const Signupbox = () => {
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordCheckMessage, setPasswordCheckMessage] = useState('');
 
+  /**
+   *
+   * @param {Event} e
+   * @returns {void}
+   */
+
   const onEmailInput = e => {
     const emailValue = e.target.value;
 
