@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { INVALIDEMAIL, INVALIDPASSWORD } from '../../constants/Messages';
+import { INVALIDEMAIL, INVALIDPASSWORD, PASSWORDNOTMATCH } from '../../constants/Messages';
 import { isValidEmail, isValidPassword } from '../../functions/isValid';
 import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 400px;
+  height: 100%;
   justify-content: center;
   align-items: center;
 `;
@@ -53,6 +53,8 @@ const Signupbox = () => {
   const [emailMessage, setEmailMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
+  const [passwordCheckMessage, setPasswordCheckMessage] = useState('');
 
   const onEmailInput = e => {
     const emailValue = e.target.value;
@@ -78,13 +80,26 @@ const Signupbox = () => {
     }
   };
 
+  const onPasswordCheckInput = e => {
+    const passwordCheckValue = e.target.value;
+
+    setPasswordCheck(passwordCheckValue);
+
+    if (password === passwordCheckValue || passwordCheckValue.length === 0) {
+      setPasswordCheckMessage('');
+    } else {
+      setPasswordCheckMessage(PASSWORDNOTMATCH);
+    }
+  };
+
   const onLoginClick = () => {
-    if (!email || !password || emailMessage || passwordMessage) {
+    if (!email || !password || !passwordCheck || emailMessage || passwordMessage || passwordCheckMessage) {
       return;
     }
 
     console.log(email);
     console.log(password);
+    console.log(passwordCheck);
   };
 
   return (
@@ -100,6 +115,15 @@ const Signupbox = () => {
           placeholder="Enter Your Password"
           onChange={onPasswordInput}
           message={passwordMessage}
+        />
+      </Box>
+      <Box>
+        <Label>Password Check</Label>
+        <SignupInput
+          type="password"
+          placeholder="Re-Enter Your Password"
+          onChange={onPasswordCheckInput}
+          message={passwordCheckMessage}
         />
       </Box>
       <Box>
