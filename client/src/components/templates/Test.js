@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import Dialog from '../molecules/Dialog';
+import { SplashProfileStickerLabel } from '../molecules/stickerLabel/SplashStickerLabel';
+import { PostList, PostListStack } from '../molecules/PostList';
 
 const Container = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 1500px;
@@ -16,7 +18,9 @@ const Test = () => {
   return (
     <Container>
       <Dialog />
-      <Dialog message="Dialog Props Test" background="var(--green-400)" />
+      <SplashProfileStickerLabel />
+      <PostList />
+      <PostListStack />
     </Container>
   );
 };
