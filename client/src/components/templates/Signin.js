@@ -1,29 +1,32 @@
 import styled from 'styled-components';
 import Openidbox from '../organisms/Openidbox';
 import Loginbox from '../organisms/Loginbox';
+import { SplashProfileStickerLabel } from '../molecules/stickerLabel/SplashStickerLabel';
 
 const Container = styled.div`
   display: flex;
+  width: 100%;
   justify-content: center;
   align-items: center;
-  height: 1500px;
-  background-color: gray;
 `;
 
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  width: 400px;
-  height: 600px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 400px;
   background-color: white;
 `;
 
 const Signin = () => {
   return (
     <Container>
+      <SplashProfileStickerLabel />
       <Body>
-        <Openidbox />
         <Loginbox />
+        <Openidbox />
       </Body>
     </Container>
   );
