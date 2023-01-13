@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { LabelMedium } from '../../styles/typo';
 import { TextButton } from '../atoms/Buttons';
@@ -21,8 +22,12 @@ const Body = styled.div`
   align-items: center;
 `;
 
-const Logo = styled.img`
+const Logo = styled(Link)`
+  width: 160px;
   height: 50px;
+  background-image: url('/image/logo.svg');
+  background-repeat: no-repeat;
+  background-size: 160px 53px;
 `;
 
 const ButtonList = styled.div`
@@ -34,6 +39,7 @@ const ButtonList = styled.div`
 
 const UserButton = styled(TextButton)`
   width: 70px;
+  justify-content: center;
   ${LabelMedium}
 `;
 
@@ -41,7 +47,7 @@ const Navigator = () => {
   return (
     <Container>
       <Body>
-        <Logo src="/image/logo.svg" alt="logo" />
+        <Logo to="/" alt="logo" />
         <SearchInput height="40px" />
         <ButtonList>
           {/* Session에 따라 변경되도록 수정 예정 */}
