@@ -35,7 +35,7 @@ const App = () => {
             <Route path="/posts/:id" element={<PublicRoute component={<PostPage />} />} />
             <Route path="/posts/new" element={<PublicRoute component={<PostCreatePage />} />} />
             <Route path="/series" element={<PublicRoute component={<SeriesList />} />} />
-            <Route path="/series/:id" element={<SeriesPage />} />
+            <Route path="/series/:id" element={<PublicRoute component={<SeriesPage />} />} />
             <Route path="/user" element={<PublicRoute component={<User />} />} />
             <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />
             <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
