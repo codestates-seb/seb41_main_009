@@ -3,16 +3,16 @@ package com.codestates.hobby.domain.showcase.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -44,38 +44,52 @@ public class Showcase extends BaseEntity {
 	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 
-	@OneToMany
-	@JoinTable(name = "SHOWCASE_IMAGE",
-		joinColumns = @JoinColumn(name = "showcase_id"),
-		inverseJoinColumns = @JoinColumn(name = "file_info_id", foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (file_info_id) references file_info ON DELETE CASCADE")))
-	private List<FileInfo> fileInfos = new ArrayList<>();
+	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
+	private List<ShowcaseImage> images = new ArrayList<>();
 
 	@OneToMany(mappedBy = "showcase")
-	private List<ShowcaseComment> comments;
+	private List<ShowcaseComment> comments = new ArrayList<>();
 
-	public Showcase(String content, Member member, Category category, List<FileInfo> fileInfos) {
+	public Showcase(String content, Member member, Category category, List<String> imageURLs) {
 		this.content = content;
 		this.member = member;
 		this.category = category;
-		this.fileInfos = fileInfos;
-	}
 
-	public void addFile(FileInfo info) {
-		this.fileInfos.add(info);
+		imageURLs.forEach(this::addImageFromUrl);
 	}
 
 	public boolean isWrittenBy(Long memberId) {
 		return Objects.equals(memberId, member.getId());
 	}
 
-	public void update(List<FileInfo> newFiles, Category category, String content) {
+	public void add(FileInfo fileInfo) {
+		images.add(new ShowcaseImage(this, fileInfo));
+	}
+
+	public void addImageFromUrl(String url) {
+		FileInfo fileInfo = new FileInfo(url);
+		images.add(new ShowcaseImage(this, fileInfo));
+	}
+
+	public void update(Category category, String content, List<String> urls) {
 		if (!Objects.equals(this.category.getId(), category.getId()))
 			this.category = category;
 
 		if (!this.content.equals(content))
 			this.content = content;
 
-		this.fileInfos.clear();
-		this.fileInfos.addAll(newFiles);
+		updateImage(urls);
+	}
+
+	private void updateImage(List<String> urls) {
+		List<String> olds = images.stream().map(ShowcaseImage::getFileURL).collect(Collectors.toList());
+
+		new ArrayList<>(images).stream()
+			.filter(image -> !urls.contains(image.getFileInfo().getFileURL()))
+			.forEach(images::remove);
+
+		urls.stream()
+			.filter(url -> !olds.contains(url))
+			.forEach(this::addImageFromUrl);
 	}
 }
