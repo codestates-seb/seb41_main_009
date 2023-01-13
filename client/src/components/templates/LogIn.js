@@ -16,11 +16,10 @@ const Body = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 400px;
-  background-color: white;
+  height: 100%;
 `;
 
-const Signin = () => {
+const LogIn = () => {
   return (
     <Container>
       <SplashProfileStickerLabel />
@@ -32,4 +31,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default LogIn;
