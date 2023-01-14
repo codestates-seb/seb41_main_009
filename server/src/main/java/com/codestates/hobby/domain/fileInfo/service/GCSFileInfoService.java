@@ -46,7 +46,7 @@ public class GCSFileInfoService extends FileInfoService {
 
 		do {
 			fileUrl = String.join("/", domain, bucketName, savedFilename);
-		} while (!fileInfoRepository.existsByFileURL(fileUrl));
+		} while (fileInfoRepository.existsByFileURL(fileUrl));
 
 		BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, savedFilename)).build();
 		Map<String, String> headers = Collections.singletonMap("Content-Type", imageType.toContentType());
@@ -57,6 +57,7 @@ public class GCSFileInfoService extends FileInfoService {
 			TimeUnit.MINUTES,
 			Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
 			Storage.SignUrlOption.withExtHeaders(headers),
+			Storage.SignUrlOption.withContentType(),
 			Storage.SignUrlOption.withV4Signature());
 
 		return new SignedURL(url.toString(), fileUrl, imageType);
