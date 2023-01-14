@@ -1,5 +1,7 @@
 package com.codestates.hobby.domain.member.controller;
 
+import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
+import com.codestates.hobby.domain.fileInfo.service.FileInfoService;
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.member.mapper.MemberMapper;
@@ -9,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,45 +20,47 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 @RequestMapping("/members")
 public class MemberController {
-    private final MemberService memberService;
-    private final MemberMapper memberMapper;
+    private final MemberService service;
+    private final MemberMapper mapper;
+    FileInfoService fileInfoService;
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity post(@RequestPart(value = "request") MemberDto.Post post,
-                               @RequestPart(value = "profileImage") MultipartFile profileImage) {
-        post.setProfileImage(profileImage);
-        Member member = memberService.create(memberMapper.PostDtoToMember(post));
+    @PostMapping
+    public ResponseEntity post(@RequestBody MemberDto.Post post) {
+        //Member member = service.create(post);
+        Member member = service.create(post);
 
         log.info("\n\n--회원 가입--\n");
         return new ResponseEntity<>(member.getId(), HttpStatus.CREATED);
     }
 
-    @PatchMapping(value = "/{member-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity patch(@PathVariable("member-id") Long memberId,
-                                @RequestPart(value = "request") MemberDto.Patch patch,
-                                @RequestPart(value = "profileImage") MultipartFile profileImage) {
+    @PatchMapping("/{member-id}")
+    public ResponseEntity patch(@PathVariable("member-id") long memberId,
+                                @AuthenticationPrincipal Long authId,
+                                @RequestBody MemberDto.Patch patch) {
+        patch.setMemberId(memberId);
 
-        patch.setProfileImage(profileImage);
-        Member member = memberService.edit(memberId, memberMapper.PatchDtoToMember(patch));
+        Member member = service.edit(authId, patch);
 
         log.info("\n\n--회원 정보 수정--\n");
-        return new ResponseEntity(memberId, HttpStatus.OK);
+        return new ResponseEntity(member.getId(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{member-id}")
-    public ResponseEntity delete(@PathVariable("member-id") Long memberId) {
-        memberService.delete(memberId);
+    public ResponseEntity delete(@PathVariable("member-id") long memberId,
+                                 @AuthenticationPrincipal Long authId) {
+        service.delete(memberId, authId);
 
         log.info("\n\n--회원 탈퇴--\n");
         return new ResponseEntity(memberId, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{member-id}")
-    public ResponseEntity getAll(@PathVariable("member-id") Long memberId) {
+    public ResponseEntity getAll(@PathVariable("member-id") long memberId,
+                                 @AuthenticationPrincipal Long authId) {
 
-        Member member = memberService.findAll(memberId);
+        Member member = service.findAll(memberId, authId);
 
         log.info("\n\n--해당 회원의 정보 조회--\n");
-        return new ResponseEntity(memberMapper.MemberToResponseDto(member), HttpStatus.OK);
+        return new ResponseEntity(mapper.MemberToResponseDto(member), HttpStatus.OK);
     }
 }

@@ -1,6 +1,8 @@
 package com.codestates.hobby.domain.member.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,24 +15,25 @@ public class MemberDto {
     @Getter
     @Setter
     @NoArgsConstructor
-    @JsonIgnoreProperties("profileImage")
+    @AllArgsConstructor
     public static class Post {
         private String email;
         private String nickname;
         private String password;
         private String introduction;
-        private MultipartFile profileImage;
+        private String imgUrl;
     }
 
     @Getter
     @Setter
     @NoArgsConstructor
-    @JsonIgnoreProperties("profileImage")
     public static class Patch {
+        @JsonIgnore
+        private Long memberId;
         private String nickname;
         private String password;
         private String introduction;
-        private MultipartFile profileImage;
+        private String imgUrl;
     }
 
     @Getter
@@ -41,7 +44,7 @@ public class MemberDto {
         private String email;
         private String nickname;
         private String introduction;
-        private String profileImageUrl;
+        private String imgUrl;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
@@ -52,6 +55,6 @@ public class MemberDto {
     public static class SimpleResponse {
         private long id;
         private String nickname;
-        private String profileImageUrl;
+        private String imgUrl;
     }
 }
