@@ -6,16 +6,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.ResultActions;
 
@@ -26,18 +21,13 @@ import com.codestates.hobby.domain.showcase.service.ShowcaseCommentService;
 import com.codestates.hobby.domain.stub.ShowcaseCommentStub;
 import com.codestates.hobby.utils.ControllerTest;
 
-@WebMvcTest(value = ShowcaseCommentController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@WebMvcTest(value = ShowcaseCommentController.class)
 class ShowcaseCommentControllerTest extends ControllerTest {
 	@MockBean
 	ShowcaseCommentService service;
 
 	@MockBean
 	ShowcaseCommentMapper mapper;
-
-	@BeforeAll
-	public void setup() {
-		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(1L, "password"));
-	}
 
 	@Test
 	void testForGetAll() throws Exception {
@@ -46,11 +36,7 @@ class ShowcaseCommentControllerTest extends ControllerTest {
 		given(service.findAll(anyLong(), any(PageRequest.class)))
 			.willReturn(new PageImpl<>(List.of(new ShowcaseComment("content", null, null))));
 
-		ResultActions actions = mvc.perform(
-			get("/showcases/1/comments")
-				.param("page", "1")
-				.param("size", "1")
-		);
+		ResultActions actions = defaultActionsWithPaging("/showcases/1/comments");
 
 		actions
 			.andExpect(status().isOk())
@@ -65,12 +51,7 @@ class ShowcaseCommentControllerTest extends ControllerTest {
 
 		given(service.comment(any())).willReturn(comment);
 
-		ResultActions actions = mvc.perform(
-			post("/showcases/1/comments")
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(om.writeValueAsString(post))
-		);
+		ResultActions actions = defaultPostActions("/showcases/1/comments", post);
 
 		actions
 			.andExpect(status().isCreated())
@@ -86,12 +67,7 @@ class ShowcaseCommentControllerTest extends ControllerTest {
 
 		given(service.comment(any())).willReturn(comment);
 
-		ResultActions actions = mvc.perform(
-			patch("/showcases/1/comments/" + commentId)
-				.contentType(MediaType.APPLICATION_JSON)
-				.accept(MediaType.APPLICATION_JSON)
-				.content(om.writeValueAsString(patch))
-		);
+		ResultActions actions = defaultPatchActions("/showcases/1/comments/{comment-id}", patch, commentId);
 
 		actions
 			.andExpect(status().isOk())
