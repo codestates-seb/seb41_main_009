@@ -1,6 +1,8 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { LabelLarge, LabelSmall } from '../../styles/typo';
 
-const WhiteButton = styled.a`
+const WhiteButton = styled(Link)`
   width: ${props => (props.width ? props.width : '116px')};
   height: ${props => (props.height ? props.height : '44px')};
   box-sizing: border-box;
@@ -11,9 +13,8 @@ const WhiteButton = styled.a`
   background-color: #ffffff;
   border: 1px solid var(--gray-600);
   text-decoration: none;
-  font-size: var(--label-l);
-  font-weight: 600;
   color: black;
+  ${LabelLarge}
 
   &:visited {
     color: black;
@@ -54,4 +55,45 @@ const BlueShadowButton = styled(BlackShadowButton)`
   box-shadow: var(--boxShadow-00) var(--orange-400);
 `;
 
-export { WhiteButton, BlackButton, OrangeButton, WhiteShadowButton, BlackShadowButton, BlueShadowButton };
+const TextButton = styled(Link)`
+  display: flex;
+  width: ${props => (props.width ? props.width : '100px')};
+  height: ${props => (props.height ? props.height : '30px')};
+  align-items: center;
+  text-decoration: none;
+  ${LabelLarge}
+  color: black;
+
+  &:visited {
+    color: black;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const SidebarMainButton = styled(TextButton)`
+  margin-top: 15px;
+`;
+
+const SidebarTagsButton = styled(TextButton)`
+  ${LabelSmall}
+  color: var(--gray-500);
+
+  &:visited {
+    color: var(--gray-500);
+  }
+`;
+
+export {
+  WhiteButton,
+  BlackButton,
+  OrangeButton,
+  WhiteShadowButton,
+  BlackShadowButton,
+  BlueShadowButton,
+  TextButton,
+  SidebarMainButton,
+  SidebarTagsButton,
+};

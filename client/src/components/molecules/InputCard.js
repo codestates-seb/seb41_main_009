@@ -7,7 +7,7 @@ const Container = styled.div`
   padding: 28px 20px;
   gap: 10px;
   border: 2px solid black;
-  box-shadow: var(--boxShadow-02) black;
+  box-shadow: ${props => (props.boxShadow ? props.boxShadow : 'var(--boxShadow-02) black')};
 `;
 
 const Input = styled.input`
@@ -37,6 +37,7 @@ const Message = styled.div`
 const InputCard = ({
   width,
   height,
+  boxShadow,
   type,
   inputWidth,
   inputHeight,
@@ -47,7 +48,7 @@ const InputCard = ({
   asideInput,
 }) => {
   return (
-    <Container width={width} height={height}>
+    <Container width={width} height={height} boxShadow={boxShadow}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Input
           type={'' || type}

@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Signin from './components/templates/Signin';
+import LogIn from './components/templates/LogIn';
 import Navigator from './components/organisms/Navigator';
 import PostList from './components/templates/PostList';
 import Showcase from './components/templates/Showcase';
@@ -14,6 +14,8 @@ import SeriesList from './components/templates/SeriesList';
 import PostPage from './components/templates/PostPage';
 import PostCreatePage from './components/templates/PostCreatePage';
 import Search from './components/templates/Search';
+import SeriesPage from './components/templates/SeriesPage';
+import Signup from './components/templates/Signup';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
@@ -23,23 +25,25 @@ const App = () => {
     <>
       <Reset />
       <GlobalStyled />
-      <Navigator />
-      <Main>
-        <Sidebar />
-        <BrowserRouter>
+      <BrowserRouter>
+        <Navigator />
+        <Main>
+          <Sidebar />
           <Routes>
             <Route path="/" element={<PublicRoute component={<Showcase />} />} />
-            <Route path="/signin" element={<PublicRoute component={<Signin />} />} />
+            <Route path="/login" element={<PublicRoute component={<LogIn />} />} />
+            <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
             <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
             <Route path="/posts/:id" element={<PublicRoute component={<PostPage />} />} />
             <Route path="/posts/new" element={<PublicRoute component={<PostCreatePage />} />} />
             <Route path="/series" element={<PublicRoute component={<SeriesList />} />} />
+            <Route path="/series/:id" element={<PublicRoute component={<SeriesPage />} />} />
             <Route path="/user" element={<PublicRoute component={<User />} />} />
             <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />
             <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
           </Routes>
-        </BrowserRouter>
-      </Main>
+        </Main>
+      </BrowserRouter>
     </>
   );
 };

@@ -31,7 +31,7 @@ public class ShowcaseImage {
 	@JoinColumn(name = "showcase_id", nullable = false, updatable = false)
 	private Showcase showcase;
 
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "file_info_id", nullable = false, updatable = false)
 	private FileInfo fileInfo;
 
