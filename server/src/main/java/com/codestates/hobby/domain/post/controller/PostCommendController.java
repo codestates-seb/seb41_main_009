@@ -30,9 +30,6 @@ public class PostCommendController {
     public ResponseEntity<?> patch(@RequestBody PostDto.Patch patchDto,
                                    @PathVariable("post-id") long postId,
                                    @AuthenticationPrincipal Long memberId) {
-        if (patchDto.getMemberId().equals(memberId)){
-
-        }
         patchDto.setProperties(memberId, postId);
 
         Post post = postService.update(patchDto);
