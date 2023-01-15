@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { LabelLarge } from '../../styles/typo';
 
+/**
+ * 버튼 클릭으로 currentTab state 를 변경하는 lnb 컴포넌트
+ * @param {number} currentTab - 현재 탭의 인덱스
+ * @param {function} handleTab - 탭 state 변경 함수
+ * @returns
+ */
 const Lnb = ({ currentTab, handleTab }) => {
   const tabList = [{ title: 'All' }, { title: 'Post' }, { title: 'Series' }];
 
