@@ -17,27 +17,26 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/posts")
 public class PostCommendController {
     private final PostService postService;
-    private final PostMapper mapper;
 
-    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> post(@RequestPart PostDto.Post postDto,
-                                  @RequestPart MultipartFile imgFile,
+    @PostMapping()
+    public ResponseEntity<?> post(@RequestBody PostDto.Post postDto,
                                   @AuthenticationPrincipal Long memberId) {
-        postDto.setProperties(memberId, imgFile);
-
+        postDto.setMemberId(memberId);
         Post post = postService.post(postDto);
-        return new ResponseEntity<>(post.getId(), HttpStatus.CREATED);
+        return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{post-id}")
     public ResponseEntity<?> patch(@RequestBody PostDto.Patch patchDto,
                                    @PathVariable("post-id") long postId,
-                                   @RequestPart MultipartFile imgFile,
                                    @AuthenticationPrincipal Long memberId) {
-        patchDto.setProperties(memberId, postId, imgFile);
+        if (patchDto.getMemberId().equals(memberId)){
+
+        }
+        patchDto.setProperties(memberId, postId);
 
         Post post = postService.update(patchDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(post,HttpStatus.OK);
     }
 
     @DeleteMapping("/{post-id}")

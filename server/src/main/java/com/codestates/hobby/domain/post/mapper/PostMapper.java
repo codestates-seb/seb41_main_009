@@ -16,6 +16,7 @@ public interface PostMapper {
 
     @Mapping(target = "writer", source = "member")
     @Mapping(target = "comments", expression = "java(post.getComments().size())")
+    @Mapping(target = "thumbnailUrl", expression = "java(post.getImages().get(0).getFileURL())")
     PostDto.SimpleResponse postToSimpleResponse(Post post);
 
     default String toString(Category value){

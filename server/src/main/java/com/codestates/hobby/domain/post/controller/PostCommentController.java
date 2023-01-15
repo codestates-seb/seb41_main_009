@@ -25,7 +25,7 @@ public class PostCommentController {
                                   @AuthenticationPrincipal Long memberId) {
         postDto.setProperties(postId, memberId);
         PostComment postComment = postCommentService.post(postDto);
-        return new ResponseEntity<>(postComment.getId(), HttpStatus.CREATED);
+        return new ResponseEntity<>(postComment, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{comment-id}")
@@ -37,7 +37,7 @@ public class PostCommentController {
     ) {
         patchDto.setProperties(memberId, postId, commentId);
         PostComment postComment = postCommentService.update(patchDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(postComment,HttpStatus.OK);
     }
 
     @DeleteMapping("/{comment-id}")
