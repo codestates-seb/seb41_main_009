@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb', 'plugin:prettier/recommended'],
+  extends: ['plugin:react/recommended', 'airbnb', 'plugin:react/jsx-runtime', 'plugin:prettier/recommended'],
   overrides: [],
   parserOptions: {
     ecmaVersion: 'latest',
@@ -16,7 +16,6 @@ module.exports = {
     // 개행문자 관련 에러 무시
     'linebreak-style': 0,
     // 'React' must be in scope when using JSX, jsx 사용시 React 스코프 내에서 사용되야 하는 에러 무시
-    'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     // 함수형 컴포넌트의 정의 방식을 지정
     'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
