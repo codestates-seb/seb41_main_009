@@ -15,6 +15,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    defer-datasource-initialization: true
   servlet:
     multipart:
       max-file-size: 5MB      # 파일당 최대크기
