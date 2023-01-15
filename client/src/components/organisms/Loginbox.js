@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 400px;
+  height: 100%;
   justify-content: center;
   align-items: center;
 `;
@@ -53,6 +53,12 @@ const Loginbox = () => {
   const [emailMessage, setEmailMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
+
+  /**
+   *
+   * @param {Event} e
+   * @returns {void}
+   */
 
   const onEmailInput = e => {
     const emailValue = e.target.value;
