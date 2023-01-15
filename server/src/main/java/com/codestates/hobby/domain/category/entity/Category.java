@@ -1,7 +1,5 @@
 package com.codestates.hobby.domain.category.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,11 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
-import com.codestates.hobby.domain.post.entity.Post;
-import com.codestates.hobby.domain.series.entity.Series;
-import com.codestates.hobby.domain.showcase.entity.Showcase;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,18 +30,6 @@ public class Category {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "group_id")
 	private Category group;
-
-	@OneToMany(mappedBy = "group")
-	private List<Category> categories;
-
-	@OneToMany(mappedBy = "category")
-	private List<Series> series;
-
-	@OneToMany(mappedBy = "category")
-	private List<Post> posts;
-
-	@OneToMany(mappedBy = "category")
-	private List<Showcase> showcases;
 
 	private Category(String korName, String engName, Category group) {
 		this.korName = korName;

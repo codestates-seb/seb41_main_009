@@ -25,6 +25,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+
+    // 캐싱
+    implementation 'com.github.ben-manes.caffeine:caffeine'
 
     // 유틸성 라이브러리
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
