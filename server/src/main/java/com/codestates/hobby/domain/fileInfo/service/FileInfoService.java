@@ -25,13 +25,15 @@ public abstract class FileInfoService {
 			.collect(Collectors.toList());
 	}
 
-	abstract public void delete(List<FileInfo> fileInfos);
-
 	public void delete(FileInfo fileInfo) {
 		fileInfoRepository.delete(fileInfo);
 	}
 
-	protected String generateRandomFilename(ImageType type, String basePath) {
+	public void delete(List<FileInfo> fileInfos) {
+		fileInfoRepository.deleteAll(fileInfos);
+	}
+
+	protected String generateRandomFilename(ImageType type, BasePath basePath) {
 		return String.format("%s/%s.%s", basePath, UUID.randomUUID(), type.getExtension());
 	}
 }
