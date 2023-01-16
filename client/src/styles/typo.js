@@ -7,7 +7,7 @@ export const LabelListTitle = css`
 `;
 
 export const LabelLarge = css`
-  font-weight: 500;
+  font-weight: 600;
   font-size: 18px;
   line-height: 24px;
 `;

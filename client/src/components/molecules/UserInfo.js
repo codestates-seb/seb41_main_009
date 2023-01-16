@@ -22,10 +22,18 @@ const UserInfo = ({ id, name, image, color, size, typo, children }) => {
   );
 };
 
+const UserInfoSmall = ({ id, name, image, color }) => {
+  return (
+    <Container>
+      <UserImage src={image} sizes="24px" />
+      <Nickname id={id} name={name} color={color} />
+    </Container>
+  );
+};
 const Container = styled.div`
   display: flex;
   gap: 24px;
   align-items: center;
 `;
 
-export default UserInfo;
+export { UserInfo, UserInfoSmall };

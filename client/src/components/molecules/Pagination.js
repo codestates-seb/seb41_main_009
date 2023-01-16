@@ -61,16 +61,20 @@ const Pagination = ({ totalPages }) => {
   // const handleClick = (e) => {};
 
   return (
-    <div className="m-[24px]">
-      <PageButton
-        onClick={() => {
-          setCurPage(curPage - 1);
-          searchParams.set('page', curPage - 1);
-          setSearchParams(searchParams);
-        }}
-        className={curPage === 1 ? 'hidden' : ''}>
-        prev
-      </PageButton>
+    <div>
+      {curPage === 1 ? (
+        ''
+      ) : (
+        <PageButton
+          onClick={() => {
+            setCurPage(curPage - 1);
+            searchParams.set('page', curPage - 1);
+            setSearchParams(searchParams);
+          }}>
+          prev
+        </PageButton>
+      )}
+
       <PageButton
         className={curPage === 1 ? 'focus' : ''}
         onClick={() => {
@@ -80,7 +84,8 @@ const Pagination = ({ totalPages }) => {
         }}>
         1
       </PageButton>
-      <PageButton className={`summary ${curPage < 5 || totalPages <= 5 ? 'hidden' : ''}`}>...</PageButton>
+
+      {curPage < 5 || totalPages <= 5 ? '' : <PageButton>...</PageButton>}
       {pageArr.map(el => {
         return (
           <PageButton
@@ -96,7 +101,8 @@ const Pagination = ({ totalPages }) => {
           </PageButton>
         );
       })}
-      <PageButton className={`summary ${curPage >= totalPages - 2 || totalPages <= 5 ? 'hidden' : ''}`}>...</PageButton>
+      {curPage >= totalPages - 2 || totalPages <= 5 ? '' : <PageButton>...</PageButton>}
+
       <PageButton
         className={`${curPage === totalPages ? 'focus' : ''} ${totalPages <= 1 ? 'hidden' : ''}`}
         onClick={() => {
@@ -106,15 +112,19 @@ const Pagination = ({ totalPages }) => {
         }}>
         {totalPages}
       </PageButton>
-      <PageButton
-        onClick={() => {
-          setCurPage(curPage + 1);
-          searchParams.set('page', curPage + 1);
-          setSearchParams(searchParams);
-        }}
-        className={curPage === totalPages || totalPages <= 1 ? 'hidden' : ''}>
-        next
-      </PageButton>
+
+      {curPage === totalPages || totalPages <= 1 ? (
+        ''
+      ) : (
+        <PageButton
+          onClick={() => {
+            setCurPage(curPage + 1);
+            searchParams.set('page', curPage + 1);
+            setSearchParams(searchParams);
+          }}>
+          next
+        </PageButton>
+      )}
     </div>
   );
 };

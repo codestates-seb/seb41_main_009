@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import TiltedContainer from './TiltedContainer';
+import { LabelListTitle } from '../../../styles/typo';
 
 const Container = styled.div`
   width: 1056px;
@@ -31,11 +32,7 @@ const ProfileInfoText = styled.div`
   left: 46px;
   top: 43px;
 
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 800;
-  font-size: 18px;
-  line-height: 40px;
+  ${LabelListTitle}
 `;
 
 const ProfileInfoTextEmphasizeA = styled.span`

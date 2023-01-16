@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PostTitle from '../../molecules/PostTitle';
-import UserInfo from '../../molecules/UserInfo';
+import { UserInfo } from '../../molecules/UserInfo';
 import { LabelSmall } from '../../../styles/typo';
 
 /**
