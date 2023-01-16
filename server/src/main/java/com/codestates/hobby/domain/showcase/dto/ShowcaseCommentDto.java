@@ -2,6 +2,8 @@ package com.codestates.hobby.domain.showcase.dto;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotBlank;
+
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -17,6 +19,8 @@ public class ShowcaseCommentDto {
 	public static class Post {
 		private Long showcaseId;
 		private Long memberId;
+
+		@NotBlank(message = "Content must not be empty.")
 		private String content;
 
 		public void setProperties(Long showcaseId, Long memberId) {
@@ -33,6 +37,8 @@ public class ShowcaseCommentDto {
 		private Long showcaseId;
 		private Long commentId;
 		private Long memberId;
+
+		@NotBlank(message = "Content must not be empty.")
 		private String content;
 
 		public void setProperties(Long memberId, Long showcaseId, Long commentId) {

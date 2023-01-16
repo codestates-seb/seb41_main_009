@@ -23,7 +23,7 @@ public class ShowcaseCommentService {
 
 	@Transactional
 	public ShowcaseComment comment(ShowcaseCommentDto.Post post) {
-		Member member = memberService.findVerifiedById(post.getMemberId());
+		Member member = memberService.findMemberById(post.getMemberId());
 		Showcase showcase = showcaseService.findById(post.getShowcaseId());
 
 		return commentRepository.save(new ShowcaseComment(post.getContent(), member, showcase));

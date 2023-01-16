@@ -25,7 +25,7 @@ public class ShowcaseService {
 
 	@Transactional
 	public Showcase post(ShowcaseDto.Post postDto) {
-		Member member = memberService.findVerifiedById(postDto.getMemberId());
+		Member member = memberService.findMemberById(postDto.getMemberId());
 		Category category = categoryService.findHobbyByName(postDto.getCategory());
 
 		return showcaseRepository.save(new Showcase(postDto.getContent(), member, category, postDto.getImageUrls()));
