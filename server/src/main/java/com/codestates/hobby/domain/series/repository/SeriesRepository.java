@@ -2,11 +2,9 @@ package com.codestates.hobby.domain.series.repository;
 
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.series.entity.Series;
-import com.codestates.hobby.domain.showcase.entity.Showcase;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 

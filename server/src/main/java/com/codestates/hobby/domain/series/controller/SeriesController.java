@@ -6,19 +6,13 @@ import com.codestates.hobby.domain.series.mapper.SeriesMapper;
 import com.codestates.hobby.domain.series.service.SeriesService;
 import com.codestates.hobby.global.config.support.CustomPageRequest;
 import com.codestates.hobby.global.dto.MultiResponseDto;
-import com.codestates.hobby.global.dto.PageInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -61,11 +55,11 @@ public class SeriesController {
     }
 
     @GetMapping("/categories/{category-name}/series")
-    public ResponseEntity getAllByCategory(@PathVariable("category-name") String categoryName,
+    public ResponseEntity getAllByCategory(@PathVariable("category-name") String category,
                                            CustomPageRequest pageRequest) {
-        Page<Series> series = seriesService.findAllByCategory(categoryName, pageRequest.to());
+        Page<Series> series = seriesService.findAllByCategory(category, pageRequest.to());
 
-        Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
+        Page<SeriesDto.Response> responses = series.map(seriesMapper::SeriesToResponseDto);
 
         log.info("\n\n--시리즈 리스트 조회--\n");
         return new ResponseEntity(new MultiResponseDto<>(responses), HttpStatus.OK);
@@ -77,17 +71,9 @@ public class SeriesController {
                                          CustomPageRequest pageRequest) {
         Page<Series> series = seriesService.findAllByMember(memberId, pageRequest.to());
 
-        log.info("\n\n--시리즈 for 마이페이지--\n");
-        return toResponseEntity(series, memberId);
-    }
+        Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
 
-    private ResponseEntity toResponseEntity(Page<Series> series, Long memberId) {
-        if(series.isEmpty()) {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
-        } else {
-            Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
-            responses.forEach(aSeries -> seriesMapper.setProperties(aSeries, memberId));
-            return new ResponseEntity(new MultiResponseDto<>(responses), HttpStatus.OK);
-        }
+        log.info("\n\n--시리즈 for 마이페이지--\n");
+        return new ResponseEntity<>(new MultiResponseDto<>(responses), HttpStatus.OK);
     }
 }
