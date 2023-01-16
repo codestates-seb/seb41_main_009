@@ -20,14 +20,4 @@ public interface SeriesMapper {
     default String toString(Category value) {
         return value.getKorName();
     }
-
-    default void setProperties(SeriesDto.Response response, Long memberId) {
-        Optional.ofNullable(memberId)
-                .ifPresent(id->response.setItWriter(id.equals(response.getMember().getId())));
-    }
-
-    default void setProperties(SeriesDto.SimpleResponse response, Long memberId) {
-        Optional.ofNullable(memberId)
-                .ifPresent(id->response.setItWriter(id.equals(response.getMember().getId())));
-    }
 }

@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class SeriesDto {
@@ -18,8 +20,14 @@ public class SeriesDto {
     public static class Post {
         @JsonIgnore
         private long memberId;
+
+        @NotBlank(message = "Title must not be empty.")
         private String title;
+
+        @NotBlank(message = "Content must not be empty.")
         private String content;
+
+        @NotBlank(message = "Category must not be empty.")
         private String category;
         private String thumbnail;
     }
@@ -31,8 +39,14 @@ public class SeriesDto {
     public static class Patch {
         private long memberId;
         private long seriesId;
+
+        @NotBlank(message = "Title must not be empty.")
         private String title;
+
+        @NotBlank(message = "Content must not be empty.")
         private String content;
+
+        @NotBlank(message = "Category must not be empty.")
         private String category;
         private String thumbnail;
 
@@ -52,7 +66,6 @@ public class SeriesDto {
         private String category;
         private int views;
         private String thumbnailUrl;
-        private boolean isItWriter;
         private MemberDto.SimpleResponse member;
         private PostDto.SimpleResponse post;
         private LocalDateTime createdAt;
@@ -68,7 +81,6 @@ public class SeriesDto {
         private String content;
         private int views;
         private String thumbnailUrl;
-        private boolean isItWriter;
         private MemberDto.SimpleResponse member;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

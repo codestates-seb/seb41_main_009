@@ -61,9 +61,9 @@ public class SeriesController {
     }
 
     @GetMapping("/categories/{category-name}/series")
-    public ResponseEntity getAllByCategory(@PathVariable("category-name") String categoryName,
+    public ResponseEntity getAllByCategory(@PathVariable("category-name") String category,
                                            CustomPageRequest pageRequest) {
-        Page<Series> series = seriesService.findAllByCategory(categoryName, pageRequest.to());
+        Page<Series> series = seriesService.findAllByCategory(category, pageRequest.to());
 
         Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
 
@@ -77,17 +77,9 @@ public class SeriesController {
                                          CustomPageRequest pageRequest) {
         Page<Series> series = seriesService.findAllByMember(memberId, pageRequest.to());
 
-        log.info("\n\n--시리즈 for 마이페이지--\n");
-        return toResponseEntity(series, memberId);
-    }
+        Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
 
-    private ResponseEntity toResponseEntity(Page<Series> series, Long memberId) {
-        if(series.isEmpty()) {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
-        } else {
-            Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
-            responses.forEach(aSeries -> seriesMapper.setProperties(aSeries, memberId));
-            return new ResponseEntity(new MultiResponseDto<>(responses), HttpStatus.OK);
-        }
+        log.info("\n\n--시리즈 for 마이페이지--\n");
+        return new ResponseEntity<>(new MultiResponseDto<>(responses), HttpStatus.OK);
     }
 }
