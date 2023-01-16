@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { AcrylicBase } from '../../atoms/AcrylicBase';
-import { PostListStack } from './PostList';
+import { PostList, PostListStack } from './PostList';
 import { ParagraphMedium, LabelListTitle, LabelMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 
@@ -15,7 +15,7 @@ const Container = styled.div`
   gap: 10px;
 
   width: 1056px;
-  height: 255px;
+  height: fit-content;
 
   background: url(https://unsplash.it/1920/1080/?random) rgba(45, 45, 45, 0.44);
   border-radius: 30px;
@@ -93,6 +93,7 @@ const UserBox = styled.div`
 
   width: fit-content;
   height: fit-content;
+  color: #fff;
 `;
 const Title = styled.div`
   width: ${props => props.width || '326px'};
@@ -117,6 +118,7 @@ const Paragraph = styled.div`
     color: var(--gray-100);
   }
 `;
+
 const SeriesList = ({ width, number = '10' }) => {
   const [series, setSeries] = useState({ tagList: [] });
   const { seriesId } = useParams();
@@ -158,4 +160,48 @@ const SeriesList = ({ width, number = '10' }) => {
   );
 };
 
-export default SeriesList;
+const SeriesPostList = ({ width, number = '10' }) => {
+  const [isListOpen, setIsListOpen] = useState(false); // input 숨기기
+  const [series, setSeries] = useState({ tagList: [] });
+  const { seriesId } = useParams();
+
+  useEffect(() => {
+    const getData = async () => {
+      await axios(`http://3.37.105.24:8080/questions/${seriesId}`)
+        .then(res => setSeries(res.data.data))
+        .catch(error => console.log(error));
+    };
+
+    getData();
+  }, [seriesId]);
+
+  const PostListToggle = () => {
+    setIsListOpen(!isListOpen);
+  };
+
+  return (
+    <Container>
+      <AcrylicBase>
+        <InfoLayer>
+          <SeriesInfoLayer>
+            <Title width={width}> {series.title || 'Series Name'} </Title>
+            <SeriesPostNumLayer>
+              <p>All Post</p>
+              <p> {number} 개</p>
+            </SeriesPostNumLayer>
+          </SeriesInfoLayer>
+
+          <ContextLayer>
+            <button type="button" onClick={PostListToggle}>
+              자세히 보기
+            </button>
+          </ContextLayer>
+          {isListOpen ? '' : <PostList />}
+        </InfoLayer>
+        {isListOpen ? <PostListStack /> : ''}
+      </AcrylicBase>
+    </Container>
+  );
+};
+
+export { SeriesPostList, SeriesList };
