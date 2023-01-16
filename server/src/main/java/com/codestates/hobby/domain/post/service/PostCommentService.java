@@ -53,12 +53,12 @@ public class PostCommentService {
 
     @Transactional(readOnly = true)
     public Page<PostComment> findAll(long postId, PageRequest pageRequest) {
-        return postCommentRepository.findAllByPostIdOrderByDesc(postId,pageRequest);
+        return postCommentRepository.findAllByPostIdOrderByIdDesc(postId,pageRequest);
     }
 
     @Transactional(readOnly = true)
     public Page<PostComment> findAllByMember(long memberId, PageRequest pageRequest) {
-        return postCommentRepository.findAllByMemberIdOrderByDesc(memberId,pageRequest);
+        return postCommentRepository.findAllByMemberIdOrderByIdDesc(memberId,pageRequest);
     }
 
     public boolean isMatchMember(PostComment postComment, long memberId){
