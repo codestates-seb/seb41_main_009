@@ -1,6 +1,5 @@
 package com.codestates.hobby.domain.post.service;
 
-import com.codestates.hobby.domain.fileInfo.service.FileInfoService;
 import com.codestates.hobby.domain.post.repository.PostRepository;
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.category.service.CategoryService;
@@ -26,7 +25,6 @@ public class PostService {
     private final MemberService memberService;
     private final CategoryService categoryService;
     private final SeriesService seriesService;
-    private final FileInfoService fileInfoService;
 
     @Transactional
     public Post post(PostDto.Post postDto){
@@ -34,23 +32,31 @@ public class PostService {
         Category category = categoryService.findHobbyByName(postDto.getCategory());
         if (postDto.getSeriesId() != null){
             Series series = seriesService.findById(postDto.getSeriesId());
-            Post post = new Post(member,postDto.getTitle(),series,category,postDto.getContent(),postDto.getImgUrls());
-            return postRepository.save(post);
+            if (postDto.getImgUrls() != null) return postRepository.save(new Post(member,postDto.getTitle(),series,category,postDto.getContent(),postDto.getImgUrls()));
+            else return postRepository.save(new Post(member,postDto.getTitle(),series,category,postDto.getContent()));
         }
         else {
-            Post post = new Post(member,postDto.getTitle(),category,postDto.getContent(),postDto.getImgUrls());
-            return postRepository.save(post);
+            if (postDto.getImgUrls() != null) return postRepository.save(new Post(member,postDto.getTitle(),category,postDto.getContent(),postDto.getImgUrls()));
+            else return postRepository.save(new Post(member,postDto.getTitle(),category,postDto.getContent()));
         }
     }
 
     @Transactional
     public Post update(PostDto.Patch patchDto){
         Post findPost = findVerifiedPost(patchDto.getPostId());
-        // mock 테스트를 위한 임시 수정.
         if (!isMatchMember(findPost, memberService.findMemberById(patchDto.getMemberId()).getId())) throw new RuntimeException("권한이 없습니다.");
         else {
-            findPost.updatePost(patchDto.getTitle(),patchDto.getContent(),categoryService.findHobbyByName(patchDto.getCategory()),
-                    seriesService.findById(patchDto.getSeriesId()),patchDto.getImgUrls());
+            if (patchDto.getSeriesId() != null) {
+                if (patchDto.getImgUrls() != null) findPost.updatePost(patchDto.getTitle(), patchDto.getContent(),
+                        categoryService.findHobbyByName(patchDto.getCategory()), seriesService.findById(patchDto.getSeriesId()), patchDto.getImgUrls());
+                else findPost.updatePost(patchDto.getTitle(), patchDto.getContent(), categoryService.findHobbyByName(patchDto.getCategory()),
+                        seriesService.findById(patchDto.getSeriesId()));
+            } else {
+                if (patchDto.getImgUrls() != null) findPost.updatePost(patchDto.getTitle(), patchDto.getContent()
+                        , categoryService.findHobbyByName(patchDto.getCategory()), patchDto.getImgUrls());
+                else findPost.updatePost(patchDto.getTitle(), patchDto.getContent()
+                        , categoryService.findHobbyByName(patchDto.getCategory()));
+            }
             return postRepository.save(findPost);
         }
     }
@@ -91,14 +97,12 @@ public class PostService {
         return postRepository.findAllBySeriesIdOrderByIdDesc(seriesId, pageRequest);
     }
 
-    @Transactional(readOnly = true)
     public Post findVerifiedPost(long postId){
         Optional<Post> optionalPost = postRepository.findById(postId);
         Post findPost = optionalPost.orElseThrow(() -> new RuntimeException("data is null"));
         return findPost;
     }
 
-    @Transactional(readOnly = true)
     public boolean isMatchMember(Post post, long memberId){
         return post.getMember().getId().equals(memberId);
     }

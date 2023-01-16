@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,8 +16,11 @@ public class PostDto {
     public static class Post {
         @JsonIgnore
         private Long memberId;
+        @NotBlank(message = "Title must not be empty.")
         private String title;
+        @NotBlank(message = "Content must not be empty.")
         private String content;
+        @NotBlank(message = "Category must not be empty.")
         private String category;
         private Long seriesId;
         private List<String> imgUrls;
@@ -26,10 +30,15 @@ public class PostDto {
     @Setter
     @NoArgsConstructor
     public static class Patch {
+        @JsonIgnore
         private Long memberId;
+        @JsonIgnore
         private Long postId;
+        @NotBlank(message = "Title must not be empty.")
         private String title;
+        @NotBlank(message = "Content must not be empty.")
         private String content;
+        @NotBlank(message = "Category must not be empty.")
         private String category;
         private Long seriesId;
         private List<String> imgUrls;

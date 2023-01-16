@@ -75,7 +75,7 @@ public class PostCommentControllerTest {
                 false,fileInfo);
         patentCategory = Category.createParent("운동","exercise");
         childCategory = Category.createChild("야구","baseball",patentCategory);
-        series = new Series(member, "입문", childCategory, "Content");
+        series = new Series(member,  childCategory, "Title","Content","url");
         post = new Post(member,"Title",series,childCategory,"Content",urls);
     }
 
