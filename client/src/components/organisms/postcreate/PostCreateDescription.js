@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Input from '../../atoms/Input';
 
 const Container = styled.div`
   display: flex;
@@ -6,14 +7,13 @@ const Container = styled.div`
   height: 50px;
   align-items: center;
   justify-content: space-between;
-  background-color: greenyellow;
   margin-bottom: 50px;
 `;
 
 const PostCreateDescription = () => {
   return (
     <Container>
-      <input value="Input description" />
+      <Input placeholder="글의 설명을 적어주세요" width="100%" />
     </Container>
   );
 };
