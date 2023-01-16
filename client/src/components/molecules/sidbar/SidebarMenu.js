@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { SidebarMainButton } from '../atoms/Buttons';
+import { SidebarMainButton } from '../../atoms/Buttons';
 import SidebarTagsContainer from './SidebarTagsContainer';
 
 const Container = styled.div`

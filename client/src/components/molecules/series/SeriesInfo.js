@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SeriesTitle from '../SeriesTitle';
+import SeriesTitle from './SeriesTitle';
 import { UserInfo } from '../UserInfo';
 import { LabelSmall, LabelXSmall } from '../../../styles/typo';
 import { ClearBlurButton } from '../../atoms/Buttons';

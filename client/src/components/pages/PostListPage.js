@@ -1,30 +1,29 @@
 import styled from 'styled-components';
 import PageHeader from '../organisms/PageHeader';
-import SeriesListContainer from '../organisms/listcontents/SeriesListContainer';
-import Lnb from '../organisms/Lnb';
 import Pagination from '../molecules/Pagination';
+import Lnb from '../organisms/Lnb';
+import PostListContainer from '../organisms/listContainter/PostListContainer';
 import SearchResultTitle from '../organisms/search/SearchResultTitle';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 1060px;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
 `;
 
-const SeriesList = () => {
+const PostList = () => {
   return (
     <Container>
       <PageHeader />
       <SearchResultTitle title="검색결과" amount="120" />
-
       <Lnb />
-      <SeriesListContainer />
-      <Pagination totalPages={10} />
+      <PostListContainer />
+      <Pagination totalPages={30} />
     </Container>
   );
 };
 
-export default SeriesList;
+export default PostList;

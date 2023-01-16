@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Selected from '../../styles/Selected';
-import { SidebarTagsButton } from '../atoms/Buttons';
+import Selected from '../../../styles/Selected';
+import { SidebarTagsButton } from '../../atoms/Buttons';
 
 const Container = styled.div`
   height: ${props => (props.isClicked ? `${props.tags.length * 30}px` : '0px')};

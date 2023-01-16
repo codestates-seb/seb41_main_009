@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { LabelListTitle, LabelMedium, ParagraphSmall } from '../../styles/typo';
+import { LabelListTitle, LabelMedium, ParagraphSmall } from '../../../styles/typo';
 
 /**
  * 포스트 헤더 molecule
