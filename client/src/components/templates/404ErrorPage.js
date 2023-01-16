@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { DisplayLarge } from '../../styles/typo';
 import { BlackShadowButton, WhiteShadowButton } from '../atoms/Buttons';
+import { SplashStickerLabelDefault } from '../molecules/stickerLabel/SplashStickerLabel';
 
 const ErrorPage = () => {
   const navigate = useNavigate();
@@ -10,13 +11,14 @@ const ErrorPage = () => {
     <Container>
       <Heading>404 Not Found</Heading>
       <Buttons>
-        <BlackShadowButton to="/" width="170px" height="80px">
+        <BlackShadowButton to="/" width="170px" height="70px">
           홈으로
         </BlackShadowButton>
-        <WhiteShadowButton width="170px" height="80px" onClick={() => navigate(-1)}>
+        <WhiteShadowButton width="170px" height="70px" onClick={() => navigate(-1)}>
           이전 페이지로
         </WhiteShadowButton>
       </Buttons>
+      <SplashStickerLabelDefault />
     </Container>
   );
 };
@@ -25,9 +27,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
-  height: 100%;
+  height: 550px;
 `;
 
 const Heading = styled.div`
