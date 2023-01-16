@@ -32,6 +32,7 @@ public class PostQueryController {
     public ResponseEntity<?> getAll(@AuthenticationPrincipal Long authMemberId,
                                     CustomPageRequest pageRequest) {
         Page<Post> posts = postService.findAll(pageRequest.to());
+
         return toResponseEntity(posts, authMemberId);
     }
 
