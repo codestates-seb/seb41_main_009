@@ -11,7 +11,6 @@ const Container = styled.div`
   margin: 0 auto;
   width: 100%;
   align-items: center;
-  background-color: cadetblue;
 `;
 
 const PostCreatePage = () => {
