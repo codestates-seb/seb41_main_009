@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import Sticker from '../../atoms/icons';
+import Sticker from '../../atoms/Icons';
+import { LabelListTitle } from '../../../styles/typo';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -20,11 +21,7 @@ const Container = styled.div`
 `;
 
 const Label = styled.div`
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 800;
-  font-size: 18px;
-  line-height: 24px;
+  ${LabelListTitle}
 
   color: #333333;
 `;

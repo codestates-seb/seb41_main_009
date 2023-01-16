@@ -1,20 +1,19 @@
 import styled from 'styled-components';
-import Post from '../../molecules/Post';
+import SeriesList from '../../molecules/list/SeriesList';
+import SeriesPostList from '../../molecules/list/SeriesPostList';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 874px;
+  width: fit-content;
   margin-bottom: 50px;
 `;
 
 const PostListContainer = () => {
   return (
     <Container>
-      <Post />
-      <Post />
-      <Post />
-      <Post />
+      <SeriesList />
+      <SeriesPostList />
     </Container>
   );
 };

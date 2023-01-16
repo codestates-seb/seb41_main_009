@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Box from '../../atoms/Box';
-import UserInfo from '../../molecules/UserInfo';
+import { UserInfo } from '../../molecules/UserInfo';
 import { ParagraphMedium } from '../../../styles/typo';
 import Nickname from '../../atoms/Nickname';
 import ImageCard from '../../molecules/ImageCard';
