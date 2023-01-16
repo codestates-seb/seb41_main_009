@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { AcrylicBase } from '../../atoms/AcrylicBase';
 import { PostListStack } from './PostList';
 import { ParagraphMedium, LabelListTitle, LabelMedium } from '../../../styles/typo';
@@ -115,22 +118,33 @@ const Paragraph = styled.div`
   }
 `;
 const SeriesList = ({ width, number = '10' }) => {
+  const [series, setSeries] = useState({ tagList: [] });
+  const { seriesId } = useParams();
+
+  useEffect(() => {
+    const getData = async () => {
+      await axios(`http://3.37.105.24:8080/questions/${seriesId}`)
+        .then(res => setSeries(res.data.data))
+        .catch(error => console.log(error));
+    };
+
+    getData();
+  }, [seriesId]);
+
   return (
     <Container>
       <AcrylicBase>
         <InfoLayer>
           <SeriesInfoLayer>
-            <Title width={width}>Series Name</Title>
+            <Title width={width}> {series.title || 'Series Name'} </Title>
             <SeriesPostNumLayer>
               <p>All Post</p>
               <p> {number} 개</p>
             </SeriesPostNumLayer>
           </SeriesInfoLayer>
           <Paragraph width={width}>
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim
-            velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sit
-            aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat
-            sunt nostrud ame.
+            {series.Paragraph ||
+              'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim            velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sitaliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequatsunt nostrud ame.'}
           </Paragraph>
           <ContextLayer>
             <UserBox>

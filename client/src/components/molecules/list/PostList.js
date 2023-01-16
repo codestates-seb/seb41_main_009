@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import { LabelListTitle, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { TextButton } from '../../atoms/Buttons';
@@ -98,15 +101,27 @@ const ImageLayer = styled.img`
  * @returns {JSX.Element} - PostList 개별 항목을 나타내는 컴포넌트
  */
 const PostList = ({ boxShadow, width }) => {
+  const [post, setPost] = useState({ tagList: [] });
+  const { postId } = useParams();
+
+  useEffect(() => {
+    const getData = async () => {
+      await axios(`http://3.37.105.24:8080/questions/${postId}`)
+        .then(res => setPost(res.data.data))
+        .catch(error => console.log(error));
+    };
+
+    getData();
+  }, [postId]);
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
-        <Title width={width}>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</Title>
+        <Title width={width}>
+          {post.title || 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.'}{' '}
+        </Title>
         <Paragraph width={width}>
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim
-          velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sit
-          aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt
-          nostrud ame.
+          {post.Paragraph ||
+            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim            velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sitaliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequatsunt nostrud ame.'}
         </Paragraph>
         <ContextLayer>
           <UserBox>
@@ -128,15 +143,27 @@ const PostList = ({ boxShadow, width }) => {
  * @returns {JSX.Element} - PostListStack을 나타내는 컴포넌트
  */
 const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px' }) => {
+  const [post, setPost] = useState({ tagList: [] });
+  const { postId } = useParams();
+
+  useEffect(() => {
+    const getData = async () => {
+      await axios(`http://3.37.105.24:8080/questions/${postId}`)
+        .then(res => setPost(res.data.data))
+        .catch(error => console.log(error));
+    };
+
+    getData();
+  }, [postId]);
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
-        <Title width={width}>Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</Title>
+        <Title width={width}>
+          {post.title || 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.'}{' '}
+        </Title>
         <Paragraph width={width}>
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim
-          velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sit
-          aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt
-          nostrud ame.
+          {post.Paragraph ||
+            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim            velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sitaliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequatsunt nostrud ame.'}
         </Paragraph>
         <ContextLayer>
           <UserBox>
