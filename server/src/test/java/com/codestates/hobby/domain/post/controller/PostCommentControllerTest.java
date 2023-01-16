@@ -86,7 +86,6 @@ public class PostCommentControllerTest {
         postDto.setProperties(1L,1L);
         PostComment postComment = new PostComment("Comment", member, post);
 
-
         given(postCommentService.post(Mockito.any(PostCommentDto.Post.class))).willReturn(postComment);
 
         String content = gson.toJson(postDto);
@@ -109,8 +108,7 @@ public class PostCommentControllerTest {
         patchDto.setContent("Comment");
         patchDto.setProperties(1L,1L,1L);
         PostComment postComment = new PostComment("Comment", member, post);
-
-
+        
         given(postCommentService.update(Mockito.any(PostCommentDto.Patch.class))).willReturn(postComment);
 
         String content = gson.toJson(patchDto);
