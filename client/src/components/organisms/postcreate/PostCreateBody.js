@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import TextEditor from '../../atoms/TextEditor';
 
 const Container = styled.div`
   display: flex;
@@ -6,14 +7,13 @@ const Container = styled.div`
   height: 300px;
   align-items: center;
   justify-content: space-between;
-  background-color: rebeccapurple;
   margin-bottom: 50px;
 `;
 
 const PostCreateBody = () => {
   return (
     <Container>
-      <textarea value="Editor" />
+      <TextEditor />
     </Container>
   );
 };
