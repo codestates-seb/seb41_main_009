@@ -33,11 +33,11 @@ const App = () => {
             <Route path="/" element={<PublicRoute component={<Showcase />} />} />
             <Route path="/login" element={<PublicRoute component={<LogIn />} />} />
             <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
-            <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
-            <Route path="/posts/:id" element={<PublicRoute component={<PostPage />} />} />
+            <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
+            <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
             <Route path="/posts/new" element={<PublicRoute component={<PostCreatePage />} />} />
-            <Route path="/series" element={<PublicRoute component={<SeriesList />} />} />
-            <Route path="/series/:id" element={<PublicRoute component={<SeriesPage />} />} />
+            <Route path="/series/:category" element={<PublicRoute component={<SeriesList />} />} />
+            <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
             <Route path="/user" element={<PublicRoute component={<User />} />} />
             <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />
             <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
