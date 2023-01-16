@@ -3,6 +3,9 @@ package com.codestates.hobby.domain.showcase.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -18,8 +21,14 @@ public class ShowcaseDto {
 	public static class Post {
 		@JsonIgnore
 		private Long memberId;
+
+		@NotBlank(message = "Content must not be empty.")
 		private String content;
+
+		@NotBlank(message = "Category must not be empty.")
 		private String category;
+
+		@Size(min = 1, message = "Image must be greater than zero")
 		private List<String> imageUrls;
 	}
 
@@ -30,8 +39,14 @@ public class ShowcaseDto {
 	public static class Patch {
 		private Long memberId;
 		private Long showcaseId;
+
+		@NotBlank(message = "Content must not be empty.")
 		private String content;
+
+		@NotBlank(message = "Category must not be empty.")
 		private String category;
+
+		@Size(min = 1, message = "Image must be greater than zero")
 		private List<String> imageUrls;
 
 		public void setProperties(Long memberId, Long showcaseId) {
