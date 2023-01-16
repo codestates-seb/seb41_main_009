@@ -3,7 +3,6 @@ package com.codestates.hobby.domain.post.dto;
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -60,10 +59,9 @@ public class PostDto {
         private String category;
         private Long seriesId;
         private boolean isItWriter;
-        private List<String> imgUrls;
         private List<PostCommentDto.Response> comments;
         private MemberDto.SimpleResponse writer;
-        private List<SimpleResponse> categoryPosts;
+        private List<String> seriesPosts;
         private LocalDateTime createdDate;
         private LocalDateTime modifiedDate;
     }
