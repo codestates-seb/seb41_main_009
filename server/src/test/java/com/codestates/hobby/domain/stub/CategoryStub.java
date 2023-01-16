@@ -3,6 +3,7 @@ package com.codestates.hobby.domain.stub;
 import java.util.List;
 
 import com.codestates.hobby.domain.category.dto.CategoryDto;
+import com.codestates.hobby.domain.category.entity.Category;
 
 public class CategoryStub {
 	public static CategoryDto.Response groupResponse() {
@@ -23,5 +24,13 @@ public class CategoryStub {
 		cat2.setEngName("SWIMMING");
 
 		return group;
+	}
+
+	public static Category group() {
+		return Category.createParent("운동", "sports");
+	}
+
+	public static Category hobby() {
+		return Category.createChild("축구", "soccer", group());
 	}
 }

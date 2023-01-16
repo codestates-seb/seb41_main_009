@@ -33,7 +33,7 @@ public abstract class ControllerTest {
 	protected MockMvc mvc;
 
 	@BeforeAll
-	void beforeAll() {
+	protected void beforeAll() {
 		mvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 

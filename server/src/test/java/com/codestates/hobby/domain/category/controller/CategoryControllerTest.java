@@ -3,7 +3,6 @@ package com.codestates.hobby.domain.category.controller;
 import static com.codestates.hobby.domain.stub.CategoryStub.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.util.List;
@@ -30,7 +29,8 @@ class CategoryControllerTest extends ControllerTest {
 	List<CategoryDto.Response> response;
 
 	@BeforeAll
-	void beforeAll() {
+	protected void beforeAll() {
+		super.beforeAll();
 		response = List.of(groupResponse());
 	}
 
@@ -38,7 +38,9 @@ class CategoryControllerTest extends ControllerTest {
 	void getGroups() throws Exception {
 		CategoryDto.Response response = groupResponse();
 		response.setCategories(null);
-		givens(List.of(response));
+
+		given(service.findAllGroups()).willReturn(List.of());
+		given(mapper.categoriesToResponses(anyList(), anyBoolean())).willReturn(List.of(response));
 
 		mvc
 			.perform(get("/categories/groups"))
@@ -48,26 +50,22 @@ class CategoryControllerTest extends ControllerTest {
 
 	@Test
 	void getCategories() throws Exception {
-		givens(response.get(0).getCategories());
+		given(service.findAllGroups()).willReturn(List.of());
+		given(mapper.categoriesToResponses(anyList(), anyBoolean())).willReturn(response.get(0).getCategories());
 
 		mvc
 			.perform(get("/categories/groups/exercise"))
-			.andDo(print())
 			.andExpect(jsonPath("$.data..categories").doesNotExist());
 	}
 
 	@Test
 	void getAll() throws Exception {
-		givens(response);
+		given(service.findAllGroups()).willReturn(List.of());
+		given(mapper.categoriesToResponses(anyList(), anyBoolean())).willReturn(response);
 
 		mvc
 			.perform(get("/categories"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.data..categories").exists());
-	}
-
-	private void givens(List<CategoryDto.Response> categories) {
-		given(service.findAllGroups()).willReturn(List.of());
-		given(mapper.categoriesToResponses(anyList())).willReturn(categories);
 	}
 }
