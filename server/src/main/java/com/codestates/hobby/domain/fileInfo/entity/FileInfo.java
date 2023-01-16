@@ -68,6 +68,12 @@ public class FileInfo {
 		this.parse(fileURL);
 	}
 
+	private FileInfo(Post post, String fileURL) {
+		this(fileURL);
+		this.post = post;
+	}
+
+
 	private FileInfo(Member member, String fileURL) {
 		this(fileURL);
 		this.member = member;
@@ -119,6 +125,10 @@ public class FileInfo {
 
 	public static FileInfo createShowcaseImage(Showcase showcase, String fileURL) {
 		return new FileInfo(showcase, fileURL);
+	}
+
+	public static FileInfo createPostImage(Post post, String fileURL) {
+		return new FileInfo(post, fileURL);
 	}
 
 	@Override

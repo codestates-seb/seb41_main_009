@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 public class PostCommentDto {
@@ -16,6 +17,7 @@ public class PostCommentDto {
     public static class Post {
         private Long postId;
         private Long memberId;
+        @NotBlank(message = "Content must not be empty.")
         private String content;
 
         public void setProperties(Long postId, Long memberId) {
@@ -32,6 +34,7 @@ public class PostCommentDto {
         private Long postId;
         private Long commentId;
         private Long memberId;
+        @NotBlank(message = "Content must not be empty.")
         private String content;
 
         public void setProperties(Long memberId, Long postId, Long commentId) {

@@ -14,7 +14,6 @@ import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.series.entity.Series;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -51,12 +50,24 @@ public class Post extends BaseEntity {
 	@OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<FileInfo> images = new ArrayList<>();
 
-	@OneToMany(mappedBy = "post")
+	@OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
 	private List<PostComment> comments = new ArrayList<>();
 
 	public Post(Member member, String title, Category category, String content, List<String> imageURLs) {
 		this(member, title, null, category, content, imageURLs);
 		imageURLs.forEach(this::addImageFromUrl);
+	}
+
+	public Post(Member member, String title, Category category, String content) {
+		this(member, title, null, category, content);
+	}
+
+	public Post(Member member, String title, Series series,Category category, String content) {
+		this.member = member;
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.series = series;
 	}
 
 	public Post(Member member, String title, Series series,Category category, String content, List<String> imageURLs) {
@@ -77,20 +88,38 @@ public class Post extends BaseEntity {
 		updateImage(imageURLs);
 	}
 
+	public void updatePost (String title, String content, Category category, Series series) {
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.series = series;
+	}
+
+	public void updatePost (String title, String content, Category category, List<String> imageURLs) {
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		updateImage(imageURLs);
+	}
+
+	public void updatePost (String title, String content, Category category) {
+		this.title = title;
+		this.content = content;
+		this.category = category;
+	}
+
 	public void addImage(FileInfo fileInfo) {
 		images.add(fileInfo);
 	}
 
 	public void addImageFromUrl(String url) {
-		FileInfo fileInfo = new FileInfo(url);
+		FileInfo fileInfo = FileInfo.createPostImage(this,url);
 		images.add(fileInfo);
 	}
 
 	public void  updateImage(List<String> urls){
 		List<String> olds = images.stream().map(FileInfo::getFileURL).collect(Collectors.toList());
-
 		new ArrayList<>(images).stream().filter(image -> !urls.contains(image.getFileURL())).forEach(image -> images.remove(image));
-
 		urls.stream().filter(url -> !olds.contains(url)).forEach(this::addImageFromUrl);
 	}
 

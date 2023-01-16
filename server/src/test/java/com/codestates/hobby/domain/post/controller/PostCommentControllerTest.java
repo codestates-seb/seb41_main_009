@@ -75,7 +75,7 @@ public class PostCommentControllerTest {
                 false,fileInfo);
         patentCategory = Category.createParent("운동","exercise");
         childCategory = Category.createChild("야구","baseball",patentCategory);
-        series = new Series(member, "입문", childCategory, "Content");
+        series = new Series(member,  childCategory, "Title","Content","url");
         post = new Post(member,"Title",series,childCategory,"Content",urls);
     }
 
@@ -85,7 +85,6 @@ public class PostCommentControllerTest {
         postDto.setContent("Comment");
         postDto.setProperties(1L,1L);
         PostComment postComment = new PostComment("Comment", member, post);
-
 
         given(postCommentService.post(Mockito.any(PostCommentDto.Post.class))).willReturn(postComment);
 
@@ -109,8 +108,7 @@ public class PostCommentControllerTest {
         patchDto.setContent("Comment");
         patchDto.setProperties(1L,1L,1L);
         PostComment postComment = new PostComment("Comment", member, post);
-
-
+        
         given(postCommentService.update(Mockito.any(PostCommentDto.Patch.class))).willReturn(postComment);
 
         String content = gson.toJson(patchDto);
