@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { SplashProfileStickerLabel } from '../molecules/stickerLabel/SplashStickerLabel';
 import Openidbox from '../organisms/Openidbox';
-import Signupbox from '../organisms/Signupbox';
+import Loginbox from '../organisms/Loginbox';
+import { SplashProfileStickerLabel } from '../molecules/stickerLabel/SplashStickerLabel';
 
 const Container = styled.div`
   display: flex;
@@ -19,21 +19,21 @@ const Body = styled.div`
   height: 100%;
 `;
 
-const Signup = () => {
+const LogIn = () => {
   return (
     <Container>
       <SplashProfileStickerLabel
-        boyMessage="Dive"
+        boyMessage="Log"
         girlMessage="IntoRest"
         emailMessage="And Share"
         createdAtMessage="Interests"
       />
       <Body>
-        <Signupbox />
+        <Loginbox />
         <Openidbox />
       </Body>
     </Container>
   );
 };
 
-export default Signup;
+export default LogIn;

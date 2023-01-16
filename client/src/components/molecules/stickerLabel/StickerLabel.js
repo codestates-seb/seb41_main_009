@@ -9,7 +9,7 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  padding: 10px 20px 10px 40px;
+  padding: 10px 20px;
   gap: 10px;
   width: ${props => (props.width ? props.width : 'fit-content')};
   height: ${props => (props.height ? props.height : '44px')};

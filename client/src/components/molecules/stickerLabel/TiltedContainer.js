@@ -28,36 +28,35 @@ const StickerLabelLine = styled.div`
   height: 64px;
 `;
 
-const TiltedContainer = ({ width, height, left, top }) => {
+const TiltedContainer = ({ width, height, left, top, boyMessage, girlMessage, emailMessage, createdAtMessage }) => {
   return (
     <Container width={width} height={height} left={left} top={top}>
       <StickerLabelLine>
-        <StickerNicknameBoy />
-        <StickerNicknameGirl />
-        <StickerNicknameBoy />
-        <StickerNicknameGirl />
-        <StickerNicknameBoy />
-        <StickerNicknameGirl />
-        <StickerNicknameBoy />
+        <StickerNicknameBoy message={boyMessage} />
+        <StickerNicknameGirl message={girlMessage} />
+        <StickerNicknameBoy message={boyMessage} />
+        <StickerNicknameGirl message={girlMessage} />
+        <StickerNicknameBoy message={boyMessage} />
+        <StickerNicknameGirl message={girlMessage} />
+        <StickerNicknameBoy message={boyMessage} />
       </StickerLabelLine>
       <StickerLabelLine>
-        <StickerEmail />
-        <StickerEmail />
-        <StickerEmail />
-        <StickerEmail />
-        <StickerEmail />
-
-        <StickerEmail />
+        <StickerEmail message={emailMessage} />
+        <StickerEmail message={emailMessage} />
+        <StickerEmail message={emailMessage} />
+        <StickerEmail message={emailMessage} />
+        <StickerEmail message={emailMessage} />
+        <StickerEmail message={emailMessage} />
       </StickerLabelLine>
       <StickerLabelLine>
-        <StickerCreatedAt />
-        <StickerCreatedAt />
-        <StickerCreatedAt />
-        <StickerCreatedAt />
-        <StickerCreatedAt />
-        <StickerCreatedAt />
-        <StickerCreatedAt />
-        <StickerCreatedAt />
+        <StickerCreatedAt message={createdAtMessage} />
+        <StickerCreatedAt message={createdAtMessage} />
+        <StickerCreatedAt message={createdAtMessage} />
+        <StickerCreatedAt message={createdAtMessage} />
+        <StickerCreatedAt message={createdAtMessage} />
+        <StickerCreatedAt message={createdAtMessage} />
+        <StickerCreatedAt message={createdAtMessage} />
+        <StickerCreatedAt message={createdAtMessage} />
       </StickerLabelLine>
     </Container>
   );

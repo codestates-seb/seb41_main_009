@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Signin from './components/templates/Signin';
+import LogIn from './components/templates/LogIn';
 import Navigator from './components/organisms/Navigator';
 import PostList from './components/templates/PostList';
 import Showcase from './components/templates/Showcase';
@@ -31,7 +31,7 @@ const App = () => {
           <Sidebar />
           <Routes>
             <Route path="/" element={<PublicRoute component={<Showcase />} />} />
-            <Route path="/signin" element={<PublicRoute component={<Signin />} />} />
+            <Route path="/login" element={<PublicRoute component={<LogIn />} />} />
             <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
             <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
             <Route path="/posts/:id" element={<PublicRoute component={<PostPage />} />} />
