@@ -45,7 +45,7 @@ public class Showcase extends BaseEntity {
 	private Category category;
 
 	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
-	private List<ShowcaseImage> images = new ArrayList<>();
+	private List<FileInfo> images = new ArrayList<>();
 
 	@OneToMany(mappedBy = "showcase")
 	private List<ShowcaseComment> comments = new ArrayList<>();
@@ -62,34 +62,40 @@ public class Showcase extends BaseEntity {
 		return Objects.equals(memberId, member.getId());
 	}
 
-	public void add(FileInfo fileInfo) {
-		images.add(new ShowcaseImage(this, fileInfo));
-	}
-
 	public void addImageFromUrl(String url) {
-		FileInfo fileInfo = new FileInfo(url);
-		images.add(new ShowcaseImage(this, fileInfo));
+		images.add(FileInfo.createShowcaseImage(this, url));
 	}
 
 	public void update(Category category, String content, List<String> urls) {
 		if (!Objects.equals(this.category.getId(), category.getId()))
 			this.category = category;
 
-		if (!this.content.equals(content))
-			this.content = content;
-
-		updateImage(urls);
+		this.content = content;
+		this.updateImage(urls);
 	}
 
 	private void updateImage(List<String> urls) {
-		List<String> olds = images.stream().map(ShowcaseImage::getFileURL).collect(Collectors.toList());
+		List<String> olds = images.stream().map(FileInfo::getFileURL).collect(Collectors.toList());
 
-		new ArrayList<>(images).stream()
-			.filter(image -> !urls.contains(image.getFileInfo().getFileURL()))
-			.forEach(images::remove);
+		images.retainAll(urls);
 
 		urls.stream()
 			.filter(url -> !olds.contains(url))
 			.forEach(this::addImageFromUrl);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Showcase))
+			return false;
+
+		return Objects.equals(getId(), ((Showcase)o).getId());
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
 	}
 }
