@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import PageHeader from '../organisms/PageHeader';
-import PaginationContainer from '../organisms/listcontents/ListPagination';
 import SeriesListContainer from '../organisms/listcontents/SeriesListContainer';
 import Lnb from '../organisms/Lnb';
 import { BlueShadowButton } from '../atoms/Buttons';
+import Pagination from '../molecules/Pagination';
 
 const Container = styled.div`
   display: flex;
@@ -20,16 +23,30 @@ const CreateSeriesButton = styled(BlueShadowButton)`
 `;
 
 const SeriesList = () => {
+  const [seriesList, setSeriesList] = useState([]);
+
+  const SERIESURL = '';
+
+  useEffect(() => {
+    axios
+      .get(SERIESURL)
+      .then(({ data }) => setSeriesList(data))
+      .catch(err => console.log(err))
+      .finally(setSeriesList(['abc', 'def']));
+  }, []);
+
+  const { category } = useParams();
+
   return (
     <Container>
       <PageHeader
         headerSubTitle="Intorest In Category"
-        headerTitle="Series In Category"
+        headerTitle={`Series In ${category}`}
         asideHeader={<CreateSeriesButton to="/series/new">Create Series</CreateSeriesButton>}
       />
       <Lnb />
-      <SeriesListContainer />
-      <PaginationContainer />
+      <SeriesListContainer seriesList={seriesList} />
+      <Pagination totalPages={10} />
     </Container>
   );
 };
