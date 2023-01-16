@@ -2,8 +2,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { AcrylicBase } from '../../atoms/AcrylicBase';
-import { PostListStack, PostList } from './PostList';
+import { PostListStack, PostList } from '../list/PostList';
 import { LabelListTitle, LabelMedium } from '../../../styles/typo';
 import Pagination from '../Pagination';
 
@@ -15,10 +14,10 @@ const Container = styled.div`
   gap: 0px;
 
   position: relative;
-  width: 1056px;
+  width: 90%;
   height: fit-content;
 
-  background: url(https://unsplash.it/1920/1080/?random) rgba(45, 45, 45, 0.44);
+  background-color: rgba(84, 84, 84, 0.5);
   border-radius: 30px;
   overflow: hidden;
 `;
@@ -34,7 +33,7 @@ const InnerLayer = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   ${LabelListTitle}
-  color: #fff;
+  color: var(--gray-700);
   &:hover {
     color: var(--gray-100);
   }
@@ -51,7 +50,7 @@ const UpperSection = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   ${LabelListTitle}
-  color: #fff;
+  color: var(--gray-700);
   &:hover {
     color: var(--gray-100);
   }
@@ -82,7 +81,7 @@ const PostListSection = styled.div`
   padding: 0px;
   gap: 21px;
 
-  width: 100vh;
+  width: 100%;
   height: fit-content;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -164,34 +163,32 @@ const SeriesPostList = ({ width, number = '10' }) => {
 
   return (
     <Container>
-      <AcrylicBase>
-        <InnerLayer>
-          <UpperSection>
-            <TextGroup>
-              <Title width={width}> {series.title || 'Series Name'} </Title>
-              <SeriesPostNumLayer>
-                <p>All Post</p>
-                <p> {number} 개</p>
-              </SeriesPostNumLayer>
-            </TextGroup>
-            {isListOpen ? <PostListStack /> : ''}
-          </UpperSection>
-          <LowerSection>
-            {isListOpen ? (
-              ''
-            ) : (
-              <PostListSection>
-                <PostList />
-                <PostList />
-                <Pagination totalPages={10} />
-              </PostListSection>
-            )}
-            <button type="button" onClick={PostListToggle}>
-              자세히 보기
-            </button>
-          </LowerSection>
-        </InnerLayer>
-      </AcrylicBase>
+      <InnerLayer>
+        <UpperSection>
+          <TextGroup>
+            <Title width={width}> {series.title || 'Series Name'} Post List</Title>
+            <SeriesPostNumLayer>
+              <p>All Post</p>
+              <p> {number} 개</p>
+            </SeriesPostNumLayer>
+          </TextGroup>
+          {isListOpen ? <PostListStack /> : ''}
+        </UpperSection>
+        <LowerSection>
+          {isListOpen ? (
+            ''
+          ) : (
+            <PostListSection>
+              <PostList />
+              <PostList />
+              <Pagination totalPages={10} />
+            </PostListSection>
+          )}
+          <button type="button" onClick={PostListToggle}>
+            자세히 보기
+          </button>
+        </LowerSection>
+      </InnerLayer>
     </Container>
   );
 };

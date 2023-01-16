@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import SeriesTitle from '../../molecules/SeriesTitle';
-import UserInfo from '../../molecules/UserInfo';
+import SeriesTitle from '../SeriesTitle';
+import { UserInfo } from '../UserInfo';
 import { LabelSmall, LabelXSmall } from '../../../styles/typo';
 import { ClearBlurButton } from '../../atoms/Buttons';
 
@@ -19,7 +19,7 @@ import { ClearBlurButton } from '../../atoms/Buttons';
  * @param {string} height - 컨테이너 높이 고정설정
  * @returns {JSX.Element} -
  */
-const SeriesHeader = ({
+const SeriesInfo = ({
   id,
   userName,
   userImage,
@@ -55,10 +55,11 @@ const SeriesHeader = ({
 const Container = styled.div`
   display: flex;
   padding: 20px 40px;
-  width: ${props => props.width || '100%'};
+  width: ${props => props.width || '82.5%'};
   border: ${props => (props.border ? '2px solid black' : 'none')};
   height: ${props => props.height || '104px'};
-  gap: 10px;
+  justify-content: space-between;
+
   border-radius: 30px;
   background-color: rgba(84, 84, 84, 0.5);
   color: white;
@@ -69,7 +70,7 @@ const SeriesInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 331px;
+  width: fit-content;
 `;
 
 const SeriesInfoList = styled.div`
@@ -90,4 +91,4 @@ const IconList = styled.div`
 const Icon = styled.div`
   ${LabelSmall}
 `;
-export default SeriesHeader;
+export default SeriesInfo;
