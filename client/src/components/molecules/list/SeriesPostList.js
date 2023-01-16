@@ -3,10 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { AcrylicBase } from '../../atoms/AcrylicBase';
-import { PostListStack } from './PostList';
-import { ParagraphMedium, LabelListTitle, LabelMedium } from '../../../styles/typo';
-import { UserInfoSmall } from '../UserInfo';
-import { PARAGRAPH, TITLE } from '../../../constants/Paragraph';
+import { PostListStack, PostList } from './PostList';
+import { LabelListTitle, LabelMedium } from '../../../styles/typo';
 
 const Container = styled.div`
   display: flex;
@@ -85,17 +83,6 @@ const ContextLayer = styled.div`
   flex-grow: 0;
 `;
 
-const UserBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 10px;
-  gap: 20px;
-
-  width: fit-content;
-  height: fit-content;
-  color: #fff;
-`;
 const Title = styled.div`
   width: ${props => props.width || '326px'};
   height: fit-content;
@@ -107,21 +94,10 @@ const Title = styled.div`
     color: var(--gray-100);
   }
 `;
-const Paragraph = styled.div`
-  width: ${props => props.width || '326px'};
-  height: 42px;
-  overflow: hidden;
-  text-overflow: ellipsis;
 
-  ${ParagraphMedium}
-  color: #fff;
-  &:hover {
-    color: var(--gray-100);
-  }
-`;
-
-const SeriesList = ({ width, number = '10' }) => {
-  const [series, setSeries] = useState({});
+const SeriesPostList = ({ width, number = '10' }) => {
+  const [isListOpen, setIsListOpen] = useState(false); // list 숨기기
+  const [series, setSeries] = useState({ tagList: [] });
   const { seriesId } = useParams();
 
   useEffect(() => {
@@ -134,28 +110,33 @@ const SeriesList = ({ width, number = '10' }) => {
     getData();
   }, [seriesId]);
 
+  const PostListToggle = () => {
+    setIsListOpen(!isListOpen);
+  };
+
   return (
     <Container>
       <AcrylicBase>
         <InfoLayer>
           <SeriesInfoLayer>
-            <Title width={width}> {series.title || TITLE} </Title>
+            <Title width={width}> {series.title || 'Series Name'} </Title>
             <SeriesPostNumLayer>
               <p>All Post</p>
               <p> {number} 개</p>
             </SeriesPostNumLayer>
           </SeriesInfoLayer>
-          <Paragraph width={width}>{series.Paragraph || PARAGRAPH}</Paragraph>
+
           <ContextLayer>
-            <UserBox>
-              <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
-            </UserBox>
+            <button type="button" onClick={PostListToggle}>
+              자세히 보기
+            </button>
           </ContextLayer>
+          {isListOpen ? '' : <PostList />}
         </InfoLayer>
-        <PostListStack />
+        {isListOpen ? <PostListStack /> : ''}
       </AcrylicBase>
     </Container>
   );
 };
 
-export default SeriesList;
+export default SeriesPostList;
