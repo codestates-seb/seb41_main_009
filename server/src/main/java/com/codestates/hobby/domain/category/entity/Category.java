@@ -1,5 +1,8 @@
 package com.codestates.hobby.domain.category.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -37,7 +41,11 @@ public class Category {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "group_id")
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = CachingConfig.CATEGORY_CACHE)
 	private Category group;
+
+	@OneToMany(mappedBy = "group")
+	private List<Category> categories = new ArrayList<>();
 
 	private Category(String korName, String engName, Category group) {
 		this.korName = korName;
@@ -54,6 +62,6 @@ public class Category {
 	}
 
 	public boolean isGroup() {
-		return group != null;
+		return group == null;
 	}
 }

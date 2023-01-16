@@ -29,4 +29,8 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
 	@QueryHints(@QueryHint(name = "org.hibernate.cacheable", value = "true"))
 	List<Category> findAllByGroup(Category group);
+
+	@QueryHints(@QueryHint(name = "org.hibernate.cacheable", value = "true"))
+	@Query("select distinct c from Category c join fetch c.categories where c.group is null")
+	List<Category> findAllGroupsWithHobbies();
 }

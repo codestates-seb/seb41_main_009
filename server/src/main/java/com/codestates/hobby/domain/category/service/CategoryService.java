@@ -35,6 +35,10 @@ public class CategoryService {
 		return categoryRepository.findAll();
 	}
 
+	public List<Category> findAllGroupsWithHobbies() {
+		return categoryRepository.findAllGroupsWithHobbies();
+	}
+
 	public List<Category> findAllGroups() {
 		return categoryRepository.findAllByGroupIsNull();
 	}
