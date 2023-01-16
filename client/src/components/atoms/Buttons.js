@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Icon } from '@iconify/react';
 import { LabelLarge, LabelSmall } from '../../styles/typo';
 
 const WhiteButton = styled(Link)`
@@ -86,6 +87,28 @@ const SidebarTagsButton = styled(TextButton)`
   }
 `;
 
+const ClearBlurButton = ({ handleClick }) => {
+  const Container = styled.div`
+    display: flex;
+    background-color: rgba(207, 207, 207, 20%);
+    color: white;
+    padding: 10px;
+    gap: 10px;
+  `;
+
+  const Button = styled.button`
+    all: unset;
+  `;
+  return (
+    <Container>
+      <Icon icon="mdi:shimmer" style={{ fontSize: '20px' }} />
+      <Button type="button" onClick={handleClick}>
+        Clear Blur
+      </Button>
+    </Container>
+  );
+};
+
 export {
   WhiteButton,
   BlackButton,
@@ -96,4 +119,5 @@ export {
   TextButton,
   SidebarMainButton,
   SidebarTagsButton,
+  ClearBlurButton,
 };
