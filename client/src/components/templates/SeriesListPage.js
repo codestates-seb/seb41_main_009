@@ -3,10 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import PageHeader from '../organisms/PageHeader';
-import SeriesListContainer from '../organisms/listcontents/SeriesListContainer';
 import Lnb from '../organisms/Lnb';
 import { BlueShadowButton } from '../atoms/Buttons';
 import Pagination from '../molecules/Pagination';
+import SeriesListContainer from '../organisms/listcontents/SeriesListContainer';
+import SERIESURL from '../../constants/URL';
 
 const Container = styled.div`
   display: flex;
@@ -22,17 +23,15 @@ const CreateSeriesButton = styled(BlueShadowButton)`
   height: 44px;
 `;
 
-const SeriesList = () => {
+const SeriesListPage = () => {
   const [seriesList, setSeriesList] = useState([]);
-
-  const SERIESURL = '';
 
   useEffect(() => {
     axios
       .get(SERIESURL)
       .then(({ data }) => setSeriesList(data))
       .catch(err => console.log(err))
-      .finally(setSeriesList(['abc', 'def']));
+      .finally(setSeriesList(['abc', 'def', 'ㅁㅁㅁ', 'ㅁㄴㅇㄹ', 'ㅁㄴㅇㄹㄹㄹㄹ']));
   }, []);
 
   const { category } = useParams();
@@ -51,4 +50,4 @@ const SeriesList = () => {
   );
 };
 
-export default SeriesList;
+export default SeriesListPage;

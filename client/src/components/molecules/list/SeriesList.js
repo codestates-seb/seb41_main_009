@@ -14,10 +14,8 @@ const Container = styled.div`
   align-items: flex-start;
   padding: 0px;
   gap: 10px;
-
-  width: 1056px;
-  height: fit-content;
-
+  width: var(--content-width);
+  margin-bottom: 20px;
   background: url(https://unsplash.it/1920/1080/?random) rgba(45, 45, 45, 0.44);
   border-radius: 30px;
   overflow: hidden;
@@ -28,7 +26,7 @@ const InfoLayer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0px 0px;
+  padding: 15px 0px;
   gap: 10px;
 
   width: fit-content;

@@ -10,16 +10,16 @@ import Showcase from './components/templates/Showcase';
 import Sidebar from './components/organisms/Sidebar';
 import User from './components/templates/User';
 import UserEdit from './components/templates/UserEdit';
-import SeriesList from './components/templates/SeriesList';
 import PostPage from './components/templates/PostPage';
 import PostCreatePage from './components/templates/PostCreatePage';
 import Search from './components/templates/Search';
 import SeriesPage from './components/templates/SeriesPage';
 import Signup from './components/templates/Signup';
+import SeriesListPage from './components/templates/SeriesListPage';
+import ErrorPage from './components/templates/404ErrorPage';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
-import ErrorPage from './components/templates/404ErrorPage';
 
 const App = () => {
   return (
@@ -37,7 +37,7 @@ const App = () => {
             <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
             <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
             <Route path="/posts/new" element={<PublicRoute component={<PostCreatePage />} />} />
-            <Route path="/series/:category" element={<PublicRoute component={<SeriesList />} />} />
+            <Route path="/series/:category" element={<PublicRoute component={<SeriesListPage />} />} />
             <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
             <Route path="/user" element={<PublicRoute component={<User />} />} />
             <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />

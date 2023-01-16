@@ -8,7 +8,7 @@ const AcrylicBase = styled.div`
   padding: 10px;
   gap: 10px;
 
-  position: absolute;
+  position: relative;
   width: ${props => props.width || 'inherit'};
   height: ${props => props.height || 'inherit'};
   box-sizing: border-box;
@@ -23,7 +23,7 @@ const AcrylicBase = styled.div`
 `;
 
 const AcrylicBaseDark = styled.div`
-  position: absolute;
+  position: relative;
   width: ${props => props.width || 'inherit'};
   height: ${props => props.height || 'inherit'};
   box-sizing: border-box;

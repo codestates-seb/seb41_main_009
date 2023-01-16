@@ -1,21 +1,19 @@
 import styled from 'styled-components';
-import Series from '../../molecules/Series';
+import SeriesList from '../../molecules/list/SeriesList';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1056px;
+  width: 100%;
   margin-bottom: 50px;
 `;
 
-const SeriesListContainer = () => {
+const SeriesListContainer = ({ seriesList }) => {
   return (
     <Container>
-      <Series />
-      <Series />
-      <Series />
-      <Series />
-      <Series />
+      {seriesList.map(series => {
+        return <SeriesList key={Math.random()} series={series} />;
+      })}
     </Container>
   );
 };
