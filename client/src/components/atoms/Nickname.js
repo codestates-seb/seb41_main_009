@@ -20,7 +20,7 @@ const Nickname = ({ name, id, color, typo }) => {
 
 const Container = styled(Link)`
   ${props => props.typo || LabelMedium};
-  color: ${props => props.color || 'black'};
+  color: ${props => props.color || 'inherit'};
   cursor: pointer;
   text-decoration: none;
 `;

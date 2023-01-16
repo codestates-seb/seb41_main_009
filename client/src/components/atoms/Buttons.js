@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { Icon } from '@iconify/react';
 import { LabelLarge, LabelSmall } from '../../styles/typo';
+import { ReactComponent as GithubLogo } from '../../static/githubLogo.svg';
+import { ReactComponent as GoogleLogo } from '../../static/googleLogo.svg';
 
 const WhiteButton = styled(Link)`
   width: ${props => (props.width ? props.width : '116px')};
@@ -86,6 +89,28 @@ const SidebarTagsButton = styled(TextButton)`
   }
 `;
 
+const ClearBlurButton = ({ handleClick }) => {
+  const Container = styled.div`
+    display: flex;
+    background-color: rgba(207, 207, 207, 20%);
+    color: white;
+    padding: 10px;
+    gap: 10px;
+  `;
+
+  const Button = styled.button`
+    all: unset;
+  `;
+  return (
+    <Container>
+      <Icon icon="mdi:shimmer" style={{ fontSize: '20px' }} />
+      <Button type="button" onClick={handleClick}>
+        Clear Blur
+      </Button>
+    </Container>
+  );
+};
+
 export {
   WhiteButton,
   BlackButton,
@@ -96,4 +121,45 @@ export {
   TextButton,
   SidebarMainButton,
   SidebarTagsButton,
+  ClearBlurButton,
 };
+
+const OAuth2Button = styled.a`
+  width: ${props => (props.width ? props.width : '512px')};
+  height: ${props => (props.height ? props.height : 'fit-content')};
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0px;
+  gap: 12px;
+  background-color: #ffffff;
+  border: 1px solid var(--gray-600);
+  ${LabelLarge}
+
+  color: black;
+  box-shadow: var(--boxShadow-00) var(--gray-700);
+
+  &:visited {
+    color: black;
+  }
+`;
+const OAuth2GithubButton = ({ message }) => {
+  return (
+    <OAuth2Button>
+      <GithubLogo />
+      {message || 'Continue with Github'}
+    </OAuth2Button>
+  );
+};
+
+const OAuth2GoogleButton = ({ message }) => {
+  return (
+    <OAuth2Button>
+      <GoogleLogo />
+      {message || 'Continue with Google'}
+    </OAuth2Button>
+  );
+};
+
+export { OAuth2GithubButton, OAuth2GoogleButton };

@@ -19,6 +19,7 @@ import Signup from './components/templates/Signup';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
+import ErrorPage from './components/templates/404ErrorPage';
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/user" element={<PublicRoute component={<User />} />} />
             <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />
             <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
+            <Route path="*" element={<PublicRoute component={<ErrorPage />} />} />
           </Routes>
         </Main>
       </BrowserRouter>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import PostHeaderContainer from '../organisms/posts/PostHeaderContainer';
+import PostHeader from '../organisms/posts/PostHeader';
 import PostSubHeaderContainer from '../organisms/posts/PostSubHeaderContainer';
 import PostContent from '../organisms/posts/PostContent';
 import Comments from '../organisms/Comments';
@@ -16,7 +16,7 @@ const Container = styled.div`
 const PostPage = () => {
   return (
     <Container>
-      <PostHeaderContainer />
+      <PostHeader />
       <PostSubHeaderContainer />
       <PostContent />
       <Comments />
