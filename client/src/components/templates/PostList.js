@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import PageHeader from '../organisms/PageHeader';
 import FilterContainer from '../organisms/listcontents/ListFilter';
-import PaginationContainer from '../organisms/listcontents/ListPagination';
-import PostListContainer from '../organisms/listcontents/PostListContainer';
+import Pagination from '../molecules/Pagination';
 
 const Container = styled.div`
   display: flex;
@@ -18,8 +17,7 @@ const PostList = () => {
     <Container>
       <PageHeader />
       <FilterContainer />
-      <PostListContainer />
-      <PaginationContainer />
+      <Pagination totalPages={30} />
     </Container>
   );
 };
