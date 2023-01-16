@@ -8,9 +8,10 @@ const AcrylicBase = styled.div`
   padding: 10px;
   gap: 10px;
 
-  position: absolute;
+  position: relative;
   width: ${props => props.width || 'inherit'};
   height: ${props => props.height || 'inherit'};
+
   box-sizing: border-box;
   background: rgba(45, 45, 45, 0.44);
   background-blend-mode: normal, luminosity;
@@ -23,7 +24,7 @@ const AcrylicBase = styled.div`
 `;
 
 const AcrylicBaseDark = styled.div`
-  position: absolute;
+  position: relative;
   width: ${props => props.width || 'inherit'};
   height: ${props => props.height || 'inherit'};
   box-sizing: border-box;

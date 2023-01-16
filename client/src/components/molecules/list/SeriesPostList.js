@@ -5,14 +5,16 @@ import axios from 'axios';
 import { AcrylicBase } from '../../atoms/AcrylicBase';
 import { PostListStack, PostList } from './PostList';
 import { LabelListTitle, LabelMedium } from '../../../styles/typo';
+import Pagination from '../Pagination';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
-  gap: 10px;
+  gap: 0px;
 
+  position: relative;
   width: 1056px;
   height: fit-content;
 
@@ -20,28 +22,105 @@ const Container = styled.div`
   border-radius: 30px;
   overflow: hidden;
 `;
-
-const InfoLayer = styled.div`
+const InnerLayer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 0px 0px;
-  gap: 10px;
+  align-items: flex-start;
+  padding: 32px;
+  gap: 32px;
+
+  width: inherit;
+  height: fit-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${LabelListTitle}
+  color: #fff;
+  &:hover {
+    color: var(--gray-100);
+  }
+`;
+const UpperSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0px;
 
   width: fit-content;
   height: fit-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${LabelListTitle}
+  color: #fff;
+  &:hover {
+    color: var(--gray-100);
+  }
 `;
 
-const SeriesInfoLayer = styled.div`
+const LowerSection = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 21px;
+
+  width: max-content;
+  height: fit-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${LabelListTitle}
+  color: var(--gray-800);
+  &:hover {
+    color: var(--gray-500);
+  }
+`;
+
+const PostListSection = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 0px 0px;
+  padding: 0px;
+  gap: 21px;
+
+  width: 100vh;
+  height: fit-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${LabelListTitle}
+  color: var(--gray-800);
+  &:hover {
+    color: var(--gray-500);
+  }
+`;
+
+const TextGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+  gap: 8px;
 
   width: fit-content;
   height: fit-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${LabelListTitle}
+  color: #fff;
+  &:hover {
+    color: var(--gray-100);
+  }
+`;
+
+const Title = styled.div`
+  width: ${props => props.width || '326px'};
+  height: fit-content;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  ${LabelListTitle}
+  color: #fff;
+  &:hover {
+    color: var(--gray-100);
+  }
 `;
 
 const SeriesPostNumLayer = styled.div`
@@ -64,37 +143,6 @@ const SeriesPostNumLayer = styled.div`
   align-self: stretch;
   flex-grow: 0;
 `;
-
-const ContextLayer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 0px;
-  gap: 10px;
-  width: fit-content;
-  height: fit-content;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 2;
-  align-self: stretch;
-  flex-grow: 0;
-`;
-
-const Title = styled.div`
-  width: ${props => props.width || '326px'};
-  height: fit-content;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  ${LabelListTitle}
-  color: #fff;
-  &:hover {
-    color: var(--gray-100);
-  }
-`;
-
 const SeriesPostList = ({ width, number = '10' }) => {
   const [isListOpen, setIsListOpen] = useState(false); // list 숨기기
   const [series, setSeries] = useState({ tagList: [] });
@@ -117,23 +165,32 @@ const SeriesPostList = ({ width, number = '10' }) => {
   return (
     <Container>
       <AcrylicBase>
-        <InfoLayer>
-          <SeriesInfoLayer>
-            <Title width={width}> {series.title || 'Series Name'} </Title>
-            <SeriesPostNumLayer>
-              <p>All Post</p>
-              <p> {number} 개</p>
-            </SeriesPostNumLayer>
-          </SeriesInfoLayer>
-
-          <ContextLayer>
+        <InnerLayer>
+          <UpperSection>
+            <TextGroup>
+              <Title width={width}> {series.title || 'Series Name'} </Title>
+              <SeriesPostNumLayer>
+                <p>All Post</p>
+                <p> {number} 개</p>
+              </SeriesPostNumLayer>
+            </TextGroup>
+            {isListOpen ? <PostListStack /> : ''}
+          </UpperSection>
+          <LowerSection>
+            {isListOpen ? (
+              ''
+            ) : (
+              <PostListSection>
+                <PostList />
+                <PostList />
+                <Pagination totalPages={10} />
+              </PostListSection>
+            )}
             <button type="button" onClick={PostListToggle}>
               자세히 보기
             </button>
-          </ContextLayer>
-          {isListOpen ? '' : <PostList />}
-        </InfoLayer>
-        {isListOpen ? <PostListStack /> : ''}
+          </LowerSection>
+        </InnerLayer>
       </AcrylicBase>
     </Container>
   );
