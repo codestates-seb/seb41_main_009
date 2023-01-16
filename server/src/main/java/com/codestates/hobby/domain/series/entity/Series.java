@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.series.entity;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -31,6 +32,9 @@ public class Series extends BaseEntity {
 	private String content;
 
 	@Column
+	private String thumbnail;
+
+	@Column
 	@ColumnDefault("0")
 	private int views;
 
@@ -45,16 +49,27 @@ public class Series extends BaseEntity {
 	@OneToMany(mappedBy = "series")
 	private List<Post> posts;
 
-	@OneToOne(fetch = FetchType.LAZY)
+/*	@OneToOne(fetch = FetchType.LAZY)
 	@JoinTable(name = "SERIES_IMAGE",
 		joinColumns = @JoinColumn(name = "SERIES_ID"),
 		inverseJoinColumns = @JoinColumn(name = "FILE_INFO_ID"))
-	private FileInfo thumbnail;
+	private FileInfo thumbnail;*/
 
-	public Series(Member member, String title, Category category, String content) {
-		this.title = title;
+	public Series(Member member, Category category, String title, String content, String thumbnail) {
 		this.member = member;
-		this.content = content;
 		this.category = category;
+		this.title = title;
+		this.content = content;
+		this.thumbnail = thumbnail;
+	}
+
+	public void edit(Category category, String title, String content, String thumbnail) {
+		if(!Objects.equals(this.category.getId(), category.getId()))  this.category = category;
+		if (!this.title.equals(title)) this.title = title;
+		if (!this.title.equals(content)) this.title = content;
+		if (!this.title.equals(thumbnail)) this.title = thumbnail;
+	}
+
+	public void addImageFromUrl(String url) {
 	}
 }
