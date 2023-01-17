@@ -3,6 +3,12 @@ import { useState, useEffect } from 'react';
 import { seriesListDummy } from '../constants/dummyData';
 import HOST from '../constants/URL';
 
+/**
+ *
+ * @param {string} category
+ * @param {string} page
+ * @returns {seriesList, seriesPageInfo}
+ */
 const useGetSeriesList = (category, page) => {
   const [seriesList, setSeriesList] = useState([]);
   const [seriesPageInfo, setSeriesPageInfo] = useState({});

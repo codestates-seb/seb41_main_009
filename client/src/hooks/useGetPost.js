@@ -3,6 +3,11 @@ import { useState, useEffect } from 'react';
 import { PostDummy } from '../constants/dummyData';
 import HOST from '../constants/URL';
 
+/**
+ *
+ * @param {string | number} postId
+ * @returns {post}
+ */
 const useGetPost = postId => {
   const [post, setPost] = useState({});
 
