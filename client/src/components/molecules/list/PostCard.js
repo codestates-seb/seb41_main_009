@@ -102,7 +102,7 @@ const ImageLayer = styled.img`
  * @param {string} width - text의 길이
  * @returns {JSX.Element} - PostList 개별 항목을 나타내는 컴포넌트
  */
-const PostList = ({ boxShadow, width }) => {
+const PostCard = ({ boxShadow, width }) => {
   const [post, setPost] = useState({});
   const { postId } = useParams();
 
@@ -164,4 +164,4 @@ const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', 
     </Container>
   );
 };
-export { PostList, PostListStack };
+export { PostCard, PostListStack };

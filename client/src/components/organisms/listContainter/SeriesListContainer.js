@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SeriesList from '../../molecules/list/SeriesList';
+import SeriesCard from '../../molecules/list/SeriesCard';
 
 const Container = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ const SeriesListContainer = ({ seriesList }) => {
   return (
     <Container>
       {seriesList.map(series => {
-        return <SeriesList key={series.id} series={series} />;
+        return <SeriesCard key={series.id} series={series} />;
       })}
     </Container>
   );

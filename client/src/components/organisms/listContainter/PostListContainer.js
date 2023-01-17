@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { PostList } from '../../molecules/list/PostList';
+import { PostCard } from '../../molecules/list/PostCard';
 
 const Container = styled.div`
   display: flex;
@@ -12,11 +12,11 @@ const Container = styled.div`
 const PostListContainer = () => {
   return (
     <Container>
-      <PostList />
-      <PostList />
-      <PostList />
-      <PostList />
-      <PostList />
+      <PostCard />
+      <PostCard />
+      <PostCard />
+      <PostCard />
+      <PostCard />
     </Container>
   );
 };

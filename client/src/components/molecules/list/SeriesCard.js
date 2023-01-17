@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { AcrylicBase } from '../../atoms/AcrylicBase';
-import { PostListStack } from './PostList';
+import { PostListStack } from './PostCard';
 import { ParagraphMedium, LabelListTitle, LabelMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { PARAGRAPH } from '../../../constants/Paragraph';
@@ -12,7 +12,7 @@ const Container = styled.div`
   padding: 0px;
   gap: 10px;
   width: var(--content-width);
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   background: url(https://unsplash.it/1920/1080/?random) rgba(45, 45, 45, 0.44);
   border-radius: 30px;
   overflow: hidden;
@@ -113,7 +113,7 @@ const Paragraph = styled.div`
   }
 `;
 
-const SeriesList = ({ width, series }) => {
+const SeriesCard = ({ width, series }) => {
   const { title, content, member, createdAt, modifiedAt, views, postId, totalPosts } = series;
   const { nickname, profileImageUrl } = member;
 
@@ -142,4 +142,4 @@ const SeriesList = ({ width, series }) => {
   );
 };
 
-export default SeriesList;
+export default SeriesCard;
