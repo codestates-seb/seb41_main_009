@@ -1,7 +1,9 @@
 package com.codestates.hobby.domain.category.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,9 +14,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.codestates.hobby.domain.post.entity.Post;
-import com.codestates.hobby.domain.series.entity.Series;
-import com.codestates.hobby.domain.showcase.entity.Showcase;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import com.codestates.hobby.global.config.CachingConfig;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,6 +26,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = CachingConfig.CATEGORY_CACHE)
 public class Category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,19 +41,11 @@ public class Category {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "group_id")
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = CachingConfig.CATEGORY_CACHE)
 	private Category group;
 
 	@OneToMany(mappedBy = "group")
-	private List<Category> categories;
-
-	@OneToMany(mappedBy = "category")
-	private List<Series> series;
-
-	@OneToMany(mappedBy = "category")
-	private List<Post> posts;
-
-	@OneToMany(mappedBy = "category")
-	private List<Showcase> showcases;
+	private List<Category> categories = new ArrayList<>();
 
 	private Category(String korName, String engName, Category group) {
 		this.korName = korName;
@@ -65,6 +62,6 @@ public class Category {
 	}
 
 	public boolean isGroup() {
-		return group != null;
+		return group == null;
 	}
 }

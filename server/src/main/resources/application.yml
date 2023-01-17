@@ -13,12 +13,21 @@ spring:
     hibernate:
       ddl-auto: create
     properties:
+      javax:
+        cache:
+          provider: org.ehcache.jsr107.EhcacheCachingProvider
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
       hibernate:
         format_sql: true
-  servlet:
-    multipart:
-      max-file-size: 5MB      # 파일당 최대크기
-      max-request-size: 50MB  # 요청당 최대크기
+        generate_statistics: true
+        cache:
+          use_query_cache: true
+          use_second_level_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+    defer-datasource-initialization: true
   output:
     ansi:
       enabled: always
@@ -33,9 +42,9 @@ cloud:
 logging:
   level:
     org:
-      springframework:
-        orm:
-          jpa: DEBUG
+      hibernate:
+        type: trace
+
 server:
   port: 8080
   servlet:
