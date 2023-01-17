@@ -35,13 +35,13 @@ const PostCreateHeader = ({ title, setTitle, curCategory, setCategory }) => {
           onChange={e => setTitle(e.target.value)}
         />
         <select name="Category" defaultValue={curCategory} onChange={e => setCategory(e.target.value)}>
-          <option value="카테고리를 선택하세요">카테고리를 선택하세요</option>
+          <option value="">카테고리를 선택하세요</option>
           {CATEGORIES.map(([category, ...tags]) => {
             return (
-              <optgroup key={category[1]} label={category[1]}>
+              <optgroup key={category[0]} label={category[1]}>
                 {tags.map(tag => {
                   return (
-                    <option key={tag[1]} value={tag[1]}>
+                    <option key={tag[1]} value={tag[0]}>
                       {tag[1]}
                     </option>
                   );
