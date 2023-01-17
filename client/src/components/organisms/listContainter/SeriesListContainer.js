@@ -12,7 +12,7 @@ const SeriesListContainer = ({ seriesList }) => {
   return (
     <Container>
       {seriesList.map(series => {
-        return <SeriesList key={Math.random()} series={series} />;
+        return <SeriesList key={series.id} series={series} />;
       })}
     </Container>
   );

@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useParams, useSearchParams } from 'react-router-dom';
 import PageHeader from '../organisms/PageHeader';
 import Lnb from '../organisms/Lnb';
 import { BlueShadowButton } from '../atoms/Buttons';
 import Pagination from '../molecules/Pagination';
 import SeriesListContainer from '../organisms/listContainter/SeriesListContainer';
-import SERIESURL from '../../constants/URL';
+import useGetSeriesList from '../../hooks/useGetSeriesList';
 
 const Container = styled.div`
   display: flex;
@@ -24,17 +22,11 @@ const CreateSeriesButton = styled(BlueShadowButton)`
 `;
 
 const SeriesListPage = () => {
-  const [seriesList, setSeriesList] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(SERIESURL)
-      .then(({ data }) => setSeriesList(data))
-      .catch(err => console.log(err))
-      .finally(setSeriesList(['abc', 'def', 'ㅁㅁㅁ', 'ㅁㄴㅇㄹ', 'ㅁㄴㅇㄹㄹㄹㄹ']));
-  }, []);
-
   const { category } = useParams();
+  const [searchParams] = useSearchParams();
+  const curPage = searchParams.get('page');
+
+  const { seriesList, seriesPageInfo } = useGetSeriesList(category, curPage);
 
   return (
     <Container>
@@ -45,7 +37,7 @@ const SeriesListPage = () => {
       />
       <Lnb />
       <SeriesListContainer seriesList={seriesList} />
-      <Pagination totalPages={10} />
+      <Pagination totalPages={seriesPageInfo.totalPage} />
     </Container>
   );
 };

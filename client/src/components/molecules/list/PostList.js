@@ -6,6 +6,7 @@ import { LabelListTitle, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { TextButton } from '../../atoms/Buttons';
 import { PARAGRAPH, TITLE } from '../../../constants/Paragraph';
+import useGetPost from '../../../hooks/useGetPost';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -138,19 +139,9 @@ const PostList = ({ boxShadow, width }) => {
  * @param {string} width - text의 길이
  * @returns {JSX.Element} - PostListStack을 나타내는 컴포넌트
  */
-const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px' }) => {
-  const [post, setPost] = useState({});
-  const { postId } = useParams();
+const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId }) => {
+  const post = useGetPost(postId);
 
-  useEffect(() => {
-    const getData = async () => {
-      await axios(`http://3.37.105.24:8080/questions/${postId}`)
-        .then(res => setPost(res.data.data))
-        .catch(error => console.log(error));
-    };
-
-    getData();
-  }, [postId]);
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
