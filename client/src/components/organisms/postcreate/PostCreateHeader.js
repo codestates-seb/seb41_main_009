@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Input from '../../atoms/Input';
 import { CATEGORIES } from '../../../constants/Categories';
-import { DisplayXSmall } from '../../../styles/typo';
+import { HeadingMedium } from '../../../styles/typo';
 
 const Container = styled.div`
   display: flex;
@@ -11,7 +11,8 @@ const Container = styled.div`
 `;
 
 const HeaderTitleContainer = styled.div`
-  ${DisplayXSmall}
+  ${HeadingMedium}
+  margin-bottom: 10px;
 `;
 
 const HeaderSubContainer = styled.div`

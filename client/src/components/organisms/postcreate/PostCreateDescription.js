@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DisplayXSmall } from '../../../styles/typo';
+import { HeadingMedium } from '../../../styles/typo';
 import Input from '../../atoms/Input';
 
 const Container = styled.div`
@@ -10,7 +10,8 @@ const Container = styled.div`
 `;
 
 const HeaderTitleContainer = styled.div`
-  ${DisplayXSmall}
+  ${HeadingMedium}
+  margin-bottom: 10px;
 `;
 
 const PostCreateDescription = () => {
