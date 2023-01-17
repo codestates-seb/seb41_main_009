@@ -14,11 +14,11 @@ const HeaderTitleContainer = styled.div`
   margin-bottom: 10px;
 `;
 
-const PostCreateBody = () => {
+const PostCreateBody = ({ body, setBody }) => {
   return (
     <Container>
       <HeaderTitleContainer>Body</HeaderTitleContainer>
-      <TextEditor />
+      <TextEditor body={body} setBody={setBody} />
     </Container>
   );
 };

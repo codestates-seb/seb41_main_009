@@ -10,14 +10,12 @@ const Container = styled.div`
   justify-content: flex-end;
 `;
 
-const PostCreateButtons = () => {
+const PostCreateButtons = ({ submitNewPost }) => {
   const navigate = useNavigate();
 
   const cancelPostCreate = () => {
     navigate(-1);
   };
-
-  const submitNewPost = () => {};
 
   return (
     <Container>

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import PostCreateBody from '../organisms/postcreate/PostCreateBody';
 import PostCreateButtons from '../organisms/postcreate/PostCreateButtons';
@@ -13,12 +14,28 @@ const Container = styled.div`
 `;
 
 const PostCreatePage = () => {
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [body, setBody] = useState('내용을 입력해주세요.');
+
+  const submitNewPost = () => {
+    const postData = {
+      title,
+      category,
+      description,
+      body,
+    };
+
+    console.log(postData);
+  };
+
   return (
     <Container>
-      <PostCreateHeader />
-      <PostCreateDescription />
-      <PostCreateBody />
-      <PostCreateButtons />
+      <PostCreateHeader title={title} setTitle={setTitle} curCategory={category} setCategory={setCategory} />
+      <PostCreateDescription description={description} setDescription={setDescription} />
+      <PostCreateBody body={body} setBody={setBody} />
+      <PostCreateButtons submitNewPost={submitNewPost} />
     </Container>
   );
 };

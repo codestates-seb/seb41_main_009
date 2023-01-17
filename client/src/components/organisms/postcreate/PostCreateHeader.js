@@ -22,13 +22,19 @@ const HeaderSubContainer = styled.div`
   justify-content: space-between;
 `;
 
-const PostCreateHeader = () => {
+const PostCreateHeader = ({ title, setTitle, curCategory, setCategory }) => {
   return (
     <Container>
       <HeaderTitleContainer>Title</HeaderTitleContainer>
       <HeaderSubContainer>
-        <Input placeholder="제목을 입력하세요" width="80%" height="45px" />
-        <select name="Category">
+        <Input
+          placeholder="제목을 입력하세요"
+          width="80%"
+          defaultValue={title}
+          height="45px"
+          onChange={e => setTitle(e.target.value)}
+        />
+        <select name="Category" defaultValue={curCategory} onChange={e => setCategory(e.target.value)}>
           <option value="카테고리를 선택하세요">카테고리를 선택하세요</option>
           {CATEGORIES.map(([category, ...tags]) => {
             return (
