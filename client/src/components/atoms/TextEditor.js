@@ -10,18 +10,20 @@ const TextEditor = ({ initialValue = '내용을 입력해주세요.' }) => {
   const editorRef = useRef();
 
   return (
-    <Editor
-      height="auto"
-      initialValue={initialValue}
-      initialEditType="wysiwyg"
-      language="ko-KR"
-      hideModeSwitch="true"
-      plugins={[colorSyntax]}
-      ref={editorRef}
-      hooks={{
-        addImageBlobHook: uploadImage,
-      }}
-    />
+    <div style={{ width: '100%' }}>
+      <Editor
+        height="auto"
+        initialValue={initialValue}
+        initialEditType="wysiwyg"
+        language="ko-KR"
+        hideModeSwitch="true"
+        plugins={[colorSyntax]}
+        ref={editorRef}
+        hooks={{
+          addImageBlobHook: uploadImage,
+        }}
+      />
+    </div>
   );
 };
 

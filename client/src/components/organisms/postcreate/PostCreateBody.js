@@ -3,10 +3,9 @@ import TextEditor from '../../atoms/TextEditor';
 
 const Container = styled.div`
   display: flex;
-  width: inherit;
-  height: 300px;
+  width: 100%;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 50px;
 `;
 

@@ -8,6 +8,7 @@ import { ReactComponent as GoogleLogo } from '../../static/googleLogo.svg';
 const WhiteButton = styled(Link)`
   width: ${props => (props.width ? props.width : '116px')};
   height: ${props => (props.height ? props.height : '44px')};
+  margin: ${props => (props.margin ? props.margin : '0')};
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -62,6 +63,7 @@ const TextButton = styled(Link)`
   display: flex;
   width: ${props => (props.width ? props.width : '100px')};
   height: ${props => (props.height ? props.height : '30px')};
+  margin: ${props => (props.margin ? props.margin : '0')};
   align-items: center;
   text-decoration: none;
   ${LabelLarge}
