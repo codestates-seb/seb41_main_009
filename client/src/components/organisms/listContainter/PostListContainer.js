@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import SeriesList from '../../molecules/list/SeriesList';
-import SeriesPostList from '../../molecules/list/SeriesPostList';
+
+import { PostList } from '../../molecules/list/PostList';
 
 const Container = styled.div`
   display: flex;
@@ -12,8 +12,11 @@ const Container = styled.div`
 const PostListContainer = () => {
   return (
     <Container>
-      <SeriesList />
-      <SeriesPostList />
+      <PostList />
+      <PostList />
+      <PostList />
+      <PostList />
+      <PostList />
     </Container>
   );
 };

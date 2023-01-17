@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Series from '../../molecules/Series';
+import SeriesList from '../../molecules/list/SeriesList';
 
 const Container = styled.div`
   display: flex;
@@ -11,11 +11,11 @@ const Container = styled.div`
 const SeriesListContainer = () => {
   return (
     <Container>
-      <Series />
-      <Series />
-      <Series />
-      <Series />
-      <Series />
+      <SeriesList />
+      <SeriesList />
+      <SeriesList />
+      <SeriesList />
+      <SeriesList />
     </Container>
   );
 };

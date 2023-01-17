@@ -6,7 +6,7 @@ import { AcrylicBase } from '../../atoms/AcrylicBase';
 import { PostListStack } from './PostList';
 import { ParagraphMedium, LabelListTitle, LabelMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
-import { PARAGRAPH, TITLE } from '../../../constants/Paragraph';
+import { PARAGRAPH } from '../../../constants/Paragraph';
 
 const Container = styled.div`
   display: flex;
@@ -139,7 +139,7 @@ const SeriesList = ({ width, number = '10' }) => {
       <AcrylicBase>
         <InfoLayer>
           <SeriesInfoLayer>
-            <Title width={width}> {series.title || TITLE} </Title>
+            <Title width={width}> {series.title || 'Series Title'} </Title>
             <SeriesPostNumLayer>
               <p>All Post</p>
               <p> {number} 개</p>

@@ -3,23 +3,23 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
-import LogIn from './components/templates/LogIn';
-import Navigator from './components/organisms/Navigator';
-import PostList from './components/templates/PostList';
-import Showcase from './components/templates/Showcase';
+import LogIn from './components/pages/LogInPage';
+import Header from './components/organisms/Header';
+import PostList from './components/pages/PostListPage';
+import Showcase from './components/pages/ShowcasePage';
 import Sidebar from './components/organisms/Sidebar';
-import User from './components/templates/User';
-import UserEdit from './components/templates/UserEdit';
-import SeriesList from './components/templates/SeriesList';
-import PostPage from './components/templates/PostPage';
-import PostCreatePage from './components/templates/PostCreatePage';
-import Search from './components/templates/Search';
-import SeriesPage from './components/templates/SeriesPage';
-import Signup from './components/templates/Signup';
+import User from './components/pages/UserPage';
+import UserEdit from './components/pages/UserEditPage';
+import SeriesList from './components/pages/SeriesListPage';
+import PostPage from './components/pages/PostPage';
+import PostCreatePage from './components/pages/PostCreatePage';
+import Search from './components/pages/SearchPage';
+import SeriesPage from './components/pages/SeriesPage';
+import Signup from './components/pages/SignupPage';
+import ErrorPage from './components/pages/404ErrorPage';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
-import ErrorPage from './components/templates/404ErrorPage';
 
 const App = () => {
   return (
@@ -27,7 +27,7 @@ const App = () => {
       <Reset />
       <GlobalStyled />
       <BrowserRouter>
-        <Navigator />
+        <Header />
         <Main>
           <Sidebar />
           <Routes>
