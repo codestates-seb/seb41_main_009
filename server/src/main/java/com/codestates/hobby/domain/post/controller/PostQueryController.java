@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping
@@ -23,8 +26,13 @@ public class PostQueryController {
     @GetMapping("/posts/{post-id}")
     public ResponseEntity<?> get(@PathVariable("post-id") long postId, @AuthenticationPrincipal Long memberId) {
         Post post = postService.findById(postId);
-
         PostDto.Response response = mapper.postToResponse(post);
+        mapper.setProperties(response,memberId);
+        mapper.setSeries(response, response.getSeriesId());
+        if (response.getSeriesId() != null){
+            List<String> seriesPostUrl = post.getSeries().getPosts().stream().map(seriesPost -> "http://localhost:8080/posts/"+seriesPost.getId()).collect(Collectors.toList());
+            response.setSeriesPosts(seriesPostUrl);
+        }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -21,7 +21,7 @@ public class PostCommendController {
                                   @AuthenticationPrincipal Long memberId) {
         postDto.setMemberId(memberId);
         Post post = postService.post(postDto);
-        return new ResponseEntity<>(post, HttpStatus.CREATED);
+        return new ResponseEntity<>(post.getId(), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{post-id}")
@@ -30,7 +30,7 @@ public class PostCommendController {
                                    @AuthenticationPrincipal Long memberId) {
         patchDto.setProperties(memberId, postId);
         Post post = postService.update(patchDto);
-        return new ResponseEntity<>(post,HttpStatus.OK);
+        return new ResponseEntity<>(post.getId(),HttpStatus.OK);
     }
 
     @DeleteMapping("/{post-id}")
