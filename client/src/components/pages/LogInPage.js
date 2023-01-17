@@ -19,7 +19,7 @@ const Body = styled.div`
   height: 100%;
 `;
 
-const LogIn = () => {
+const LogInPage = () => {
   return (
     <Container>
       <SplashProfileStickerLabel
@@ -36,4 +36,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default LogInPage;

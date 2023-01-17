@@ -44,7 +44,7 @@ const UserButton = styled(TextButton)`
   ${LabelMedium}
 `;
 
-const Navigator = () => {
+const Header = () => {
   return (
     <Container>
       <Body>
@@ -69,4 +69,4 @@ const Navigator = () => {
   );
 };
 
-export default Navigator;
+export default Header;

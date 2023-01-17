@@ -2,6 +2,8 @@ package com.codestates.hobby.domain.category.controller;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,29 +27,26 @@ public class CategoryController {
 	private final CategoryService categoryService;
 	private final CategoryMapper mapper;
 
-	// 카테고리 그룹 목록을 조회한다.
+	@GetMapping
+	public ResponseEntity<?> getAll() {
+		List<Category> categories = categoryService.findAllGroupsWithHobbies();
+		return new ResponseEntity<>(toResponseDto(categories, true), HttpStatus.OK);
+	}
+
 	@GetMapping("/groups")
 	public ResponseEntity<?> getGroups() {
 		List<Category> groups = categoryService.findAllGroups();
-		return new ResponseEntity<>(toResponseDto(groups), HttpStatus.OK);
+		return new ResponseEntity<>(toResponseDto(groups, false), HttpStatus.OK);
 	}
 
-	// 특정 그룹의 카테고리 목록을 조회한다.
 	@GetMapping("/groups/{group}")
-	public ResponseEntity<?> getCategories(@PathVariable String group) {
+	public ResponseEntity<?> getCategories(@PathVariable @NotBlank String group) {
 		List<Category> categories = categoryService.findAllByGroup(group);
-		return new ResponseEntity<>(toResponseDto(categories), HttpStatus.OK);
+		return new ResponseEntity<>(toResponseDto(categories, false), HttpStatus.OK);
 	}
 
-	// 모든 카테고리 목록을 조회한다.
-	@GetMapping
-	public ResponseEntity<?> getAll() {
-		List<Category> categories = categoryService.findAll();
-		return new ResponseEntity<>(toResponseDto(categories), HttpStatus.OK);
-	}
-
-	private MultiResponseDto<?> toResponseDto(List<Category> categories) {
-		List<CategoryDto.Response> responses = mapper.categoriesToResponses(categories);
+	private MultiResponseDto<?> toResponseDto(List<Category> categories, boolean containHobbies) {
+		List<CategoryDto.Response> responses = mapper.categoriesToResponses(categories, containHobbies);
 		return new MultiResponseDto<>(new PageImpl<>(responses));
 	}
 }

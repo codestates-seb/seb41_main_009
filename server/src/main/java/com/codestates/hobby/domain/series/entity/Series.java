@@ -5,11 +5,11 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.common.BaseEntity;
-import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.post.entity.Post;
 
@@ -32,9 +32,6 @@ public class Series extends BaseEntity {
 	private String content;
 
 	@Column
-	private String thumbnail;
-
-	@Column
 	@ColumnDefault("0")
 	private int views;
 
@@ -49,27 +46,22 @@ public class Series extends BaseEntity {
 	@OneToMany(mappedBy = "series")
 	private List<Post> posts;
 
-/*	@OneToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "SERIES_IMAGE",
-		joinColumns = @JoinColumn(name = "SERIES_ID"),
-		inverseJoinColumns = @JoinColumn(name = "FILE_INFO_ID"))
-	private FileInfo thumbnail;*/
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinColumn(name = "file_info_id", updatable = false)
+	private FileInfo image;
 
 	public Series(Member member, Category category, String title, String content, String thumbnail) {
 		this.member = member;
 		this.category = category;
 		this.title = title;
 		this.content = content;
-		this.thumbnail = thumbnail;
+		FileInfo.createSeriesImage(this, thumbnail);
 	}
 
 	public void edit(Category category, String title, String content, String thumbnail) {
-		if(!Objects.equals(this.category.getId(), category.getId()))  this.category = category;
+		if (!this.category.getId().equals(category.getId()))  this.category = category;
 		if (!this.title.equals(title)) this.title = title;
-		if (!this.title.equals(content)) this.title = content;
-		if (!this.title.equals(thumbnail)) this.title = thumbnail;
-	}
-
-	public void addImageFromUrl(String url) {
+		if (!this.content.equals(content)) this.content = content;
+		if (!this.image.getFileURL().equals(thumbnail)) FileInfo.createSeriesImage(this, thumbnail);
 	}
 }

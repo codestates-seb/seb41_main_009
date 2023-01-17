@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import PageHeader from '../organisms/PageHeader';
-import FilterContainer from '../organisms/listcontents/ListFilter';
 import Pagination from '../molecules/Pagination';
+import Lnb from '../organisms/Lnb';
+import PostListContainer from '../organisms/listContainter/PostListContainer';
+import SearchResultTitle from '../organisms/search/SearchResultTitle';
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +18,9 @@ const PostList = () => {
   return (
     <Container>
       <PageHeader />
-      <FilterContainer />
+      <SearchResultTitle title="검색결과" amount="120" />
+      <Lnb />
+      <PostListContainer />
       <Pagination totalPages={30} />
     </Container>
   );

@@ -22,17 +22,21 @@ public class CategoryService {
 	}
 
 	public Category findHobbyByName(String name) {
-		return categoryRepository.findByGroupIsNotNullAndName(name.toUpperCase())
+		return categoryRepository.findByGroupIsNotNullAndName(name.toLowerCase())
 			.orElseThrow(() -> new IllegalArgumentException("Not found category for " + name));
 	}
 
 	public Category findGroupByName(String name) {
-		return categoryRepository.findByGroupIsNullAndName(name.toUpperCase())
+		return categoryRepository.findByGroupIsNullAndName(name.toLowerCase())
 			.orElseThrow(() -> new IllegalArgumentException("Not found category for " + name));
 	}
 
 	public List<Category> findAll() {
 		return categoryRepository.findAll();
+	}
+
+	public List<Category> findAllGroupsWithHobbies() {
+		return categoryRepository.findAllGroupsWithHobbies();
 	}
 
 	public List<Category> findAllGroups() {

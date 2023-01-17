@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { MAIN, CATEGORIES } from '../../constants/Categories';
-import Menu from '../molecules/SidebarMenu';
+import Menu from '../molecules/sidbar/SidebarMenu';
 import { SidebarMainButton } from '../atoms/Buttons';
 import Selected from '../../styles/Selected';
 
