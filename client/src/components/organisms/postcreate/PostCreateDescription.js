@@ -1,19 +1,23 @@
 import styled from 'styled-components';
+import { DisplayXSmall } from '../../../styles/typo';
 import Input from '../../atoms/Input';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   width: inherit;
-  height: 50px;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 50px;
+`;
+
+const HeaderTitleContainer = styled.div`
+  ${DisplayXSmall}
 `;
 
 const PostCreateDescription = () => {
   return (
     <Container>
-      <Input placeholder="글의 설명을 적어주세요" width="100%" />
+      <HeaderTitleContainer>Description</HeaderTitleContainer>
+      <Input placeholder="글의 설명을 적어주세요" width="100%" height="45px" />
     </Container>
   );
 };
