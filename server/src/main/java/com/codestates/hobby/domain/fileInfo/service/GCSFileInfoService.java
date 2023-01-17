@@ -58,7 +58,6 @@ public class GCSFileInfoService extends FileInfoService {
 			TimeUnit.MINUTES,
 			Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
 			Storage.SignUrlOption.withExtHeaders(headers),
-			Storage.SignUrlOption.withContentType(),
 			Storage.SignUrlOption.withV4Signature());
 
 		return new SignedURL(url.toString(), fileUrl, imageType);
