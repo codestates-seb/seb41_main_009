@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -41,12 +42,12 @@ public class GCSFileInfoService extends FileInfoService {
 
 	@Override
 	public SignedURL generateSignedURL(ImageType imageType, BasePath basePath) {
-		String savedFilename = generateRandomFilename(imageType, basePath.toString());
+		String savedFilename = generateRandomFilename(imageType, basePath);
 		String fileUrl;
 
 		do {
 			fileUrl = String.join("/", domain, bucketName, savedFilename);
-		} while (!fileInfoRepository.existsByFileURL(fileUrl));
+		} while (fileInfoRepository.existsByFileURL(fileUrl));
 
 		BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, savedFilename)).build();
 		Map<String, String> headers = Collections.singletonMap("Content-Type", imageType.toContentType());
@@ -57,6 +58,7 @@ public class GCSFileInfoService extends FileInfoService {
 			TimeUnit.MINUTES,
 			Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
 			Storage.SignUrlOption.withExtHeaders(headers),
+			Storage.SignUrlOption.withContentType(),
 			Storage.SignUrlOption.withV4Signature());
 
 		return new SignedURL(url.toString(), fileUrl, imageType);
@@ -64,16 +66,20 @@ public class GCSFileInfoService extends FileInfoService {
 
 	@Override
 	public void delete(FileInfo fileInfo) {
-		if (!storage.delete(BlobId.of(fileInfo.getBucket(), fileInfo.getFilename()))) {
-			String message =
-				"FileInfo [" + fileInfo.getId() + "] was not deleted. (url: " + fileInfo.getFileURL() + ")";
-			throw new RuntimeException(message);
-		}
-
+		this.deleteFileInStorage(List.of(fileInfo));
 		super.delete(fileInfo);
 	}
 
 	public void delete(List<FileInfo> fileInfos) {
-		fileInfos.forEach(this::delete);
+		this.deleteFileInStorage(fileInfos);
+		super.delete(fileInfos);
+	}
+
+	private void deleteFileInStorage(List<FileInfo> fileInfos) {
+		List<BlobId> ids = fileInfos.stream()
+			.map(info -> BlobId.of(info.getBucket(), info.getPath()))
+			.collect(Collectors.toList());
+
+		storage.delete(ids);
 	}
 }

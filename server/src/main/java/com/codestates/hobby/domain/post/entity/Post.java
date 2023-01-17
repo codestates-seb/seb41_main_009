@@ -1,6 +1,8 @@
 package com.codestates.hobby.domain.post.entity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 
@@ -12,7 +14,6 @@ import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.series.entity.Series;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -34,16 +35,6 @@ public class Post extends BaseEntity {
 	@ColumnDefault("0")
 	private int views;
 
-	@Column
-	@ColumnDefault("false")
-	private boolean isTemp;
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "POST_IMAGE",
-			joinColumns = @JoinColumn(name = "POST_ID"),
-			inverseJoinColumns = @JoinColumn(name = "FILE_INFO_ID"))
-	private FileInfo thumbnail;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
@@ -56,18 +47,80 @@ public class Post extends BaseEntity {
 	@JoinColumn(name = "series_id", nullable = false)
 	private Series series;
 
-	@OneToMany(mappedBy = "post")
-	private List<PostComment> comments;
+	@OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST, orphanRemoval = true)
+	private List<FileInfo> images = new ArrayList<>();
 
-	public Post(Member member, String title, Category category, String content) {
-		this(member, title, null, content, category);
+	@OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+	private List<PostComment> comments = new ArrayList<>();
+
+	public Post(Member member, String title, Category category, String content, List<String> imageURLs) {
+		this(member, title, null, category, content, imageURLs);
+		imageURLs.forEach(this::addImageFromUrl);
 	}
 
-	public Post(Member member, String title, Series series, String content, Category category) {
+	public Post(Member member, String title, Category category, String content) {
+		this(member, title, null, category, content);
+	}
+
+	public Post(Member member, String title, Series series,Category category, String content) {
+		this.member = member;
 		this.title = title;
 		this.content = content;
-		this.member = member;
 		this.category = category;
 		this.series = series;
 	}
+
+	public Post(Member member, String title, Series series,Category category, String content, List<String> imageURLs) {
+		this.member = member;
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.series = series;
+
+		imageURLs.forEach(this::addImageFromUrl);
+	}
+
+	public void updatePost (String title, String content, Category category, Series series, List<String> imageURLs) {
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.series = series;
+		updateImage(imageURLs);
+	}
+
+	public void updatePost (String title, String content, Category category, Series series) {
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		this.series = series;
+	}
+
+	public void updatePost (String title, String content, Category category, List<String> imageURLs) {
+		this.title = title;
+		this.content = content;
+		this.category = category;
+		updateImage(imageURLs);
+	}
+
+	public void updatePost (String title, String content, Category category) {
+		this.title = title;
+		this.content = content;
+		this.category = category;
+	}
+
+	public void addImage(FileInfo fileInfo) {
+		images.add(fileInfo);
+	}
+
+	public void addImageFromUrl(String url) {
+		FileInfo fileInfo = FileInfo.createPostImage(this,url);
+		images.add(fileInfo);
+	}
+
+	public void  updateImage(List<String> urls){
+		List<String> olds = images.stream().map(FileInfo::getFileURL).collect(Collectors.toList());
+		new ArrayList<>(images).stream().filter(image -> !urls.contains(image.getFileURL())).forEach(image -> images.remove(image));
+		urls.stream().filter(url -> !olds.contains(url)).forEach(this::addImageFromUrl);
+	}
+
 }

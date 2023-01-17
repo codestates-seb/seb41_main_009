@@ -16,10 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class SeriesService {
-    SeriesRepository seriesRepository;
-    MemberService memberService;
-    CategoryService categoryService;
-
+    private final SeriesRepository seriesRepository;
+    private final MemberService memberService;
+    private final CategoryService categoryService;
 
     @Transactional
     public Series create(SeriesDto.Post post) {
@@ -32,17 +31,23 @@ public class SeriesService {
     @Transactional
     public Series edit(SeriesDto.Patch patch) {
         Category category = categoryService.findHobbyByName(patch.getCategory());
-        Series series = seriesRepository.findByIdAndMemberId(patch.getSeriesId(), patch.getMemberId())
-                .orElseThrow(() -> new RuntimeException("not found series"));
+        Series series = findById(patch.getSeriesId());
+        if(patch.getMemberId() != series.getMember().getId())
+            new RuntimeException("Unauthorized");
         series.edit(category, patch.getTitle(), patch.getContent(), patch.getThumbnail());
 
-        return series;
+        return seriesRepository.save(series);
     }
 
     @Transactional
     public void delete(long seriesId, long memberId) {
-        seriesRepository.findByIdAndMemberId(memberId, seriesId).orElseThrow(() -> new RuntimeException("not found series"));
+        seriesRepository.findByIdAndMemberId(seriesId, memberId).orElseThrow(() -> new RuntimeException("not found series"));
         seriesRepository.deleteById(seriesId);
+    }
+
+    @Transactional(readOnly = true)
+    public Series findById(long seriesId) {
+        return seriesRepository.findById(seriesId).orElseThrow(()->new RuntimeException("not found series"));
     }
 
 

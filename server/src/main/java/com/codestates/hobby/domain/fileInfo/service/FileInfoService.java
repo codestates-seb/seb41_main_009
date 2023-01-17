@@ -19,30 +19,21 @@ public abstract class FileInfoService {
 
 	abstract public SignedURL generateSignedURL(ImageType type, BasePath basePath);
 
-	abstract public void delete(List<FileInfo> fileInfos);
-
-	public FileInfo save(FileInfo fileInfo) {
-		return fileInfoRepository.save(fileInfo);
-	}
-
-	public List<FileInfo> save(List<FileInfo> fileInfos) {
-		return fileInfoRepository.saveAll(fileInfos);
-	}
-
-	public FileInfo saveByUrl(String url) {
-		return save(new FileInfo(url));
-	}
-
-	public List<FileInfo> saveAllByUrls(List<String> urls) {
-		List<FileInfo> infos = urls.stream().map(FileInfo::new).collect(Collectors.toList());
-		return save(infos);
+	public List<SignedURL> generateSignedURLs(List<ImageType> types, BasePath basePath) {
+		return types.parallelStream()
+			.map(type -> generateSignedURL(type, basePath))
+			.collect(Collectors.toList());
 	}
 
 	public void delete(FileInfo fileInfo) {
 		fileInfoRepository.delete(fileInfo);
 	}
 
-	protected String generateRandomFilename(ImageType type, String basePath) {
+	public void delete(List<FileInfo> fileInfos) {
+		fileInfoRepository.deleteAll(fileInfos);
+	}
+
+	protected String generateRandomFilename(ImageType type, BasePath basePath) {
 		return String.format("%s/%s.%s", basePath, UUID.randomUUID(), type.getExtension());
 	}
 }

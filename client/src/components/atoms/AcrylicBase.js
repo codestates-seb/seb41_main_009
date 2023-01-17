@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const AcrylicBase = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: ${props => props.flexDirection || 'row'};
   justify-content: center;
   align-items: center;
   padding: 10px;
@@ -11,6 +11,7 @@ const AcrylicBase = styled.div`
   position: relative;
   width: ${props => props.width || 'inherit'};
   height: ${props => props.height || 'inherit'};
+
   box-sizing: border-box;
   background: rgba(45, 45, 45, 0.44);
   background-blend-mode: normal, luminosity;
@@ -27,7 +28,7 @@ const AcrylicBaseDark = styled.div`
   width: ${props => props.width || 'inherit'};
   height: ${props => props.height || 'inherit'};
   box-sizing: border-box;
-  background: rgba(45, 45, 45, 0.44);
+  background: rgba(45, 45, 45, 0.64);
   background-blend-mode: normal, luminosity;
   backdrop-filter: blur(30px);
   border-radius: 7px;

@@ -6,7 +6,7 @@ import PageHeader from '../organisms/PageHeader';
 import Lnb from '../organisms/Lnb';
 import { BlueShadowButton } from '../atoms/Buttons';
 import Pagination from '../molecules/Pagination';
-import SeriesListContainer from '../organisms/listcontents/SeriesListContainer';
+import SeriesListContainer from '../organisms/listContainter/SeriesListContainer';
 import SERIESURL from '../../constants/URL';
 
 const Container = styled.div`

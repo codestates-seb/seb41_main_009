@@ -1,7 +1,6 @@
 package com.codestates.hobby.domain.member.entity;
 
 import java.util.List;
-
 import javax.persistence.*;
 
 import com.codestates.hobby.domain.common.BaseEntity;
@@ -14,7 +13,6 @@ import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
 import com.codestates.hobby.domain.subscription.entity.Subscription;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -64,41 +62,34 @@ public class Member extends BaseEntity {
 	@OneToMany(mappedBy = "target")
 	private List<Subscription> subscriptions;
 
-	@JsonManagedReference(value ="member")
 	@Enumerated(value = EnumType.STRING)
 	@Column
-	@ColumnDefault("MEMBER_ACTIVE")
 	@Setter
-	private MemberStatus memberStatus;
+	private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinTable(name = "MEMBER_IMAGE",
-		joinColumns = @JoinColumn(name = "member_id"),
-		inverseJoinColumns = @JoinColumn(name = "file_info_id"), foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (file_info_id) references file_info ON DELETE CASCADE"),
-		uniqueConstraints = @UniqueConstraint(name = "unq_member_profile", columnNames = "member_id"))
-	private FileInfo fileInfo;
+	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinColumn(name = "file_info_id", updatable = false)
+	private FileInfo image;
 
-	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, FileInfo fileInfo) {
+	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, String profileUrl) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
 		this.introduction = introduction;
 		this.isOauth2 = isOauth2;
-		this.fileInfo = fileInfo;
+		FileInfo.createMemberImage(this, profileUrl);
 	}
 
-	public void edit(String nickname, String password, String introduction, FileInfo fileInfo) {
-		this.nickname = nickname;
-		this.password = password;
-		this.introduction = introduction;
-		this.fileInfo = fileInfo;
+	public void edit(String nickname, String password, String introduction, String profileUrl) {
+		if (!this.nickname.equals(nickname)) this.nickname = nickname;
+		if (!this.password.equals(password)) this.password = password;
+		if (!this.introduction.equals(introduction)) this.introduction = introduction;
+		if (!this.image.getFileURL().equals(profileUrl)) FileInfo.createMemberImage(this, profileUrl);
 	}
 
 	public enum MemberStatus {
 		MEMBER_ACTIVE("활동중"),
-		MEMBER_QUIT("탈퇴 상태"),
-		MEMBER_LOGIN("로그인"),
-		MEMBER_LOGOUT("로그아웃");
+		MEMBER_QUIT("탈퇴 상태");
 
 		@Getter
 		private String status;

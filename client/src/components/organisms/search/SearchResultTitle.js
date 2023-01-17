@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { LabelListTitle, LabelMedium } from '../../../styles/typo';
 
 const SearchResultTitle = ({ title, amount, moreBtn }) => {
   return (
@@ -19,23 +20,26 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid black;
+
   padding-bottom: 10px;
-  margin-bottom: 15px;
-  background-color: yellow;
+  margin-top: 20px;
 `;
 
 const HeaderContainer = styled.div`
   display: flex;
+  flex-direction: row;
   align-items: center;
+  padding: 0px;
   gap: 10px;
 `;
 
 const Header = styled.div`
-  font-size: var(--heading-s);
+  ${LabelListTitle}
 `;
 
 const ResultCount = styled.div`
-  font-size: var(--label-l);
+  ${LabelMedium}
+  color: var(--orange-400)
 `;
 
 export default SearchResultTitle;
