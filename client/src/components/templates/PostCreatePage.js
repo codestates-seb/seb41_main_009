@@ -27,7 +27,9 @@ const PostCreatePage = () => {
       body,
     };
 
-    console.log(postData);
+    if (title && category && description && body) {
+      console.log(postData);
+    }
   };
 
   return (
