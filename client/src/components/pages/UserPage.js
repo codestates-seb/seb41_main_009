@@ -9,9 +9,9 @@ import UserContentBox from '../organisms/user/UserContentBox';
 const User = () => {
   const params = useParams('id');
   const { userId } = params;
-  const { userInfo, isLoading, isLoadingError } = useGetUser(userId);
+  const { userInfo, isLoadingUser, isLoadingUserError } = useGetUser(userId);
 
-  console.log(isLoading, isLoadingError);
+  console.log(isLoadingUser, isLoadingUserError);
 
   return (
     <Container>
@@ -30,8 +30,9 @@ const User = () => {
       <TabHeader> Activities </TabHeader>
       <TabContentContainer>
         {ACTIVITIES.map(activity => {
+          const activityTitle = activity.slice(0, 1).toUpperCase() + activity.slice(1);
           return (
-            <UserContentBox key={activity} tag={activity}>
+            <UserContentBox key={activity} tag={activityTitle}>
               <CardContainer />
             </UserContentBox>
           );

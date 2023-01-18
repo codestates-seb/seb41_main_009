@@ -108,4 +108,65 @@ const userInfoDummy = {
   modifiedAt: '2023-01-17 18:00:00',
 };
 
-export { seriesListDummy, PostDummy, userInfoDummy };
+const userActivitiesDummy = [
+  [
+    {
+      id: 1,
+      title: '제목',
+      content: '내용',
+      category: '카테고리',
+      views: 100,
+      thumbnailUrl: 'url~',
+      createdAt: '2023-01-17 12:00:00',
+      modifiedAt: '2023-01-17 18:00:00',
+      member: {
+        id: 1,
+        nickname: 'nickname',
+        profileImageUrl: 'url',
+      },
+    },
+  ],
+  [
+    {
+      id: 1, // 포스트 식별자
+      title: 'title', // 제목
+      content: 'content', // 내용
+      category: 'category', // 카테고리
+      views: 100, // 조회수
+      comments: 100, // 댓글수
+      seriesId: 1, // 시리즈Id
+      isItWriter: false, // 작성자 여부
+      thumbnailUrl: 'thumbnailUrl', // 대표 이미지
+      createdAt: '2023-01-10 12:00:00', // 작성일
+      modifiedAt: '2023-01-10 18:00:00', // 수정일
+      writer: {
+        // 작성자 정보
+        id: 1, // 포스트 작성자 식별자
+        nickname: 'nickname', // 포스트 작성자 닉네임
+        profileImageUrl: 'url', // 포스트 작성자 프로필 사진
+      },
+    },
+  ],
+  [
+    {
+      id: 1, // 쇼케이스 식별자
+      content: 'content', // 내용
+      category: 'category', // 카테고리
+      views: 100, // 조회수
+      comments: 100, // 댓글수
+      isItWriter: false, // 작성자 여부
+      thumbnailUrl: 'thumbnail url', // 썸네일 이미지 url
+      createdAt: '2023-01-08 12:00:00', // 작성일
+      modifiedAt: '2023-01-08 18:00:00', // 수정일
+      writer: {
+        // 작성자 정보
+        id: 1, // 쇼케이스 작성자 식별자
+        nickname: 'nickname', // 쇼케이스 작성자 닉네임
+        profileImageUrl: 'url', // 쇼케이스 작성자 프로필 사진
+        isSubscribed: false, // 작성자에 대한 구독여부
+      },
+    },
+  ],
+];
+
+export { seriesListDummy, PostDummy, userInfoDummy, userActivitiesDummy };

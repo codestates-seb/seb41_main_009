@@ -10,8 +10,8 @@ import HOST from '../constants/URL';
  */
 const useGetUser = id => {
   const [userInfo, setUserInfo] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingError, setIsLoadingError] = useState(false);
+  const [isLoadingUser, setIsLoading] = useState(false);
+  const [isLoadingUserError, setIsLoadingUserError] = useState(false);
   const url = `${HOST}/members/${id}`;
 
   useEffect(() => {
@@ -26,16 +26,16 @@ const useGetUser = id => {
       .catch(err => {
         console.log(err);
         setIsLoading(false);
-        setIsLoadingError(true);
+        setIsLoadingUserError(true);
       })
       .finally(() => {
         setIsLoading(false);
-        setIsLoadingError(false);
+        setIsLoadingUserError(false);
         setUserInfo(userInfoDummy);
       });
   }, []);
 
-  return { userInfo, isLoading, isLoadingError };
+  return { userInfo, isLoadingUser, isLoadingUserError };
 };
 
 export default useGetUser;

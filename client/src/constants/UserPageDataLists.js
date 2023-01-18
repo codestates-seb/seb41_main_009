@@ -3,6 +3,6 @@ const STATS = [
   ['Email', 'email'],
   ['Created At', 'createdAt'],
 ];
-const ACTIVITIES = ['Series', 'Post', 'Showcase'];
+const ACTIVITIES = ['series', 'post', 'showcase'];
 
 export { STATS, ACTIVITIES };
