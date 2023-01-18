@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
-import com.codestates.hobby.domain.fileInfo.dto.FileResponseDto;
 import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
+import com.codestates.hobby.domain.fileInfo.mapper.FileInfoMapper;
 import com.codestates.hobby.domain.fileInfo.service.FileInfoService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/{base-path}")
 public class FileInfoController {
 	private final FileInfoService fileInfoService;
+	private final FileInfoMapper mapper;
 
 	@PostMapping("/files")
 	public ResponseEntity<?> generateURL(
@@ -31,6 +32,6 @@ public class FileInfoController {
 	) {
 		FileInfo fileInfo = fileInfoService.generateSignedURL(request, basePath);
 
-		return new ResponseEntity<>(FileResponseDto.of(fileInfo), HttpStatus.CREATED);
+		return new ResponseEntity<>(mapper.fileInfoToResponse(fileInfo), HttpStatus.CREATED);
 	}
 }
