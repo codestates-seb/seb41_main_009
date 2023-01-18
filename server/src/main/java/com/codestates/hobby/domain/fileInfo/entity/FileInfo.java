@@ -96,10 +96,6 @@ public class FileInfo {
 		return fileURL.getToken(token);
 	}
 
-	public String getPath() {
-		return fileURL.getPath();
-	}
-
 	public String getFileURL() {
 		return fileURL.getFileUrl();
 	}
@@ -120,6 +116,14 @@ public class FileInfo {
 	@Override
 	public int hashCode() {
 		return fileURL != null ? fileURL.hashCode() : 0;
+	}
+
+	public void updateIndex(int index) {
+		this.index = index;
+	}
+
+	public void setSignedURL(String url) {
+		this.signedURL = url;
 	}
 
 	public enum TOKEN {
