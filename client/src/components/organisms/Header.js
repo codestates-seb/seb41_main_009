@@ -14,6 +14,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 9999;
+
+  box-shadow: 0px 2px 8px rgba(40, 41, 61, 0.08), 0px 20px 32px rgba(96, 97, 112, 0.24);
 `;
 
 const Body = styled.div`
