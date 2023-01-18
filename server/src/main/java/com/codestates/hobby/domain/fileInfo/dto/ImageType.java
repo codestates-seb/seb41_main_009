@@ -21,14 +21,14 @@ public enum ImageType {
 	}
 
 	@JsonValue
-	public String toContentType() {
+	public String getFullName() {
 		return "image/" + lowerCase;
 	}
 
 	@JsonCreator
 	public static ImageType search(String type) {
 		return Arrays.stream(ImageType.values())
-			.filter(imageType -> type.equalsIgnoreCase(imageType.name()))
+			.filter(imageType -> type.toLowerCase().contains(imageType.lowerCase))
 			.findAny()
 			.orElseThrow(() -> new UnsupportedMediaTypeStatusException("Unsupported media type for " + type));
 	}

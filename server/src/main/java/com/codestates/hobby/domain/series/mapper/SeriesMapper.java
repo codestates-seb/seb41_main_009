@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {MemberMapper.class})
 public interface SeriesMapper {
+    @Mapping(target = "totalPosts", expression = "java(series.getPosts().size())")
     @Mapping(target = "postId", expression = "java(series.getPosts().get(0).getId())")
     SeriesDto.Response SeriesToResponseDto(Series series);
 

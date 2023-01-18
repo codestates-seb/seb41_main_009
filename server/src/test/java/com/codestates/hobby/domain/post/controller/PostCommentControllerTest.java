@@ -63,19 +63,20 @@ public class PostCommentControllerTest {
     private static Category childCategory;
     private static Series series;
     private static Post post;
-    private static List<String> urls = new ArrayList<>(Arrays.asList("url1","url2","url3"));
+    private static List<String> urls =
+        Arrays.asList("http://domain.com/bucket/basepath/file1.png","http://domain.com/bucket/basepath/file2.png","http://domain.com/bucket/basepath/file3.png");
 
     @BeforeAll
     public static void init(){
 
-        fileInfo = new FileInfo("url");
         member = new Member("aaa@gmail.com",
                 "홍길동",
                 "Codestates11!","introduction",
-                false,fileInfo);
+                false, "http://domain.com/bucket/basepath/file.png");
+        fileInfo = member.getImage();
         patentCategory = Category.createParent("운동","exercise");
         childCategory = Category.createChild("야구","baseball",patentCategory);
-        series = new Series(member,  childCategory, "Title","Content","url");
+        series = new Series(member,  childCategory, "Title","Content","http://domain.com/bucket/basepath/file.png");
         post = new Post(member,"Title",series,childCategory,"Content",urls);
     }
 

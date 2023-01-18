@@ -46,21 +46,20 @@ public class PostServiceTest {
     @Mock
     static SeriesService seriesService;
 
+    private static List<String> urls =
+        Arrays.asList("http://domain.com/bucket/basepath/file1.png","http://domain.com/bucket/basepath/file2.png","http://domain.com/bucket/basepath/file3.png");
+
     @Nested
     class 포스트_생성{
         @Test
         void 회원_포스트_생성(){
-            List<String> urls = new ArrayList<>(Arrays.asList("url1","url2","url3"));
-
-            FileInfo fileInfo = new FileInfo("url");
             Member member = new Member("aaa@gmail.com",
-                    "홍길동",
-                    "Codestates11!","introduction",
-                    false,fileInfo);
-
+                "홍길동",
+                "Codestates11!","introduction",
+                false, "http://domain.com/bucket/basepath/file.png");
             Category patentCategory = Category.createParent("운동","exercise");
             Category childCategory = Category.createChild("야구","baseball",patentCategory);
-            Series series = new Series(member, "입문", childCategory, "Content");
+            Series series = new Series(member, childCategory, "입문", "Content", urls.get(0));
             Post post = new Post(member,"Title",series,childCategory,"Content",urls);
 
             PostDto.Post postDto = new PostDto.Post();
@@ -89,17 +88,14 @@ public class PostServiceTest {
     class 포스트_수정{
         @Test
         void 회원_포스트_수정(){
-            List<String> urls = new ArrayList<>(Arrays.asList("url1","url2","url3"));
-
-            FileInfo fileInfo = new FileInfo("url");
             Member member = new Member("aaa@gmail.com",
                     "홍길동",
                     "Codestates11!","introduction",
-                    false,fileInfo);
+                    false, "http://domain.com/bucket/basepath/file.png");
 
             Category patentCategory = Category.createParent("운동","exercise");
             Category childCategory = Category.createChild("야구","baseball",patentCategory);
-            Series series = new Series(member, "입문", childCategory, "Content");
+            Series series = new Series(member, childCategory, "입문", "입문", urls.get(0));
             Post post = new Post(member,"Title",series,childCategory,"Content",urls);
 
             PostDto.Patch patchDto = new PostDto.Patch();

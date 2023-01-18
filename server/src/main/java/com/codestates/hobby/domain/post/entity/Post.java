@@ -113,7 +113,7 @@ public class Post extends BaseEntity {
 	}
 
 	public void addImageFromUrl(String url) {
-		FileInfo fileInfo = FileInfo.createPostImage(this,url);
+		FileInfo fileInfo = new FileInfo(this, url, 0);
 		images.add(fileInfo);
 	}
 

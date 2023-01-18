@@ -5,8 +5,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
+import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
 import com.codestates.hobby.domain.fileInfo.dto.ImageType;
-import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 
@@ -17,11 +17,11 @@ public abstract class FileInfoService {
 		this.fileInfoRepository = fileInfoRepository;
 	}
 
-	abstract public SignedURL generateSignedURL(ImageType type, BasePath basePath);
+	abstract public FileInfo generateSignedURL(FileRequestDto request, BasePath basePath);
 
-	public List<SignedURL> generateSignedURLs(List<ImageType> types, BasePath basePath) {
-		return types.parallelStream()
-			.map(type -> generateSignedURL(type, basePath))
+	public List<FileInfo> generateSignedURLs(List<FileRequestDto> requests, BasePath basePath) {
+		return requests.parallelStream()
+			.map(req -> generateSignedURL(req, basePath))
 			.collect(Collectors.toList());
 	}
 
