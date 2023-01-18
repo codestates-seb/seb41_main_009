@@ -10,6 +10,7 @@ public enum ExceptionCode {
     NO_PERMISSION_TO_CREATE(403, ""),
     NO_PERMISSION_TO_DELETE(403, ""),
     WITHDRAWAL_MEMBER(403,"Member Is Withdrawn"),
+    NOT_MATCH_MEMBER(500, "Doesn't Belong This Member"),
 
     // NOT FOUND
     NOT_FOUND_POST(404, "Post Not Found"),
