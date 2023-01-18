@@ -1,5 +1,7 @@
 package com.codestates.hobby.domain.showcase.service;
 
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -35,7 +37,7 @@ public class ShowcaseService {
 	public Showcase update(ShowcaseDto.Patch patch) {
 		Category category = categoryService.findHobbyByName(patch.getCategory());
 		Showcase showcase = showcaseRepository.findByIdAndMemberId(patch.getShowcaseId(), patch.getMemberId())
-			.orElseThrow(() -> new IllegalArgumentException("Not Found showcase for " + patch.getShowcaseId()));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.SHOWCASE_NOT_FOUND));
 
 		showcase.update(category, patch.getContent(), patch.getImageUrls());
 
@@ -50,7 +52,7 @@ public class ShowcaseService {
 	@Transactional(readOnly = true)
 	public Showcase findById(long showcaseId) {
 		return showcaseRepository.findById(showcaseId)
-			.orElseThrow(() -> new IllegalArgumentException("Not found for " + showcaseId));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.SHOWCASE_NOT_FOUND));
 	}
 
 	@Transactional(readOnly = true)
