@@ -13,13 +13,17 @@ const User = () => {
   const { userInfo, isLoadingUser, isLoadingUserError } = useGetUser(userId);
   const { userActivities, isLoadingActivities, isLoadingActivitiesError } = useGetUserActivities(userId, 1);
 
-  console.log(userActivities);
   console.log(isLoadingUser, isLoadingUserError);
   console.log(isLoadingActivities, isLoadingActivitiesError);
 
   return (
     <Container>
-      <UserInfo />
+      <UserInfo
+        id={userInfo.id}
+        name={userInfo.nickname}
+        introduction={userInfo.introduction}
+        image={userInfo.imgUrl}
+      />
       <TabHeader> Stats </TabHeader>
       <TabContentContainer>
         {STATS.map(stat => {
@@ -55,7 +59,7 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
 
   & > div {
     width: 100%;
