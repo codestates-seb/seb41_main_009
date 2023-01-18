@@ -44,11 +44,15 @@ const Container = styled.div`
 `;
 
 const UserInfoBigContainer = styled.div`
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 227px;
   padding: 20px 60px;
+  border: 5px solid var(--gray-900);
+  box-shadow: var(--boxShadow-01) var(--gray-700);
+  border-radius: 15px;
 `;
 
 const UserHeader = styled.div`

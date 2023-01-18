@@ -48,7 +48,12 @@ const User = () => {
           );
         })}
       </TabContentContainer>
-      <SplashStickerLabelDefault />
+      <SplashStickerLabelDefault
+        boyMessage={userInfo.nickname}
+        girlMessage={userInfo.nickname}
+        emailMessage={userInfo.email}
+        createdAtMessage={userInfo.createdAt}
+      />
     </Container>
   );
 };
@@ -74,6 +79,7 @@ const TabHeader = styled.div`
 
 const TabContentContainer = styled.div`
   display: flex;
+  margin-bottom: 40px;
 `;
 
 const CardContainer = styled.div`
