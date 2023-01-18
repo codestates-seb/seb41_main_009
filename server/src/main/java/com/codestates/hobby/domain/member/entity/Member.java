@@ -77,14 +77,18 @@ public class Member extends BaseEntity {
 		this.password = password;
 		this.introduction = introduction;
 		this.isOauth2 = isOauth2;
-		FileInfo.createMemberImage(this, profileUrl);
+		this.setImage(profileUrl);
 	}
 
 	public void edit(String nickname, String password, String introduction, String profileUrl) {
 		if (!this.nickname.equals(nickname)) this.nickname = nickname;
 		if (!this.password.equals(password)) this.password = password;
 		if (!this.introduction.equals(introduction)) this.introduction = introduction;
-		if (!this.image.getFileURL().equals(profileUrl)) FileInfo.createMemberImage(this, profileUrl);
+		if (!this.image.getFileURL().equals(profileUrl)) setImage(profileUrl);
+	}
+
+	public void setImage(String url) {
+		this.image = new FileInfo(this, url, 0);
 	}
 
 	public enum MemberStatus {

@@ -3,7 +3,6 @@ package com.codestates.hobby.domain.showcase.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -50,38 +49,40 @@ public class Showcase extends BaseEntity {
 	@OneToMany(mappedBy = "showcase")
 	private List<ShowcaseComment> comments = new ArrayList<>();
 
-	public Showcase(String content, Member member, Category category, List<String> imageURLs) {
+	public Showcase(String content, Member member, Category category, List<FileInfo> imageURLs) {
 		this.content = content;
 		this.member = member;
 		this.category = category;
 
-		imageURLs.forEach(this::addImageFromUrl);
+		imageURLs.forEach(this::addImage);
 	}
 
 	public boolean isWrittenBy(Long memberId) {
 		return Objects.equals(memberId, member.getId());
 	}
 
-	public void addImageFromUrl(String url) {
-		images.add(FileInfo.createShowcaseImage(this, url));
+	public void addImage(String url, int index) {
+		images.add(new FileInfo(this, url, index));
 	}
 
-	public void update(Category category, String content, List<String> urls) {
+	public void addImage(FileInfo info) {
+		images.add(info);
+	}
+
+	public void update(Category category, String content, List<FileInfo> infos) {
 		if (!Objects.equals(this.category.getId(), category.getId()))
 			this.category = category;
 
 		this.content = content;
-		this.updateImage(urls);
+		this.updateImage(infos);
 	}
 
-	private void updateImage(List<String> urls) {
-		List<String> olds = images.stream().map(FileInfo::getFileURL).collect(Collectors.toList());
+	private void updateImage(List<FileInfo> newInfos) {
+		images.retainAll(newInfos);
 
-		images.retainAll(urls);
-
-		urls.stream()
-			.filter(url -> !olds.contains(url))
-			.forEach(this::addImageFromUrl);
+		newInfos.stream()
+			.filter(info -> !images.contains(info))
+			.forEach(this::addImage);
 	}
 
 	@Override

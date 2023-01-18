@@ -24,8 +24,9 @@ public class MvcConfig implements WebMvcConfigurer {
 			.serializationInclusion(JsonInclude.Include.NON_NULL)
 			.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 			.visibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+			.visibility(PropertyAccessor.SETTER, JsonAutoDetect.Visibility.NONE)
 			.visibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE)
-			.visibility(PropertyAccessor.SETTER, JsonAutoDetect.Visibility.NONE);
+			.visibility(PropertyAccessor.IS_GETTER, JsonAutoDetect.Visibility.NONE);
 	}
 
 	@Override

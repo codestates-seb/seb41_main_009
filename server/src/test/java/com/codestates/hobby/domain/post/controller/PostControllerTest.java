@@ -61,19 +61,20 @@ public class PostControllerTest {
     private static Category childCategory;
     private static Series series;
     private static Post post;
-    private static List<String> urls = new ArrayList<>(Arrays.asList("url1","url2","url3"));
+    private static List<String> urls =
+        Arrays.asList("http://domain.com/bucket/basepath/file1.png","http://domain.com/bucket/basepath/file2.png","http://domain.com/bucket/basepath/file3.png");
 
     @BeforeAll
     public static void init(){
 
-        fileInfo = new FileInfo("url");
         member = new Member("aaa@gmail.com",
-                "홍길동",
-                "Codestates11!","introduction",
-                false,fileInfo);
+            "홍길동",
+            "Codestates11!","introduction",
+            false, "http://domain.com/bucket/basepath/file.png");
+        fileInfo = member.getImage();
         patentCategory = Category.createParent("운동","exercise");
         childCategory = Category.createChild("야구","baseball",patentCategory);
-        series = new Series(member, "입문", childCategory, "Content");
+        series = new Series(member, childCategory, "입문", "Content", urls.get(0));
         post = new Post(member,"Title",series,childCategory,"Content",urls);
     }
 
@@ -162,7 +163,6 @@ public class PostControllerTest {
         response.setId(1L);
         response.setTitle("Title");
         response.setContent("Content");
-        response.setImgUrls(urls);
         response.setItWriter(true);
         response.setViews(10);
         response.setCreatedDate(LocalDateTime.now());

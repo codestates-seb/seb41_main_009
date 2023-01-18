@@ -1,15 +1,24 @@
 package com.codestates.hobby.domain.series.entity;
 
 import java.util.List;
-import java.util.Objects;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.common.BaseEntity;
+import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.post.entity.Post;
 
@@ -55,13 +64,17 @@ public class Series extends BaseEntity {
 		this.category = category;
 		this.title = title;
 		this.content = content;
-		FileInfo.createSeriesImage(this, thumbnail);
+		this.changeImage(thumbnail);
 	}
 
 	public void edit(Category category, String title, String content, String thumbnail) {
 		if (!this.category.getId().equals(category.getId()))  this.category = category;
 		if (!this.title.equals(title)) this.title = title;
 		if (!this.content.equals(content)) this.content = content;
-		if (!this.image.getFileURL().equals(thumbnail)) FileInfo.createSeriesImage(this, thumbnail);
+		if (!this.image.getFileURL().equals(thumbnail)) changeImage(thumbnail);
+	}
+
+	public void changeImage(String url) {
+		this.image = new FileInfo(this, url, 0);
 	}
 }
