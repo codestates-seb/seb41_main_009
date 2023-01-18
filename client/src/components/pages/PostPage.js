@@ -11,6 +11,15 @@ const Container = styled.div`
   margin: 0 auto;
   justify-content: center;
   align-items: center;
+
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 63px;
+  gap: 52px; */
+  background: #ffffff;
+  border-radius: 30px;
 `;
 
 const PostPage = () => {
