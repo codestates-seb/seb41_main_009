@@ -3,6 +3,7 @@ package com.codestates.hobby.domain.showcase.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,7 +45,7 @@ public class Showcase extends BaseEntity {
 	private Category category;
 
 	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
-	private List<FileInfo> images = new ArrayList<>();
+	private List<FileInfo> fileInfos = new ArrayList<>();
 
 	@OneToMany(mappedBy = "showcase")
 	private List<ShowcaseComment> comments = new ArrayList<>();
@@ -61,12 +62,11 @@ public class Showcase extends BaseEntity {
 		return Objects.equals(memberId, member.getId());
 	}
 
-	public void addImage(String url, int index) {
-		images.add(new FileInfo(this, url, index));
-	}
-
 	public void addImage(FileInfo info) {
-		images.add(info);
+		FileInfo newInfo = new FileInfo(this, info.getFileURL(), info.getIndex());
+		Optional.ofNullable(info.getSignedURL())
+			.ifPresent(newInfo::setSignedURL);
+		fileInfos.add(newInfo);
 	}
 
 	public void update(Category category, String content, List<FileInfo> infos) {
@@ -78,11 +78,15 @@ public class Showcase extends BaseEntity {
 	}
 
 	private void updateImage(List<FileInfo> newInfos) {
-		images.retainAll(newInfos);
+		fileInfos.retainAll(newInfos);
 
-		newInfos.stream()
-			.filter(info -> !images.contains(info))
-			.forEach(this::addImage);
+		newInfos.forEach(info -> {
+			int idx = fileInfos.indexOf(info);
+			if (idx == -1)
+				addImage(info);
+			else
+				fileInfos.get(idx).updateIndex(info.getIndex());
+		});
 	}
 
 	@Override

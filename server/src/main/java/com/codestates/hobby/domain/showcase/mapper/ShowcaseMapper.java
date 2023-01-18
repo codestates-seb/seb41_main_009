@@ -4,26 +4,29 @@ import java.util.Optional;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
-import com.codestates.hobby.domain.category.entity.Category;
+import com.codestates.hobby.domain.category.mapper.CategoryMapper;
+import com.codestates.hobby.domain.fileInfo.mapper.FileInfoMapper;
 import com.codestates.hobby.domain.member.mapper.MemberMapper;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 
-@Mapper(componentModel = "spring", uses = {MemberMapper.class, ShowcaseCommentMapper.class})
+@Mapper(
+	componentModel = "spring",
+	unmappedTargetPolicy = ReportingPolicy.IGNORE,
+	uses = {MemberMapper.class, CategoryMapper.class, FileInfoMapper.class, ShowcaseCommentMapper.class})
 public interface ShowcaseMapper {
 	@Mapping(target = "writer", source = "member")
+	@Mapping(target = "imageUrls", source = "fileInfos")
 	ShowcaseDto.Response showcaseToResponse(Showcase showcase);
 
 	@Mapping(target = "writer", source = "member")
 	@Mapping(target = "comments", expression = "java(showcase.getComments().size())")
+	@Mapping(target = "thumbnailUrl", expression = "java(showcase.getFileInfos().get(0).getFileURL())")
 	ShowcaseDto.SimpleResponse showcaseToSimpleResponse(Showcase showcase);
 
-	// TODO(File): ImageUrls
-
-	default String toString(Category value) {
-		return value.getKorName();
-	}
+	ShowcaseDto.CommandResponse showcaseToCommendResponse(Showcase showcase);
 
 	default void setProperties(ShowcaseDto.Response response, Long memberId) {
 		Optional.ofNullable(memberId)
