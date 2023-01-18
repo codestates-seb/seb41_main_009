@@ -3,23 +3,31 @@ package com.codestates.hobby.global.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
-    MEMBER_NOT_FOUND(404, "Member Not Found"),
-    CATEGORY_NOT_FOUND(404, "Category Not Found"),
-    POST_NOT_FOUND(404, "Post Not Found"),
-    COMMENT_NOT_FOUND(404,"Comment Not Found"),
-    SERIES_NOT_FOUND(404,"Series Not Found"),
-    SHOWCASE_NOT_FOUND(404,"Showcase Not Found"),
+    // UNAUTHORIZED
 
-    WITHDRAWAL_MEMBER(500,"Member Is Withdrawn"),
-    EXISTS_EMAIL(500,"Email Is Exists"),
-    EXISTS_NICKNAME(500,"NickName Is Exists"),
-    NOT_MATCH_MEMBER(500, "Doesn't Belong This Member");
+    // FORBIDDEN
+    NO_PERMISSION_TO_EDIT(403, ""),
+    NO_PERMISSION_TO_CREATE(403, ""),
+    NO_PERMISSION_TO_DELETE(403, ""),
+    WITHDRAWAL_MEMBER(403,"Member Is Withdrawn"),
+
+    // NOT FOUND
+    NOT_FOUND_POST(404, "Post Not Found"),
+    NOT_FOUND_MEMBER(404, "Member Not Found"),
+    NOT_FOUND_SERIES(404,"Series Not Found"),
+    NOT_FOUND_COMMENT(404,"Comment Not Found"),
+    NOT_FOUND_CATEGORY(404, "Category Not Found"),
+    NOT_FOUND_SHOWCASE(404,"Showcase Not Found"),
+
+    // Conflict
+    EXISTS_EMAIL(409,"Email Is Exists"),
+    EXISTS_NICKNAME(409,"NickName Is Exists");
 
     @Getter
-    private int status;
+    private final int status;
 
     @Getter
-    private String message;
+    private final String message;
 
     ExceptionCode(int status, String message) {
         this.status = status;

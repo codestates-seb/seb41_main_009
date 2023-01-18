@@ -38,7 +38,6 @@ public class ErrorResponse {
         return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
     }
 
-
     @Getter
     public static class FieldError {
         private String field;
