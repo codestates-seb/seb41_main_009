@@ -126,6 +126,36 @@ const userActivitiesDummy = [
         profileImageUrl: 'url',
       },
     },
+    {
+      id: 1,
+      title: '제목',
+      content: '시리즈',
+      category: '카테고리',
+      views: 100,
+      thumbnailUrl: 'url~',
+      createdAt: '2023-01-17 12:00:00',
+      modifiedAt: '2023-01-17 18:00:00',
+      member: {
+        id: 1,
+        nickname: 'nickname',
+        profileImageUrl: 'url',
+      },
+    },
+    {
+      id: 1,
+      title: '제목',
+      content: '시리즈',
+      category: '카테고리',
+      views: 100,
+      thumbnailUrl: 'url~',
+      createdAt: '2023-01-17 12:00:00',
+      modifiedAt: '2023-01-17 18:00:00',
+      member: {
+        id: 1,
+        nickname: 'nickname',
+        profileImageUrl: 'url',
+      },
+    },
   ],
   [
     {

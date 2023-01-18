@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { ACTIVITIES, STATS } from '../../constants/UserPageDataLists';
 import useGetUser from '../../hooks/useGetUser';
 import useGetUserActivities from '../../hooks/useGetUserActivities';
+import { LabelSmall } from '../../styles/typo';
+import { TextButton } from '../atoms/Buttons';
+import CardContainer from '../atoms/CardContainer';
 import { SplashStickerLabelDefault } from '../molecules/stickerLabel/SplashStickerLabel';
 import { UserInfo } from '../molecules/UserInfo';
 import UserContentBox from '../organisms/user/UserContentBox';
@@ -41,9 +44,17 @@ const User = () => {
           const activityTitle = activity.slice(0, 1).toUpperCase() + activity.slice(1);
           return (
             <UserContentBox key={activity} tag={activityTitle}>
-              {userActivities[idx]?.map(content => {
-                return <CardContainer>{content?.content}</CardContainer>;
-              })}
+              <CardContainer>
+                {userActivities[idx]
+                  ?.map(content => {
+                    return (
+                      <ActivityButton to={`/${activity}/${content.id}`}>
+                        {content.title ? content.title : content.content}
+                      </ActivityButton>
+                    );
+                  })
+                  .slice(0, 5)}
+              </CardContainer>
             </UserContentBox>
           );
         })}
@@ -82,14 +93,8 @@ const TabContentContainer = styled.div`
   margin-bottom: 40px;
 `;
 
-const CardContainer = styled.div`
-  box-sizing: border-box;
-  width: ${props => (props.width ? props.width : '331px')};
-  height: ${props => (props.height ? props.height : '76px')};
-  padding: 28px 20px;
-  gap: 10px;
-  border: 2px solid black;
-  box-shadow: var(--boxShadow-02) black;
+const ActivityButton = styled(TextButton)`
+  ${LabelSmall}
 `;
 
 export default User;
