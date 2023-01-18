@@ -29,10 +29,7 @@ public class PostQueryController {
         PostDto.Response response = mapper.postToResponse(post);
         mapper.setProperties(response,memberId);
         mapper.setSeries(response, response.getSeriesId());
-        if (response.getSeriesId() != null){
-            List<String> seriesPostUrl = post.getSeries().getPosts().stream().map(seriesPost -> "http://localhost:8080/posts/"+seriesPost.getId()).collect(Collectors.toList());
-            response.setSeriesPosts(seriesPostUrl);
-        }
+        mapper.setSeriesPostUrl(response,post);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -46,7 +48,7 @@ public class ShowcaseService {
 		List<FileInfo> fileInfos = fileInfoService.generateSignedURLs(patch.getFileInfos(), BasePath.SHOWCASES);
 		Category category = categoryService.findHobbyByName(patch.getCategory());
 		Showcase showcase = showcaseRepository.findByIdAndMemberId(patch.getShowcaseId(), patch.getMemberId())
-			.orElseThrow(() -> new IllegalArgumentException("Not Found showcase for " + patch.getShowcaseId()));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.SHOWCASE_NOT_FOUND));
 
 		showcase.update(category, patch.getContent(), fileInfos);
 		return showcase;
@@ -60,7 +62,7 @@ public class ShowcaseService {
 	@Transactional(readOnly = true)
 	public Showcase findById(long showcaseId) {
 		return showcaseRepository.findById(showcaseId)
-			.orElseThrow(() -> new IllegalArgumentException("Not found for " + showcaseId));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.SHOWCASE_NOT_FOUND));
 	}
 
 	@Transactional(readOnly = true)
@@ -82,16 +84,5 @@ public class ShowcaseService {
 	@Transactional(readOnly = true)
 	public Page<Showcase> search(String query, PageRequest pageRequest) {
 		return showcaseRepository.findAllByContentContainsOrderByIdDesc(query, pageRequest);
-	}
-
-	@Transactional
-	protected void arrangeFileIndexes(List<FileInfo> fileInfos) {
-		Set<Integer> set = fileInfos.stream().map(FileInfo::getIndex).collect(Collectors.toSet());
-		fileInfos.sort(Comparator.comparingInt(FileInfo::getIndex));
-
-		if (fileInfos.size() != set.size()) {
-			for (int i = 0; i < fileInfos.size(); i++)
-				fileInfos.get(i).updateIndex(i);
-		}
 	}
 }

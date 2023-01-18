@@ -2,6 +2,8 @@ package com.codestates.hobby.domain.series.service;
 
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.category.service.CategoryService;
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.member.service.MemberService;
 import com.codestates.hobby.domain.series.dto.SeriesDto;
@@ -41,13 +43,13 @@ public class SeriesService {
 
     @Transactional
     public void delete(long seriesId, long memberId) {
-        seriesRepository.findByIdAndMemberId(seriesId, memberId).orElseThrow(() -> new RuntimeException("not found series"));
+        seriesRepository.findByIdAndMemberId(seriesId, memberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.SERIES_NOT_FOUND));
         seriesRepository.deleteById(seriesId);
     }
 
     @Transactional(readOnly = true)
     public Series findById(long seriesId) {
-        return seriesRepository.findById(seriesId).orElseThrow(()->new RuntimeException("not found series"));
+        return seriesRepository.findById(seriesId).orElseThrow(()->new BusinessLogicException(ExceptionCode.SERIES_NOT_FOUND));
     }
 
 
@@ -71,6 +73,6 @@ public class SeriesService {
 
     @Transactional(readOnly = true)
     public Series findById(Long seriesId) {
-        return seriesRepository.findById(seriesId).orElseThrow(() -> new RuntimeException("not found series"));
+        return seriesRepository.findById(seriesId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.SERIES_NOT_FOUND));
     }
 }
