@@ -1,19 +1,28 @@
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ACTIVITIES, STATS } from '../../constants/UserPageDataLists';
+import useGetUser from '../../hooks/useGetUser';
 import { SplashStickerLabelDefault } from '../molecules/stickerLabel/SplashStickerLabel';
 import { UserInfo } from '../molecules/UserInfo';
 import UserContentBox from '../organisms/user/UserContentBox';
 
 const User = () => {
+  const params = useParams('id');
+  const { userId } = params;
+  const { userInfo, isLoading, isLoadingError } = useGetUser(userId);
+
+  console.log(isLoading, isLoadingError);
+
   return (
     <Container>
       <UserInfo />
       <TabHeader> Stats </TabHeader>
       <TabContentContainer>
         {STATS.map(stat => {
+          const [displayName, name] = stat;
           return (
-            <UserContentBox key={stat} tag={stat}>
-              <CardContainer>abc</CardContainer>
+            <UserContentBox key={name} tag={displayName}>
+              <CardContainer>{userInfo[name]}</CardContainer>
             </UserContentBox>
           );
         })}

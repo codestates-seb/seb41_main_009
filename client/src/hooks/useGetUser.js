@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { userInfoDummy } from '../constants/dummyData';
 import HOST from '../constants/URL';
 
 /**
@@ -30,9 +31,9 @@ const useGetUser = id => {
       .finally(() => {
         setIsLoading(false);
         setIsLoadingError(false);
-        setUserInfo();
+        setUserInfo(userInfoDummy);
       });
-  });
+  }, []);
 
   return { userInfo, isLoading, isLoadingError };
 };
