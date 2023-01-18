@@ -140,7 +140,10 @@ const PostCard = ({ boxShadow, width }) => {
  * @returns {JSX.Element} - PostListStack을 나타내는 컴포넌트
  */
 const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId }) => {
-  const post = useGetPost(postId);
+  const { post, isLoading, isLoadingError } = useGetPost(postId);
+
+  // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
+  console.log(isLoading, isLoadingError);
 
   return (
     <Container boxShadow={boxShadow}>

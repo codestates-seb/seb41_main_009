@@ -26,7 +26,10 @@ const SeriesListPage = () => {
   const [searchParams] = useSearchParams();
   const curPage = searchParams.get('page');
 
-  const { seriesList, seriesPageInfo } = useGetSeriesList(category, curPage);
+  const { seriesList, seriesPageInfo, isLoading, isLoadingError } = useGetSeriesList(category, curPage);
+
+  // isLoading, isLoadingError 값에 따라 Loading 컴포넌트 변경 예정
+  console.log(isLoading, isLoadingError);
 
   return (
     <Container>
