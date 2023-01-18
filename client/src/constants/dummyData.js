@@ -113,7 +113,7 @@ const userActivitiesDummy = [
     {
       id: 1,
       title: '제목',
-      content: '내용',
+      content: '시리즈',
       category: '카테고리',
       views: 100,
       thumbnailUrl: 'url~',
@@ -130,7 +130,7 @@ const userActivitiesDummy = [
     {
       id: 1, // 포스트 식별자
       title: 'title', // 제목
-      content: 'content', // 내용
+      content: '포스트', // 내용
       category: 'category', // 카테고리
       views: 100, // 조회수
       comments: 100, // 댓글수
@@ -150,7 +150,7 @@ const userActivitiesDummy = [
   [
     {
       id: 1, // 쇼케이스 식별자
-      content: 'content', // 내용
+      content: '쇼케이스', // 내용
       category: 'category', // 카테고리
       views: 100, // 조회수
       comments: 100, // 댓글수

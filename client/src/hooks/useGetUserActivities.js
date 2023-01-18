@@ -19,8 +19,8 @@ const useGetUserActivities = (id, page = 1) => {
       .all(requests)
       .then(responses => {
         setIsLoadingActivities(false);
-        responses.forEach(res => {
-          setUserActivities([...userActivities, res.data]);
+        responses.forEach(({ data }) => {
+          setUserActivities([...userActivities, data]);
         });
       })
       .catch(err => {
@@ -33,7 +33,7 @@ const useGetUserActivities = (id, page = 1) => {
         setIsLoadingActivitiesError(false);
         setUserActivities(userActivitiesDummy);
       });
-  });
+  }, []);
 
   return { userActivities, isLoadingActivities, isLoadingActivitiesError };
 };

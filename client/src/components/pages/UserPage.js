@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ACTIVITIES, STATS } from '../../constants/UserPageDataLists';
 import useGetUser from '../../hooks/useGetUser';
+import useGetUserActivities from '../../hooks/useGetUserActivities';
 import { SplashStickerLabelDefault } from '../molecules/stickerLabel/SplashStickerLabel';
 import { UserInfo } from '../molecules/UserInfo';
 import UserContentBox from '../organisms/user/UserContentBox';
@@ -10,8 +11,11 @@ const User = () => {
   const params = useParams('id');
   const { userId } = params;
   const { userInfo, isLoadingUser, isLoadingUserError } = useGetUser(userId);
+  const { userActivities, isLoadingActivities, isLoadingActivitiesError } = useGetUserActivities(userId, 1);
 
+  console.log(userActivities);
   console.log(isLoadingUser, isLoadingUserError);
+  console.log(isLoadingActivities, isLoadingActivitiesError);
 
   return (
     <Container>
@@ -29,11 +33,13 @@ const User = () => {
       </TabContentContainer>
       <TabHeader> Activities </TabHeader>
       <TabContentContainer>
-        {ACTIVITIES.map(activity => {
+        {ACTIVITIES.map((activity, idx) => {
           const activityTitle = activity.slice(0, 1).toUpperCase() + activity.slice(1);
           return (
             <UserContentBox key={activity} tag={activityTitle}>
-              <CardContainer />
+              {userActivities[idx]?.map(content => {
+                return <CardContainer>{content?.content}</CardContainer>;
+              })}
             </UserContentBox>
           );
         })}
