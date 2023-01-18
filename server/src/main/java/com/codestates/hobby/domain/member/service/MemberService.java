@@ -1,17 +1,19 @@
 package com.codestates.hobby.domain.member.service;
 
-import com.codestates.hobby.global.exception.BusinessLogicException;
-import com.codestates.hobby.global.exception.ExceptionCode;
+import com.codestates.hobby.domain.auth.utils.CustomAuthorityUtils;
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.codestates.hobby.domain.member.repository.MemberRepository;
 import com.codestates.hobby.domain.member.entity.Member;
 
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,35 +22,33 @@ public class MemberService {
     private final MemberRepository repository;
     private final PasswordEncoder passwordEncoder;
 
+    private final CustomAuthorityUtils authorityUtils;
+
     @Transactional
     public Member create(MemberDto.Post post) {
-        //email 중복 확인
         verifyExistEmail(post.getEmail());
-        //닉네임 중복 확인
         verifyExistNickname(post.getNickname());
-        //비밀번호 암호화
         String encryptedPassword = passwordEncoder.encode(post.getPassword());
+        List<String> roles = authorityUtils.createRoles(post.getEmail());
 
-        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword, post.getIntroduction(), false, post.getImgUrl()));
+        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword, post.getIntroduction(), false, post.getImgUrl(), roles));
     }
 
     @Transactional
     public Member edit(MemberDto.Patch patch) {
-        //멤버가 있는지 확인
         Member findMember = findMemberById(patch.getMemberId());
         verifyExistNickname(patch.getNickname());
-        String encryptedPassword = passwordEncoder.encode(patch.getPassword());
 
-        findMember.edit(patch.getNickname(), encryptedPassword, patch.getIntroduction(), patch.getImgUrl());
+        findMember.edit(patch.getNickname(), patch.getIntroduction(), patch.getImgUrl());
 
-        return findMember;
+        return repository.save(findMember);
     }
 
     @Transactional
     public void delete(long memberId) {
         //멤버가 있는지 확인
         Member findMember = findMemberById(memberId);
-        findMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
+        findMember.setStatus(Member.MemberStatus.MEMBER_QUIT);
     }
 
     @Transactional(readOnly = true)

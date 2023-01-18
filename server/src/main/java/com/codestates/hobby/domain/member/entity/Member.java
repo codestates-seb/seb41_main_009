@@ -1,5 +1,6 @@
 package com.codestates.hobby.domain.member.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -64,27 +65,41 @@ public class Member extends BaseEntity {
 
 	@Enumerated(value = EnumType.STRING)
 	@Column
-	@Setter
 	private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles = new ArrayList<>();
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "file_info_id", updatable = false)
 	private FileInfo image;
 
-	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, String profileUrl) {
+	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, String profileUrl, List<String> roles) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
 		this.introduction = introduction;
 		this.isOauth2 = isOauth2;
+		this.roles = roles;
 		this.setImage(profileUrl);
 	}
 
-	public void edit(String nickname, String password, String introduction, String profileUrl) {
+	public void edit(String nickname, String introduction, String profileUrl) {
 		if (!this.nickname.equals(nickname)) this.nickname = nickname;
-		if (!this.password.equals(password)) this.password = password;
 		if (!this.introduction.equals(introduction)) this.introduction = introduction;
 		if (!this.image.getFileURL().equals(profileUrl)) setImage(profileUrl);
+	}
+
+	public void setUserInfo(Long id, String email, String nickname, String password, List<String> roles) {
+		this.id = id;
+		this.email = email;
+		this.nickname = nickname;
+		this.password = password;
+		this.roles = roles;
+	}
+
+	public void setStatus(MemberStatus memberStatus) {
+		this.memberStatus = memberStatus;
 	}
 
 	public void setImage(String url) {
@@ -101,5 +116,10 @@ public class Member extends BaseEntity {
 		MemberStatus(String status) {
 			this.status = status;
 		}
+	}
+
+	public enum MemberRole {
+		ROLE_USER,
+		ROLE_ADMIN
 	}
 }

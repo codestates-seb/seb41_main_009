@@ -17,9 +17,6 @@ public class MemberDto {
     @Setter
     @NoArgsConstructor
     public static class Post {
-        @JsonIgnore
-        private Long memberId;
-
         @NotBlank(message = "Email must not be empty.")
         @Email
         private String email;
@@ -33,7 +30,7 @@ public class MemberDto {
                 message = "최소 하나의 문자, 숫자, 특문를 포함해야하며 8자리 이상")
         private String password;
 
-        @Size(max = 255)
+        @Size(max = 255, message = "255자 이하로 제한됩니다.")
         private String introduction;
 
         private String imgUrl;
@@ -46,17 +43,12 @@ public class MemberDto {
         @JsonIgnore
         private Long memberId;
 
-        @NotBlank(message = "Nickname must not be empty.")
         @Pattern(regexp = "[A-Za-z0-9가-힣]{2,15}", message = "영어 대소문자, 한글, 숫자만 가능, 2~15자로 제한")
         private String nickname;
 
-        @NotBlank(message = "Password must not be empty.")
-        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
-                message = "최소 하나의 문자, 숫자, 특문를 포함해야하며 8자리 이상")
-        private String password;
-
-        @Size(max = 255)
+        @Size(max = 255, message = "255자 이하로 제한됩니다.")
         private String introduction;
+
         private String imgUrl;
     }
 

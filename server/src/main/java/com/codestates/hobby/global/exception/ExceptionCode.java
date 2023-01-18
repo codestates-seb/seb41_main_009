@@ -4,6 +4,7 @@ import lombok.Getter;
 
 public enum ExceptionCode {
     // UNAUTHORIZED
+    UNAUTHORIZED(401,"Unauthorized"),
 
     // FORBIDDEN
     NO_PERMISSION_TO_EDIT(403, ""),
