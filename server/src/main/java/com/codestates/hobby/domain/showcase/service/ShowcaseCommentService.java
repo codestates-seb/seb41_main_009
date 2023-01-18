@@ -52,7 +52,7 @@ public class ShowcaseCommentService {
 	@Transactional(readOnly = true)
 	public ShowcaseComment findById(Long commentId) {
 		return commentRepository.findById(commentId)
-			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
 	}
 
 	@Transactional(readOnly = true)
@@ -68,6 +68,6 @@ public class ShowcaseCommentService {
 	private ShowcaseComment findVerifiedComment(long memberId, long showcaseId, long commentId) {
 		return commentRepository
 			.findByIdAndMemberIdAndShowcaseId(commentId, memberId, showcaseId)
-			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
 	}
 }

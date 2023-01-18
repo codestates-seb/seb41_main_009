@@ -20,17 +20,17 @@ public class CategoryService {
 
 	public Category findById(long categoryId) {
 		return categoryRepository.findById(categoryId)
-			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.CATEGORY_NOT_FOUND));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_CATEGORY));
 	}
 
 	public Category findHobbyByName(String name) {
 		return categoryRepository.findByGroupIsNotNullAndName(name.toLowerCase())
-			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.CATEGORY_NOT_FOUND));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_CATEGORY));
 	}
 
 	public Category findGroupByName(String name) {
 		return categoryRepository.findByGroupIsNullAndName(name.toLowerCase())
-			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.CATEGORY_NOT_FOUND));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_CATEGORY));
 	}
 
 	public List<Category> findAll() {

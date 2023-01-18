@@ -22,8 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
-import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
+import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 import com.codestates.hobby.domain.stub.FileInfoStub;

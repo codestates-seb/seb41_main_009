@@ -70,7 +70,7 @@ public class PostCommentService {
     }
     private PostComment findVerifiedComment(long commentId) {
         Optional<PostComment> optionalComment = postCommentRepository.findById(commentId);
-        PostComment findPostComment = optionalComment.orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+        PostComment findPostComment = optionalComment.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
         return findPostComment;
     }
 }
