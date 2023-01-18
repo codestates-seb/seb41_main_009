@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
 import com.codestates.hobby.domain.fileInfo.dto.ImageType;
-import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
+import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 import com.google.cloud.storage.BlobId;
@@ -41,8 +41,9 @@ public class GCSFileInfoService extends FileInfoService {
 	}
 
 	@Override
-	public SignedURL generateSignedURL(ImageType imageType, BasePath basePath) {
-		String savedFilename = generateRandomFilename(imageType, basePath);
+	public FileInfo generateSignedURL(FileRequestDto request, BasePath basePath) {
+		ImageType type = request.getContentType();
+		String savedFilename = generateRandomFilename(type, basePath);
 		String fileUrl;
 
 		do {
@@ -50,7 +51,7 @@ public class GCSFileInfoService extends FileInfoService {
 		} while (fileInfoRepository.existsByFileURL(fileUrl));
 
 		BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, savedFilename)).build();
-		Map<String, String> headers = Collections.singletonMap("Content-Type", imageType.toContentType());
+		Map<String, String> headers = Collections.singletonMap("Content-Type", type.getFullName());
 
 		URL url = storage.signUrl(
 			blobInfo,
@@ -60,7 +61,7 @@ public class GCSFileInfoService extends FileInfoService {
 			Storage.SignUrlOption.withExtHeaders(headers),
 			Storage.SignUrlOption.withV4Signature());
 
-		return new SignedURL(url.toString(), fileUrl, imageType);
+		return new FileInfo(fileUrl, url.toString(), request.getIndex());
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class GCSFileInfoService extends FileInfoService {
 
 	private void deleteFileInStorage(List<FileInfo> fileInfos) {
 		List<BlobId> ids = fileInfos.stream()
-			.map(info -> BlobId.of(info.getBucket(), info.getPath()))
+			.map(info -> BlobId.of(info.getToken(FileInfo.TOKEN.BUCKET), info.getPath()))
 			.collect(Collectors.toList());
 
 		storage.delete(ids);
