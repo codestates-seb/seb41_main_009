@@ -55,5 +55,8 @@ export default App;
 const Main = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: var(--header-height);
+  /* margin-top: calc(var(--header-height) + 50px); */
+  padding-top: calc(var(--header-height) + 50px);
+
+  background-color: var(--gray-50);
 `;
