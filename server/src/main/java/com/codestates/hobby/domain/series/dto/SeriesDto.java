@@ -64,6 +64,7 @@ public class SeriesDto {
         private int views;
         private String thumbnailUrl;
         private MemberDto.SimpleResponse member;
+        private long totalPost;
         private long postId;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
