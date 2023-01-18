@@ -2,6 +2,8 @@ package com.codestates.hobby.domain.category.service;
 
 import java.util.List;
 
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,17 +20,17 @@ public class CategoryService {
 
 	public Category findById(long categoryId) {
 		return categoryRepository.findById(categoryId)
-			.orElseThrow(() -> new IllegalArgumentException("Not found category for " + categoryId));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.CATEGORY_NOT_FOUND));
 	}
 
 	public Category findHobbyByName(String name) {
 		return categoryRepository.findByGroupIsNotNullAndName(name.toLowerCase())
-			.orElseThrow(() -> new IllegalArgumentException("Not found category for " + name));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.CATEGORY_NOT_FOUND));
 	}
 
 	public Category findGroupByName(String name) {
 		return categoryRepository.findByGroupIsNullAndName(name.toLowerCase())
-			.orElseThrow(() -> new IllegalArgumentException("Not found category for " + name));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.CATEGORY_NOT_FOUND));
 	}
 
 	public List<Category> findAll() {

@@ -1,5 +1,7 @@
 package com.codestates.hobby.domain.showcase.service;
 
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -50,7 +52,7 @@ public class ShowcaseCommentService {
 	@Transactional(readOnly = true)
 	public ShowcaseComment findById(Long commentId) {
 		return commentRepository.findById(commentId)
-			.orElseThrow(() -> new IllegalArgumentException("Not found comment for " + commentId));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
 	}
 
 	@Transactional(readOnly = true)
@@ -66,6 +68,6 @@ public class ShowcaseCommentService {
 	private ShowcaseComment findVerifiedComment(long memberId, long showcaseId, long commentId) {
 		return commentRepository
 			.findByIdAndMemberIdAndShowcaseId(commentId, memberId, showcaseId)
-			.orElseThrow(() -> new IllegalArgumentException("Not found comment for " + commentId));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
 	}
 }

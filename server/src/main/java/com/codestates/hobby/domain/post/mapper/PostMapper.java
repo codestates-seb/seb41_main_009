@@ -7,12 +7,15 @@ import com.codestates.hobby.domain.post.entity.Post;
 import com.codestates.hobby.domain.series.entity.Series;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", uses = {MemberMapper.class, PostCommentMapper.class})
 public interface PostMapper {
     @Mapping(target = "writer", source = "member")
-    @Mapping(target = "comments", expression = "java(post.getComments().size())")
     @Mapping(target = "seriesPosts", ignore = true)
     @Mapping(target = "seriesId", ignore = true)
     PostDto.Response postToResponse(Post post);
@@ -43,5 +46,12 @@ public interface PostMapper {
 
     default void setSeries(PostDto.Response response, Long seriesId){
         Optional.ofNullable(seriesId).ifPresent(id -> response.setSeriesId(seriesId));
+    }
+    default void setSeriesPostUrl(PostDto.Response response, Post post){
+        if (response.getSeriesId() != null){
+            List<String> seriesPostUrl = post.getSeries().getPosts().stream().map(seriesPost ->
+                    "http://localhost:8080/posts/"+seriesPost.getId()).collect(Collectors.toList());
+            response.setSeriesPosts(seriesPostUrl);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.member.service;
 
-import com.codestates.hobby.domain.fileInfo.service.FileInfoService;
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.codestates.hobby.domain.member.repository.MemberRepository;
 import com.codestates.hobby.domain.member.entity.Member;
@@ -58,30 +59,30 @@ public class MemberService {
     @Transactional(readOnly = true)
     private void verifyExistEmail(String email) {
         Optional<Member> member = repository.findByEmail(email);
-        if(member.isPresent()) throw new RuntimeException("Email Exists");
+        if(member.isPresent()) throw new BusinessLogicException(ExceptionCode.EXISTS_EMAIL);
     }
 
     @Transactional(readOnly = true)
     private void verifyExistNickname(String nickname) {
         Optional<Member> member = repository.findByNickname(nickname);
-        if(member.isPresent()) throw new RuntimeException("Nickname Exists");
+        if(member.isPresent()) throw new BusinessLogicException(ExceptionCode.EXISTS_NICKNAME);
     }
 
     @Transactional(readOnly = true)
     public Member findMemberById(long memberId) {
         Optional<Member> optionalMember = repository.findById(memberId);
-        Member findMember = optionalMember.orElseThrow(() -> new RuntimeException("Not Found Member"));
+        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         if(findMember.getMemberStatus().equals(Member.MemberStatus.MEMBER_QUIT))
-            throw new RuntimeException("탈퇴한 멤버입니다.");
+            throw new BusinessLogicException(ExceptionCode.WITHDRAWAL_MEMBER);
         return findMember;
     }
 
     @Transactional(readOnly = true)
     public Member findMemberByEmail(String email) {
         Optional<Member> optionalMember = repository.findByEmail(email);
-        Member findMember = optionalMember.orElseThrow(() -> new RuntimeException("Not Found Member"));
+        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         if(findMember.getMemberStatus().equals(Member.MemberStatus.MEMBER_QUIT))
-            throw new RuntimeException("탈퇴한 멤버입니다.");
+            throw new BusinessLogicException(ExceptionCode.WITHDRAWAL_MEMBER);
         return findMember;
     }
 }
