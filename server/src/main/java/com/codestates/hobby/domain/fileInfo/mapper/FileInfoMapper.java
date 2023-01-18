@@ -14,4 +14,8 @@ public interface FileInfoMapper {
 			fileInfo.getSignedURL(),
 			fileInfo.getImageType());
 	}
+
+	default String map(FileInfo value) {
+		return value.getFileURL();
+	}
 }

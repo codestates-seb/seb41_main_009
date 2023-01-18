@@ -53,12 +53,12 @@ public class FileURL {
 			: urlTokens.get(token.getIndex());
 	}
 
-	public String getPath() {
-		return String.join("/", urlTokens.get(3), urlTokens.get(4));
+	public ImageType getImageType() {
+		return ImageType.search(getToken(FileInfo.TOKEN.EXTENSION));
 	}
 
-	public ImageType getImageType() {
-		return ImageType.search(urlTokens.get(FileInfo.TOKEN.EXTENSION.getIndex()));
+	private String getPath() {
+		return String.join("/", urlTokens.get(3), urlTokens.get(4));
 	}
 
 	@Override
