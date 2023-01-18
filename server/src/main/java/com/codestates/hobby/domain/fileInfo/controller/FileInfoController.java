@@ -1,5 +1,7 @@
 package com.codestates.hobby.domain.fileInfo.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +30,7 @@ public class FileInfoController {
 	@PostMapping("/files")
 	public ResponseEntity<?> generateURL(
 		@PathVariable("base-path") BasePath basePath,
-		@RequestBody FileRequestDto request
+		@RequestBody @Valid FileRequestDto request
 	) {
 		FileInfo fileInfo = fileInfoService.generateSignedURL(request, basePath);
 

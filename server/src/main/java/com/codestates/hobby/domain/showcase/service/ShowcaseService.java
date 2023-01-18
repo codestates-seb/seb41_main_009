@@ -1,9 +1,6 @@
 package com.codestates.hobby.domain.showcase.service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.codestates.hobby.global.exception.BusinessLogicException;
 import com.codestates.hobby.global.exception.ExceptionCode;
@@ -48,7 +45,7 @@ public class ShowcaseService {
 		List<FileInfo> fileInfos = fileInfoService.generateSignedURLs(patch.getFileInfos(), BasePath.SHOWCASES);
 		Category category = categoryService.findHobbyByName(patch.getCategory());
 		Showcase showcase = showcaseRepository.findByIdAndMemberId(patch.getShowcaseId(), patch.getMemberId())
-			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.SHOWCASE_NOT_FOUND));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_SHOWCASE));
 
 		showcase.update(category, patch.getContent(), fileInfos);
 		return showcase;
@@ -62,7 +59,7 @@ public class ShowcaseService {
 	@Transactional(readOnly = true)
 	public Showcase findById(long showcaseId) {
 		return showcaseRepository.findById(showcaseId)
-			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.SHOWCASE_NOT_FOUND));
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_SHOWCASE));
 	}
 
 	@Transactional(readOnly = true)

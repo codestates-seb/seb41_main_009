@@ -71,7 +71,7 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Member findMemberById(long memberId) {
         Optional<Member> optionalMember = repository.findById(memberId);
-        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_MEMBER));
         if(findMember.getMemberStatus().equals(Member.MemberStatus.MEMBER_QUIT))
             throw new BusinessLogicException(ExceptionCode.WITHDRAWAL_MEMBER);
         return findMember;
@@ -80,7 +80,7 @@ public class MemberService {
     @Transactional(readOnly = true)
     public Member findMemberByEmail(String email) {
         Optional<Member> optionalMember = repository.findByEmail(email);
-        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_MEMBER));
         if(findMember.getMemberStatus().equals(Member.MemberStatus.MEMBER_QUIT))
             throw new BusinessLogicException(ExceptionCode.WITHDRAWAL_MEMBER);
         return findMember;

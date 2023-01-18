@@ -99,7 +99,7 @@ public class PostService {
 
     public Post findVerifiedPost(long postId){
         Optional<Post> optionalPost = postRepository.findById(postId);
-        Post findPost = optionalPost.orElseThrow(() ->new BusinessLogicException(ExceptionCode.POST_NOT_FOUND));
+        Post findPost = optionalPost.orElseThrow(() ->new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
         return findPost;
     }
 

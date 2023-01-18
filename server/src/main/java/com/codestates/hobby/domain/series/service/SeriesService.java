@@ -43,13 +43,13 @@ public class SeriesService {
 
     @Transactional
     public void delete(long seriesId, long memberId) {
-        seriesRepository.findByIdAndMemberId(seriesId, memberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.SERIES_NOT_FOUND));
+        seriesRepository.findByIdAndMemberId(seriesId, memberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
         seriesRepository.deleteById(seriesId);
     }
 
     @Transactional(readOnly = true)
     public Series findById(long seriesId) {
-        return seriesRepository.findById(seriesId).orElseThrow(()->new BusinessLogicException(ExceptionCode.SERIES_NOT_FOUND));
+        return seriesRepository.findById(seriesId).orElseThrow(()->new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
     }
 
 
@@ -73,6 +73,6 @@ public class SeriesService {
 
     @Transactional(readOnly = true)
     public Series findById(Long seriesId) {
-        return seriesRepository.findById(seriesId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.SERIES_NOT_FOUND));
+        return seriesRepository.findById(seriesId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
     }
 }
