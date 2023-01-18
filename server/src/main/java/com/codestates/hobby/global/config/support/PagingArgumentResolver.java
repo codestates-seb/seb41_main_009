@@ -12,7 +12,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class PagingArgumentResolver implements HandlerMethodArgumentResolver {
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
-		return parameter.getClass().isAssignableFrom(CustomPageRequest.class);
+		return parameter.getParameterType().isAssignableFrom(CustomPageRequest.class);
 	}
 
 	@Override
@@ -24,9 +24,6 @@ public class PagingArgumentResolver implements HandlerMethodArgumentResolver {
 	) {
 		String pageStr = webRequest.getParameter("page");
 		String sizeStr = webRequest.getParameter("size");
-
-		if (!hasText(pageStr) && !hasText(sizeStr))
-			return null;
 
 		// TODO: 컨트롤러마다 기본값이 다름.
 		//     : 각자 디폴트 Value를 설정할 수 있어야됨.

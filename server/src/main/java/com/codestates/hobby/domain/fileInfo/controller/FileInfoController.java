@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
-import com.codestates.hobby.domain.fileInfo.dto.ImageType;
-import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
+import com.codestates.hobby.domain.fileInfo.dto.FileResponseDto;
+import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
+import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.service.FileInfoService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,12 @@ public class FileInfoController {
 	private final FileInfoService fileInfoService;
 
 	@PostMapping("/files")
-	public ResponseEntity<?> generateURL(@PathVariable("base-path") BasePath basePath, @RequestBody ImageType type) {
-		SignedURL signedURL = fileInfoService.generateSignedURL(type, basePath);
+	public ResponseEntity<?> generateURL(
+		@PathVariable("base-path") BasePath basePath,
+		@RequestBody FileRequestDto request
+	) {
+		FileInfo fileInfo = fileInfoService.generateSignedURL(request, basePath);
 
-		return new ResponseEntity<>(signedURL, HttpStatus.CREATED);
+		return new ResponseEntity<>(FileResponseDto.of(fileInfo), HttpStatus.CREATED);
 	}
 }
