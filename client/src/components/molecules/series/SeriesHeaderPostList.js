@@ -142,7 +142,7 @@ const SeriesPostNumLayer = styled.div`
   align-self: stretch;
   flex-grow: 0;
 `;
-const SeriesPostList = ({ width, number = '10' }) => {
+const SeriesHeaderPostList = ({ width, number = '10' }) => {
   const [isListOpen, setIsListOpen] = useState(false); // list 숨기기
   const [series, setSeries] = useState({ tagList: [] });
   const { seriesId } = useParams();
@@ -193,4 +193,4 @@ const SeriesPostList = ({ width, number = '10' }) => {
   );
 };
 
-export default SeriesPostList;
+export default SeriesHeaderPostList;

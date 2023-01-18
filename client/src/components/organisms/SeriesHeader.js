@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SeriesPostList from '../molecules/series/SeriesPostList';
+import SeriesHeaderPostList from '../molecules/series/SeriesHeaderPostList';
 import SeriesInfo from '../molecules/series/SeriesInfo';
 import { AcrylicBase } from '../atoms/AcrylicBase';
 
@@ -25,7 +25,7 @@ const SeriesHeader = () => {
           title="seriesTitle"
           desc="descrption"
         />
-        <SeriesPostList />
+        <SeriesHeaderPostList />
       </AcrylicBase>
     </Container>
   );
