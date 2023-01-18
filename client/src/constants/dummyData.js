@@ -98,4 +98,14 @@ const PostDummy = {
   },
 };
 
-export { seriesListDummy, PostDummy };
+const userInfoDummy = {
+  id: 1,
+  email: 'java@gmail.com',
+  nickname: 'nickname',
+  introduction: '안녕하세요',
+  imgUrl: 'url~',
+  createdAt: '2023-01-17 12:00:00',
+  modifiedAt: '2023-01-17 18:00:00',
+};
+
+export { seriesListDummy, PostDummy, userInfoDummy };

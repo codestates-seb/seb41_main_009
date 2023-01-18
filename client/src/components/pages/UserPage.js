@@ -1,24 +1,34 @@
 import styled from 'styled-components';
+import { ACTIVITIES, STATS } from '../../constants/UserPageDataLists';
+import { SplashStickerLabelDefault } from '../molecules/stickerLabel/SplashStickerLabel';
+import { UserInfo } from '../molecules/UserInfo';
 import UserContentBox from '../organisms/user/UserContentBox';
-import UserTitle from '../organisms/user/UserTitle';
 
 const User = () => {
   return (
     <Container>
-      <UserTitle />
+      <UserInfo />
       <TabHeader> Stats </TabHeader>
       <TabContentContainer>
-        <UserContentBox tag="NickName"> dddd </UserContentBox>
-        <UserContentBox tag="Email"> test1@test.com </UserContentBox>
-        <UserContentBox tag="Created At"> 2022-01-10 </UserContentBox>
+        {STATS.map(stat => {
+          return (
+            <UserContentBox key={stat} tag={stat}>
+              <CardContainer>abc</CardContainer>
+            </UserContentBox>
+          );
+        })}
       </TabContentContainer>
       <TabHeader> Activities </TabHeader>
       <TabContentContainer>
-        <UserContentBox tag="Series"> DDDDDDDDDDDDDD </UserContentBox>
-        <UserContentBox tag="Post"> ddddddddd </UserContentBox>
-        <UserContentBox tag="Showcase"> dddddddddd </UserContentBox>
+        {ACTIVITIES.map(activity => {
+          return (
+            <UserContentBox key={activity} tag={activity}>
+              <CardContainer />
+            </UserContentBox>
+          );
+        })}
       </TabContentContainer>
-      <ImageFooter />
+      <SplashStickerLabelDefault />
     </Container>
   );
 };
@@ -30,7 +40,6 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100vh;
-  background-color: gray;
 
   & > div {
     width: 100%;
@@ -47,10 +56,14 @@ const TabContentContainer = styled.div`
   display: flex;
 `;
 
-const ImageFooter = styled.div`
-  margin-top: 76px;
-  background-color: blue;
-  height: 260px;
+const CardContainer = styled.div`
+  box-sizing: border-box;
+  width: ${props => (props.width ? props.width : '331px')};
+  height: ${props => (props.height ? props.height : '76px')};
+  padding: 28px 20px;
+  gap: 10px;
+  border: 2px solid black;
+  box-shadow: var(--boxShadow-02) black;
 `;
 
 export default User;
