@@ -10,9 +10,6 @@ import UserImage from '../atoms/UserImage';
  * @param {string} name - 유저 닉네임
  * @param {string} introduction - 유저 소개
  * @param {string} image - 유저 프로필 이미지 URL
- * @param {string} color - 유저 닉네임 색상
- * @param {CSSProperties} typo - 적용할 타이포
- * @param {*} children - 하위 컴포넌트
  * @returns {JSX.Element} - 프로필이미지, 닉네임정보를 담은 컴포넌트
  */
 const UserInfo = ({ id, name, introduction, image }) => {
