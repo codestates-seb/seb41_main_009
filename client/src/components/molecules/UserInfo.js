@@ -15,8 +15,8 @@ import UserImage from '../atoms/UserImage';
 const UserInfo = ({ id, name, image, color, size, typo, children }) => {
   return (
     <Container>
-      <UserImage src={image} sizes={size} />
-      <Nickname id={id} name={name} color={color} typo={typo} />
+      <UserImage src={image || 'https://unsplash.it/1920/1080/?random'} sizes={size} />
+      <Nickname id={id} name={name || 'Name'} color={color} typo={typo} />
       {children}
     </Container>
   );
@@ -25,8 +25,8 @@ const UserInfo = ({ id, name, image, color, size, typo, children }) => {
 const UserInfoSmall = ({ id, name, image, color }) => {
   return (
     <Container>
-      <UserImage src={image} sizes="24px" />
-      <Nickname id={id} name={name} color={color} />
+      <UserImage src={image || 'https://unsplash.it/1920/1080/?random'} sizes="24px" />
+      <Nickname id={id} name={name || 'Name'} color={color} />
     </Container>
   );
 };

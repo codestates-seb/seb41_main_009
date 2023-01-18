@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { HeadingMedium, ParagraphSmall } from '../../styles/typo';
-import Category from '../atoms/Category';
+import { HeadingMedium, ParagraphSmall } from '../../../styles/typo';
+import Category from '../../atoms/Category';
+import { PARAGRAPH } from '../../../constants/Paragraph';
 
 /**
  * 포스트 헤더 molecule
@@ -13,14 +14,14 @@ const PostTitle = ({ title, description, categoryName }) => {
   return (
     <Container>
       <TitleContainer>
-        <Title>{title}</Title>
+        <Title>{title || PARAGRAPH}</Title>
         {categoryName ? (
           <CategoryContainer>
             <Category padding="10px 30px">{categoryName}</Category>
           </CategoryContainer>
         ) : null}
       </TitleContainer>
-      <Desc>{description}</Desc>
+      <Desc>{description || PARAGRAPH}</Desc>
     </Container>
   );
 };
@@ -45,6 +46,10 @@ const CategoryContainer = styled.div`
 `;
 
 const Title = styled.div`
+  width: ${props => props.width || '100% '};
+  height: 72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   ${HeadingMedium};
   font-weight: 700;
 `;
@@ -52,6 +57,10 @@ const Title = styled.div`
 const Desc = styled.div`
   ${ParagraphSmall};
   margin-top: 10px;
+  width: 662px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 40px;
 `;
 
 export default PostTitle;
