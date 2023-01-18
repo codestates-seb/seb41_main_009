@@ -1,9 +1,6 @@
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { AcrylicBase } from '../../atoms/AcrylicBase';
-import { PostListStack } from './PostList';
+import { PostListStack } from './PostCard';
 import { ParagraphMedium, LabelListTitle, LabelMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { PARAGRAPH } from '../../../constants/Paragraph';
@@ -14,10 +11,8 @@ const Container = styled.div`
   align-items: flex-start;
   padding: 0px;
   gap: 10px;
-
-  width: 1056px;
-  height: fit-content;
-
+  width: var(--content-width);
+  margin-bottom: 40px;
   background: url(https://unsplash.it/1920/1080/?random) rgba(45, 45, 45, 0.44);
   border-radius: 30px;
   overflow: hidden;
@@ -28,7 +23,7 @@ const InfoLayer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0px 0px;
+  padding: 15px 0px;
   gap: 10px;
 
   width: fit-content;
@@ -48,13 +43,10 @@ const SeriesInfoLayer = styled.div`
 
 const SeriesPostNumLayer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
   padding: 0px;
-  gap: 20px;
-
-  padding: 0px;
-  gap: 20px;
+  gap: 5px;
   ${LabelMedium}
   color: #fff;
 
@@ -103,6 +95,7 @@ const Title = styled.div`
   text-overflow: ellipsis;
   ${LabelListTitle}
   color: #fff;
+  margin-bottom: 10px;
   &:hover {
     color: var(--gray-100);
   }
@@ -120,42 +113,33 @@ const Paragraph = styled.div`
   }
 `;
 
-const SeriesList = ({ width, number = '10' }) => {
-  const [series, setSeries] = useState({});
-  const { seriesId } = useParams();
-
-  useEffect(() => {
-    const getData = async () => {
-      await axios(`URL/${seriesId}`)
-        .then(res => setSeries(res.data.data))
-        .catch(error => console.log(error));
-    };
-
-    getData();
-  }, [seriesId]);
+const SeriesCard = ({ width, series }) => {
+  const { title, content, member, createdAt, modifiedAt, views, postId, totalPosts } = series;
+  const { nickname, profileImageUrl } = member;
 
   return (
     <Container>
       <AcrylicBase>
         <InfoLayer>
           <SeriesInfoLayer>
-            <Title width={width}> {series.title || 'Series Title'} </Title>
+            <Title width={width}> {title || 'Series Title'} </Title>
             <SeriesPostNumLayer>
-              <p>All Post</p>
-              <p> {number} 개</p>
+              <div>총 {totalPosts}개의 Post</div>
+              <div>{views}번 조회</div>
             </SeriesPostNumLayer>
           </SeriesInfoLayer>
-          <Paragraph width={width}>{series.Paragraph || PARAGRAPH}</Paragraph>
+          <Paragraph width={width}>{content || PARAGRAPH}</Paragraph>
           <ContextLayer>
             <UserBox>
-              <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
+              <UserInfoSmall name={nickname} image={profileImageUrl} />
+              <span>{(modifiedAt || createdAt).slice(0, 10)}</span>
             </UserBox>
           </ContextLayer>
         </InfoLayer>
-        <PostListStack />
+        <PostListStack postId={postId} />
       </AcrylicBase>
     </Container>
   );
 };
 
-export default SeriesList;
+export default SeriesCard;

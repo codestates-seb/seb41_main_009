@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { PostListStack, PostList } from '../list/PostList';
+import { PostListStack, PostCard } from '../list/PostCard';
 import { LabelListTitle, LabelMedium } from '../../../styles/typo';
 import Pagination from '../Pagination';
 
@@ -179,8 +179,8 @@ const SeriesPostList = ({ width, number = '10' }) => {
             ''
           ) : (
             <PostListSection>
-              <PostList />
-              <PostList />
+              <PostCard />
+              <PostCard />
               <Pagination totalPages={10} />
             </PostListSection>
           )}

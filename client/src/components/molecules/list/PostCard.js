@@ -6,6 +6,7 @@ import { LabelListTitle, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { TextButton } from '../../atoms/Buttons';
 import { PARAGRAPH, TITLE } from '../../../constants/Paragraph';
+import useGetPost from '../../../hooks/useGetPost';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -101,7 +102,7 @@ const ImageLayer = styled.img`
  * @param {string} width - text의 길이
  * @returns {JSX.Element} - PostList 개별 항목을 나타내는 컴포넌트
  */
-const PostList = ({ boxShadow, width }) => {
+const PostCard = ({ boxShadow, width }) => {
   const [post, setPost] = useState({});
   const { postId } = useParams();
 
@@ -138,19 +139,12 @@ const PostList = ({ boxShadow, width }) => {
  * @param {string} width - text의 길이
  * @returns {JSX.Element} - PostListStack을 나타내는 컴포넌트
  */
-const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px' }) => {
-  const [post, setPost] = useState({});
-  const { postId } = useParams();
+const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId }) => {
+  const { post, isLoading, isLoadingError } = useGetPost(postId);
 
-  useEffect(() => {
-    const getData = async () => {
-      await axios(`http://3.37.105.24:8080/questions/${postId}`)
-        .then(res => setPost(res.data.data))
-        .catch(error => console.log(error));
-    };
+  // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
+  console.log(isLoading, isLoadingError);
 
-    getData();
-  }, [postId]);
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
@@ -173,4 +167,4 @@ const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px' }
     </Container>
   );
 };
-export { PostList, PostListStack };
+export { PostCard, PostListStack };
