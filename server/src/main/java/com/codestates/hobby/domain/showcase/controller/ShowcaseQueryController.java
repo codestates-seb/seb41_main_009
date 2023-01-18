@@ -70,14 +70,12 @@ public class ShowcaseQueryController {
 	}
 
 	private ResponseEntity<?> toResponseEntity(Page<Showcase> showcases, Long memberId) {
-		if (showcases.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		} else {
-			Page<ShowcaseDto.SimpleResponse> responses = showcases.map(mapper::showcaseToSimpleResponse);
+		Page<ShowcaseDto.SimpleResponse> responses = showcases.map(showcase -> {
+			ShowcaseDto.SimpleResponse response = mapper.showcaseToSimpleResponse(showcase);
+			mapper.setProperties(response, memberId);
+			return response;
+		});
 
-			responses.forEach(showcase -> mapper.setProperties(showcase, memberId));
-
-			return new ResponseEntity<>(new MultiResponseDto<>(responses), HttpStatus.OK);
-		}
+		return new ResponseEntity<>(new MultiResponseDto<>(responses), HttpStatus.OK);
 	}
 }
