@@ -1,8 +1,11 @@
-package com.codestates.hobby.domain.showcase.controller;
+package com.codestates.hobby.domain.showcase;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -10,10 +13,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.web.servlet.ResultActions;
 
+import com.codestates.hobby.domain.showcase.controller.ShowcaseCommendController;
+import com.codestates.hobby.domain.showcase.controller.ShowcaseQueryController;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.mapper.ShowcaseMapper;
 import com.codestates.hobby.domain.showcase.service.ShowcaseService;
+import com.codestates.hobby.domain.stub.FileInfoStub;
 import com.codestates.hobby.domain.stub.ShowcaseStub;
 import com.codestates.hobby.utils.ControllerTest;
 
@@ -29,24 +35,31 @@ class ShowcaseControllerTest extends ControllerTest {
 	void post() throws Exception {
 		ShowcaseDto.Post post = ShowcaseStub.createPost();
 		given(service.post(any(ShowcaseDto.Post.class))).willReturn(ShowcaseStub.createShowcase());
+		given(mapper.showcaseToCommendResponse(any(Showcase.class))).willReturn(
+			new ShowcaseDto.CommandResponse(1L, List.of(FileInfoStub.createResponse()))
+		);
 
 		ResultActions actions = defaultPostActions("/showcases", post);
 
 		actions
+			.andDo(print())
 			.andExpect(status().isCreated())
-			.andExpect(jsonPath("$").value(1L));
+			.andExpect(jsonPath("$.id").value(1L));
 	}
 
 	@Test
 	void patch() throws Exception {
 		ShowcaseDto.Patch patch = ShowcaseStub.createPatch();
 		given(service.update(any(ShowcaseDto.Patch.class))).willReturn(ShowcaseStub.createShowcase());
+		given(mapper.showcaseToCommendResponse(any(Showcase.class))).willReturn(
+			new ShowcaseDto.CommandResponse(1L, List.of(FileInfoStub.createResponse())));
 
 		ResultActions actions = defaultPatchActions("/showcases/{showcase-id}", patch, 1L);
 
 		actions
+			.andDo(print())
 			.andExpect(status().isOk())
-			.andExpect(jsonPath("$").value(1L));
+			.andExpect(jsonPath("$.id").value(1L));
 	}
 
 	@Test

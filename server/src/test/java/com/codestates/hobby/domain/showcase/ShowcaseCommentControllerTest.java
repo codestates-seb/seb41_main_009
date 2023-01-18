@@ -1,4 +1,4 @@
-package com.codestates.hobby.domain.showcase.controller;
+package com.codestates.hobby.domain.showcase;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.ResultActions;
 
+import com.codestates.hobby.domain.showcase.controller.ShowcaseCommentController;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
 import com.codestates.hobby.domain.showcase.mapper.ShowcaseCommentMapper;
