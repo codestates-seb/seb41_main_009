@@ -3,12 +3,13 @@ package com.codestates.hobby.domain.showcase.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.mapper.ShowcaseMapper;
@@ -26,53 +27,56 @@ public class ShowcaseQueryController {
 	private final ShowcaseMapper mapper;
 
 	@GetMapping("/showcases/{showcase-id}")
-	public ResponseEntity<?> get(@AuthenticationPrincipal Long memberId, @PathVariable("showcase-id") long showcaseId) {
+	public ResponseEntity<?> get(
+		@SessionAttribute(required = false) Member loginMember,
+		@PathVariable("showcase-id") long showcaseId
+	) {
 		Showcase showcase = showcaseService.findById(showcaseId);
 
 		ShowcaseDto.Response response = mapper.showcaseToResponse(showcase);
-		mapper.setProperties(response, memberId);
+		mapper.setProperties(response, loginMember != null ? loginMember.getId() : null);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/showcases")
 	public ResponseEntity<?> getAll(
-		@AuthenticationPrincipal Long memberId,
+		@SessionAttribute(required = false) Member loginMember,
 		CustomPageRequest pageRequest
 	) {
 		Page<Showcase> showcases = showcaseService.findAll(pageRequest.to());
 
-		return toResponseEntity(showcases, memberId);
+		return toResponseEntity(showcases, loginMember);
 	}
 
 	@GetMapping("/categories/{category-name}/showcases")
 	public ResponseEntity<?> getAllByCategory(
+		@SessionAttribute(required = false) Member loginMember,
 		@PathVariable("category-name") String category,
-		@AuthenticationPrincipal Long memberId,
 		CustomPageRequest pageRequest
 	) {
 		Page<Showcase> showcases =
 			showcaseService.findAllByCategory(category, pageRequest.to());
 
-		return toResponseEntity(showcases, memberId);
+		return toResponseEntity(showcases, loginMember);
 	}
 
 	@GetMapping("/members/{member-id}/showcases")
 	public ResponseEntity<?> getAllByMember(
-		@AuthenticationPrincipal Long authMemberId,
+		@SessionAttribute(required = false) Member loginMember,
 		@PathVariable("member-id") long memberId,
 		CustomPageRequest pageRequest
 	) {
 		Page<Showcase> showcases =
 			showcaseService.findAllByMember(memberId, pageRequest.to());
 
-		return toResponseEntity(showcases, authMemberId);
+		return toResponseEntity(showcases, loginMember);
 	}
 
-	private ResponseEntity<?> toResponseEntity(Page<Showcase> showcases, Long memberId) {
+	private ResponseEntity<?> toResponseEntity(Page<Showcase> showcases, Member member) {
 		Page<ShowcaseDto.SimpleResponse> responses = showcases.map(showcase -> {
 			ShowcaseDto.SimpleResponse response = mapper.showcaseToSimpleResponse(showcase);
-			mapper.setProperties(response, memberId);
+			mapper.setProperties(response, member != null ? member.getId() : null);
 			return response;
 		});
 
