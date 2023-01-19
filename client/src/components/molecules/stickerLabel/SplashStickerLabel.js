@@ -39,10 +39,15 @@ const ProfileInfoTextEmphasizeA = styled.span`
   color: var(--orange-400);
 `;
 
-const SplashStickerLabelDefault = () => {
+const SplashStickerLabelDefault = ({ boyMessage, girlMessage, emailMessage, createdAtMessage }) => {
   return (
     <Container>
-      <TiltedContainer />
+      <TiltedContainer
+        boyMessage={boyMessage}
+        girlMessage={girlMessage}
+        emailMessage={emailMessage}
+        createdAtMessage={createdAtMessage}
+      />
     </Container>
   );
 };
