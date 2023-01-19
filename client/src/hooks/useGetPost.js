@@ -7,7 +7,7 @@ import { PostDummy } from '../constants/dummyData';
  * @param {string | number} postId
  * @returns {{}, boolean, boolean}
  */
-const useGetPost = postId => {
+const useGetPost = ({ postId }) => {
   const [post, setPost] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
@@ -29,6 +29,7 @@ const useGetPost = postId => {
         setIsLoadingError(true);
       })
       .finally(() => {
+        // 현재는 더미데이터에서 가져옴
         setPost(PostDummy);
         setIsLoading(false);
         setIsLoadingError(false);

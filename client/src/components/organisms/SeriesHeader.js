@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import SeriesPostList from '../molecules/series/SeriesPostList';
+import SeriesHeaderPostList from '../molecules/series/SeriesPostList';
 import SeriesInfo from '../molecules/series/SeriesInfo';
 import { AcrylicBase } from '../atoms/AcrylicBase';
 
@@ -7,7 +7,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: inherit;
-  height: inherit;
+  height: fit-content;
   justify-content: center;
   align-items: center;
   background: url(https://unsplash.it/1920/1080/?random) rgba(45, 45, 45, 0.44);
@@ -25,7 +25,7 @@ const SeriesHeader = () => {
           title="seriesTitle"
           desc="descrption"
         />
-        <SeriesPostList />
+        <SeriesHeaderPostList />
       </AcrylicBase>
     </Container>
   );

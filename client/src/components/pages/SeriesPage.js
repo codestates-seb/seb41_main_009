@@ -9,6 +9,7 @@ const Container = styled.div`
   margin: 0 auto;
   justify-content: center;
   align-items: center;
+  gap: 5vh;
 `;
 
 const SeriesPage = () => {

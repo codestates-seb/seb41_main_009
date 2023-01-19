@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import PostTitle from '../../molecules/PostTitle';
-import { UserInfo } from '../../molecules/UserInfo';
+import PostTitle from '../../molecules/posts/PostTitle';
+import { UserInfoSmall } from '../../molecules/UserInfo';
 import { LabelSmall } from '../../../styles/typo';
 
 /**
@@ -18,7 +18,7 @@ import { LabelSmall } from '../../../styles/typo';
  * @param {string} height - 컨테이너 높이 고정설정
  * @returns {JSX.Element} -
  */
-const PostHeader = ({
+const PostHeaderLayer = ({
   id,
   userName,
   userImage,
@@ -34,12 +34,12 @@ const PostHeader = ({
   // TODO: 페이지 구현시 createAt, modifiedAt 은 Date 타입으로 받아 컴포넌트 내에서 변환하기?
   return (
     <Container border={border} width={width} height={height}>
-      <PostTitle title={title} description={desc} categoryName={categoryName} />
+      <PostTitle title={title} description={desc} categoryName={categoryName || 'Category'} />
       <DeatilInfoList>
-        <UserInfo id={id} name={userName} image={userImage}>
+        <UserInfoSmall id={id} name={userName} image={userImage}>
           <CreatedAtText>{createdAt}</CreatedAtText>
           <CreatedAtText>{modifiedAt}</CreatedAtText>
-        </UserInfo>
+        </UserInfoSmall>
         <IconList>
           <Icon>Icon</Icon>
           <Icon>Icon</Icon>
@@ -51,7 +51,7 @@ const PostHeader = ({
 
 const Container = styled.div`
   display: flex;
-  width: ${props => props.width || '100%'};
+  width: ${props => props.width || 'calc(100% / 12 * 10)'};
   border: ${props => (props.border ? '2px solid black' : 'none')};
   height: ${props => props.height || '193px'};
   box-sizing: content-box;
@@ -79,4 +79,4 @@ const CreatedAtText = styled.div`
   color: var(--gray-400);
 `;
 
-export default PostHeader;
+export default PostHeaderLayer;

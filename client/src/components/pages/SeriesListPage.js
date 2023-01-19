@@ -14,6 +14,7 @@ const Container = styled.div`
   margin: 0 auto;
   justify-content: center;
   align-items: center;
+  margin-bottom: 100px;
 `;
 
 const CreateSeriesButton = styled(BlueShadowButton)`

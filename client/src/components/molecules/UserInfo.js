@@ -14,7 +14,7 @@ import UserImage from '../atoms/UserImage';
  */
 const UserInfo = ({ id, name, introduction, image }) => {
   return (
-    <UserInfoBigContainer>
+<UserInfoBigContainer>
       <UserImage src={image} sizes="128px" />
       <UserHeader>
         <Nickname id={id} name={name} color="var(--orange-400)" typo={HeadingLarge} />
@@ -25,11 +25,11 @@ const UserInfo = ({ id, name, introduction, image }) => {
   );
 };
 
-const UserInfoSmall = ({ id, name, image, color }) => {
+const UserInfoSmall = ({ id, name, image, color, size }) => {
   return (
     <Container>
-      <UserImage src={image} sizes="24px" />
-      <Nickname id={id} name={name} color={color} />
+      <UserImage src={image || 'https://unsplash.it/1920/1080/?random'} sizes={size || '24px'} />
+      <Nickname id={id} name={name || 'Name'} color={color} />
     </Container>
   );
 };

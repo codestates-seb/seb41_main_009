@@ -38,6 +38,7 @@ const App = () => {
             <Route path="/" element={<PublicRoute component={<Showcase />} />} />
             <Route path="/login" element={<PublicRoute component={<LogIn />} />} />
             <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
+            <Route path="/posts/" element={<PublicRoute component={<PostList />} />} />
             <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
             <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
             <Route path="/posts/new" element={<PublicRoute component={<PostCreatePage />} />} />
@@ -59,5 +60,6 @@ export default App;
 const Main = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: var(--header-height);
+  /* margin-top: calc(var(--header-height) + 50px); */
+  padding-top: calc(var(--header-height) + 50px);
 `;
