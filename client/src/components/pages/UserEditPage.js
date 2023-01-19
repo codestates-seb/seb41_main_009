@@ -29,6 +29,7 @@ const UserEdit = () => {
 
     if (image && image.size <= MAXIMAGESIZE) {
       const imagePath = URL.createObjectURL(image);
+      // 이미지 처리 로직에 따라서 여기서 이미지 서버에 업로드할수도 있음
       setNewImage(imagePath);
     } else {
       alert(IMAGESIZELIMIT);
@@ -56,13 +57,12 @@ const UserEdit = () => {
       setDescriptionMessage('');
       setNewDescription(descriptionValue);
     }
-
-    setNewDescription(descriptionValue);
   };
 
   const submitNewUserInfo = () => {
-    if (newNickname && newDescription && newImage) {
-      //
+    if (!nicknameMessage && !descriptionMessage && newImage) {
+      // update 로직에 따라서 함수 추후 구현 예정
+      console.log(newNickname, newDescription, newImage);
     }
   };
 
