@@ -1,44 +1,65 @@
 import styled from 'styled-components';
+import { useEffect } from 'react';
+import { ClipLoader } from 'react-spinners';
+
+import useShowcaseStore from '../../store/showcaseStore';
+import ShowcaseTitle from '../molecules/ShowcaseTitle';
 import Showcasebox from '../organisms/showcase/Showcasebox';
 import ShowcaseModal from '../organisms/showcase/ShowcaseModal';
+import useIntersect from '../../hooks/useIntersect';
+import useShowcaseModal from '../../store/showcaseModalStore';
 
 const Showcase = () => {
+  const { itemList, isLoading, getItemListForTest } = useShowcaseStore();
+  const { isModalOpen, getModalItemTest } = useShowcaseModal();
+
+  const ref = useIntersect(async (entry, observer) => {
+    // TODO: 너무 빠른 업데이트 요청 방지로직 추가
+
+    observer.unobserve(entry.target);
+    await getItemListForTest();
+    observer.observe(entry.target);
+  });
+
+  const handleModal = async id => {
+    await getModalItemTest(id);
+  };
+
+  const renderItem = line => {
+    return itemList.map((el, idx) => {
+      return idx % 3 === line ? (
+        <Showcasebox
+          key={el.id}
+          thumnail={el.thumbnailUrl}
+          tagName={el.category}
+          summary={el.content}
+          userImg={el.writer.profileImageUrl}
+          userName={el.writer.nickname}
+          commentUserName={el.commentUserName}
+          commentContent={el.commentContent}
+          handle={() => handleModal(el.id)}
+        />
+      ) : null;
+    });
+  };
+
+  useEffect(() => {
+    getItemListForTest();
+  }, []);
   return (
-    <Container>
-      <ShowcaseModal />
-      <Header> Header </Header>
-      <Body>
-        <CaseContainer>
-          <Showcasebox
-            thumnail="https://images.pexels.com/photos/3558637/pexels-photo-3558637.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-            tagId="1"
-            tagName="여행"
-            userImg="https://images.pexels.com/photos/3558637/pexels-photo-3558637.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-            userName="여행자"
-            summary="푸른 언덕에 배낭을 메고
-황금빛 태양 축제를 여는
-광야를 향해서 계곡을 향해서
-먼 동이 트는 이른 아침에
-도시의 소음 수 많은 사람
-빌딩 숲 속을 벗어나봐요"
-            commentUserName="Hojung"
-            commentContent="정말 잘 들었습니다. 화려하네요"
-          />
-          <Showcasebox />
-          <Showcasebox />
-        </CaseContainer>
-        <CaseContainer>
-          <Showcasebox />
-          <Showcasebox />
-          <Showcasebox />
-        </CaseContainer>
-        <CaseContainer>
-          <Showcasebox />
-          <Showcasebox />
-          <Showcasebox />
-        </CaseContainer>
-      </Body>
-    </Container>
+    <>
+      <ShowcaseModal isModalOpen={isModalOpen} />
+      <Container>
+        <ShowcaseTitle />
+        <Body>
+          <CaseContainer>{renderItem(0)}</CaseContainer>
+          <CaseContainer>{renderItem(1)}</CaseContainer>
+          <CaseContainer>{renderItem(2)}</CaseContainer>
+        </Body>
+        {isLoading ? <ClipLoader /> : null}
+        <InfinityScrollSection ref={ref} />
+      </Container>
+    </>
   );
 };
 
@@ -48,14 +69,7 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 100vh;
-`;
-
-const Header = styled.div`
-  display: flex;
-  width: 100%;
-  height: 50px;
-  background-color: green;
+  height: auto;
 `;
 
 const Body = styled.div`
@@ -75,6 +89,10 @@ const CaseContainer = styled.div`
   &:last-child {
     padding-right: 0px;
   }
+`;
+
+const InfinityScrollSection = styled.div`
+  height: 1px;
 `;
 
 export default Showcase;
