@@ -46,6 +46,8 @@ const InputCard = ({
   messageColor,
   message,
   asideInput,
+  defaultValue,
+  accept,
 }) => {
   return (
     <Container width={width} height={height} boxShadow={boxShadow}>
@@ -56,6 +58,8 @@ const InputCard = ({
           width={inputWidth}
           height={inputHeight}
           onChange={onChange}
+          defaultValue={defaultValue}
+          accept={accept}
         />
         {asideInput || ''}
       </div>
