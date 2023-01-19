@@ -10,12 +10,12 @@ const Container = styled.div`
   width: calc(100% / 12 * 10);
   height: fit-content;
   gap: 10px;
-  margin-bottom: 1vh;
+  margin-bottom: 10px;
 
   .toastui-editor-contents h1 {
     // 본문 H1 태그 스타일 지정
     padding-left: 5px;
-    margin-top: 5vh;
+    margin-top: 30px;
     ${HeadingLarge}
     color: var(--gray-900);
 
@@ -26,7 +26,7 @@ const Container = styled.div`
   .toastui-editor-contents h2 {
     // 본문 H2 태그 스타일 지정
     padding-left: 5px;
-    margin-top: 5vh;
+    margin-top: 20px;
     ${HeadingMedium}
     color: var(--gray-800);
 
@@ -38,7 +38,7 @@ const Container = styled.div`
   .toastui-editor-contents h3 {
     // 본문 H3s 태그 스타일 지정
     padding-left: 5px;
-    margin-top: 5vh;
+    margin-top: 15px;
 
     color: var(--gray-800);
 
