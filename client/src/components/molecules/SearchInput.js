@@ -15,12 +15,14 @@ const Container = styled.div`
   padding: 0 10px;
   border: 2px solid black;
   box-shadow: var(--boxShadow-00) black;
+  background-color: var(--gray-50);
 `;
 
 const Input = styled.input`
   border: none;
   width: 90%;
   height: 55%;
+  background-color: var(--gray-50);
 `;
 
 const SearchButton = styled(TextButton)`

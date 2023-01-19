@@ -9,7 +9,7 @@ const Container = styled.div`
   top: 0;
   width: 100%;
   height: var(--header-height);
-  background-color: white;
+  background-color: var(--gray-50);
   display: flex;
   justify-content: center;
   align-items: center;
