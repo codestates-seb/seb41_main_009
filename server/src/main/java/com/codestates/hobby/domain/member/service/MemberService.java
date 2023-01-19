@@ -5,7 +5,6 @@ import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.codestates.hobby.domain.member.repository.MemberRepository;
 import com.codestates.hobby.domain.member.entity.Member;
 
-import com.codestates.hobby.domain.post.entity.Post;
 import com.codestates.hobby.global.exception.BusinessLogicException;
 import com.codestates.hobby.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;

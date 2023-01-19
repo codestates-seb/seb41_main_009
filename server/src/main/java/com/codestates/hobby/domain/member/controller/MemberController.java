@@ -1,13 +1,10 @@
 package com.codestates.hobby.domain.member.controller;
 
-import com.codestates.hobby.domain.auth.Session.SessionConst;
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.member.mapper.MemberMapper;
 import com.codestates.hobby.domain.member.service.MemberService;
 
-import com.codestates.hobby.domain.series.dto.SeriesDto;
-import com.codestates.hobby.domain.series.entity.Series;
 import com.codestates.hobby.global.config.support.CustomPageRequest;
 import com.codestates.hobby.global.dto.MultiResponseDto;
 import com.codestates.hobby.global.exception.BusinessLogicException;
@@ -18,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
