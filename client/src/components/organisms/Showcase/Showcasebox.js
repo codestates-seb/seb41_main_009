@@ -28,10 +28,11 @@ const Showcasebox = ({
   summary,
   commentUserName,
   commentContent,
+  handle,
 }) => {
   return (
     <Container>
-      <ImageCard thumnail={thumnail} id={tagId} name={tagName} />
+      <ImageCard thumnail={thumnail} id={tagId} name={tagName} handle={handle} />
       <Box>
         <UserInfo id={userId} name={userName} image={userImg} />
         <ContentSummary>{summary}</ContentSummary>

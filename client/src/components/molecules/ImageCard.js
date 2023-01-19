@@ -9,10 +9,10 @@ import CategoryTag from '../atoms/Category';
  * @param {string} thumnail - 썸네일 URL
  * @returns {JSX.Element} - 쇼케이스용 이미지 썸네일 컴포넌트
  */
-const ImageCard = ({ id, name, thumnail }) => {
+const ImageCard = ({ id, name, thumnail, handle }) => {
   return (
     <Box padding="0px" boxShadow="null">
-      <ThumnailCard src={thumnail} />
+      <ThumnailCard src={thumnail} onClick={handle} />
       <CategoryTag id={id}>{name}</CategoryTag>
     </Box>
   );
@@ -25,6 +25,7 @@ const ThumnailCard = styled.img`
   min-height: 200px;
   max-height: 453px;
   background-color: var(--gray-50);
+  cursor: pointer;
 `;
 
 export default ImageCard;
