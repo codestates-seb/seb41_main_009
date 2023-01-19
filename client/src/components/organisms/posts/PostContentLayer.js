@@ -15,7 +15,7 @@ const Container = styled.div`
   margin-bottom: 5vh;
 `;
 
-const PostSubHeaderContainer = () => {
+const PostContentLayer = () => {
   return (
     <Container>
       <PostContentViewer />
@@ -23,4 +23,4 @@ const PostSubHeaderContainer = () => {
   );
 };
 
-export default PostSubHeaderContainer;
+export default PostContentLayer;

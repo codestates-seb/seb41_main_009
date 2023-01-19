@@ -18,7 +18,7 @@ import { LabelSmall } from '../../../styles/typo';
  * @param {string} height - 컨테이너 높이 고정설정
  * @returns {JSX.Element} -
  */
-const PostHeader = ({
+const PostHeaderLayer = ({
   id,
   userName,
   userImage,
@@ -79,4 +79,4 @@ const CreatedAtText = styled.div`
   color: var(--gray-400);
 `;
 
-export default PostHeader;
+export default PostHeaderLayer;

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import PostHeader from '../organisms/posts/PostHeader';
-import PostSubHeaderContainer from '../organisms/posts/PostSubHeaderContainer';
-import PostContent from '../organisms/posts/PostContent';
+import { useParams } from 'react-router-dom';
+import PostHeaderLayer from '../organisms/posts/PostHeaderLayer';
+import PostSubHeaderLayer from '../organisms/posts/PostSubHeaderLayer';
+import PostContentLayer from '../organisms/posts/PostContentLayer';
 import Comments from '../organisms/Comments';
+import useGetPost from '../../hooks/useGetPost';
 
 const Container = styled.div`
   display: flex;
@@ -22,12 +24,17 @@ const Container = styled.div`
   border-radius: 30px;
 `;
 
+// isLoading, isLoadingError 나중에 추가
 const PostPage = () => {
+  const { category, postId } = useParams();
+
+  const { post } = useGetPost(category, postId);
+
   return (
     <Container>
-      <PostHeader />
-      <PostSubHeaderContainer />
-      <PostContent />
+      <PostHeaderLayer post={post} />
+      <PostSubHeaderLayer post={post} />
+      <PostContentLayer post={post} />
       <Comments />
     </Container>
   );

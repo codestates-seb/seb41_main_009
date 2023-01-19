@@ -58,7 +58,7 @@ const INDEXLABEL = {
   ],
 };
 
-const PostSubHeaderContainer = ({ indexLabel }) => {
+const PostSubHeaderLayer = ({ indexLabel }) => {
   const [Labels, SetILabels] = useState({ indexLabel });
   useEffect(() => {
     SetILabels(INDEXLABEL.data);
@@ -74,4 +74,4 @@ const PostSubHeaderContainer = ({ indexLabel }) => {
   );
 };
 
-export default PostSubHeaderContainer;
+export default PostSubHeaderLayer;
