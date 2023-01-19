@@ -8,12 +8,12 @@ import HOST from '../constants/URL';
  * @param {string | number} postId
  * @returns {{}, boolean, boolean}
  */
-const useGetPost = postId => {
+const useGetPost = (category, postId) => {
   const [post, setPost] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `${HOST}/posts/${postId}`;
+  const URL = `${HOST}/posts/${category}/${postId}`;
 
   useEffect(() => {
     setIsLoading(true);
@@ -30,6 +30,7 @@ const useGetPost = postId => {
         setIsLoadingError(true);
       })
       .finally(() => {
+        // 현재는 더미데이터에서 받아옴
         setPost(PostDummy);
         setIsLoading(false);
         setIsLoadingError(false);
