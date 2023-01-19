@@ -15,6 +15,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.common.BaseEntity;
@@ -44,10 +48,13 @@ public class Showcase extends BaseEntity {
 	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 
+	@OrderBy("index asc")
 	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<FileInfo> fileInfos = new ArrayList<>();
 
-	@OneToMany(mappedBy = "showcase")
+	@OrderBy("id desc")
+	@LazyCollection(LazyCollectionOption.EXTRA)
+	@OneToMany(mappedBy = "showcase", orphanRemoval = true)
 	private List<ShowcaseComment> comments = new ArrayList<>();
 
 	public Showcase(String content, Member member, Category category, List<FileInfo> imageURLs) {
