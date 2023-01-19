@@ -22,10 +22,10 @@ const UserInfo = ({ id, name, image, color, size, typo, children }) => {
   );
 };
 
-const UserInfoSmall = ({ id, name, image, color }) => {
+const UserInfoSmall = ({ id, name, image, color, size }) => {
   return (
     <Container>
-      <UserImage src={image || 'https://unsplash.it/1920/1080/?random'} sizes="24px" />
+      <UserImage src={image || 'https://unsplash.it/1920/1080/?random'} sizes={size || '24px'} />
       <Nickname id={id} name={name || 'Name'} color={color} />
     </Container>
   );

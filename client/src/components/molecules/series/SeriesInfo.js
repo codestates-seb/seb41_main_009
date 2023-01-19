@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SeriesTitle from './SeriesTitle';
-import { UserInfo } from '../UserInfo';
+import { UserInfoSmall } from '../UserInfo';
 import { LabelSmall, LabelXSmall } from '../../../styles/typo';
 import { ClearBlurButton } from '../../atoms/Buttons';
 
@@ -39,7 +39,7 @@ const SeriesInfo = ({
       <SeriesInfoContainer>
         <SeriesInfoList>
           <ClearBlurButton />
-          <UserInfo id={id} name={userName} image={userImage} typo={LabelXSmall} size="24px" />
+          <UserInfoSmall id={id} name={userName} image={userImage} typo={LabelXSmall} size="24px" />
         </SeriesInfoList>
         <IconList>
           <div>{createdAt}</div>

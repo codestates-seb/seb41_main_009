@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PostTitle from '../../molecules/posts/PostTitle';
-import { UserInfo } from '../../molecules/UserInfo';
+import { UserInfoSmall } from '../../molecules/UserInfo';
 import { LabelSmall } from '../../../styles/typo';
 
 /**
@@ -36,10 +36,10 @@ const PostHeaderLayer = ({
     <Container border={border} width={width} height={height}>
       <PostTitle title={title} description={desc} categoryName={categoryName || 'Category'} />
       <DeatilInfoList>
-        <UserInfo id={id} name={userName} image={userImage}>
+        <UserInfoSmall id={id} name={userName} image={userImage}>
           <CreatedAtText>{createdAt}</CreatedAtText>
           <CreatedAtText>{modifiedAt}</CreatedAtText>
-        </UserInfo>
+        </UserInfoSmall>
         <IconList>
           <Icon>Icon</Icon>
           <Icon>Icon</Icon>
