@@ -34,13 +34,10 @@ public class ShowcaseDto {
 		private List<FileRequestDto> fileInfos;
 	}
 
-	@Getter
-	@Setter
 	public static class Post extends Request {
 	}
 
-	@Getter
-	@Setter
+	@Getter @Setter
 	public static class Patch extends Request {
 		@JsonIgnore
 		private Long showcaseId;
@@ -52,10 +49,9 @@ public class ShowcaseDto {
 		private long id;
 		private String content;
 		private String category;
-		private boolean isItWriter;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
-		private List<String> imageUrls;
+		private List<FileResponseDto> imageUrls;
 		private List<ShowcaseCommentDto.Response> comments;
 		private MemberDto.SimpleResponse writer;
 	}
@@ -67,7 +63,6 @@ public class ShowcaseDto {
 		private String content;
 		private String category;
 		private int comments;
-		private boolean isItWriter;
 		private String thumbnailUrl;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
