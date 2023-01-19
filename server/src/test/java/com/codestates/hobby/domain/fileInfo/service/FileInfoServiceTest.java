@@ -22,8 +22,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
-import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
+import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 import com.codestates.hobby.domain.stub.FileInfoStub;
@@ -67,7 +67,7 @@ class FileInfoServiceTest {
 			assertEquals(bucketName, info.getToken(FileInfo.TOKEN.BUCKET));
 			assertEquals("basepath", info.getToken(FileInfo.TOKEN.BASEPATH));
 			assertEquals("filename", info.getToken(FileInfo.TOKEN.FILENAME));
-			assertEquals(String.join("/", "basepath", "filename"), info.getPath());
+			assertEquals(String.join("/", "basepath", "filename"), info.getToken(FileInfo.TOKEN.PATH));
 		}
 
 		@Test
@@ -83,7 +83,7 @@ class FileInfoServiceTest {
 		FileRequestDto request = FileInfoStub.createRequest(0);
 		URL url = new URL("http", domain, "/");
 
-		given(repository.existsByFileURL(anyString())).willReturn(false);
+		given(repository.existsByFileURL_FileUrl(anyString())).willReturn(false);
 		given(storage.signUrl(any(), anyLong(), any(), ArgumentMatchers.<Storage.SignUrlOption>any())).willReturn(url);
 
 		// when
@@ -101,7 +101,7 @@ class FileInfoServiceTest {
 		List<FileRequestDto> requests = FileInfoStub.createRequests(0, 5);
 		URL url = new URL("http", domain, "/");
 
-		given(repository.existsByFileURL(anyString())).willReturn(false);
+		given(repository.existsByFileURL_FileUrl(anyString())).willReturn(false);
 		given(storage.signUrl(any(), anyLong(), any(), ArgumentMatchers.<Storage.SignUrlOption>any())).willReturn(url);
 
 		// when

@@ -50,3 +50,9 @@ server:
   servlet:
     encoding:
       force-response: true
+    session:
+      tracking-mode: cookie
+
+mail:
+  address:
+    admin: admin@gmail.com

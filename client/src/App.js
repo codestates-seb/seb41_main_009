@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
+import axios from 'axios';
 import LogIn from './components/pages/LogInPage';
 import Header from './components/organisms/Header';
 import PostList from './components/pages/PostListPage';
@@ -20,6 +21,9 @@ import ErrorPage from './components/pages/404ErrorPage';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
+
+axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.headers.common.Authorization = 'AUTH_TOKEN';
 
 const App = () => {
   return (
@@ -40,8 +44,8 @@ const App = () => {
             <Route path="/posts/new" element={<PublicRoute component={<PostCreatePage />} />} />
             <Route path="/series/:category" element={<PublicRoute component={<SeriesListPage />} />} />
             <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
-            <Route path="/user" element={<PublicRoute component={<User />} />} />
-            <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />
+            <Route path="/users/:userId" element={<PublicRoute component={<User />} />} />
+            <Route path="/users/:userId/edit" element={<PublicRoute component={<UserEdit />} />} />
             <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
             <Route path="*" element={<PublicRoute component={<ErrorPage />} />} />
           </Routes>

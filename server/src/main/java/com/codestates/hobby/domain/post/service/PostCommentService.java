@@ -1,5 +1,7 @@
 package com.codestates.hobby.domain.post.service;
 
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.member.service.MemberService;
 import com.codestates.hobby.domain.post.dto.PostCommentDto;
@@ -32,16 +34,16 @@ public class PostCommentService {
     @Transactional
     public PostComment update(PostCommentDto.Patch patchDto) {
         PostComment findComment = findVerifiedComment(patchDto.getCommentId());
-        if (!isMatchMember(findComment, patchDto.getMemberId()))  throw new RuntimeException("권한이 없습니다.");
-        else findComment.update(patchDto.getContent());
+        isMatchMember(findComment, patchDto.getMemberId());
+        findComment.update(patchDto.getContent());
         return postCommentRepository.save(findComment);
     }
 
     @Transactional
     public void delete(long memberId, long postId, long commentId) {
         PostComment findComment = findVerifiedComment(commentId);
-        if (!isMatchMember(findComment, memberId))  throw new RuntimeException("권한이 없습니다.");
-        if (postService.findVerifiedPost(postId) == null) throw new RuntimeException("포스트가 존재하지 않습니다.");
+        isMatchMember(findComment,memberId);
+        postService.findVerifiedPost(postId);
         postCommentRepository.delete(findComment);
 
     }
@@ -62,12 +64,13 @@ public class PostCommentService {
     }
 
     public boolean isMatchMember(PostComment postComment, long memberId){
+        boolean isMatch = postComment.getMember().getId().equals(memberId);
+        if (!isMatch) throw new BusinessLogicException(ExceptionCode.NOT_MATCH_MEMBER);
         return postComment.getMember().getId().equals(memberId);
     }
-
     private PostComment findVerifiedComment(long commentId) {
         Optional<PostComment> optionalComment = postCommentRepository.findById(commentId);
-        PostComment findPostComment = optionalComment.orElseThrow(() -> new RuntimeException("data is null"));
+        PostComment findPostComment = optionalComment.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
         return findPostComment;
     }
 }

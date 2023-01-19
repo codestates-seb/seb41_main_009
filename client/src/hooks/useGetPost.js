@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { PostDummy } from '../constants/dummyData';
-import HOST from '../constants/URL';
 
 /**
  *
@@ -13,13 +12,13 @@ const useGetPost = ({ postId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `${HOST}/posts/${postId}`;
+  const url = `posts/${postId}`;
 
   useEffect(() => {
     setIsLoading(true);
 
     axios
-      .get(URL)
+      .get(url)
       .then(({ data }) => {
         setPost(data);
         setIsLoading(false);

@@ -6,9 +6,9 @@ import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.RandomUtils;
 
-import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
 import com.codestates.hobby.domain.fileInfo.dto.FileResponseDto;
+import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 
 public class FileInfoStub {
@@ -45,8 +45,18 @@ public class FileInfoStub {
 			.collect(Collectors.toList());
 	}
 
-	public static FileInfo createEntity() {
+	public static FileResponseDto createUpdateResponse() {
+		return new FileResponseDto(
+			1,
+			"http://domain.com/bucket/basepath/file.png",
+			"SignedURL",
+			ImageType.PNG);
+	}
+
+	public static FileInfo createEntity(boolean isNew) {
 		String fileURL = "https://storage.cloud.google.com/intorest-images/basepath/filename.png";
-		return new FileInfo(ShowcaseStub.createShowcase(), fileURL, 0);
+		return isNew
+			? new FileInfo(fileURL, "SignedURL", 0)
+			: new FileInfo(ShowcaseStub.createShowcase(), fileURL, 0);
 	}
 }

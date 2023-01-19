@@ -22,6 +22,10 @@ const Container = styled.div`
 
 const Label = styled.div`
   ${LabelListTitle}
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 
   color: #333333;
 `;
