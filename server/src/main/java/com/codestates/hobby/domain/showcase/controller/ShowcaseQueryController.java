@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.mapper.ShowcaseMapper;
@@ -42,6 +44,7 @@ public class ShowcaseQueryController {
 
 	@GetMapping("/categories/{category-name}/showcases")
 	public ResponseEntity<?> getAllByCategory(
+		@SessionAttribute(required = false) Member loginMember,
 		@PathVariable("category-name") String category,
 		InfiniteScrollRequest isRequest
 	) {

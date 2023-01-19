@@ -1,24 +1,51 @@
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { ACTIVITIES, STATS } from '../../constants/UserPageDataLists';
+import useGetUser from '../../hooks/useGetUser';
+import CardContainer from '../atoms/CardContainer';
+import { SplashStickerLabelDefault } from '../molecules/stickerLabel/SplashStickerLabel';
+import { UserInfo } from '../molecules/UserInfo';
+import UserActivitiesBox from '../organisms/user/UserActivitiesBox';
 import UserContentBox from '../organisms/user/UserContentBox';
-import UserTitle from '../organisms/user/UserTitle';
 
 const User = () => {
+  const params = useParams('id');
+  const { userId } = params;
+  const { userInfo, isLoadingUser, isLoadingUserError } = useGetUser(userId);
+
+  console.log(isLoadingUser, isLoadingUserError);
+
   return (
     <Container>
-      <UserTitle />
+      <UserInfo
+        id={userInfo.id}
+        name={userInfo.nickname}
+        introduction={userInfo.introduction}
+        image={userInfo.imgUrl}
+      />
       <TabHeader> Stats </TabHeader>
       <TabContentContainer>
-        <UserContentBox tag="NickName"> dddd </UserContentBox>
-        <UserContentBox tag="Email"> test1@test.com </UserContentBox>
-        <UserContentBox tag="Created At"> 2022-01-10 </UserContentBox>
+        {STATS.map(stat => {
+          const [displayName, name] = stat;
+          return (
+            <UserContentBox key={name} tag={displayName}>
+              <CardContainer>{userInfo[name]}</CardContainer>
+            </UserContentBox>
+          );
+        })}
       </TabContentContainer>
       <TabHeader> Activities </TabHeader>
       <TabContentContainer>
-        <UserContentBox tag="Series"> DDDDDDDDDDDDDD </UserContentBox>
-        <UserContentBox tag="Post"> ddddddddd </UserContentBox>
-        <UserContentBox tag="Showcase"> dddddddddd </UserContentBox>
+        {ACTIVITIES.map(activity => {
+          return <UserActivitiesBox key={activity} activity={activity} id={userId} />;
+        })}
       </TabContentContainer>
-      <ImageFooter />
+      <SplashStickerLabelDefault
+        boyMessage={userInfo.nickname}
+        girlMessage={userInfo.nickname}
+        emailMessage={userInfo.email}
+        createdAtMessage={userInfo.createdAt}
+      />
     </Container>
   );
 };
@@ -29,8 +56,7 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  background-color: gray;
+  /* height: 100vh; */
 
   & > div {
     width: 100%;
@@ -45,12 +71,7 @@ const TabHeader = styled.div`
 
 const TabContentContainer = styled.div`
   display: flex;
-`;
-
-const ImageFooter = styled.div`
-  margin-top: 76px;
-  background-color: blue;
-  height: 260px;
+  margin-bottom: 40px;
 `;
 
 export default User;

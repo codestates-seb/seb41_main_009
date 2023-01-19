@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { seriesListDummy } from '../constants/dummyData';
-import HOST from '../constants/URL';
 
 /**
  *
@@ -15,13 +14,13 @@ const useGetSeriesList = (category, page) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `${HOST}/categories/${category}/series?page=${page}&size=10`;
+  const url = `categories/${category}/series?page=${page}&size=10`;
 
   useEffect(() => {
     setIsLoading(true);
 
     axios
-      .get(URL)
+      .get(url)
       .then(({ data, pageInfo }) => {
         setSeriesList(data);
         setSeriesPageInfo(pageInfo);
