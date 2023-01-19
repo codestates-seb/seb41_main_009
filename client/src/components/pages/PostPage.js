@@ -14,21 +14,16 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 63px;
-  gap: 52px; */
   background: #ffffff;
   border-radius: 30px;
 `;
 
 // isLoading, isLoadingError 나중에 추가
 const PostPage = () => {
-  const { category, postId } = useParams();
+  const { postId } = useParams();
 
-  const { post } = useGetPost(category, postId);
+  // `${HOST}/posts/${category}/${postId}` 해당하는 정보를 가져옴
+  const { post } = useGetPost(postId);
 
   return (
     <Container>
