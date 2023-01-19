@@ -60,11 +60,79 @@ const seriesListDummy = {
   },
 };
 
+const postListDummy = {
+  data: [
+    {
+      id: 1, // 포스트 식별자
+      title: 'title', // 제목
+      content: 'content', // 내용
+      category: 'category', // 카테고리
+      views: 100, // 조회수
+      comments: 100, // 댓글수
+      seriesId: 1, // 시리즈Id
+      isItWriter: false, // 작성자 여부
+      thumbnailUrl: 'thumbnailUrl', // 대표 이미지
+      createdAt: '2023-01-10 12:00:00', // 작성일
+      modifiedAt: '2023-01-10 18:00:00', // 수정일
+      writer: {
+        // 작성자 정보
+        id: 1, // 포스트 작성자 식별자
+        nickname: 'nickname', // 포스트 작성자 닉네임
+        profileImageUrl: 'url', // 포스트 작성자 프로필 사진
+      },
+    },
+    {
+      id: 2, // 포스트 식별자
+      title: 'title', // 제목
+      content: 'content', // 내용
+      category: 'category', // 카테고리
+      views: 100, // 조회수
+      comments: 100, // 댓글수
+      seriesId: 1, // 시리즈Id
+      isItWriter: false, // 작성자 여부
+      thumbnailUrl: 'thumbnailUrl', // 대표 이미지
+      createdAt: '2023-01-10 12:00:00', // 작성일
+      modifiedAt: '2023-01-10 18:00:00', // 수정일
+      writer: {
+        // 작성자 정보
+        id: 1, // 포스트 작성자 식별자
+        nickname: 'nickname', // 포스트 작성자 닉네임
+        profileImageUrl: 'url', // 포스트 작성자 프로필 사진
+      },
+    },
+    {
+      id: 3, // 포스트 식별자
+      title: 'title', // 제목
+      content: 'content', // 내용
+      category: 'category', // 카테고리
+      views: 100, // 조회수
+      comments: 100, // 댓글수
+      seriesId: 1, // 시리즈Id
+      isItWriter: false, // 작성자 여부
+      thumbnailUrl: 'thumbnailUrl', // 대표 이미지
+      createdAt: '2023-01-10 12:00:00', // 작성일
+      modifiedAt: '2023-01-10 18:00:00', // 수정일
+      writer: {
+        // 작성자 정보
+        id: 1, // 포스트 작성자 식별자
+        nickname: 'nickname', // 포스트 작성자 닉네임
+        profileImageUrl: 'url', // 포스트 작성자 프로필 사진
+      },
+    },
+  ],
+  pageInfo: {
+    page: '1', // 페이지 번호
+    size: '10', // 포스트 수
+    totalPage: '10', // 존재하는 총 페이지 수
+    totalElements: '100', // 존재하는 총 포스트 수
+  },
+};
 const PostDummy = {
   data: {
     id: 1, // 포스트 식별자
     title: 'title', // 제목
-    content: 'content', // 내용
+    content:
+      '<h1> h1제목입니다</h1><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h2> h2제목입니다</h2> <p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h3> h3제목입니다</h3><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p>',
     views: 100, // 조회수
     category: 'category', // 카테고리
     seriesId: 1, // 시리즈 Id
@@ -98,4 +166,4 @@ const PostDummy = {
   },
 };
 
-export { seriesListDummy, PostDummy };
+export { seriesListDummy, postListDummy, PostDummy };
