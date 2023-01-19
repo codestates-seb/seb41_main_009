@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import UserContentBox from '../organisms/user/UserContentBox';
 import { WhiteShadowButton, BlackShadowButton } from '../atoms/Buttons';
+import { DisplayMedium } from '../../styles/typo';
+import InputCard from '../molecules/InputCard';
 
 const UserEdit = () => {
   return (
@@ -8,9 +10,15 @@ const UserEdit = () => {
       <TabHeader> Change Info </TabHeader>
       <TabContentContainer>
         <UserInputContainer>
-          <UserContentBox tag="NickName"> Input Your name </UserContentBox>
-          <UserContentBox tag="Desc"> 내용을 입력하시오 </UserContentBox>
-          <UserContentBox tag="Upload Profile"> Upload Profile </UserContentBox>
+          <UserContentBox tag="NickName">
+            <InputCard placeholder="변경하실 닉네임을 입력해 주세요." inputWidth="100%" />
+          </UserContentBox>
+          <UserContentBox tag="Description">
+            <InputCard placeholder="내 소개를 입력해 주세요." inputWidth="100%" />
+          </UserContentBox>
+          <UserContentBox tag="Upload Profile">
+            <InputCard type="file" inputWidth="100%" />
+          </UserContentBox>
         </UserInputContainer>
         <ProfileImage />
       </TabContentContainer>
@@ -28,8 +36,6 @@ const Container = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  background-color: gray;
 
   & > div {
     width: 100%;
@@ -37,9 +43,8 @@ const Container = styled.div`
 `;
 
 const TabHeader = styled.div`
-  font-size: 36px;
-  margin-top: 40px;
-  margin-bottom: 30px;
+  ${DisplayMedium}
+  margin: 40px 0;
 `;
 const UserInputContainer = styled.div`
   display: flex;
