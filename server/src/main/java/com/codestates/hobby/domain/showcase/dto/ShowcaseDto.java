@@ -72,6 +72,7 @@ public class ShowcaseDto {
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
 		private MemberDto.SimpleResponse writer;
+		private ShowcaseCommentDto.Response lastComment;
 	}
 
 	@Getter

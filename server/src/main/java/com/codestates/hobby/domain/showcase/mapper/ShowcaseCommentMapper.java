@@ -1,5 +1,6 @@
 package com.codestates.hobby.domain.showcase.mapper;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.mapstruct.Mapper;
@@ -14,6 +15,10 @@ import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
 public interface ShowcaseCommentMapper {
 	@Mapping(target = "writer", source = "member")
 	ShowcaseCommentDto.Response entityToResponse(ShowcaseComment comment);
+
+	default ShowcaseCommentDto.Response getLastComment(List<ShowcaseComment> comments) {
+		return comments.isEmpty() ? null : entityToResponse(comments.get(0));
+	}
 
 	default void setProperties(ShowcaseCommentDto.Response response, Long memberId) {
 		Optional.ofNullable(memberId)
