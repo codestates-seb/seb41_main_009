@@ -9,7 +9,9 @@ import com.codestates.hobby.domain.member.service.MemberService;
 import com.codestates.hobby.domain.series.dto.SeriesDto;
 import com.codestates.hobby.domain.series.entity.Series;
 import com.codestates.hobby.domain.series.repository.SeriesRepository;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -31,34 +33,38 @@ public class SeriesService {
     }
 
     @Transactional
-    public Series edit(SeriesDto.Patch patch) {
+    public Series edit(SeriesDto.Patch patch, long loginId) {
         Category category = categoryService.findHobbyByName(patch.getCategory());
         Series series = findById(patch.getSeriesId());
-        if(patch.getMemberId() != series.getMember().getId())
-            new RuntimeException("Unauthorized");
+        if(series.getMember().getId() != loginId) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
+
         series.edit(category, patch.getTitle(), patch.getContent(), patch.getThumbnail());
 
         return seriesRepository.save(series);
     }
 
     @Transactional
-    public void delete(long seriesId, long memberId) {
-        seriesRepository.findByIdAndMemberId(seriesId, memberId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
+    public void delete(long seriesId, long loginId) {
+        Series series = findById(seriesId);
+        if(series.getMember().getId() != loginId) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         seriesRepository.deleteById(seriesId);
     }
 
     @Transactional(readOnly = true)
     public Series findById(long seriesId) {
-        return seriesRepository.findById(seriesId).orElseThrow(()->new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
+        return seriesRepository.findById(seriesId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
     }
 
+    @Transactional(readOnly = true)
+    public Page<Series> findAll(PageRequest pageRequest) {
+        return seriesRepository.findAll(pageRequest);
+    }
 
     @Transactional(readOnly = true)
     public Page<Series> findAllByCategory(String categoryName, PageRequest pageRequest) {
         Category category = categoryService.findHobbyByName(categoryName);
         return seriesRepository.findAllByCategoryOrderByIdDesc(category, pageRequest);
     }
-
 
     @Transactional(readOnly = true)
     public Page<Series> findAllByMember(long memberId, PageRequest pageRequest) {
