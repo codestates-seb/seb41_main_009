@@ -7,7 +7,8 @@ import { DisplayMedium } from '../../styles/typo';
 import InputCard from '../molecules/InputCard';
 import useGetUser from '../../hooks/useGetUser';
 import UserImage from '../atoms/UserImage';
-import { IMAGESIZELIMIT } from '../../constants/Messages';
+import { IMAGESIZELIMIT, INVALIDDESCRIPTION, INVALIDNICKNAME } from '../../constants/Messages';
+import { isValidIntroduction, isValidNickname } from '../../functions/isValid';
 
 const UserEdit = () => {
   const params = useParams('id');
@@ -16,7 +17,9 @@ const UserEdit = () => {
   const { nickname, imgUrl, introduction } = userInfo;
   const [newNickname, setNewNickname] = useState(nickname);
   const [newImage, setNewImage] = useState(imgUrl);
-  const [newIntroduction, setNewIntroduction] = useState(introduction);
+  const [newDescription, setNewDescription] = useState(introduction);
+  const [nicknameMessage, setNicknameMessage] = useState('');
+  const [descriptionMessage, setDescriptionMessage] = useState('');
   const MAXIMAGESIZE = 2097152;
 
   console.log(isLoadingUser, isLoadingUserError);
@@ -34,15 +37,31 @@ const UserEdit = () => {
   };
 
   const changeNewNickname = e => {
-    setNewNickname(e.target.value);
+    const nicknameValue = e.target.value;
+
+    if (!nicknameValue || !isValidNickname(nicknameValue)) {
+      setNicknameMessage(INVALIDNICKNAME);
+    } else {
+      setNicknameMessage('');
+      setNewNickname(nicknameValue);
+    }
   };
 
   const changeNewIntroduction = e => {
-    setNewIntroduction(e.target.value);
+    const descriptionValue = e.target.value;
+
+    if (!isValidIntroduction(descriptionValue)) {
+      setDescriptionMessage(INVALIDDESCRIPTION);
+    } else {
+      setDescriptionMessage('');
+      setNewDescription(descriptionValue);
+    }
+
+    setNewDescription(descriptionValue);
   };
 
   const submitNewUserInfo = () => {
-    if (newNickname && newIntroduction && newImage) {
+    if (newNickname && newDescription && newImage) {
       //
     }
   };
@@ -58,6 +77,8 @@ const UserEdit = () => {
               inputWidth="100%"
               defaultValue={nickname}
               onChange={changeNewNickname}
+              messageColor="red"
+              message={nicknameMessage}
             />
           </UserContentBox>
           <UserContentBox tag="Description">
@@ -66,6 +87,8 @@ const UserEdit = () => {
               inputWidth="100%"
               defaultValue={introduction}
               onChange={changeNewIntroduction}
+              messageColor="red"
+              message={descriptionMessage}
             />
           </UserContentBox>
           <UserContentBox tag="Upload Profile">
