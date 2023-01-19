@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { userInfoDummy } from '../constants/dummyData';
-import HOST from '../constants/URL';
 
 /**
  *
@@ -12,7 +11,8 @@ const useGetUser = id => {
   const [userInfo, setUserInfo] = useState({});
   const [isLoadingUser, setIsLoading] = useState(false);
   const [isLoadingUserError, setIsLoadingUserError] = useState(false);
-  const url = `${HOST}/members/${id}`;
+
+  const url = `members/${id}`;
 
   useEffect(() => {
     setIsLoading(true);

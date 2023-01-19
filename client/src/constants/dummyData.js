@@ -126,7 +126,7 @@ const userActivitiesDummy = [
     },
   },
   {
-    id: 1,
+    id: 2,
     title: '제목',
     content: '시리즈',
     category: '카테고리',
@@ -141,7 +141,7 @@ const userActivitiesDummy = [
     },
   },
   {
-    id: 1,
+    id: 3,
     title: '제목',
     content: '시리즈',
     category: '카테고리',

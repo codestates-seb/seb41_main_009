@@ -22,7 +22,7 @@ const UserActivitiesBox = ({ activity, id }) => {
       <CardContainer>
         {userContents?.map(content => {
           return (
-            <ActivityButton to={`/${activity}/${content.id}`}>
+            <ActivityButton to={`/${activity}/${content.id}`} key={content.id}>
               {content.title ? content.title : content.content}
             </ActivityButton>
           );

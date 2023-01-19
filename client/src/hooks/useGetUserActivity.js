@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import { userActivitiesDummy } from '../constants/dummyData';
-import HOST from '../constants/URL';
 
 const useGetUserActivity = (activity, id, page) => {
   const [userContents, setUserContents] = useState([]);
@@ -9,7 +8,7 @@ const useGetUserActivity = (activity, id, page) => {
   const [isLoadingActivity, setIsLoadingActivity] = useState(false);
   const [isLoadingActivityError, setIsLoadingActivityError] = useState(false);
 
-  const url = `${HOST}/members/${id}/${activity}?page=${page}&size=5`;
+  const url = `members/${id}/${activity}?page=${page}&size=5`;
 
   useEffect(() => {
     setIsLoadingActivity(true);

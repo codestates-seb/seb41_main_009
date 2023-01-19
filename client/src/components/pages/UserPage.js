@@ -37,7 +37,7 @@ const User = () => {
       <TabHeader> Activities </TabHeader>
       <TabContentContainer>
         {ACTIVITIES.map(activity => {
-          return <UserActivitiesBox key={activity} activity={activity} />;
+          return <UserActivitiesBox key={activity} activity={activity} id={userId} />;
         })}
       </TabContentContainer>
       <SplashStickerLabelDefault
