@@ -21,6 +21,7 @@ import com.codestates.hobby.domain.showcase.mapper.ShowcaseMapper;
 import com.codestates.hobby.domain.showcase.service.ShowcaseService;
 import com.codestates.hobby.domain.stub.FileInfoStub;
 import com.codestates.hobby.domain.stub.ShowcaseStub;
+import com.codestates.hobby.global.config.support.InfiniteScrollRequest;
 import com.codestates.hobby.utils.ControllerTest;
 
 @WebMvcTest({ShowcaseCommendController.class, ShowcaseQueryController.class})
@@ -66,7 +67,9 @@ class ShowcaseControllerTest extends ControllerTest {
 	void testForDelete() throws Exception {
 		willDoNothing().given(service).delete(anyLong(), anyLong());
 
-		ResultActions actions = mvc.perform(delete("/showcases/1"));
+		ResultActions actions = mvc.perform(
+			delete("/showcases/1").session(session)
+		);
 
 		actions
 			.andExpect(status().isNoContent())
@@ -77,7 +80,6 @@ class ShowcaseControllerTest extends ControllerTest {
 	void testForGet() throws Exception {
 		given(service.findById(anyLong())).willReturn(ShowcaseStub.createShowcase());
 		given(mapper.showcaseToResponse(any(Showcase.class))).willReturn(ShowcaseStub.createResponse());
-		willDoNothing().given(mapper).setProperties(any(ShowcaseDto.Response.class), anyLong());
 
 		mvc
 			.perform(get("/showcases/1"))
@@ -86,9 +88,8 @@ class ShowcaseControllerTest extends ControllerTest {
 
 	@Test
 	void testForGetAll() throws Exception {
-		given(service.findAll(any(PageRequest.class))).willReturn(ShowcaseStub.createPage());
+		given(service.findAll(any(InfiniteScrollRequest.class))).willReturn(ShowcaseStub.createPage());
 		given(mapper.showcaseToSimpleResponse(any(Showcase.class))).willReturn(ShowcaseStub.createSimpleResponse());
-		willDoNothing().given(mapper).setProperties(any(ShowcaseDto.Response.class), anyLong());
 
 		ResultActions actions = defaultActionsWithPaging("/showcases");
 
@@ -100,9 +101,8 @@ class ShowcaseControllerTest extends ControllerTest {
 
 	@Test
 	void getAllByCategory() throws Exception {
-		given(service.findAllByCategory(anyString(), any(PageRequest.class))).willReturn(ShowcaseStub.createPage());
+		given(service.findAllByCategory(anyString(), any(InfiniteScrollRequest.class))).willReturn(ShowcaseStub.createPage());
 		given(mapper.showcaseToSimpleResponse(any(Showcase.class))).willReturn(ShowcaseStub.createSimpleResponse());
-		willDoNothing().given(mapper).setProperties(any(ShowcaseDto.Response.class), anyLong());
 
 		ResultActions actions = defaultActionsWithPaging("/categories/{category-name}/showcases", "soccer");
 
@@ -114,9 +114,8 @@ class ShowcaseControllerTest extends ControllerTest {
 
 	@Test
 	void getAllByMember() throws Exception {
-		given(service.findAllByMember(anyLong(), any(PageRequest.class))).willReturn(ShowcaseStub.createPage());
+		given(service.findAllByMember(anyLong(), any(InfiniteScrollRequest.class))).willReturn(ShowcaseStub.createPage());
 		given(mapper.showcaseToSimpleResponse(any(Showcase.class))).willReturn(ShowcaseStub.createSimpleResponse());
-		willDoNothing().given(mapper).setProperties(any(ShowcaseDto.Response.class), anyLong());
 
 		ResultActions actions = defaultActionsWithPaging("/members/{member-id}/showcases", 1L);
 

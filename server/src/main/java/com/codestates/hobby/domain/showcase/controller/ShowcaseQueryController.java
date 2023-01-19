@@ -12,7 +12,7 @@ import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.mapper.ShowcaseMapper;
 import com.codestates.hobby.domain.showcase.service.ShowcaseService;
-import com.codestates.hobby.global.config.support.CustomPageRequest;
+import com.codestates.hobby.global.config.support.InfiniteScrollRequest;
 import com.codestates.hobby.global.dto.MultiResponseDto;
 
 import lombok.RequiredArgsConstructor;
@@ -34,8 +34,8 @@ public class ShowcaseQueryController {
 	}
 
 	@GetMapping("/showcases")
-	public ResponseEntity<?> getAll(CustomPageRequest pageRequest) {
-		Page<Showcase> showcases = showcaseService.findAll(pageRequest.to());
+	public ResponseEntity<?> getAll(InfiniteScrollRequest isRequest) {
+		Page<Showcase> showcases = showcaseService.findAll(isRequest);
 
 		return toResponseEntity(showcases);
 	}
@@ -43,16 +43,16 @@ public class ShowcaseQueryController {
 	@GetMapping("/categories/{category-name}/showcases")
 	public ResponseEntity<?> getAllByCategory(
 		@PathVariable("category-name") String category,
-		CustomPageRequest pageRequest
+		InfiniteScrollRequest isRequest
 	) {
-		Page<Showcase> showcases = showcaseService.findAllByCategory(category, pageRequest.to());
+		Page<Showcase> showcases = showcaseService.findAllByCategory(category, isRequest);
 
 		return toResponseEntity(showcases);
 	}
 
 	@GetMapping("/members/{member-id}/showcases")
-	public ResponseEntity<?> getAllByMember(@PathVariable("member-id") long memberId, CustomPageRequest pageRequest) {
-		Page<Showcase> showcases = showcaseService.findAllByMember(memberId, pageRequest.to());
+	public ResponseEntity<?> getAllByMember(@PathVariable("member-id") long memberId, InfiniteScrollRequest isRequest) {
+		Page<Showcase> showcases = showcaseService.findAllByMember(memberId, isRequest);
 
 		return toResponseEntity(showcases);
 	}
