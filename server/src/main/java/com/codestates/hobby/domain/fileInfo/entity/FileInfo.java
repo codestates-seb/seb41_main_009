@@ -47,11 +47,11 @@ public class FileInfo {
 
 	@Setter
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", updatable = false)
+	@JoinColumn(name = "member_id")
 	private Member member;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "series_id", updatable = false)
+	@JoinColumn(name = "series_id")
 	private Series series;
 
 	@ManyToOne(fetch = FetchType.LAZY)
