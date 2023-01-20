@@ -51,6 +51,8 @@ const Label = styled.div`
 const Signupbox = () => {
   const [email, setEmail] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
+  const [nickname, setNickname] = useState('');
+  // const [nicknameMessage, setNicknameMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -72,6 +74,17 @@ const Signupbox = () => {
     } else {
       setEmailMessage(INVALIDEMAIL);
     }
+  };
+
+  const onNicknameInput = e => {
+    const nicknameValue = e.target.value;
+    setNickname(nicknameValue);
+
+    // if (isValidNickname(nicknameValue) || nicknameValue.length === 0) {
+    //   setNicknameMessage('');
+    // } else {
+    //   setNicknameMessage(INVALIDNICKNAME);
+    // }
   };
 
   const onPasswordInput = e => {
@@ -99,7 +112,7 @@ const Signupbox = () => {
   };
 
   const onLoginClick = () => {
-    if (!email || !password || !passwordCheck || emailMessage || passwordMessage || passwordCheckMessage) {
+    if (!email || !password || !passwordCheck || !nickname || emailMessage || passwordMessage || passwordCheckMessage) {
       return;
     }
 
@@ -113,6 +126,10 @@ const Signupbox = () => {
       <Box>
         <Label>Email</Label>
         <SignupInput placeholder="Enter Your Email" onChange={onEmailInput} message={emailMessage} />
+      </Box>
+      <Box>
+        <Label>Nickname</Label>
+        <SignupInput placeholder="Enter Your Nickname" onChange={onNicknameInput} />
       </Box>
       <Box>
         <Label>Password</Label>
