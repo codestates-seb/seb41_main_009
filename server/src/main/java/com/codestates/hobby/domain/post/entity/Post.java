@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -44,7 +45,7 @@ public class Post extends BaseEntity {
 	private Category category;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "series_id", nullable = false)
+	@JoinColumn(name = "series_id")
 	private Series series;
 
 	@OneToMany(mappedBy = "post", cascade = CascadeType.PERSIST, orphanRemoval = true)
@@ -55,29 +56,27 @@ public class Post extends BaseEntity {
 
 	public Post(Member member, String title, Category category, String content, List<String> imageURLs) {
 		this(member, title, null, category, content, imageURLs);
-		imageURLs.forEach(this::addImageFromUrl);
 	}
 
 	public Post(Member member, String title, Category category, String content) {
-		this(member, title, null, category, content);
+		this(member, title, null, category, content,null);
 	}
 
 	public Post(Member member, String title, Series series,Category category, String content) {
-		this.member = member;
-		this.title = title;
-		this.content = content;
-		this.category = category;
-		this.series = series;
+		this(member,title,series,category,content,null);
 	}
 
-	public Post(Member member, String title, Series series,Category category, String content, List<String> imageURLs) {
+	public Post(Member member, String title, Series series, Category category, String content, List<String> imageURLs) {
 		this.member = member;
 		this.title = title;
 		this.content = content;
 		this.category = category;
 		this.series = series;
 
-		imageURLs.forEach(this::addImageFromUrl);
+		if (imageURLs == null) this.images = null;
+		else imageURLs.forEach(this::addImageFromUrl);
+
+
 	}
 
 	public void updatePost (String title, String content, Category category, Series series, List<String> imageURLs) {
@@ -108,10 +107,6 @@ public class Post extends BaseEntity {
 		this.category = category;
 	}
 
-	public void addImage(FileInfo fileInfo) {
-		images.add(fileInfo);
-	}
-
 	public void addImageFromUrl(String url) {
 		FileInfo fileInfo = new FileInfo(this, url, 0);
 		images.add(fileInfo);
@@ -122,5 +117,4 @@ public class Post extends BaseEntity {
 		new ArrayList<>(images).stream().filter(image -> !urls.contains(image.getFileURL())).forEach(image -> images.remove(image));
 		urls.stream().filter(url -> !olds.contains(url)).forEach(this::addImageFromUrl);
 	}
-
 }

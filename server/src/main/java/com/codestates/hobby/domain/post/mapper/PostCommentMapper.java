@@ -14,9 +14,4 @@ import java.util.Optional;
 public interface PostCommentMapper {
     @Mapping(target = "writer", source = "member")
     PostCommentDto.Response postCommentToPostCommentResponse(PostComment comment);
-
-    default void setProperties(PostCommentDto.Response response, Long memberId) {
-        Optional.ofNullable(memberId)
-                .ifPresent(id -> response.setItWriter(id.equals(response.getWriter().getId())));
-    }
 }
