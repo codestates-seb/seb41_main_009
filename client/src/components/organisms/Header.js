@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useAuthStore from '../../store/useAuthStore';
 import { LabelMedium } from '../../styles/typo';
 import { TextButton } from '../atoms/Buttons';
 import SearchInput from '../molecules/SearchInput';
@@ -47,22 +48,23 @@ const UserButton = styled(TextButton)`
 `;
 
 const Header = () => {
+  const { currentUserId } = useAuthStore(state => state);
+
   return (
     <Container>
       <Body>
         <Logo to="/" alt="logo" />
         <SearchInput height="40px" />
         <ButtonList>
-          {/* Session에 따라 변경되도록 수정 예정 */}
-          {true ? (
+          {currentUserId ? (
             <>
-              <UserButton to="/login">Log In</UserButton>
-              <UserButton to="/signup">Sign Up</UserButton>
+              <UserButton to="/users/100">My Page</UserButton>
+              <UserButton to="/">Log Out</UserButton>
             </>
           ) : (
             <>
-              <UserButton to="/user">My Page</UserButton>
-              <UserButton to="/">Log Out</UserButton>
+              <UserButton to="/login">Log In</UserButton>
+              <UserButton to="/signup">Sign Up</UserButton>
             </>
           )}
         </ButtonList>

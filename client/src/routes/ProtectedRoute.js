@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useAuthStore from '../store/useAuthStore';
 
 const Container = styled.div`
   width: var(--content-width);
@@ -7,9 +8,9 @@ const Container = styled.div`
 `;
 
 const ProtectedRoute = ({ component: Component }) => {
-  const user = sessionStorage.getItem('userId');
+  const { currentUserId } = useAuthStore(state => state);
 
-  if (!user) {
+  if (!currentUserId) {
     return <Navigate to="/login" />;
   }
 

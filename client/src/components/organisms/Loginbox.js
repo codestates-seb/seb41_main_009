@@ -8,6 +8,7 @@ import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
 import InputCard from '../molecules/InputCard';
 import { FindPasswordMessage, SignUpMessage } from '../molecules/SignUpMessage';
+import useAuthStore from '../../store/useAuthStore';
 
 const Container = styled.div`
   display: flex;
@@ -56,6 +57,7 @@ const Loginbox = () => {
   const [emailMessage, setEmailMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
+  const { setUserId } = useAuthStore(state => state);
 
   /**
    *
@@ -108,9 +110,9 @@ const Loginbox = () => {
         console.log(err.message);
       })
       .finally(() => {
-        console.log('finaly');
-        sessionStorage.setItem('userId', '100');
-        // navigate('/');
+        console.log('finally');
+        setUserId('100');
+        navigate('/');
         // window.location.reload();
       });
   };

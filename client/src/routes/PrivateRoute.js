@@ -1,5 +1,6 @@
 import { Navigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import useAuthStore from '../store/useAuthStore';
 
 const Container = styled.div`
   width: var(--content-width);
@@ -7,10 +8,10 @@ const Container = styled.div`
 `;
 
 const PrivateRoute = ({ component: Component }) => {
-  const user = sessionStorage.getItem('userId');
+  const { currentUserId } = useAuthStore(state => state);
   const { userId } = useParams();
 
-  if (user !== userId) {
+  if (currentUserId !== userId) {
     return <Navigate to={`/users/${userId}`} />;
   }
 
