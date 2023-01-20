@@ -137,9 +137,6 @@ const Signupbox = () => {
       .catch(err => {
         console.log(err);
         alert(err.message);
-      })
-      .finally(() => {
-        console.log('finally');
       });
   };
 
