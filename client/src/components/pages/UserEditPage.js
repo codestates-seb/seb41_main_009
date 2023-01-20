@@ -30,6 +30,7 @@ const UserEdit = () => {
     if (image && image.size <= MAXIMAGESIZE) {
       const imagePath = URL.createObjectURL(image);
       // 이미지 처리 로직에 따라서 여기서 이미지 서버에 업로드할수도 있음
+      console.log(image);
       setNewImage(imagePath);
     } else {
       alert(IMAGESIZELIMIT);
