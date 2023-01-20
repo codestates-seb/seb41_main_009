@@ -2,6 +2,7 @@ package com.codestates.hobby.domain.member.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.*;
 
 import com.codestates.hobby.domain.common.BaseEntity;
@@ -17,8 +18,6 @@ import com.codestates.hobby.domain.subscription.entity.Subscription;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Entity
@@ -31,7 +30,7 @@ public class Member extends BaseEntity {
 	@Column(nullable = false, unique = true, updatable = false)
 	private String email;
 
-	@Column(nullable = false, unique = true, updatable = false)
+	@Column(nullable = false, unique = true)
 	private String nickname;
 
 	@Column(nullable = false)
@@ -71,7 +70,7 @@ public class Member extends BaseEntity {
 	private List<String> roles = new ArrayList<>();
 
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name = "file_info_id", updatable = false)
+	@JoinColumn(name = "file_info_id")
 	private FileInfo image;
 
 	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, String profileUrl, List<String> roles) {
@@ -85,17 +84,9 @@ public class Member extends BaseEntity {
 	}
 
 	public void edit(String nickname, String introduction, String profileUrl) {
-		if (!this.nickname.equals(nickname)) this.nickname = nickname;
-		if (!this.introduction.equals(introduction)) this.introduction = introduction;
-		if (!this.image.getFileURL().equals(profileUrl)) setImage(profileUrl);
-	}
-
-	public void setUserInfo(Long id, String email, String nickname, String password, List<String> roles) {
-		this.id = id;
-		this.email = email;
-		this.nickname = nickname;
-		this.password = password;
-		this.roles = roles;
+		if(Optional.ofNullable(nickname).isPresent()) this.nickname = nickname;
+		if(Optional.ofNullable(introduction).isPresent()) this.introduction = introduction;
+		if(Optional.ofNullable(profileUrl).isPresent()) setImage(profileUrl);
 	}
 
 	public void setStatus(MemberStatus memberStatus) {

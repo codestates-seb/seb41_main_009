@@ -9,6 +9,8 @@ import com.codestates.hobby.global.exception.BusinessLogicException;
 import com.codestates.hobby.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,29 +33,36 @@ public class MemberService {
         String encryptedPassword = passwordEncoder.encode(post.getPassword());
         List<String> roles = authorityUtils.createRoles(post.getEmail());
 
-        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword, post.getIntroduction(), false, post.getImgUrl(), roles));
+        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword, post.getIntroduction(), false, post.getProfileUrl(), roles));
     }
 
     @Transactional
-    public Member edit(MemberDto.Patch patch) {
+    public Member edit(MemberDto.Patch patch, long loginId) {
         Member findMember = findMemberById(patch.getMemberId());
+        if(patch.getMemberId() != loginId) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
+
+        //Optional<String>
         verifyExistNickname(patch.getNickname());
 
-        findMember.edit(patch.getNickname(), patch.getIntroduction(), patch.getImgUrl());
+        findMember.edit(patch.getNickname(), patch.getIntroduction(), patch.getProfileUrl());
 
         return repository.save(findMember);
     }
 
     @Transactional
     public void delete(long memberId) {
-        //멤버가 있는지 확인
         Member findMember = findMemberById(memberId);
         findMember.setStatus(Member.MemberStatus.MEMBER_QUIT);
     }
 
     @Transactional(readOnly = true)
-    public Member findAll(long memberId) {
+    public Member find(long memberId) {
         return findMemberById(memberId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Member> findAll(PageRequest pageRequest) {
+        return repository.findAll(pageRequest);
     }
 
     @Transactional(readOnly = true)
