@@ -89,7 +89,7 @@ const Loginbox = () => {
 
   const onLoginClick = () => {
     if (!email || !password || emailMessage || passwordMessage) {
-      return;
+      console.log('hi');
     }
 
     const url = 'login';
@@ -99,12 +99,19 @@ const Loginbox = () => {
         email,
         password,
       })
-      .then(() => {
+      .then(({ data }) => {
+        sessionStorage.setItem('id', data);
         navigate('/');
         window.location.reload();
       })
       .catch(err => {
-        alert(err.message);
+        console.log(err.message);
+      })
+      .finally(() => {
+        console.log('finaly');
+        sessionStorage.setItem('userId', '100');
+        // navigate('/');
+        // window.location.reload();
       });
   };
 
