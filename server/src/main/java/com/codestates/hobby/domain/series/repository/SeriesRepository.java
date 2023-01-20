@@ -9,8 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface SeriesRepository extends JpaRepository<Series, Long> {
-    Optional<Series> findByIdAndMemberId(long seriesId, long memberId);
-
     Page<Series> findAllByMemberIdOrderByIdDesc(long memberId, Pageable pageable);
 
     Page<Series> findAllByCategoryOrderByIdDesc(Category category, Pageable pageable);
