@@ -225,4 +225,4 @@ const userActivitiesDummy = [
   },
 ];
 
-export { seriesListDummy, PostDummy, userInfoDummy, userActivitiesDummy };
+export { seriesListDummy, PostDummy, userInfoDummy, userActivitiesDummy, postListDummy };
