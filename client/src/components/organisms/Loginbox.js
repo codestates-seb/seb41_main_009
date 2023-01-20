@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { INVALIDEMAIL, INVALIDPASSWORD } from '../../constants/Messages';
 import { isValidEmail, isValidPassword } from '../../functions/isValid';
 import { LabelListTitle } from '../../styles/typo';
@@ -49,6 +51,7 @@ const Label = styled.div`
 `;
 
 const Loginbox = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
   const [password, setPassword] = useState('');
@@ -89,8 +92,20 @@ const Loginbox = () => {
       return;
     }
 
-    console.log(email);
-    console.log(password);
+    const url = 'login';
+
+    axios
+      .post(url, {
+        email,
+        password,
+      })
+      .then(() => {
+        navigate('/');
+        window.location.reload();
+      })
+      .catch(err => {
+        alert(err.message);
+      });
   };
 
   return (
