@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const useSignUp = (email, nickname, password) => {
+const postSignUpData = (email, nickname, password) => {
   const url = 'members';
 
   const body = {
@@ -13,10 +13,16 @@ const useSignUp = (email, nickname, password) => {
     .post(url, body)
     .then(res => {
       console.log(res);
+      return res.message;
     })
     .catch(err => {
       console.log(err);
+      return err.message;
+    })
+    .finally(() => {
+      console.log('finally');
+      return 'success';
     });
 };
 
-export default useSignUp;
+export default postSignUpData;

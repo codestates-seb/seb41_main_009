@@ -1,6 +1,8 @@
+import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { INVALIDEMAIL, INVALIDPASSWORD, PASSWORDNOTMATCH } from '../../constants/Messages';
+import { INVALIDEMAIL, INVALIDPASSWORD, PASSWORDNOTMATCH, SIGNUP_SUCCESS } from '../../constants/Messages';
 import { isValidEmail, isValidPassword } from '../../functions/isValid';
 import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
@@ -49,6 +51,7 @@ const Label = styled.div`
 `;
 
 const Signupbox = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
   const [nickname, setNickname] = useState('');
@@ -111,14 +114,33 @@ const Signupbox = () => {
     }
   };
 
-  const onLoginClick = () => {
+  const onSignUpClick = async () => {
     if (!email || !password || !passwordCheck || !nickname || emailMessage || passwordMessage || passwordCheckMessage) {
       return;
     }
 
-    console.log(email);
-    console.log(password);
-    console.log(passwordCheck);
+    // 비밀번호 전달 시 Hash 사용하여 암호화 추후 구현 필요
+    const url = 'members';
+    const body = {
+      email,
+      nickname,
+      password,
+    };
+
+    axios
+      .post(url, body)
+      .then(res => {
+        alert(SIGNUP_SUCCESS);
+        console.log(res);
+        navigate('/login');
+      })
+      .catch(err => {
+        console.log(err);
+        alert(err.message);
+      })
+      .finally(() => {
+        console.log('finally');
+      });
   };
 
   return (
@@ -150,7 +172,7 @@ const Signupbox = () => {
         />
       </Box>
       <Box>
-        <BlackShadowButton width="512px" onClick={onLoginClick}>
+        <BlackShadowButton type="button" width="512px" onClick={onSignUpClick}>
           Sign Up
         </BlackShadowButton>
         <LoginMessage />
