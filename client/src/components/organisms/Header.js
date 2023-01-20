@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useAuthStore from '../../store/useAuthStore';
@@ -48,7 +49,23 @@ const UserButton = styled(TextButton)`
 `;
 
 const Header = () => {
-  const { currentUserId } = useAuthStore(state => state);
+  const { currentUserId, setUserId } = useAuthStore(state => state);
+
+  const handleLogout = () => {
+    const url = 'logout';
+
+    axios
+      .get(url)
+      .then(() => {
+        setUserId(0);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        setUserId(0);
+      });
+  };
 
   return (
     <Container>
@@ -58,8 +75,8 @@ const Header = () => {
         <ButtonList>
           {currentUserId ? (
             <>
-              <UserButton to="/users/100">My Page</UserButton>
-              <UserButton to="/">Log Out</UserButton>
+              <UserButton to={`users/${currentUserId}`}>My Page</UserButton>
+              <UserButton onClick={handleLogout}>Log Out</UserButton>
             </>
           ) : (
             <>

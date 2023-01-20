@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useAuthStore from '../../store/useAuthStore';
 import { HeadingLarge } from '../../styles/typo';
 import { BlueShadowButton } from '../atoms/Buttons';
 import Nickname from '../atoms/Nickname';
@@ -13,6 +14,10 @@ import UserImage from '../atoms/UserImage';
  * @returns {JSX.Element} - 프로필이미지, 닉네임정보를 담은 컴포넌트
  */
 const UserInfo = ({ id, name, introduction, image }) => {
+  const { currentUserId } = useAuthStore(state => state);
+
+  console.log(currentUserId, id);
+
   return (
     <UserInfoBigContainer>
       <UserImage src={image} sizes="128px" />
@@ -20,7 +25,7 @@ const UserInfo = ({ id, name, introduction, image }) => {
         <Nickname id={id} name={name} color="var(--orange-400)" typo={HeadingLarge} />
         <Description>{introduction}</Description>
       </UserHeader>
-      {false ? <div style={{ width: '116px' }} /> : <BlueShadowButton to="edit">Edit</BlueShadowButton>}
+      {currentUserId === id ? <BlueShadowButton to="edit">Edit</BlueShadowButton> : <div style={{ width: '116px' }} />}
     </UserInfoBigContainer>
   );
 };

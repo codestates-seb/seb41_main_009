@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: Component }) => {
   const { currentUserId } = useAuthStore(state => state);
   const { userId } = useParams();
 
-  if (currentUserId !== userId) {
+  if (currentUserId !== Number(userId)) {
     return <Navigate to={`/users/${userId}`} />;
   }
 
