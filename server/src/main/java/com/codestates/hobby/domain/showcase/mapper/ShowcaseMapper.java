@@ -1,7 +1,5 @@
 package com.codestates.hobby.domain.showcase.mapper;
 
-import java.util.Optional;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -18,7 +16,7 @@ import com.codestates.hobby.domain.showcase.entity.Showcase;
 	uses = {MemberMapper.class, CategoryMapper.class, FileInfoMapper.class, ShowcaseCommentMapper.class})
 public interface ShowcaseMapper {
 	@Mapping(target = "writer", source = "member")
-	@Mapping(target = "imageUrls", source = "fileInfos")
+	@Mapping(target = "imageUrls", source = "fileInfos", qualifiedByName = "Query")
 	ShowcaseDto.Response showcaseToResponse(Showcase showcase);
 
 	@Mapping(target = "writer", source = "member")
@@ -27,15 +25,6 @@ public interface ShowcaseMapper {
 	@Mapping(target = "thumbnailUrl", expression = "java(showcase.getFileInfos().get(0).getFileURL())")
 	ShowcaseDto.SimpleResponse showcaseToSimpleResponse(Showcase showcase);
 
+	@Mapping(target = "fileInfos", qualifiedByName = "Command")
 	ShowcaseDto.CommandResponse showcaseToCommendResponse(Showcase showcase);
-
-	default void setProperties(ShowcaseDto.Response response, Long memberId) {
-		Optional.ofNullable(memberId)
-			.ifPresent(id -> response.setItWriter(id.equals(response.getWriter().getId())));
-	}
-
-	default void setProperties(ShowcaseDto.SimpleResponse response, Long memberId) {
-		Optional.ofNullable(memberId)
-			.ifPresent(id -> response.setItWriter(id.equals(response.getWriter().getId())));
-	}
 }
