@@ -10,6 +10,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.codestates.hobby.domain.fileInfo.support.BasePathConverter;
+import com.codestates.hobby.global.config.support.InfiniteScrollArgumentResolver;
 import com.codestates.hobby.global.config.support.PagingArgumentResolver;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -32,6 +33,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(new PagingArgumentResolver());
+		resolvers.add(new InfiniteScrollArgumentResolver());
 	}
 
 	@Override

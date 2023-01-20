@@ -10,10 +10,12 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {MemberMapper.class})
 public interface SeriesMapper {
+    @Mapping(target = "post", ignore = true)
     @Mapping(target = "totalPosts", expression = "java(series.getPosts().size())")
-    @Mapping(target = "postId", expression = "java(series.getPosts().get(0).getId())")
+    @Mapping(target = "thumbnailUrl", expression = "java(series.getImage().getFileURL())")
     SeriesDto.Response SeriesToResponseDto(Series series);
 
+    @Mapping(target = "thumbnailUrl", expression = "java(series.getImage().getFileURL())")
     SeriesDto.SimpleResponse SeriesToSimpleResponseDto(Series series);
 
     default String toString(Category value) {

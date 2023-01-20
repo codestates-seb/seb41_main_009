@@ -1,5 +1,6 @@
 package com.codestates.hobby.domain.post.controller;
 
+import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.post.dto.PostDto;
 import com.codestates.hobby.domain.post.entity.Post;
 import com.codestates.hobby.domain.post.service.PostService;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -16,27 +19,27 @@ import org.springframework.web.bind.annotation.*;
 public class PostCommendController {
     private final PostService postService;
 
-    @PostMapping()
-    public ResponseEntity<?> post(@RequestBody PostDto.Post postDto,
-                                  @AuthenticationPrincipal Long memberId) {
-        postDto.setMemberId(memberId);
+    @PostMapping
+    public ResponseEntity<?> post(@Valid @RequestBody PostDto.Post postDto,
+                                  @SessionAttribute Member loginMember) {
+        postDto.setMemberId(loginMember.getId());
         Post post = postService.post(postDto);
         return new ResponseEntity<>(post.getId(), HttpStatus.CREATED);
     }
 
     @PatchMapping("/{post-id}")
-    public ResponseEntity<?> patch(@RequestBody PostDto.Patch patchDto,
+    public ResponseEntity<?> patch(@Valid @RequestBody PostDto.Patch patchDto,
                                    @PathVariable("post-id") long postId,
-                                   @AuthenticationPrincipal Long memberId) {
-        patchDto.setProperties(memberId, postId);
+                                   @SessionAttribute Member loginMember) {
+        patchDto.setProperties(loginMember.getId(), postId);
         Post post = postService.update(patchDto);
         return new ResponseEntity<>(post.getId(),HttpStatus.OK);
     }
 
     @DeleteMapping("/{post-id}")
     public ResponseEntity<?> delete(@PathVariable("post-id") long postId,
-                                    @AuthenticationPrincipal Long memberId) {
-        postService.delete(postId,memberId);
+                                    @SessionAttribute Member loginMember) {
+        postService.delete(postId, loginMember.getId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -33,7 +33,7 @@ public class MemberDto {
         @Size(max = 255, message = "255자 이하로 제한됩니다.")
         private String introduction;
 
-        private String imgUrl;
+        private String profileUrl;
     }
 
     @Getter
@@ -49,7 +49,7 @@ public class MemberDto {
         @Size(max = 255, message = "255자 이하로 제한됩니다.")
         private String introduction;
 
-        private String imgUrl;
+        private String profileUrl;
     }
 
     @Getter
@@ -60,7 +60,7 @@ public class MemberDto {
         private String email;
         private String nickname;
         private String introduction;
-        private String imgUrl;
+        private String profileUrl;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
@@ -71,6 +71,6 @@ public class MemberDto {
     public static class SimpleResponse {
         private long id;
         private String nickname;
-        private String imgUrl;
+        private String profileUrl;
     }
 }

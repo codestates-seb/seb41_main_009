@@ -33,10 +33,9 @@ public class ShowcaseStub {
 		response.setId(1L);
 		response.setContent("content");
 		response.setCategory("soccer");
-		response.setItWriter(false);
 		response.setCreatedAt(LocalDateTime.now());
 		response.setModifiedAt(LocalDateTime.now());
-		response.setImageUrls(List.of("URL1", "URL2", "URL3"));
+		response.setImageUrls(FileInfoStub.createResponses(0, 3));
 		response.setComments(List.of(ShowcaseCommentStub.createResponse()));
 		response.setWriter(new MemberDto.SimpleResponse());
 		return response;
@@ -48,7 +47,6 @@ public class ShowcaseStub {
 		response.setContent("content");
 		response.setCategory("soccer");
 		response.setComments(3);
-		response.setItWriter(false);
 		response.setCreatedAt(LocalDateTime.now());
 		response.setModifiedAt(LocalDateTime.now());
 		response.setThumbnailUrl("URL1");

@@ -1,6 +1,7 @@
 package com.codestates.hobby.domain.series.entity;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,11 +15,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.common.BaseEntity;
-import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.post.entity.Post;
 
@@ -68,10 +69,10 @@ public class Series extends BaseEntity {
 	}
 
 	public void edit(Category category, String title, String content, String thumbnail) {
-		if (!this.category.getId().equals(category.getId()))  this.category = category;
-		if (!this.title.equals(title)) this.title = title;
-		if (!this.content.equals(content)) this.content = content;
-		if (!this.image.getFileURL().equals(thumbnail)) changeImage(thumbnail);
+		if(!this.category.getId().equals(category.getId()))  this.category = category;
+		if(Optional.ofNullable(title).isPresent()) this.title = title;
+		if(Optional.ofNullable(content).isPresent()) this.content = content;
+		if(Optional.ofNullable(thumbnail).isPresent()) changeImage(thumbnail);
 	}
 
 	public void changeImage(String url) {

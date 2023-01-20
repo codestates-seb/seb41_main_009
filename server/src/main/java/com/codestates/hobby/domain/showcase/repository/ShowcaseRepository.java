@@ -14,12 +14,14 @@ public interface ShowcaseRepository extends JpaRepository<Showcase, Long> {
 	@Query("select s from Showcase s "
 		+ "join fetch s.member m "
 		+ "join fetch s.category c "
-		+ "where s.id = ?1 and m.id = ?2")
-	Optional<Showcase> findByIdAndMemberId(long showcaseId, long memberId);
+		+ "where s.id = ?1")
+	Optional<Showcase> findById(long showcaseId, long memberId);
 
-	Page<Showcase> findAllByMemberIdOrderByIdDesc(long memberId, Pageable pageable);
+	Page<Showcase> findAllByMemberIdAndIdLessThan(long memberId, long showcaseId, Pageable pageable);
 
-	Page<Showcase> findAllByCategoryOrderByIdDesc(Category category, Pageable pageable);
+	Page<Showcase> findAllByIdLessThan(long showcaseId, Pageable pageable);
 
-	Page<Showcase> findAllByContentContainsOrderByIdDesc(String query, Pageable pageable);
+	Page<Showcase> findAllByCategoryAndIdLessThan(Category category, long showcaseId, Pageable pageable);
+
+	Page<Showcase> findAllByContentContainsAndIdLessThan(String query, long showcaseId, Pageable pageable);
 }

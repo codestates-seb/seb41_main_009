@@ -29,7 +29,7 @@ class CategoryControllerTest extends ControllerTest {
 	List<CategoryDto.Response> response;
 
 	@BeforeAll
-	protected void beforeAll() {
+	protected void beforeAll() throws Exception {
 		super.beforeAll();
 		response = List.of(groupResponse());
 	}
