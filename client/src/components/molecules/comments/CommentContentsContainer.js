@@ -10,11 +10,12 @@ const Container = styled.div`
 const CommentContentsContainer = ({ comments }) => {
   return (
     <Container>
-      {comments?.map()}
-      <Comment />
-      <Comment />
-      <Comment />
-      <Comment />
+      {comments?.map(el => {
+        const { id, writer, content } = el;
+        return (
+          <Comment key={id} id={writer.id} name={writer.nickname} image={writer.profileImageUrl} content={content} />
+        );
+      })}
     </Container>
   );
 };
