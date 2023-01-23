@@ -26,9 +26,8 @@ public class GoogleEmailService implements EmailService {
 		try {
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
 			mimeMessageHelper.setTo(to);
-			mimeMessageHelper.setSubject(subject);
-
 			mimeMessageHelper.setText(text, true);
+			mimeMessageHelper.setSubject(subject);
 
 			mailSender.send(mimeMessage);
 			log.info("sent email (to: {}, subject: {})", to, subject);
