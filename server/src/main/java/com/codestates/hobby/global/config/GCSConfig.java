@@ -16,7 +16,7 @@ public class GCSConfig {
 	@Bean
 	public Storage storage() throws IOException {
 		GoogleCredentials credentials =
-			GoogleCredentials.fromStream(getClass().getResourceAsStream("/intorest-ea8d5b9d1484.json"));
+			GoogleCredentials.fromStream(getClass().getResourceAsStream("/key.json"));
 
 		return StorageOptions.newBuilder().setProjectId("intorest")
 			.setCredentials(credentials)

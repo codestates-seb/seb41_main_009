@@ -24,8 +24,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
     // 캐시
     implementation 'org.hibernate:hibernate-jcache:5.6.14.Final'
@@ -38,8 +39,6 @@ dependencies {
     implementation 'com.google.code.gson:gson'
 
     // 클라우드 스토리지
-    // implementation 'org.springframework.cloud:spring-cloud-gcp-starter:1.2.8.RELEASE'
-    // -> application.yml에 key 위치만 명시하면 자동설정돼서 편하지만, 잡다한 라이브러리들을 의존함
     implementation 'org.springframework.cloud:spring-cloud-gcp-storage:1.2.8.RELEASE'
 
     runtimeOnly 'com.h2database:h2'
