@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -17,11 +18,11 @@ public interface ShowcaseRepository extends JpaRepository<Showcase, Long> {
 		+ "where s.id = ?1")
 	Optional<Showcase> findById(long showcaseId, long memberId);
 
-	Page<Showcase> findAllByMemberIdAndIdLessThan(long memberId, long showcaseId, Pageable pageable);
+	Slice<Showcase> findAllByMemberIdAndIdLessThan(long memberId, long showcaseId, Pageable pageable);
 
-	Page<Showcase> findAllByIdLessThan(long showcaseId, Pageable pageable);
+	Slice<Showcase> findAllByIdLessThan(long showcaseId, Pageable pageable);
 
-	Page<Showcase> findAllByCategoryAndIdLessThan(Category category, long showcaseId, Pageable pageable);
+	Slice<Showcase> findAllByCategoryAndIdLessThan(Category category, long showcaseId, Pageable pageable);
 
-	Page<Showcase> findAllByContentContainsAndIdLessThan(String query, long showcaseId, Pageable pageable);
+	Slice<Showcase> findAllByContentContainsAndIdLessThan(String query, long showcaseId, Pageable pageable);
 }

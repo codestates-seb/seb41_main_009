@@ -2,7 +2,7 @@ package com.codestates.hobby.domain.showcase.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,23 +62,23 @@ public class ShowcaseService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findAll(InfiniteScrollRequest isRequest) {
+	public Slice<Showcase> findAll(InfiniteScrollRequest isRequest) {
 		return showcaseRepository.findAllByIdLessThan(getOffset(isRequest), isRequest.of());
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findAllByMember(long memberId, InfiniteScrollRequest isRequest) {
+	public Slice<Showcase> findAllByMember(long memberId, InfiniteScrollRequest isRequest) {
 		return showcaseRepository.findAllByMemberIdAndIdLessThan(memberId, getOffset(isRequest), isRequest.of());
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findAllByCategory(String categoryName, InfiniteScrollRequest isRequest) {
+	public Slice<Showcase> findAllByCategory(String categoryName, InfiniteScrollRequest isRequest) {
 		Category category = categoryService.findHobbyByName(categoryName);
 		return showcaseRepository.findAllByCategoryAndIdLessThan(category, getOffset(isRequest), isRequest.of());
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> search(String query, InfiniteScrollRequest isRequest) {
+	public Slice<Showcase> search(String query, InfiniteScrollRequest isRequest) {
 		return showcaseRepository.findAllByContentContainsAndIdLessThan(query, getOffset(isRequest), isRequest.of());
 	}
 
