@@ -28,7 +28,7 @@ public class ShowcaseQueryController {
 
 	@GetMapping("/showcases/{showcase-id}")
 	public ResponseEntity<?> get(@PathVariable("showcase-id") long showcaseId) {
-		Showcase showcase = showcaseService.findById(showcaseId);
+		Showcase showcase = showcaseService.findByIdUsingFetch(showcaseId);
 
 		ShowcaseDto.Response response = mapper.showcaseToResponse(showcase);
 
