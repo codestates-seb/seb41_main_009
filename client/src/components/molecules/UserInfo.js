@@ -14,7 +14,7 @@ import UserImage from '../atoms/UserImage';
  */
 const UserInfo = ({ id, name, introduction, image }) => {
   return (
-<UserInfoBigContainer>
+    <UserInfoBigContainer>
       <UserImage src={image} sizes="128px" />
       <UserHeader>
         <Nickname id={id} name={name} color="var(--orange-400)" typo={HeadingLarge} />

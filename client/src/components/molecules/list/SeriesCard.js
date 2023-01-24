@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { AcrylicBase } from '../../atoms/AcrylicBase';
 import { PostListStack } from './PostCard';
 import { ParagraphMedium, LabelListTitle, LabelMedium } from '../../../styles/typo';
@@ -113,8 +114,10 @@ const Paragraph = styled.div`
   }
 `;
 
+// seriesdummy에 id 단위의 데이터들이 들어감
+
 const SeriesCard = ({ width, series }) => {
-  const { title, content, member, createdAt, modifiedAt, views, postId, totalPosts } = series;
+  const { id, title, content, member, createdAt, modifiedAt, views, postId, totalPosts } = series;
   const { nickname, profileImageUrl } = member;
 
   return (
@@ -122,11 +125,13 @@ const SeriesCard = ({ width, series }) => {
       <AcrylicBase>
         <InfoLayer>
           <SeriesInfoLayer>
-            <Title width={width}> {title || 'Series Title'} </Title>
-            <SeriesPostNumLayer>
-              <div>총 {totalPosts}개의 Post</div>
-              <div>{views}번 조회</div>
-            </SeriesPostNumLayer>
+            <Link to={`/series/category/${id}`}>
+              <Title width={width}> {title || 'Series Title'} </Title>
+              <SeriesPostNumLayer>
+                <div>총 {totalPosts}개의 Post</div>
+                <div>{views}번 조회</div>
+              </SeriesPostNumLayer>
+            </Link>
           </SeriesInfoLayer>
           <Paragraph width={width}>{content || PARAGRAPH}</Paragraph>
           <ContextLayer>

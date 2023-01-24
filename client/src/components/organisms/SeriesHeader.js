@@ -15,17 +15,21 @@ const Container = styled.div`
   border-radius: 30px;
 `;
 
-const SeriesHeader = () => {
+const SeriesHeader = ({ series }) => {
+  console.log('series', series);
   return (
     <Container>
       <AcrylicBase flexDirection="column">
         <SeriesInfo
-          userName="userName"
-          userImage="https://unsplash.it/1920/1080/?random"
-          title="seriesTitle"
-          desc="descrption"
+          title={series.title}
+          userId={series.member.id}
+          userName={series.member.nickname}
+          userImage={series.member.profileUrl}
+          createdAt={series.createdAt}
+          modifiedAt={series.modifiedAt}
         />
-        <SeriesHeaderPostList />
+        {/* Series Page의 갯수를 알 수있어야함 page 갯수 api response값 필요 */}
+        <SeriesHeaderPostList seriesId={series.id} page={series.id} />
       </AcrylicBase>
     </Container>
   );

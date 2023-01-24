@@ -8,6 +8,7 @@ const Container = styled.div`
   margin-bottom: 50px;
 `;
 
+// seriesList에 seriesListDummy.data
 const SeriesListContainer = ({ seriesList }) => {
   return (
     <Container>

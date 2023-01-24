@@ -1,18 +1,19 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { PostDummy } from '../constants/dummyData';
+import { SeriesDummy } from '../constants/dummyData';
 
 /**
  *
- * @param {string | number} postId
- * @returns {post{}, boolean, boolean}
+ * @param {string | number} seriesId
+ * @returns {series{}, boolean, boolean}
+ * 특정한 시리즈 정보를 리턴
  */
-const useGetPost = ({ postId }) => {
-  const [post, setPost] = useState({});
+const useGetSeries = ({ seriesId }) => {
+  const [series, setSeries] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const url = `posts/${postId}`;
+  const url = `series/${seriesId}`;
 
   useEffect(() => {
     setIsLoading(true);
@@ -20,7 +21,7 @@ const useGetPost = ({ postId }) => {
     axios
       .get(url)
       .then(({ data }) => {
-        setPost(data);
+        setSeries(data);
         setIsLoading(false);
       })
       .catch(err => {
@@ -30,13 +31,13 @@ const useGetPost = ({ postId }) => {
       })
       .finally(() => {
         // 현재는 더미데이터에서 가져옴
-        setPost(PostDummy);
+        setSeries(SeriesDummy.data);
         setIsLoading(false);
         setIsLoadingError(false);
       });
   }, []);
 
-  return { post, isLoading, isLoadingError };
+  return { series, isLoading, isLoadingError };
 };
 
-export default useGetPost;
+export default useGetSeries;

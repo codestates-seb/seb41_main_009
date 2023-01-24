@@ -1,21 +1,22 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { postListDummy } from '../constants/dummyData';
+import { SeriesPostLIstDummy } from '../constants/dummyData';
 import HOST from '../constants/URL';
 
 /**
  *
- * @param {string} category
- * @param {string} page
+ * @param {string} seriesId post를 포함하고 있는 series의 ID
+ * @param {string} page post의 갯수
  * @returns {postList[], postPageInfo{}, boolean, boolean}
  */
-const useGetPostList = (category, page) => {
+const useGetSeriesPostList = (seriesId, page) => {
   const [postList, setPostList] = useState([]);
   const [postPageInfo, setPostPageInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `${HOST}/categories/${category}/posts?page=${page}&size=10`;
+  //   Series API 명 확인필요
+  const URL = `${HOST}/categories/${seriesId}/posts?page=${page}&sort=newest'`;
   useEffect(() => {
     setIsLoading(true);
 
@@ -32,7 +33,7 @@ const useGetPostList = (category, page) => {
         setIsLoadingError(true);
       })
       .finally(() => {
-        const { data, pageInfo } = postListDummy;
+        const { data, pageInfo } = SeriesPostLIstDummy;
         setPostList(data);
         setPostPageInfo(pageInfo);
         setIsLoading(false);
@@ -43,4 +44,4 @@ const useGetPostList = (category, page) => {
   return { postList, postPageInfo, isLoading, isLoadingError };
 };
 
-export default useGetPostList;
+export default useGetSeriesPostList;
