@@ -9,7 +9,7 @@ import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 
 @Service
-@Profile("!(gcs | aws)")
+@Profile("local")
 public class MockFileInfoService extends FileInfoService {
 	MockFileInfoService(FileInfoRepository fileInfoRepository) {
 		super(fileInfoRepository);

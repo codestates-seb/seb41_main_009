@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-@Profile("!mock")
+@Profile("prod")
 @RequiredArgsConstructor
 public class GoogleEmailService implements EmailService {
 	private final JavaMailSender mailSender;

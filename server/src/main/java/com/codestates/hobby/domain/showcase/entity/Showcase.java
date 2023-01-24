@@ -53,7 +53,7 @@ public class Showcase extends BaseEntity {
 	@Transient
 	private ShowcaseComment lastComment;
 
-	@OrderBy("index asc")
+	@OrderBy("fileIndex asc")
 	@BatchSize(size = 100)
 	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<FileInfo> fileInfos = new ArrayList<>();
@@ -76,7 +76,7 @@ public class Showcase extends BaseEntity {
 	}
 
 	public void addImage(FileInfo info) {
-		FileInfo newInfo = new FileInfo(this, info.getFileURL(), info.getIndex());
+		FileInfo newInfo = new FileInfo(this, info.getFileURL(), info.getFileIndex());
 		Optional.ofNullable(info.getSignedURL())
 			.ifPresent(newInfo::setSignedURL);
 		fileInfos.add(newInfo);
@@ -98,7 +98,7 @@ public class Showcase extends BaseEntity {
 			if (idx == -1)
 				addImage(info);
 			else
-				fileInfos.get(idx).updateIndex(info.getIndex());
+				fileInfos.get(idx).updateIndex(info.getFileIndex());
 		});
 	}
 
