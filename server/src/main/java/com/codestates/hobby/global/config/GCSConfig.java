@@ -10,7 +10,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
-@Profile("gcs")
+@Profile("prod & gcs")
 @Configuration
 public class GCSConfig {
 	@Bean

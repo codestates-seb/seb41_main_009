@@ -35,8 +35,7 @@ public class Subscription {
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member target;
 
-	@ColumnDefault(value = "CURRENT_TIMESTAMP")
-	@Column(nullable = false, updatable = false)
+	@Column(nullable = false, updatable = false, columnDefinition = "timestamp")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
 	public Subscription(Member subscriber, Member target) {

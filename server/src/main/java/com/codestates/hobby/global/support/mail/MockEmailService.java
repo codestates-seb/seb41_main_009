@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-@Profile("mock")
+@Profile("local")
 @RequiredArgsConstructor
 public class MockEmailService implements EmailService {
 	public void send(String to, String subject, String text) {
