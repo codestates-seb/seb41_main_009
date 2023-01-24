@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import javax.persistence.*;
 
+import com.codestates.hobby.domain.common.Writing;
 import org.hibernate.annotations.ColumnDefault;
 
 import com.codestates.hobby.domain.category.entity.Category;
@@ -20,29 +21,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@DiscriminatorValue("Post")
 @NoArgsConstructor
-public class Post extends BaseEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(nullable = false)
-	private String title;
-
-	@Column(nullable = false, columnDefinition = "MEDIUMTEXT")
-	private String content;
-
-	@Column
-	@ColumnDefault("0")
-	private int views;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	private Member member;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "category_id", nullable = false)
-	private Category category;
+public class Post extends Writing {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "series_id")
@@ -67,44 +48,32 @@ public class Post extends BaseEntity {
 	}
 
 	public Post(Member member, String title, Series series, Category category, String content, List<String> imageURLs) {
-		this.member = member;
-		this.title = title;
-		this.content = content;
-		this.category = category;
+		super(member, title, category, content);
 		this.series = series;
 
 		if (imageURLs == null) this.images = null;
 		else imageURLs.forEach(this::addImageFromUrl);
-
-
 	}
 
 	public void updatePost (String title, String content, Category category, Series series, List<String> imageURLs) {
-		this.title = title;
-		this.content = content;
-		this.category = category;
+		super.update(title, content, category);
 		this.series = series;
-		updateImage(imageURLs);
+
+		if (imageURLs == null) this.images = null;
+		else updateImage(imageURLs);
 	}
 
 	public void updatePost (String title, String content, Category category, Series series) {
-		this.title = title;
-		this.content = content;
-		this.category = category;
-		this.series = series;
+		this.updatePost(title, content, category, series, null);
 	}
 
 	public void updatePost (String title, String content, Category category, List<String> imageURLs) {
-		this.title = title;
-		this.content = content;
-		this.category = category;
-		updateImage(imageURLs);
+		this.updatePost(title, content, category, null, imageURLs);
 	}
 
 	public void updatePost (String title, String content, Category category) {
-		this.title = title;
-		this.content = content;
-		this.category = category;
+		this.updatePost(title, content, category, null, null);
+
 	}
 
 	public void addImageFromUrl(String url) {
