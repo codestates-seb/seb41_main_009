@@ -22,10 +22,10 @@ const TextContainer = styled.div`
 
 /**
  * props 설명
- * headerTitle: Header 왼쪽 하단 타이틀
- * headerSubTitle: Header 왼쪽 상단 타이틀
- * asideHeader: Header 오른쪽 추가 컴포넌트
- * height: Header 외부 컨테이너의 높이
+ * @param headerTitle: Header 왼쪽 하단 타이틀
+ * @param headerSubTitle: Header 왼쪽 상단 타이틀
+ * @param asideHeader: Header 오른쪽 추가 컴포넌트
+ * @param height: Header 외부 컨테이너의 높이
  */
 
 const PageHeader = ({ headerTitle, headerSubTitle, asideHeader, height }) => {

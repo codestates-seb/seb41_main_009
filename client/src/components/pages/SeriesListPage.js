@@ -27,6 +27,8 @@ const SeriesListPage = () => {
   const [searchParams] = useSearchParams();
   const curPage = searchParams.get('page');
 
+  // seriesList에 seriesListDummy.data
+  // seriesPageInfo에 seriesListDummy.pageInfo
   const { seriesList, seriesPageInfo, isLoading, isLoadingError } = useGetSeriesList(category, curPage);
 
   // isLoading, isLoadingError 값에 따라 Loading 컴포넌트 변경 예정
