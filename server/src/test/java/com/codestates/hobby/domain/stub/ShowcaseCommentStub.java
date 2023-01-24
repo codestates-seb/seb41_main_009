@@ -9,7 +9,6 @@ public class ShowcaseCommentStub {
 		ShowcaseCommentDto.Response response = new ShowcaseCommentDto.Response();
 		response.setId(1L);
 		response.setWriter(null);
-		response.setItWriter(false);
 		response.setContent("쇼케이스 댓글");
 		response.setCreatedAt(LocalDateTime.now());
 		response.setModifiedAt(LocalDateTime.now());

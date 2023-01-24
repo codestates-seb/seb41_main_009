@@ -1,8 +1,13 @@
 package com.codestates.hobby.domain.showcase.service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +20,8 @@ import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.member.service.MemberService;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
+import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
+import com.codestates.hobby.domain.showcase.repository.ShowcaseCommentRepository;
 import com.codestates.hobby.domain.showcase.repository.ShowcaseRepository;
 import com.codestates.hobby.global.config.support.InfiniteScrollRequest;
 import com.codestates.hobby.global.exception.BusinessLogicException;
@@ -25,6 +32,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ShowcaseService {
+	private final ShowcaseCommentRepository commentRepository;
 	private final ShowcaseRepository showcaseRepository;
 	private final CategoryService categoryService;
 	private final FileInfoService fileInfoService;
@@ -44,7 +52,7 @@ public class ShowcaseService {
 		List<FileInfo> fileInfos = fileInfoService.generateSignedURLs(patch.getFileInfos(), BasePath.SHOWCASES);
 		Category category = categoryService.findHobbyByName(patch.getCategory());
 
-		Showcase showcase = getEditableShowcase(patch.getMemberId(), patch.getShowcaseId());
+		Showcase showcase = findVerifiedShowcase(patch.getMemberId(), patch.getShowcaseId());
 		showcase.update(category, patch.getContent(), fileInfos);
 
 		return showcase;
@@ -52,7 +60,7 @@ public class ShowcaseService {
 
 	@Transactional
 	public void delete(long memberId, long showcaseId) {
-		showcaseRepository.delete(getEditableShowcase(memberId, showcaseId));
+		showcaseRepository.delete(findVerifiedShowcase(memberId, showcaseId));
 	}
 
 	@Transactional(readOnly = true)
@@ -62,34 +70,66 @@ public class ShowcaseService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findAll(InfiniteScrollRequest isRequest) {
-		return showcaseRepository.findAllByIdLessThan(getOffset(isRequest), isRequest.of());
+	public Showcase findByIdUsingFetch(long showcaseId) {
+		Showcase showcase = showcaseRepository.findByIdUsingFetch(showcaseId)
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_SHOWCASE));
+
+		List<ShowcaseComment> comments =
+			commentRepository.findAllByShowcase(showcase, PageRequest.of(0, 5, Sort.by("id").descending()));
+
+		showcase.setComments(comments);
+		return showcase;
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findAllByMember(long memberId, InfiniteScrollRequest isRequest) {
-		return showcaseRepository.findAllByMemberIdAndIdLessThan(memberId, getOffset(isRequest), isRequest.of());
+	public Slice<Showcase> findAll(InfiniteScrollRequest isRequest) {
+		return setLastComment(showcaseRepository.findAllByIdLessThan(getOffset(isRequest), isRequest.of()));
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> findAllByCategory(String categoryName, InfiniteScrollRequest isRequest) {
+	public Slice<Showcase> findAllByMember(long memberId, InfiniteScrollRequest isRequest) {
+		return setLastComment(
+			showcaseRepository.findAllByMemberIdAndIdLessThan(memberId, getOffset(isRequest), isRequest.of())
+		);
+	}
+
+	@Transactional(readOnly = true)
+	public Slice<Showcase> findAllByCategory(String categoryName, InfiniteScrollRequest isRequest) {
 		Category category = categoryService.findHobbyByName(categoryName);
-		return showcaseRepository.findAllByCategoryAndIdLessThan(category, getOffset(isRequest), isRequest.of());
+
+		return setLastComment(
+			showcaseRepository.findAllByCategoryAndIdLessThan(category, getOffset(isRequest), isRequest.of())
+		);
 	}
 
 	@Transactional(readOnly = true)
-	public Page<Showcase> search(String query, InfiniteScrollRequest isRequest) {
-		return showcaseRepository.findAllByContentContainsAndIdLessThan(query, getOffset(isRequest), isRequest.of());
+	public Slice<Showcase> search(String query, InfiniteScrollRequest isRequest) {
+		return setLastComment(
+			showcaseRepository.findAllByContentContainsAndIdLessThan(query, getOffset(isRequest), isRequest.of())
+		);
+	}
+
+	private Slice<Showcase> setLastComment(Slice<Showcase> showcases) {
+		Map<Long, Showcase> map = showcases.stream()
+			.collect(Collectors.toMap(Showcase::getId, Function.identity()));
+
+		commentRepository.findListAllByShowcaseIdOrderByIdDesc(map.keySet())
+			.forEach(comment -> map.get(comment.getShowcase().getId()).setLastComment(comment));
+
+		return showcases;
+	}
+
+	private Showcase findVerifiedShowcase(long memberId, long showcaseId) {
+		Showcase showcase = showcaseRepository.findById(showcaseId)
+			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_SHOWCASE));
+
+		if (!showcase.isWrittenBy(memberId))
+			throw new BusinessLogicException(ExceptionCode.NO_PERMISSION_TO_EDIT);
+
+		return showcase;
 	}
 
 	private long getOffset(InfiniteScrollRequest isRequest) {
 		return isRequest.getOffset() < 0 ? showcaseRepository.count() + 1 : isRequest.getOffset();
-	}
-
-	private Showcase getEditableShowcase(long memberId, long showcaseId) {
-		Showcase showcase = findById(showcaseId);
-		if (!showcase.isWrittenBy(memberId))
-			throw new BusinessLogicException(ExceptionCode.NO_PERMISSION_TO_EDIT);
-		return showcase;
 	}
 }

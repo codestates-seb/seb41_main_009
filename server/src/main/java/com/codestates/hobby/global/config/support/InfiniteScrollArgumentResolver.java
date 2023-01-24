@@ -9,6 +9,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 public class InfiniteScrollArgumentResolver implements HandlerMethodArgumentResolver {
 	private static final int DEFAULT_SIZE = 9;
+	private static final int MAX_SIZE = DEFAULT_SIZE * 2;
 
 	@Override
 	public boolean supportsParameter(MethodParameter parameter) {
@@ -26,7 +27,7 @@ public class InfiniteScrollArgumentResolver implements HandlerMethodArgumentReso
 		String sizeStr = webRequest.getParameter("size");
 
 		long offset = NumberUtils.toLong(pageStr, -1);
-		int size = NumberUtils.toInt(sizeStr, DEFAULT_SIZE);
+		int size = Math.min(MAX_SIZE, NumberUtils.toInt(sizeStr, DEFAULT_SIZE));
 
 		return new InfiniteScrollRequest(offset, size);
 	}
