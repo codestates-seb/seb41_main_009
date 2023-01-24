@@ -40,7 +40,7 @@ public class FileInfo {
 	@Transient
 	private String signedURL;
 
-	@Column(columnDefinition = "int(11)")
+	@Column(columnDefinition = "TINYINT")
 	private int fileIndex;
 
 	@Column(nullable = false, updatable = false, columnDefinition = "timestamp")
