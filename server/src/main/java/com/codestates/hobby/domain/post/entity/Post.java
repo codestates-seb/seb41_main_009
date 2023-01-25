@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.annotation.Nullable;
 import javax.persistence.*;
 
 import com.codestates.hobby.domain.common.Writing;
-import org.hibernate.annotations.ColumnDefault;
 
 import com.codestates.hobby.domain.category.entity.Category;
-import com.codestates.hobby.domain.common.BaseEntity;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.series.entity.Series;
@@ -85,5 +82,9 @@ public class Post extends Writing {
 		List<String> olds = images.stream().map(FileInfo::getFileURL).collect(Collectors.toList());
 		new ArrayList<>(images).stream().filter(image -> !urls.contains(image.getFileURL())).forEach(image -> images.remove(image));
 		urls.stream().filter(url -> !olds.contains(url)).forEach(this::addImageFromUrl);
+	}
+
+	public void deleteSeries() {
+		this.series = null;
 	}
 }

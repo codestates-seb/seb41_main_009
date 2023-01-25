@@ -3,7 +3,7 @@ package com.codestates.hobby.global.config;
 import com.codestates.hobby.domain.auth.filter.JsonAuthenticationFilter;
 import com.codestates.hobby.domain.auth.handler.CustomLoginFailureHandler;
 import com.codestates.hobby.domain.auth.handler.CustomLoginSuccessHandler;
-import com.codestates.hobby.domain.auth.service.LoginService;
+import com.codestates.hobby.domain.auth.service.UserDetailsServiceImpl;
 import com.codestates.hobby.domain.member.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -36,23 +36,23 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfig {
 
     private final ObjectMapper objectMapper;
-    private final LoginService loginService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final MemberRepository memberRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http    .headers().frameOptions().sameOrigin()
             .and()
-                .csrf().disable() //로그인 시 post 요청이라 해제해도 됨
+                .csrf().disable() //로그인 시 post 요청이라 해제해도 됨??
                 .cors(withDefaults())
                 .formLogin().disable()
                 .httpBasic().disable();
         http.authorizeHttpRequests(authorize -> authorize
-/*                        .antMatchers("/members/**").hasRole("USER")
-                        .antMatchers("/showcases/**").hasRole("USER")
-                        .antMatchers("/series/**").hasRole("USER")
-                        .antMatchers("/posts/**").hasRole("USER")*/
-                        .anyRequest().permitAll());
+/*                .antMatchers(HttpMethod.POST,"/series", "/showcases", "/posts").authenticated()
+                .antMatchers(HttpMethod.PATCH,"/members", "/series", "/showcases", "/posts").authenticated()
+                .antMatchers(HttpMethod.DELETE,"/members", "/series", "/showcases", "/posts").authenticated()
+                .antMatchers(HttpMethod.GET,"/members").authenticated()*/
+                .anyRequest().permitAll());
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
                 .maximumSessions(1)
@@ -85,7 +85,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(loginService);
+        provider.setUserDetailsService(userDetailsService);
         return new ProviderManager(provider);
     }
 
