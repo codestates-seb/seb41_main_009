@@ -1,4 +1,4 @@
-INSERT INTO CATEGORY(id, group_id, kor_name, eng_name)
+INSERT INTO category(id, group_id, kor_name, eng_name)
 VALUES (default, null, '스포츠', 'sports'),
        (default, null, '금융', 'finance'),
        (default, null, '게임', 'game'),
@@ -6,7 +6,7 @@ VALUES (default, null, '스포츠', 'sports'),
        (default, null, '예술/문화', 'art/culture'),
        (default, null, '창작/제작', 'creation/making');
 
-INSERT INTO CATEGORY(id, group_id, kor_name, eng_name)
+INSERT INTO category(id, group_id, kor_name, eng_name)
 VALUES (default, 1, '야구', 'baseball'),
        (default, 1, '축구', 'soccer'),
        (default, 1, '농구', 'basketball'),

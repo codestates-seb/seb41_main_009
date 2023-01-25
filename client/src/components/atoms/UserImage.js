@@ -8,7 +8,7 @@ import styled from 'styled-components';
 const UserImage = styled.img`
   width: ${props => (props.sizes ? props.sizes : '36px')};
   height: ${props => (props.sizes ? props.sizes : '36px')};
-  border-radius: 30px;
+  border-radius: 50%;
   background-color: #d9d9d9;
   cursor: pointer;
 `;

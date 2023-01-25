@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
+import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
 import com.codestates.hobby.domain.fileInfo.dto.ImageType;
-import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 import com.google.cloud.storage.BlobId;
@@ -22,7 +22,7 @@ import com.google.cloud.storage.HttpMethod;
 import com.google.cloud.storage.Storage;
 
 @Service
-@Profile("gcs")
+@Profile("prod & gcs")
 public class GCSFileInfoService extends FileInfoService {
 	private final Storage storage;
 
@@ -41,27 +41,34 @@ public class GCSFileInfoService extends FileInfoService {
 	}
 
 	@Override
-	public SignedURL generateSignedURL(ImageType imageType, BasePath basePath) {
-		String savedFilename = generateRandomFilename(imageType, basePath);
-		String fileUrl;
+	public FileInfo generateSignedURL(FileRequestDto request, BasePath basePath) {
+		if (request.isNew()) {
+			ImageType type = request.getContentType();
+			String savedFilename = generateRandomFilename(type, basePath);
+			String fileUrl;
 
-		do {
-			fileUrl = String.join("/", domain, bucketName, savedFilename);
-		} while (fileInfoRepository.existsByFileURL(fileUrl));
+			do {
+				fileUrl = String.join("/", domain, bucketName, savedFilename);
+			} while (fileInfoRepository.existsByFileURL_FileUrl(fileUrl));
 
-		BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, savedFilename)).build();
-		Map<String, String> headers = Collections.singletonMap("Content-Type", imageType.toContentType());
+			BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, savedFilename)).build();
+			Map<String, String> headers = Collections.singletonMap("Content-Type", type.getFullName());
 
-		URL url = storage.signUrl(
-			blobInfo,
-			duration,
-			TimeUnit.MINUTES,
-			Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
-			Storage.SignUrlOption.withExtHeaders(headers),
-			Storage.SignUrlOption.withContentType(),
-			Storage.SignUrlOption.withV4Signature());
+			URL url = storage.signUrl(
+				blobInfo,
+				duration,
+				TimeUnit.MINUTES,
+				Storage.SignUrlOption.httpMethod(HttpMethod.PUT),
+				Storage.SignUrlOption.withExtHeaders(headers),
+				Storage.SignUrlOption.withV4Signature());
 
-		return new SignedURL(url.toString(), fileUrl, imageType);
+			return new FileInfo(fileUrl, url.toString(), request.getIndex());
+		} else {
+			FileInfo fileInfo = fileInfoRepository.findByFileURL_FileUrl(request.getFileURL())
+				.orElseThrow(() -> new IllegalArgumentException("Invalid File URL(url: " + request.getFileURL() + ")"));
+			fileInfo.updateIndex(request.getIndex());
+			return fileInfo;
+		}
 	}
 
 	@Override
@@ -77,7 +84,7 @@ public class GCSFileInfoService extends FileInfoService {
 
 	private void deleteFileInStorage(List<FileInfo> fileInfos) {
 		List<BlobId> ids = fileInfos.stream()
-			.map(info -> BlobId.of(info.getBucket(), info.getPath()))
+			.map(info -> BlobId.of(info.getToken(FileInfo.TOKEN.BUCKET), info.getToken(FileInfo.TOKEN.PATH)))
 			.collect(Collectors.toList());
 
 		storage.delete(ids);

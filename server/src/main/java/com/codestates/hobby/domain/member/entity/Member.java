@@ -1,6 +1,8 @@
 package com.codestates.hobby.domain.member.entity;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.*;
 
 import com.codestates.hobby.domain.common.BaseEntity;
@@ -16,8 +18,6 @@ import com.codestates.hobby.domain.subscription.entity.Subscription;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Entity
@@ -30,7 +30,7 @@ public class Member extends BaseEntity {
 	@Column(nullable = false, unique = true, updatable = false)
 	private String email;
 
-	@Column(nullable = false, unique = true, updatable = false)
+	@Column(nullable = false, unique = true)
 	private String nickname;
 
 	@Column(nullable = false)
@@ -64,27 +64,37 @@ public class Member extends BaseEntity {
 
 	@Enumerated(value = EnumType.STRING)
 	@Column
-	@Setter
 	private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roles = new ArrayList<>();
+
 	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name = "file_info_id", updatable = false)
+	@JoinColumn(name = "file_info_id")
 	private FileInfo image;
 
-	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, String profileUrl) {
+	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, String profileUrl, List<String> roles) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
 		this.introduction = introduction;
 		this.isOauth2 = isOauth2;
-		FileInfo.createMemberImage(this, profileUrl);
+		this.roles = roles;
+		this.setImage(profileUrl);
 	}
 
-	public void edit(String nickname, String password, String introduction, String profileUrl) {
-		if (!this.nickname.equals(nickname)) this.nickname = nickname;
-		if (!this.password.equals(password)) this.password = password;
-		if (!this.introduction.equals(introduction)) this.introduction = introduction;
-		if (!this.image.getFileURL().equals(profileUrl)) FileInfo.createMemberImage(this, profileUrl);
+	public void edit(String nickname, String introduction, String profileUrl) {
+		if(Optional.ofNullable(nickname).isPresent()) this.nickname = nickname;
+		if(Optional.ofNullable(introduction).isPresent()) this.introduction = introduction;
+		if(Optional.ofNullable(profileUrl).isPresent()) setImage(profileUrl);
+	}
+
+	public void setStatus(MemberStatus memberStatus) {
+		this.memberStatus = memberStatus;
+	}
+
+	public void setImage(String url) {
+		this.image = new FileInfo(this, url, 0);
 	}
 
 	public enum MemberStatus {
@@ -97,5 +107,10 @@ public class Member extends BaseEntity {
 		MemberStatus(String status) {
 			this.status = status;
 		}
+	}
+
+	public enum MemberRole {
+		ROLE_USER,
+		ROLE_ADMIN
 	}
 }

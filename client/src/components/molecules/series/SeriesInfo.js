@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import SeriesTitle from './SeriesTitle';
-import { UserInfo } from '../UserInfo';
+import { UserInfoSmall } from '../UserInfo';
 import { LabelSmall, LabelXSmall } from '../../../styles/typo';
 import { ClearBlurButton } from '../../atoms/Buttons';
 
@@ -20,26 +20,22 @@ import { ClearBlurButton } from '../../atoms/Buttons';
  * @returns {JSX.Element} -
  */
 const SeriesInfo = ({
-  id,
+  title,
+  userId,
   userName,
   userImage,
-  title,
-  desc,
-  postCount,
+  // postCount={series.postCount}
   createdAt,
   modifiedAt,
-  border,
-  width,
-  height,
 }) => {
   // TODO: 페이지 구현시 createAt, modifiedAt 은 Date 타입으로 받아 컴포넌트 내에서 변환
   return (
-    <Container border={border} width={width} height={height}>
-      <SeriesTitle title={title} description={desc} postCount={postCount} />
+    <Container>
+      <SeriesTitle title={title} />
       <SeriesInfoContainer>
         <SeriesInfoList>
           <ClearBlurButton />
-          <UserInfo id={id} name={userName} image={userImage} typo={LabelXSmall} size="24px" />
+          <UserInfoSmall id={userId} name={userName} image={userImage} typo={LabelXSmall} size="24px" />
         </SeriesInfoList>
         <IconList>
           <div>{createdAt}</div>

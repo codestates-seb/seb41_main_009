@@ -1,23 +1,20 @@
 package com.codestates.hobby.domain.fileInfo.service;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.DynamicTest.*;
 import static org.mockito.BDDMockito.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -25,10 +22,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
+import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
 import com.codestates.hobby.domain.fileInfo.dto.ImageType;
-import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
+import com.codestates.hobby.domain.stub.FileInfoStub;
+import com.codestates.hobby.domain.stub.ShowcaseStub;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.Storage;
 
@@ -63,56 +62,61 @@ class FileInfoServiceTest {
 	class EntityTest {
 		@Test
 		void Should_Success_Create_Entity() {
-			FileInfo info = FileInfo.createShowcaseImage(null, fileURL);
+			FileInfo info = new FileInfo(ShowcaseStub.createShowcase(), fileURL, 0);
 
-			assertEquals(bucketName, info.getBucket());
-			assertEquals("basepath", info.getBasePath());
-			assertEquals("filename", info.getFilename());
-			assertEquals(String.join("/", "basepath", "filename"), info.getPath());
+			assertEquals(bucketName, info.getToken(FileInfo.TOKEN.BUCKET));
+			assertEquals("basepath", info.getToken(FileInfo.TOKEN.BASEPATH));
+			assertEquals("filename", info.getToken(FileInfo.TOKEN.FILENAME));
+			assertEquals(String.join("/", "basepath", "filename"), info.getToken(FileInfo.TOKEN.PATH));
 		}
 
 		@Test
 		void Should_Fail_For_Invalid_FileURL() {
 			String url = String.join("/", domain, "basepath/fileName");
-			assertThrows(IllegalArgumentException.class, () -> FileInfo.createShowcaseImage(null, url));
+			assertThrows(IllegalArgumentException.class, () -> new FileInfo(ShowcaseStub.createShowcase(), url, 0));
 		}
 	}
 
-	@TestFactory
-	Stream<DynamicTest> generateSignedURL() throws MalformedURLException {
+	@Test
+	void generateSignedURL() throws MalformedURLException {
+		// given
+		FileRequestDto request = FileInfoStub.createRequest(0);
 		URL url = new URL("http", domain, "/");
 
-		given(repository.existsByFileURL(anyString())).willReturn(false);
+		given(repository.existsByFileURL_FileUrl(anyString())).willReturn(false);
 		given(storage.signUrl(any(), anyLong(), any(), ArgumentMatchers.<Storage.SignUrlOption>any())).willReturn(url);
 
-		return Stream.of(ImageType.values())
-			.map(type -> dynamicTest(type.name(), () -> {
-				// when
-				SignedURL signedURL = service.generateSignedURL(type, BasePath.SHOWCASES);
+		// when
+		FileInfo fileInfo = service.generateSignedURL(request, BasePath.SHOWCASES);
 
-				// then
-				assertTrue(signedURL.getFileURL().startsWith(domain));
-				assertEquals(url.toString(), signedURL.getSignedURL());
-				assertEquals(type, signedURL.getType());
-			}));
+		// then
+		assertEquals(request.getIndex(), fileInfo.getIndex());
+		assertEquals(request.getContentType(), fileInfo.getImageType());
+		assertTrue(fileInfo.getFileURL().endsWith(request.getContentType().getExtension()));
 	}
 
 	@Test
 	void generateSignedURLs() throws MalformedURLException {
 		// given
-		List<ImageType> types = List.of(ImageType.values());
+		List<FileRequestDto> requests = FileInfoStub.createRequests(0, 5);
 		URL url = new URL("http", domain, "/");
 
-		given(repository.existsByFileURL(anyString())).willReturn(false);
+		given(repository.existsByFileURL_FileUrl(anyString())).willReturn(false);
 		given(storage.signUrl(any(), anyLong(), any(), ArgumentMatchers.<Storage.SignUrlOption>any())).willReturn(url);
 
 		// when
-		List<SignedURL> signedURLs = service.generateSignedURLs(types, BasePath.SHOWCASES);
+		List<FileInfo> response = service.generateSignedURLs(requests, BasePath.SHOWCASES);
+		requests.sort(Comparator.comparingInt(FileRequestDto::getIndex));
+		response.sort(Comparator.comparingInt(FileInfo::getIndex));
 
 		// then
-		assertIterableEquals(types, signedURLs.stream().map(SignedURL::getType).collect(Collectors.toList()));
-		signedURLs.forEach(signedURL -> assertEquals(url.toString(), signedURL.getSignedURL()));
-		signedURLs.forEach(signedURL -> assertTrue(signedURL.getFileURL().startsWith(domain)));
+		assertEquals(requests.size(), response.size());
+		IntStream.range(0, requests.size())
+			.forEach(idx -> {
+				assertEquals(requests.get(idx).getIndex(), response.get(idx).getIndex());
+				assertEquals(requests.get(idx).getContentType(), response.get(idx).getImageType());
+				assertTrue(response.get(idx).getFileURL().endsWith(requests.get(idx).getContentType().getExtension()));
+			});
 	}
 
 	@Test
@@ -120,7 +124,7 @@ class FileInfoServiceTest {
 		given(storage.delete(any(BlobId.class))).willReturn(true);
 		willDoNothing().given(repository).delete(any(FileInfo.class));
 
-		service.delete(FileInfo.createShowcaseImage(null, fileURL));
+		service.delete(new FileInfo(ShowcaseStub.createShowcase(), fileURL, 0));
 	}
 
 	@Test
@@ -128,7 +132,7 @@ class FileInfoServiceTest {
 		given(storage.delete(anyList())).willReturn(List.of(true));
 		willDoNothing().given(repository).deleteAll(anyList());
 
-		service.delete(List.of(FileInfo.createShowcaseImage(null, fileURL)));
+		service.delete(List.of(new FileInfo(ShowcaseStub.createShowcase(), fileURL, 0)));
 	}
 
 	@Test

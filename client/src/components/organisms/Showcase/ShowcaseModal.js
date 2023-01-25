@@ -1,16 +1,57 @@
 import styled from 'styled-components';
+import { useRef, useEffect } from 'react';
+import Box from '../../atoms/Box';
+import useShowcaseModal from '../../../store/showcaseModalStore';
+import { UserInfoSmall } from '../../molecules/UserInfo';
+import { ParagraphMedium } from '../../../styles/typo';
+import Category from '../../atoms/Category';
+import Comments from '../Comments';
 
-const ShowcaseModal = ({ isModalOn }) => {
+const ShowcaseModal = ({ isModalOpen }) => {
+  const modalRef = useRef(null);
+  const { modalItem, toggleModalOpen } = useShowcaseModal();
+
+  const handleClickOutside = e => {
+    const condition = isModalOpen && !modalRef.current.contains(e.target);
+    if (condition) {
+      toggleModalOpen();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      window.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <Container isModalOn={isModalOn}>
-      <Body>
-        <div>
-          <Image> Image </Image>
-          <Article> Article </Article>
-        </div>
-        <div>
-          <CommentList> CommentList </CommentList>
-        </div>
+    <Container isModalOpen={isModalOpen}>
+      <Body ref={modalRef}>
+        <TopContainer>
+          <ImageBox padding="0px">
+            <Image src={modalItem.images[0].fileURL} />
+          </ImageBox>
+          <ShowcaseContents>
+            <Box>
+              <UserInfoSmall
+                id={modalItem.writer.id}
+                name={modalItem.writer.nickname}
+                image={modalItem.writer.profileImageUrl}
+              />
+            </Box>
+            <Box margin="15px 0px 35px 0px">
+              <Content>{modalItem.content}</Content>
+            </Box>
+            <Category padding="20px" color="rgba(51, 51, 51, 1)">
+              {modalItem.category}
+            </Category>
+          </ShowcaseContents>
+        </TopContainer>
+        <CommentListContainer>
+          <Comments comments={modalItem.comments} />
+        </CommentListContainer>
       </Body>
     </Container>
   );
@@ -19,7 +60,7 @@ const ShowcaseModal = ({ isModalOn }) => {
 export default ShowcaseModal;
 
 const Container = styled.div`
-  display: ${props => (props.isModalOn ? 'flex' : 'none')};
+  display: ${props => (props.isModalOpen ? 'flex' : 'none')};
   position: fixed;
   top: 0;
   right: 0;
@@ -27,41 +68,46 @@ const Container = styled.div`
   left: 0;
   justify-content: center;
   align-items: center;
-  z-index: 99;
+  z-index: 9999;
   background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  width: 800px;
+  width: 1057px;
   height: 1000px;
-  background-color: white;
-
-  & > div {
-    display: flex;
-    width: 100%;
-    &:first-child {
-      height: 500px;
-    }
-    &:nth-child(2) {
-      height: 500px;
-    }
-  }
+  z-index: 99999;
+  gap: 32px;
 `;
 
-const Image = styled.div`
-  width: 65%;
-  background-color: green;
+const TopContainer = styled.div`
+  display: flex;
+  height: 632px;
+  gap: 32px;
 `;
 
-const Article = styled.div`
-  width: 35%;
-  background-color: blue;
+const ImageBox = styled(Box)`
+  max-width: 693px;
+  margin-right: 32px;
 `;
 
-const CommentList = styled.div`
-  width: 100%;
+const Image = styled.img`
   height: 100%;
-  background-color: orange;
+`;
+
+const Content = styled.div`
+  ${ParagraphMedium};
+  height: 438px;
+`;
+
+const ShowcaseContents = styled.div`
+  width: 331px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const CommentListContainer = styled.div`
+  width: 100%;
+  background-color: white;
 `;

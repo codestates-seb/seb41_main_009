@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 
+import axios from 'axios';
 import LogIn from './components/pages/LogInPage';
 import Header from './components/organisms/Header';
 import PostList from './components/pages/PostListPage';
@@ -10,7 +11,7 @@ import Showcase from './components/pages/ShowcasePage';
 import Sidebar from './components/organisms/Sidebar';
 import User from './components/pages/UserPage';
 import UserEdit from './components/pages/UserEditPage';
-import SeriesList from './components/pages/SeriesListPage';
+import SeriesListPage from './components/pages/SeriesListPage';
 import PostPage from './components/pages/PostPage';
 import PostCreatePage from './components/pages/PostCreatePage';
 import Search from './components/pages/SearchPage';
@@ -20,6 +21,11 @@ import ErrorPage from './components/pages/404ErrorPage';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
+import PrivateRoute from './routes/PrivateRoute';
+import ProtectedRoute from './routes/ProtectedRoute';
+
+axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.headers.common.Authorization = 'AUTH_TOKEN';
 
 const App = () => {
   return (
@@ -34,13 +40,14 @@ const App = () => {
             <Route path="/" element={<PublicRoute component={<Showcase />} />} />
             <Route path="/login" element={<PublicRoute component={<LogIn />} />} />
             <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
-            <Route path="/posts" element={<PublicRoute component={<PostList />} />} />
-            <Route path="/posts/:id" element={<PublicRoute component={<PostPage />} />} />
-            <Route path="/posts/new" element={<PublicRoute component={<PostCreatePage />} />} />
-            <Route path="/series" element={<PublicRoute component={<SeriesList />} />} />
-            <Route path="/series/:id" element={<PublicRoute component={<SeriesPage />} />} />
-            <Route path="/user" element={<PublicRoute component={<User />} />} />
-            <Route path="/user/edit" element={<PublicRoute component={<UserEdit />} />} />
+            <Route path="/posts/" element={<PublicRoute component={<PostList />} />} />
+            <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
+            <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
+            <Route path="/posts/new" element={<ProtectedRoute component={<PostCreatePage />} />} />
+            <Route path="/series/:category" element={<PublicRoute component={<SeriesListPage />} />} />
+            <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
+            <Route path="/users/:userId" element={<PublicRoute component={<User />} />} />
+            <Route path="/users/:userId/edit" element={<PrivateRoute component={<UserEdit />} />} />
             <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
             <Route path="*" element={<PublicRoute component={<ErrorPage />} />} />
           </Routes>
@@ -55,5 +62,6 @@ export default App;
 const Main = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: var(--header-height);
+  /* margin-top: calc(var(--header-height) + 50px); */
+  padding-top: calc(var(--header-height) + 50px);
 `;

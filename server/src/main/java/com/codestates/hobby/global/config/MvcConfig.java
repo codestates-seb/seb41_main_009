@@ -10,6 +10,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.codestates.hobby.domain.fileInfo.support.BasePathConverter;
+import com.codestates.hobby.global.config.support.InfiniteScrollArgumentResolver;
 import com.codestates.hobby.global.config.support.PagingArgumentResolver;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -24,13 +25,15 @@ public class MvcConfig implements WebMvcConfigurer {
 			.serializationInclusion(JsonInclude.Include.NON_NULL)
 			.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 			.visibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+			.visibility(PropertyAccessor.SETTER, JsonAutoDetect.Visibility.NONE)
 			.visibility(PropertyAccessor.GETTER, JsonAutoDetect.Visibility.NONE)
-			.visibility(PropertyAccessor.SETTER, JsonAutoDetect.Visibility.NONE);
+			.visibility(PropertyAccessor.IS_GETTER, JsonAutoDetect.Visibility.NONE);
 	}
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 		resolvers.add(new PagingArgumentResolver());
+		resolvers.add(new InfiniteScrollArgumentResolver());
 	}
 
 	@Override

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { UserInfoSmall } from '../UserInfo';
 
 const Container = styled.div`
   display: flex;
@@ -40,17 +41,20 @@ const CommentButton = styled.button`
   }
 `;
 
-const Comment = () => {
+const Comment = ({ id, name, image, content, handleEdit, handleDelete }) => {
   return (
     <Container>
       <InfoContainer>
-        <span>이미지</span>
-        <span>작성자</span>
+        <UserInfoSmall id={id} name={name} image={image} />
       </InfoContainer>
-      <CommentContainer>댓글 어쩌구</CommentContainer>
+      <CommentContainer>{content}</CommentContainer>
       <InfoContainer>
-        <CommentButton type="button">Edit</CommentButton>
-        <CommentButton type="button">Delete</CommentButton>
+        <CommentButton type="button" onClick={handleEdit}>
+          Edit
+        </CommentButton>
+        <CommentButton type="button" onClick={handleDelete}>
+          Delete
+        </CommentButton>
       </InfoContainer>
     </Container>
   );

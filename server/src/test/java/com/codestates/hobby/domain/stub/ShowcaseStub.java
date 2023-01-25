@@ -16,7 +16,7 @@ public class ShowcaseStub {
 		ShowcaseDto.Post post = new ShowcaseDto.Post();
 		post.setContent("content");
 		post.setCategory("soccer");
-		post.setImageUrls(List.of("URL1", "URL2", "URL3"));
+		post.setFileInfos(FileInfoStub.createRequests(0, 3));
 		return post;
 	}
 
@@ -24,7 +24,7 @@ public class ShowcaseStub {
 		ShowcaseDto.Patch patch = new ShowcaseDto.Patch();
 		patch.setContent("modified-content");
 		patch.setCategory("soccer");
-		patch.setImageUrls(List.of("URL1", "URL2", "URL3"));
+		patch.setFileInfos(FileInfoStub.createRequests(2, 3));
 		return patch;
 	}
 
@@ -33,10 +33,9 @@ public class ShowcaseStub {
 		response.setId(1L);
 		response.setContent("content");
 		response.setCategory("soccer");
-		response.setItWriter(false);
 		response.setCreatedAt(LocalDateTime.now());
 		response.setModifiedAt(LocalDateTime.now());
-		response.setImageUrls(List.of("URL1", "URL2", "URL3"));
+		response.setImageUrls(FileInfoStub.createResponses(0, 3));
 		response.setComments(List.of(ShowcaseCommentStub.createResponse()));
 		response.setWriter(new MemberDto.SimpleResponse());
 		return response;
@@ -48,7 +47,6 @@ public class ShowcaseStub {
 		response.setContent("content");
 		response.setCategory("soccer");
 		response.setComments(3);
-		response.setItWriter(false);
 		response.setCreatedAt(LocalDateTime.now());
 		response.setModifiedAt(LocalDateTime.now());
 		response.setThumbnailUrl("URL1");
@@ -61,7 +59,13 @@ public class ShowcaseStub {
 	}
 
 	public static Showcase createShowcase() {
-		Showcase showcase = new Showcase("content", null, null, List.of("URL1", "URL2", "URL3"));
+		Showcase showcase = new Showcase("content", null, null, List.of(FileInfoStub.createEntity(true)));
+		ReflectionTestUtils.setField(showcase, "id", 1L);
+		return showcase;
+	}
+
+	public static Showcase updateShowcase() {
+		Showcase showcase = new Showcase("content", null, null, List.of(FileInfoStub.createEntity(false)));
 		ReflectionTestUtils.setField(showcase, "id", 1L);
 		return showcase;
 	}

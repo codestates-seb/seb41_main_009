@@ -1,5 +1,7 @@
 package com.codestates.hobby.domain.post.service;
 
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 import com.codestates.hobby.domain.post.repository.PostRepository;
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.category.service.CategoryService;
@@ -44,32 +46,30 @@ public class PostService {
     @Transactional
     public Post update(PostDto.Patch patchDto){
         Post findPost = findVerifiedPost(patchDto.getPostId());
-        if (!isMatchMember(findPost, memberService.findMemberById(patchDto.getMemberId()).getId())) throw new RuntimeException("권한이 없습니다.");
-        else {
-            if (patchDto.getSeriesId() != null) {
-                if (patchDto.getImgUrls() != null) findPost.updatePost(patchDto.getTitle(), patchDto.getContent(),
-                        categoryService.findHobbyByName(patchDto.getCategory()), seriesService.findById(patchDto.getSeriesId()), patchDto.getImgUrls());
-                else findPost.updatePost(patchDto.getTitle(), patchDto.getContent(), categoryService.findHobbyByName(patchDto.getCategory()),
-                        seriesService.findById(patchDto.getSeriesId()));
-            } else {
-                if (patchDto.getImgUrls() != null) findPost.updatePost(patchDto.getTitle(), patchDto.getContent()
-                        , categoryService.findHobbyByName(patchDto.getCategory()), patchDto.getImgUrls());
-                else findPost.updatePost(patchDto.getTitle(), patchDto.getContent()
-                        , categoryService.findHobbyByName(patchDto.getCategory()));
-            }
-            return postRepository.save(findPost);
+        isMatchMember(findPost, patchDto.getMemberId());
+        if (patchDto.getSeriesId() != null) {
+            if (patchDto.getImgUrls() != null) findPost.updatePost(patchDto.getTitle(), patchDto.getContent(),
+                    categoryService.findHobbyByName(patchDto.getCategory()), seriesService.findById(patchDto.getSeriesId()), patchDto.getImgUrls());
+            else findPost.updatePost(patchDto.getTitle(), patchDto.getContent(), categoryService.findHobbyByName(patchDto.getCategory()),
+                    seriesService.findById(patchDto.getSeriesId()));
+        } else {
+            if (patchDto.getImgUrls() != null) findPost.updatePost(patchDto.getTitle(), patchDto.getContent()
+                    , categoryService.findHobbyByName(patchDto.getCategory()), patchDto.getImgUrls());
+            else findPost.updatePost(patchDto.getTitle(), patchDto.getContent()
+                    , categoryService.findHobbyByName(patchDto.getCategory()));
         }
+        return postRepository.save(findPost);
     }
     @Transactional
     public void delete(long postId, long memberId){
         Post findPost = findVerifiedPost(postId);
-        if (!isMatchMember(findPost, memberService.findMemberById(memberId).getId())) throw new RuntimeException("권한이 없습니다.");
-        else postRepository.delete(findPost);
+        isMatchMember(findPost,memberId);
+        postRepository.delete(findPost);
     }
 
     @Transactional
     public Post findById(long postId) {
-        return postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Cannot find post"));
+        return findVerifiedPost(postId);
     }
 
     @Transactional(readOnly = true)
@@ -99,11 +99,13 @@ public class PostService {
 
     public Post findVerifiedPost(long postId){
         Optional<Post> optionalPost = postRepository.findById(postId);
-        Post findPost = optionalPost.orElseThrow(() -> new RuntimeException("data is null"));
+        Post findPost = optionalPost.orElseThrow(() ->new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
         return findPost;
     }
 
     public boolean isMatchMember(Post post, long memberId){
+        boolean isMatch = post.getMember().getId().equals(memberId);
+        if (!isMatch) throw new BusinessLogicException(ExceptionCode.NOT_MATCH_MEMBER);
         return post.getMember().getId().equals(memberId);
     }
 

@@ -6,13 +6,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
-import com.codestates.hobby.domain.fileInfo.dto.ImageType;
-import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
+import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 
 @Service
-@Profile("aws")
+@Profile("prod & aws")
 public class S3FileInfoService extends FileInfoService {
 	// https://docs.aws.amazon.com/ko_kr/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html
 
@@ -20,8 +19,7 @@ public class S3FileInfoService extends FileInfoService {
 		super(fileInfoRepository);
 	}
 
-	@Override
-	public SignedURL generateSignedURL(ImageType type, BasePath basePath) {
+	public FileInfo generateSignedURL(FileRequestDto request, BasePath basePath) {
 		return null;
 	}
 

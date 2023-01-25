@@ -7,6 +7,7 @@ import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.member.service.MemberService;
 import com.codestates.hobby.domain.post.dto.PostDto;
 import com.codestates.hobby.domain.post.entity.Post;
+import com.codestates.hobby.domain.post.mapper.PostMapper;
 import com.codestates.hobby.domain.post.repository.PostRepository;
 import com.codestates.hobby.domain.series.entity.Series;
 import com.codestates.hobby.domain.series.service.SeriesService;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.ArrayList;
@@ -40,28 +42,31 @@ public class PostServiceTest {
     @Mock
     static MemberService memberService;
 
+    @Autowired
+    static PostMapper postMapper;
+
     @Mock
     static CategoryService categoryService;
 
     @Mock
     static SeriesService seriesService;
 
+    private static List<String> urls =
+        Arrays.asList("http://domain.com/bucket/basepath/file1.png","http://domain.com/bucket/basepath/file2.png","http://domain.com/bucket/basepath/file3.png");
+
     @Nested
     class 포스트_생성{
         @Test
         void 회원_포스트_생성(){
-            List<String> urls = new ArrayList<>(Arrays.asList("url1","url2","url3"));
-
-            FileInfo fileInfo = new FileInfo("url");
             Member member = new Member("aaa@gmail.com",
-                    "홍길동",
-                    "Codestates11!","introduction",
-                    false,fileInfo);
-
+                "홍길동",
+                "Codestates11!","introduction",
+                false, "http://domain.com/bucket/basepath/file.png", List.of("TestUser"));
             Category patentCategory = Category.createParent("운동","exercise");
             Category childCategory = Category.createChild("야구","baseball",patentCategory);
-            Series series = new Series(member, "입문", childCategory, "Content");
+            Series series = new Series(member, childCategory, "입문", "Content", urls.get(0));
             Post post = new Post(member,"Title",series,childCategory,"Content",urls);
+
 
             PostDto.Post postDto = new PostDto.Post();
 
@@ -89,17 +94,14 @@ public class PostServiceTest {
     class 포스트_수정{
         @Test
         void 회원_포스트_수정(){
-            List<String> urls = new ArrayList<>(Arrays.asList("url1","url2","url3"));
-
-            FileInfo fileInfo = new FileInfo("url");
             Member member = new Member("aaa@gmail.com",
                     "홍길동",
                     "Codestates11!","introduction",
-                    false,fileInfo);
+                    false, "http://domain.com/bucket/basepath/file.png", List.of("TestUser"));
 
             Category patentCategory = Category.createParent("운동","exercise");
             Category childCategory = Category.createChild("야구","baseball",patentCategory);
-            Series series = new Series(member, "입문", childCategory, "Content");
+            Series series = new Series(member, childCategory, "입문", "입문", urls.get(0));
             Post post = new Post(member,"Title",series,childCategory,"Content",urls);
 
             PostDto.Patch patchDto = new PostDto.Patch();

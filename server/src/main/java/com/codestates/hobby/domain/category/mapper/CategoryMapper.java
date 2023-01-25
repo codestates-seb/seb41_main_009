@@ -10,6 +10,10 @@ import com.codestates.hobby.domain.category.entity.Category;
 
 @Mapper(componentModel = "spring")
 public interface CategoryMapper {
+	default String map(Category value) {
+		return value.getKorName();
+	}
+
 	default List<CategoryDto.Response> categoriesToResponses(List<Category> categories, boolean containHobbies) {
 		return categories.stream()
 			.map(category -> categoryToResponse(category, containHobbies))

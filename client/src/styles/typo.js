@@ -66,25 +66,25 @@ export const HeadingXLarge = css`
 `;
 
 export const HeadingLarge = css`
-  font-weight: 500;
+  font-weight: 700;
   font-size: 32px;
   line-height: 40px;
 `;
 
 export const HeadingMedium = css`
-  font-weight: 500;
+  font-weight: 700;
   font-size: 28px;
   line-height: 36px;
 `;
 
 export const HeadingSmall = css`
-  font-weight: 500;
+  font-weight: 700;
   font-size: 24px;
   line-height: 32px;
 `;
 
 export const HeadingXSmall = css`
-  font-weight: 500;
+  font-weight: 700;
   font-size: 20px;
   line-height: 28px;
 `;

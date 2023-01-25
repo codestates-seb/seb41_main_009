@@ -3,7 +3,7 @@ package com.codestates.hobby.domain.showcase.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.common.BaseEntity;
@@ -44,44 +50,64 @@ public class Showcase extends BaseEntity {
 	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 
-	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
-	private List<FileInfo> images = new ArrayList<>();
+	@Transient
+	private ShowcaseComment lastComment;
 
-	@OneToMany(mappedBy = "showcase")
+	@OrderBy("fileIndex asc")
+	@BatchSize(size = 100)
+	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
+	private List<FileInfo> fileInfos = new ArrayList<>();
+
+	@OrderBy("id desc")
+	@LazyCollection(LazyCollectionOption.EXTRA)
+	@OneToMany(mappedBy = "showcase", orphanRemoval = true)
 	private List<ShowcaseComment> comments = new ArrayList<>();
 
-	public Showcase(String content, Member member, Category category, List<String> imageURLs) {
+	public Showcase(String content, Member member, Category category, List<FileInfo> imageURLs) {
 		this.content = content;
 		this.member = member;
 		this.category = category;
 
-		imageURLs.forEach(this::addImageFromUrl);
+		imageURLs.forEach(this::addImage);
 	}
 
 	public boolean isWrittenBy(Long memberId) {
 		return Objects.equals(memberId, member.getId());
 	}
 
-	public void addImageFromUrl(String url) {
-		images.add(FileInfo.createShowcaseImage(this, url));
+	public void addImage(FileInfo info) {
+		FileInfo newInfo = new FileInfo(this, info.getFileURL(), info.getFileIndex());
+		Optional.ofNullable(info.getSignedURL())
+			.ifPresent(newInfo::setSignedURL);
+		fileInfos.add(newInfo);
 	}
 
-	public void update(Category category, String content, List<String> urls) {
+	public void update(Category category, String content, List<FileInfo> infos) {
 		if (!Objects.equals(this.category.getId(), category.getId()))
 			this.category = category;
 
 		this.content = content;
-		this.updateImage(urls);
+		this.updateImage(infos);
 	}
 
-	private void updateImage(List<String> urls) {
-		List<String> olds = images.stream().map(FileInfo::getFileURL).collect(Collectors.toList());
+	private void updateImage(List<FileInfo> newInfos) {
+		fileInfos.retainAll(newInfos);
 
-		images.retainAll(urls);
+		newInfos.forEach(info -> {
+			int idx = fileInfos.indexOf(info);
+			if (idx == -1)
+				addImage(info);
+			else
+				fileInfos.get(idx).updateIndex(info.getFileIndex());
+		});
+	}
 
-		urls.stream()
-			.filter(url -> !olds.contains(url))
-			.forEach(this::addImageFromUrl);
+	public void setLastComment(ShowcaseComment comment) {
+		lastComment = comment;
+	}
+
+	public void setComments(List<ShowcaseComment> comments) {
+		this.comments = comments;
 	}
 
 	@Override

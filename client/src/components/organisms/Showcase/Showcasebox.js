@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Box from '../../atoms/Box';
-import { UserInfo } from '../../molecules/UserInfo';
+import { UserInfoSmall } from '../../molecules/UserInfo';
 import { ParagraphMedium } from '../../../styles/typo';
 import Nickname from '../../atoms/Nickname';
 import ImageCard from '../../molecules/ImageCard';
@@ -28,12 +28,13 @@ const Showcasebox = ({
   summary,
   commentUserName,
   commentContent,
+  handle,
 }) => {
   return (
     <Container>
-      <ImageCard thumnail={thumnail} id={tagId} name={tagName} />
+      <ImageCard thumnail={thumnail} id={tagId} name={tagName} handle={handle} />
       <Box>
-        <UserInfo id={userId} name={userName} image={userImg} />
+        <UserInfoSmall id={userId} name={userName} image={userImg} />
         <ContentSummary>{summary}</ContentSummary>
       </Box>
       <Box>

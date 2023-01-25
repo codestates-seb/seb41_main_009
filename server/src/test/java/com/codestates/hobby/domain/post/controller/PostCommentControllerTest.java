@@ -63,19 +63,20 @@ public class PostCommentControllerTest {
     private static Category childCategory;
     private static Series series;
     private static Post post;
-    private static List<String> urls = new ArrayList<>(Arrays.asList("url1","url2","url3"));
+    private static List<String> urls =
+        Arrays.asList("http://domain.com/bucket/basepath/file1.png","http://domain.com/bucket/basepath/file2.png","http://domain.com/bucket/basepath/file3.png");
 
     @BeforeAll
     public static void init(){
 
-        fileInfo = new FileInfo("url");
         member = new Member("aaa@gmail.com",
                 "홍길동",
                 "Codestates11!","introduction",
-                false,fileInfo);
+                false, "http://domain.com/bucket/basepath/file.png",List.of("role"));
+        fileInfo = member.getImage();
         patentCategory = Category.createParent("운동","exercise");
         childCategory = Category.createChild("야구","baseball",patentCategory);
-        series = new Series(member,  childCategory, "Title","Content","url");
+        series = new Series(member,  childCategory, "Title","Content","http://domain.com/bucket/basepath/file.png");
         post = new Post(member,"Title",series,childCategory,"Content",urls);
     }
 
@@ -146,9 +147,8 @@ public class PostCommentControllerTest {
         response.setId(1L);
         response.setContent("Content");
         response.setWriter(null);
-        response.setItWriter(true);
         response.setCreatedAt(LocalDateTime.now());
-        response.setLastModifiedAt(LocalDateTime.now());
+        response.setModifiedAt(LocalDateTime.now());
         PostComment postComment = new PostComment("Comment", member, post);
 
         //Comment를 Page로 주는게 맞나??..
@@ -158,7 +158,6 @@ public class PostCommentControllerTest {
 
         given(postCommentService.findAll(anyLong(),any(PageRequest.class))).willReturn(pageComment);
         given(postCommentMapper.postCommentToPostCommentResponse(any(PostComment.class))).willReturn(response);
-        willDoNothing().given(postCommentMapper).setProperties(any(PostCommentDto.Response.class), anyLong());
 
         ResultActions actions = mockMvc.perform(
                 get("/posts/{post-id}/comments",1)

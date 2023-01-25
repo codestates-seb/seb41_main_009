@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import useAuthStore from '../../store/useAuthStore';
 import { LabelMedium } from '../../styles/typo';
 import { TextButton } from '../atoms/Buttons';
 import SearchInput from '../molecules/SearchInput';
@@ -9,11 +11,13 @@ const Container = styled.div`
   top: 0;
   width: 100%;
   height: var(--header-height);
-  background-color: white;
+  background-color: var(--gray-50);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
+
+  box-shadow: 0px 2px 8px rgba(40, 41, 61, 0.08), 0px 20px 32px rgba(96, 97, 112, 0.24);
 `;
 
 const Body = styled.div`
@@ -45,22 +49,39 @@ const UserButton = styled(TextButton)`
 `;
 
 const Header = () => {
+  const { currentUserId, setUserId } = useAuthStore(state => state);
+
+  const handleLogout = () => {
+    const url = 'logout';
+
+    axios
+      .get(url)
+      .then(() => {
+        setUserId(0);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+      .finally(() => {
+        setUserId(0);
+      });
+  };
+
   return (
     <Container>
       <Body>
         <Logo to="/" alt="logo" />
         <SearchInput height="40px" />
         <ButtonList>
-          {/* Session에 따라 변경되도록 수정 예정 */}
-          {true ? (
+          {currentUserId ? (
             <>
-              <UserButton to="/login">Log In</UserButton>
-              <UserButton to="/signup">Sign Up</UserButton>
+              <UserButton to={`users/${currentUserId}`}>My Page</UserButton>
+              <UserButton onClick={handleLogout}>Log Out</UserButton>
             </>
           ) : (
             <>
-              <UserButton to="/user">My Page</UserButton>
-              <UserButton to="/">Log Out</UserButton>
+              <UserButton to="/login">Log In</UserButton>
+              <UserButton to="/signup">Sign Up</UserButton>
             </>
           )}
         </ButtonList>

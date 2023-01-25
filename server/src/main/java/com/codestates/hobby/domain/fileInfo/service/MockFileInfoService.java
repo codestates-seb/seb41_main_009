@@ -4,23 +4,20 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
-import com.codestates.hobby.domain.fileInfo.dto.ImageType;
-import com.codestates.hobby.domain.fileInfo.dto.SignedURL;
+import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
+import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 
 @Service
-@Profile("!(gcs | aws)")
+@Profile("local")
 public class MockFileInfoService extends FileInfoService {
 	MockFileInfoService(FileInfoRepository fileInfoRepository) {
 		super(fileInfoRepository);
 	}
 
 	@Override
-	public SignedURL generateSignedURL(ImageType type, BasePath basePath) {
-		return new SignedURL(
-			"SignedURL",
-			String.join("/", basePath.toString(), type.toContentType()),
-			type);
+	public FileInfo generateSignedURL(FileRequestDto request, BasePath basePath) {
+		return new FileInfo("http://domain.com/bucket/basepath/file.png", "signedURL", request.getIndex());
 	}
 
 }

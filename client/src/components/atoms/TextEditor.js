@@ -13,7 +13,7 @@ const TextEditor = ({ body, setBody }) => {
     editorRef.current.getInstance().setHTML(body);
   }, [body]);
 
-  const setHTML = () => {
+  const handleSetBody = () => {
     setBody(editorRef.current.getInstance().getHTML());
   };
 
@@ -26,7 +26,7 @@ const TextEditor = ({ body, setBody }) => {
         hideModeSwitch="true"
         plugins={[colorSyntax]}
         ref={editorRef}
-        onBlur={setHTML}
+        onBlur={handleSetBody}
         hooks={{
           addImageBlobHook: uploadImage,
         }}

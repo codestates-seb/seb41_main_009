@@ -49,9 +49,8 @@ public class PostCommentDto {
     public static class Response{
         private long id;
         private String content;
-        private boolean isItWriter;
         private LocalDateTime createdAt;
-        private LocalDateTime lastModifiedAt;
+        private LocalDateTime modifiedAt;
         private MemberDto.SimpleResponse writer;
     }
 }
