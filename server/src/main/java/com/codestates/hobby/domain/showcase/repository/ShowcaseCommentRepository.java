@@ -18,10 +18,15 @@ public interface ShowcaseCommentRepository extends JpaRepository<ShowcaseComment
 
 	Optional<ShowcaseComment> findByIdAndMemberIdAndShowcaseId(long commentId, long memberId, long showcaseId);
 
+	@Query(value = "select c from ShowcaseComment c join fetch c.member m join fetch m.image where c.member.id = :memberId",
+		countQuery = "select c from ShowcaseComment c where c.member.id = :memberId")
 	Page<ShowcaseComment> findAllByMemberIdOrderByIdDesc(long memberId, Pageable pageable);
 
+	@Query(value = "select c from ShowcaseComment c join fetch c.member m join fetch m.image where c.showcase.id = :showcaseId",
+		countQuery = "select c from ShowcaseComment c where c.showcase.id = :showcaseId")
 	Page<ShowcaseComment> findAllByShowcaseIdOrderByIdDesc(long showcaseId, Pageable pageable);
 
+	@Query("select c from ShowcaseComment c join fetch c.member m join fetch m.image where c.showcase = :showcase")
 	List<ShowcaseComment> findAllByShowcase(Showcase showcase, Pageable pageable);
 
 	@Query("select c from ShowcaseComment c join fetch c.member m join fetch m.image where c.id in (:ids)")
