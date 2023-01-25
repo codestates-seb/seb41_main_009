@@ -20,8 +20,7 @@ public interface ShowcaseMapper {
 	ShowcaseDto.Response showcaseToResponse(Showcase showcase);
 
 	@Mapping(target = "writer", source = "member")
-	@Mapping(target = "comments", expression = "java(showcase.getComments().size())")
-	@Mapping(target = "thumbnailUrl", expression = "java(showcase.getFileInfos().get(0).getFileURL())")
+	@Mapping(target = "lastComment", source = "comments")
 	ShowcaseDto.SimpleResponse showcaseToSimpleResponse(Showcase showcase);
 
 	@Mapping(target = "fileInfos", qualifiedByName = "Command")

@@ -5,23 +5,26 @@ import com.codestates.hobby.domain.member.repository.MemberRepository;
 import com.codestates.hobby.global.exception.BusinessLogicException;
 import com.codestates.hobby.global.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class LoginService {
+public class LoginService implements UserDetailsService {
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public Member login(String email, String password) {
-        Optional<Member> optionalMember = memberRepository.findByEmail(email);
-        Member member = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_MEMBER));
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_MEMBER));
 
-        //matches(CharSequence rawPassword, String encodedPassword);
-        if(passwordEncoder.matches(password, member.getPassword())) return member;
-        else return null;
+        return User.builder().username(member.getEmail())
+                .password(member.getPassword())
+                .roles(String.valueOf(member.getRoles()))
+                .build();
     }
 }
