@@ -1,6 +1,6 @@
 package com.codestates.hobby.domain.auth.handler;
 
-import com.codestates.hobby.domain.auth.Session.SessionConst;
+import com.codestates.hobby.domain.auth.session.SessionConst;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.member.repository.MemberRepository;
 import com.codestates.hobby.global.exception.BusinessLogicException;
