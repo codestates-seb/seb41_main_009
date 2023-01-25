@@ -4,7 +4,7 @@ import axios from 'axios';
 const useShowcaseCreateStore = create((set, get) => ({
   // category
   categoryKey: '',
-  categoryName: 'Categorie',
+  categoryName: 'Category',
   setCategoryKey: categoryKey => set({ categoryKey }),
   setCategoryName: categoryName => set({ categoryName }),
 
