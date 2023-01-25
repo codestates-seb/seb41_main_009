@@ -1,11 +1,13 @@
 package com.codestates.hobby.domain.fileInfo.service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.codestates.hobby.domain.fileInfo.dto.BasePath;
 import com.codestates.hobby.domain.fileInfo.dto.FileRequestDto;
+import com.codestates.hobby.domain.fileInfo.dto.ImageProjection;
 import com.codestates.hobby.domain.fileInfo.dto.ImageType;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
@@ -35,5 +37,12 @@ public abstract class FileInfoService {
 
 	protected String generateRandomFilename(ImageType type, BasePath basePath) {
 		return String.format("%s/%s.%s", basePath, UUID.randomUUID(), type.getExtension());
+	}
+
+	public Set<ImageProjection> findThumbnail(BasePath basePath, Set<Long> ids) {
+		if (basePath == BasePath.SHOWCASES) {
+			return fileInfoRepository.findAllThumbnailByEntityAndIndexIn(ids);
+		}
+		throw new IllegalArgumentException();
 	}
 }

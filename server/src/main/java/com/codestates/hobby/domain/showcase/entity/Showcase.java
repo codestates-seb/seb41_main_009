@@ -53,13 +53,14 @@ public class Showcase extends BaseEntity {
 	@Transient
 	private long commentCount;
 
+	@Transient
+	private String thumbnailUrl;
+
 	@OrderBy("fileIndex asc")
-	@BatchSize(size = 100)
 	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<FileInfo> fileInfos = new ArrayList<>();
 
 	@OrderBy("id desc")
-	@BatchSize(size = 100)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	@OneToMany(mappedBy = "showcase", orphanRemoval = true)
 	private List<ShowcaseComment> comments = new ArrayList<>();
@@ -109,6 +110,10 @@ public class Showcase extends BaseEntity {
 
 	public void setComments(List<ShowcaseComment> comments) {
 		this.comments = comments;
+	}
+
+	public void setThumbnail(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
 	}
 
 	@Override

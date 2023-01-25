@@ -37,7 +37,8 @@ public class ShowcaseDto {
 	public static class Post extends Request {
 	}
 
-	@Getter @Setter
+	@Getter
+	@Setter
 	public static class Patch extends Request {
 		@JsonIgnore
 		private Long showcaseId;
@@ -52,7 +53,6 @@ public class ShowcaseDto {
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;
 		private List<FileResponseDto> imageUrls;
-		private List<ShowcaseCommentDto.Response> comments;
 		private MemberDto.SimpleResponse writer;
 	}
 

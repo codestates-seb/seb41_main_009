@@ -5,9 +5,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +19,6 @@ import com.codestates.hobby.domain.member.service.MemberService;
 import com.codestates.hobby.domain.showcase.dto.CommentProjection;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
-import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
 import com.codestates.hobby.domain.showcase.repository.ShowcaseCommentRepository;
 import com.codestates.hobby.domain.showcase.repository.ShowcaseRepository;
 import com.codestates.hobby.global.config.support.InfiniteScrollRequest;
@@ -72,24 +69,18 @@ public class ShowcaseService {
 
 	@Transactional(readOnly = true)
 	public Showcase findByIdUsingFetch(long showcaseId) {
-		Showcase showcase = showcaseRepository.findByIdUsingFetch(showcaseId)
+		return showcaseRepository.findByIdUsingFetch(showcaseId)
 			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_SHOWCASE));
-
-		List<ShowcaseComment> comments =
-			commentRepository.findAllByShowcase(showcase, PageRequest.of(0, 5, Sort.by("id").descending()));
-
-		showcase.setComments(comments);
-		return showcase;
 	}
 
 	@Transactional(readOnly = true)
 	public Slice<Showcase> findAll(InfiniteScrollRequest isRequest) {
-		return setLastComment(showcaseRepository.findAllByIdLessThan(getOffset(isRequest), isRequest.of()));
+		return setThumbnailAndComment(showcaseRepository.findAllByIdLessThan(getOffset(isRequest), isRequest.of()));
 	}
 
 	@Transactional(readOnly = true)
 	public Slice<Showcase> findAllByMember(long memberId, InfiniteScrollRequest isRequest) {
-		return setLastComment(
+		return setThumbnailAndComment(
 			showcaseRepository.findAllByMemberIdAndIdLessThan(memberId, getOffset(isRequest), isRequest.of())
 		);
 	}
@@ -98,33 +89,46 @@ public class ShowcaseService {
 	public Slice<Showcase> findAllByCategory(String categoryName, InfiniteScrollRequest isRequest) {
 		Category category = categoryService.findHobbyByName(categoryName);
 
-		return setLastComment(
+		return setThumbnailAndComment(
 			showcaseRepository.findAllByCategoryAndIdLessThan(category, getOffset(isRequest), isRequest.of())
 		);
 	}
 
 	@Transactional(readOnly = true)
 	public Slice<Showcase> search(String query, InfiniteScrollRequest isRequest) {
-		return setLastComment(
+		return setThumbnailAndComment(
 			showcaseRepository.findAllByContentContainsAndIdLessThan(query, getOffset(isRequest), isRequest.of())
 		);
 	}
 
-	private Slice<Showcase> setLastComment(Slice<Showcase> showcases) {
+	private Slice<Showcase> setThumbnailAndComment(Slice<Showcase> showcases) {
 		Map<Long, Showcase> map = showcases.stream()
 			.collect(Collectors.toMap(Showcase::getId, Function.identity()));
 
-		Map<Long, CommentProjection> projs = commentRepository.findAllLastIdByShowcaseId(map.keySet()).stream()
+		setThumbnail(map);
+		setLastComment(map);
+
+		return showcases;
+	}
+
+	private void setThumbnail(Map<Long, Showcase> showcases) {
+		fileInfoService.findThumbnail(BasePath.SHOWCASES, showcases.keySet())
+			.forEach(fileInfo -> {
+				Showcase showcase = showcases.get(fileInfo.getEntityId());
+				showcase.setThumbnail(fileInfo.getFileURL());
+			});
+	}
+
+	private void setLastComment(Map<Long, Showcase> showcases) {
+		Map<Long, CommentProjection> projs = commentRepository.findAllLastIdByShowcaseId(showcases.keySet()).stream()
 			.collect(Collectors.toMap(CommentProjection::getId, Function.identity()));
 
 		commentRepository.findAllByIdUsingFetch(projs.keySet())
 			.forEach(comment -> {
-				Showcase showcase = map.get(comment.getShowcase().getId());
+				Showcase showcase = showcases.get(comment.getShowcase().getId());
 				showcase.setCommentCount(projs.get(comment.getId()).getCount());
 				showcase.setComments(List.of(comment));
 			});
-
-		return showcases;
 	}
 
 	private Showcase findVerifiedShowcase(long memberId, long showcaseId) {

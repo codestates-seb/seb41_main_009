@@ -21,7 +21,6 @@ public interface ShowcaseMapper {
 
 	@Mapping(target = "writer", source = "member")
 	@Mapping(target = "lastComment", source = "comments")
-	@Mapping(target = "thumbnailUrl", expression = "java(showcase.getFileInfos().get(0).getFileURL())")
 	ShowcaseDto.SimpleResponse showcaseToSimpleResponse(Showcase showcase);
 
 	@Mapping(target = "fileInfos", qualifiedByName = "Command")
