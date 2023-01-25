@@ -7,7 +7,7 @@ import HOST from '../constants/URL';
  *
  * @param {string} category
  * @param {string} page
- * @returns {seriesList[], seriesPageInfo{}, boolean, boolean}
+ * @returns {postList[], postPageInfo{}, boolean, boolean}
  */
 const useGetPostList = (category, page) => {
   const [postList, setPostList] = useState([]);

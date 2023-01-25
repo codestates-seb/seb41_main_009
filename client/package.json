@@ -7,6 +7,9 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@toast-ui/editor": "^3.2.1",
+    "@toast-ui/editor-plugin-code-syntax-highlight": "^3.1.0",
+    "@toast-ui/editor-plugin-color-syntax": "^3.1.0",
     "@toast-ui/react-editor": "^3.2.2",
     "axios": "^1.2.2",
     "jsdoc": "^4.0.0",
@@ -18,8 +21,10 @@
     "react-spinners": "^0.13.8",
     "styled-components": "^5.3.6",
     "styled-reset": "^4.4.4",
+    "tui-color-picker": "^2.2.8",
     "web-vitals": "^2.1.4",
-    "zustand": "^4.2.0"
+    "zustand": "^4.2.0",
+    "zustand-persist": "^0.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

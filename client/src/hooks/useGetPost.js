@@ -5,7 +5,7 @@ import { PostDummy } from '../constants/dummyData';
 /**
  *
  * @param {string | number} postId
- * @returns {{}, boolean, boolean}
+ * @returns {post{}, boolean, boolean}
  */
 const useGetPost = ({ postId }) => {
   const [post, setPost] = useState({});

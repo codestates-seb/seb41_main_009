@@ -40,9 +40,10 @@ public class FileInfo {
 	@Transient
 	private String signedURL;
 
-	private Integer index;
+	@Column(columnDefinition = "TINYINT")
+	private int fileIndex;
 
-	@Column(nullable = false, updatable = false)
+	@Column(nullable = false, updatable = false, columnDefinition = "timestamp")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
 	@Setter
@@ -62,34 +63,34 @@ public class FileInfo {
 	@JoinColumn(name = "showcase_id", updatable = false)
 	private Showcase showcase;
 
-	public FileInfo(String fileURL, String signedURL, Integer index) {
+	public FileInfo(String fileURL, String signedURL, Integer fileIndex) {
 		this.fileURL = new FileURL(fileURL);
 		this.signedURL = signedURL;
-		this.index = index;
+		this.fileIndex = fileIndex;
 	}
 
-	public FileInfo(Member member, String fileURL, int index) {
+	public FileInfo(Member member, String fileURL, int fileIndex) {
 		this.fileURL = new FileURL(fileURL);
 		this.member = member;
-		this.index = index;
+		this.fileIndex = fileIndex;
 	}
 
-	public FileInfo(Series series, String fileURL, int index) {
+	public FileInfo(Series series, String fileURL, int fileIndex) {
 		this.fileURL = new FileURL(fileURL);
 		this.series = series;
-		this.index = index;
+		this.fileIndex = fileIndex;
 	}
 
-	public FileInfo(Post post, String fileURL, int index) {
+	public FileInfo(Post post, String fileURL, int fileIndex) {
 		this.fileURL = new FileURL(fileURL);
-		this.index = index;
+		this.fileIndex = fileIndex;
 		this.post = post;
 	}
 
-	public FileInfo(Showcase showcase, String fileURL, int index) {
+	public FileInfo(Showcase showcase, String fileURL, int fileIndex) {
 		this.fileURL = new FileURL(fileURL);
 		this.showcase = showcase;
-		this.index = index;
+		this.fileIndex = fileIndex;
 	}
 
 	public String getToken(TOKEN token) {
@@ -119,7 +120,7 @@ public class FileInfo {
 	}
 
 	public void updateIndex(int index) {
-		this.index = index;
+		this.fileIndex = index;
 	}
 
 	public void setSignedURL(String url) {

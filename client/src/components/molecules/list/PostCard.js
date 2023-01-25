@@ -1,7 +1,5 @@
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { LabelListTitle, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { TextButton } from '../../atoms/Buttons';
@@ -32,6 +30,13 @@ const InfoLayer = styled.div`
   padding: 18px 20px;
   width: fit-content;
   height: fit-content;
+  & > .link {
+    text-decoration: none;
+    color: var(--gray-800);
+    &:hover {
+      color: var(--gray-500);
+    }
+  }
 
   /* Inside auto layout */
   background: #efefef;
@@ -76,6 +81,8 @@ const Title = styled.div`
   height: 48px;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;
+
   ${LabelListTitle}
 `;
 const Paragraph = styled.div`
@@ -83,6 +90,7 @@ const Paragraph = styled.div`
   height: 42px;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-decoration: none;
 
   ${ParagraphMedium}
 `;
@@ -102,24 +110,19 @@ const ImageLayer = styled.img`
  * @param {string} width - text의 길이
  * @returns {JSX.Element} - PostList 개별 항목을 나타내는 컴포넌트
  */
-const PostCard = ({ boxShadow, width }) => {
-  const [post, setPost] = useState({});
-  const { postId } = useParams();
+const PostCard = ({ boxShadow, width, postId }) => {
+  // 현재는postId와 관계없이 PostDummy에 있는 데이터를 가져옴
+  const { post, isLoading, isLoadingError } = useGetPost(postId);
 
-  useEffect(() => {
-    const getData = async () => {
-      await axios(`URL/${postId}`)
-        .then(res => setPost(res.data.data))
-        .catch(error => console.log(error));
-    };
-
-    getData();
-  }, [postId]);
+  // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
+  console.log(isLoading, isLoadingError);
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
-        <Title width={width}>{post.title || TITLE}</Title>
-        <Paragraph width={width}>{post.Paragraph || PARAGRAPH}</Paragraph>
+        <Link className="link" to={`/posts/category/${postId}`}>
+          <Title width={width}>{post.title || TITLE}</Title>
+          <Paragraph width={width}>{post.Paragraph || PARAGRAPH}</Paragraph>
+        </Link>
         <ContextLayer>
           <UserBox>
             <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />

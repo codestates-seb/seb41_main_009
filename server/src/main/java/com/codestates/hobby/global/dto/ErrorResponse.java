@@ -1,4 +1,4 @@
-package com.codestates.hobby.global.response;
+package com.codestates.hobby.global.dto;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

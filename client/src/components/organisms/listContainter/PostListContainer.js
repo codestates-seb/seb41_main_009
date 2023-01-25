@@ -13,14 +13,12 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const PostListContainer = () => {
+const PostListContainer = ({ postList }) => {
   return (
     <Container>
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
-      <PostCard />
+      {postList.map(post => {
+        return <PostCard key={post.id} postId={post.id} />;
+      })}
     </Container>
   );
 };

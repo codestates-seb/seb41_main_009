@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { seriesListDummy } from '../constants/dummyData';
+import HOST from '../constants/URL';
 
 /**
  *
@@ -14,13 +15,13 @@ const useGetSeriesList = (category, page) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const url = `categories/${category}/series?page=${page}&size=10`;
+  const URL = `${HOST}/categories/${category}/series?page=${page}&size=10`;
 
   useEffect(() => {
     setIsLoading(true);
 
     axios
-      .get(url)
+      .get(URL)
       .then(({ data, pageInfo }) => {
         setSeriesList(data);
         setSeriesPageInfo(pageInfo);
@@ -40,6 +41,7 @@ const useGetSeriesList = (category, page) => {
       });
   }, []);
 
+  // 아직은 seriesList에 seriesListDummy의 값을 넣음
   return { seriesList, seriesPageInfo, isLoading, isLoadingError };
 };
 

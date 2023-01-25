@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: "jdbc:h2:mem:hobby;MODE=MYSQL"
+    password:
+    username: admin
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        generate_statistics: true
+    defer-datasource-initialization: true
+  output:
+    ansi:
+      enabled: always
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
