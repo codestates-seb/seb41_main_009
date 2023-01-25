@@ -1,23 +1,19 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import styled from 'styled-components';
+import TextArea from '../atoms/TextArea';
 import Box from '../atoms/Box';
-import { ParagraphMedium } from '../../styles/typo';
 import { UserInfoSmall } from '../molecules/UserInfo';
 import { WhiteShadowButton, BlackShadowButton } from '../atoms/Buttons';
 import ShowcaseImageInput from '../molecules/showcase/ShowcaseImageInput';
 import Dropdown from '../organisms/Dropdown';
+import useShowcaseCreateStore from '../../store/showcaseCreateStore';
 
 const ShowcaseCreatePage = () => {
-  const [content, setContent] = useState('');
+  const { setContent } = useShowcaseCreateStore();
 
   // save text to content state
   const handleTextOnChange = useCallback(event => {
     setContent(event.target.value);
-    console.log(content);
-  });
-
-  useEffect(() => {
-    console.log('mount test');
   });
 
   return (
@@ -33,7 +29,7 @@ const ShowcaseCreatePage = () => {
             <UserInfoSmall />
           </DefaultBox>
           <DefaultBox>
-            <ContentTextArea placeholder="내용을 입력하세요(최대 300자)" onChange={handleTextOnChange} />
+            <TextArea placeholder="내용을 입력하세요(최대 300자)" handleContent={handleTextOnChange} />
           </DefaultBox>
           <Dropdown>Categorie</Dropdown>
         </ContentInputContiner>
@@ -76,14 +72,6 @@ const ContentInputContiner = styled.div`
       margin-bottom: 33px;
     }
   }
-`;
-
-const ContentTextArea = styled.textarea`
-  ${ParagraphMedium};
-  padding: 0px 0px 100px 0px;
-  height: 310px;
-  border: none;
-  outline-color: white;
 `;
 
 const DefaultBox = styled(Box).attrs({
