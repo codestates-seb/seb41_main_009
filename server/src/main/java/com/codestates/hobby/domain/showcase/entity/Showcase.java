@@ -51,10 +51,12 @@ public class Showcase extends BaseEntity {
 	private Category category;
 
 	@Transient
-	private ShowcaseComment lastComment;
+	private long commentCount;
+
+	@Transient
+	private String thumbnailUrl;
 
 	@OrderBy("fileIndex asc")
-	@BatchSize(size = 100)
 	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<FileInfo> fileInfos = new ArrayList<>();
 
@@ -102,12 +104,16 @@ public class Showcase extends BaseEntity {
 		});
 	}
 
-	public void setLastComment(ShowcaseComment comment) {
-		lastComment = comment;
+	public void setCommentCount(long commentCount) {
+		this.commentCount = commentCount;
 	}
 
 	public void setComments(List<ShowcaseComment> comments) {
 		this.comments = comments;
+	}
+
+	public void setThumbnail(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
 	}
 
 	@Override

@@ -66,7 +66,7 @@ public class Member extends BaseEntity {
 	@Column
 	private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	private List<String> roles = new ArrayList<>();
 
 	@OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})

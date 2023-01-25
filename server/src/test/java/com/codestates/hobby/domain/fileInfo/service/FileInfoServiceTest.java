@@ -90,7 +90,7 @@ class FileInfoServiceTest {
 		FileInfo fileInfo = service.generateSignedURL(request, BasePath.SHOWCASES);
 
 		// then
-		assertEquals(request.getIndex(), fileInfo.getIndex());
+		assertEquals(request.getIndex(), fileInfo.getFileIndex());
 		assertEquals(request.getContentType(), fileInfo.getImageType());
 		assertTrue(fileInfo.getFileURL().endsWith(request.getContentType().getExtension()));
 	}
@@ -107,13 +107,13 @@ class FileInfoServiceTest {
 		// when
 		List<FileInfo> response = service.generateSignedURLs(requests, BasePath.SHOWCASES);
 		requests.sort(Comparator.comparingInt(FileRequestDto::getIndex));
-		response.sort(Comparator.comparingInt(FileInfo::getIndex));
+		response.sort(Comparator.comparingInt(FileInfo::getFileIndex));
 
 		// then
 		assertEquals(requests.size(), response.size());
 		IntStream.range(0, requests.size())
 			.forEach(idx -> {
-				assertEquals(requests.get(idx).getIndex(), response.get(idx).getIndex());
+				assertEquals(requests.get(idx).getIndex(), response.get(idx).getFileIndex());
 				assertEquals(requests.get(idx).getContentType(), response.get(idx).getImageType());
 				assertTrue(response.get(idx).getFileURL().endsWith(requests.get(idx).getContentType().getExtension()));
 			});
