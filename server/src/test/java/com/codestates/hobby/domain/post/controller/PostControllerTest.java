@@ -70,7 +70,7 @@ public class PostControllerTest {
         member = new Member("aaa@gmail.com",
             "홍길동",
             "Codestates11!","introduction",
-            false, "http://domain.com/bucket/basepath/file.png");
+            false, "http://domain.com/bucket/basepath/file.png",List.of("role"));
         fileInfo = member.getImage();
         patentCategory = Category.createParent("운동","exercise");
         childCategory = Category.createChild("야구","baseball",patentCategory);
@@ -151,10 +151,9 @@ public class PostControllerTest {
         PostCommentDto.Response commentDto = new PostCommentDto.Response();
         commentDto.setId(1L);
         commentDto.setWriter(null);
-        commentDto.setItWriter(true);
         commentDto.setContent("comment");
         commentDto.setCreatedAt(LocalDateTime.now());
-        commentDto.setLastModifiedAt(LocalDateTime.now());
+        commentDto.setModifiedAt(LocalDateTime.now());
 
         PostDto.Response response = new PostDto.Response();
 
@@ -163,10 +162,9 @@ public class PostControllerTest {
         response.setId(1L);
         response.setTitle("Title");
         response.setContent("Content");
-        response.setItWriter(true);
         response.setViews(10);
-        response.setCreatedDate(LocalDateTime.now());
-        response.setModifiedDate(LocalDateTime.now());
+        response.setCreatedAt(LocalDateTime.now());
+        response.setModifiedAt(LocalDateTime.now());
         response.setCategory("야구");
         response.setSeriesId(1L);
         response.setComments(List.of(commentDto));
@@ -191,10 +189,9 @@ public class PostControllerTest {
         simpleResponse.setId(1L);
         simpleResponse.setTitle("Title");
         simpleResponse.setContent("Content");
-        simpleResponse.setItWriter(true);
         simpleResponse.setViews(10);
-        simpleResponse.setCreatedDate(LocalDateTime.now());
-        simpleResponse.setModifiedDate(LocalDateTime.now());
+        simpleResponse.setCreatedAt(LocalDateTime.now());
+        simpleResponse.setModifiedAt(LocalDateTime.now());
         simpleResponse.setCategory("야구");
         simpleResponse.setSeriesId(1L);
         simpleResponse.setComments(10);
@@ -207,7 +204,6 @@ public class PostControllerTest {
 
         given(postService.findAll(any(PageRequest.class))).willReturn(pagePost);
         given(postMapper.postToSimpleResponse(any(Post.class))).willReturn(simpleResponse);
-        willDoNothing().given(postMapper).setProperties(any(PostDto.Response.class), anyLong());
 
         ResultActions actions = mockMvc.perform(
                 get("/posts")
@@ -229,10 +225,9 @@ public class PostControllerTest {
         simpleResponse.setId(1L);
         simpleResponse.setTitle("Title");
         simpleResponse.setContent("Content");
-        simpleResponse.setItWriter(true);
         simpleResponse.setViews(10);
-        simpleResponse.setCreatedDate(LocalDateTime.now());
-        simpleResponse.setModifiedDate(LocalDateTime.now());
+        simpleResponse.setCreatedAt(LocalDateTime.now());
+        simpleResponse.setModifiedAt(LocalDateTime.now());
         simpleResponse.setCategory("야구");
         simpleResponse.setSeriesId(1L);
         simpleResponse.setComments(10);
@@ -245,7 +240,6 @@ public class PostControllerTest {
 
         given(postService.findAllByCategory(anyString(),any(PageRequest.class))).willReturn(pagePost);
         given(postMapper.postToSimpleResponse(any(Post.class))).willReturn(simpleResponse);
-        willDoNothing().given(postMapper).setProperties(any(PostDto.Response.class), anyLong());
 
         ResultActions actions = mockMvc.perform(
                 get("/categories/{category-name}/posts", 1)
@@ -266,10 +260,9 @@ public class PostControllerTest {
         simpleResponse.setId(1L);
         simpleResponse.setTitle("Title");
         simpleResponse.setContent("Content");
-        simpleResponse.setItWriter(true);
         simpleResponse.setViews(10);
-        simpleResponse.setCreatedDate(LocalDateTime.now());
-        simpleResponse.setModifiedDate(LocalDateTime.now());
+        simpleResponse.setCreatedAt(LocalDateTime.now());
+        simpleResponse.setModifiedAt(LocalDateTime.now());
         simpleResponse.setCategory("야구");
         simpleResponse.setSeriesId(1L);
         simpleResponse.setComments(10);
@@ -282,7 +275,6 @@ public class PostControllerTest {
 
         given(postService.findAllBySeries(anyLong(),any(PageRequest.class))).willReturn(pagePost);
         given(postMapper.postToSimpleResponse(any(Post.class))).willReturn(simpleResponse);
-        willDoNothing().given(postMapper).setProperties(any(PostDto.Response.class), anyLong());
 
         ResultActions actions = mockMvc.perform(
                 get("/series/{series-id}/posts", 1)
@@ -303,10 +295,9 @@ public class PostControllerTest {
         simpleResponse.setId(1L);
         simpleResponse.setTitle("Title");
         simpleResponse.setContent("Content");
-        simpleResponse.setItWriter(true);
         simpleResponse.setViews(10);
-        simpleResponse.setCreatedDate(LocalDateTime.now());
-        simpleResponse.setModifiedDate(LocalDateTime.now());
+        simpleResponse.setCreatedAt(LocalDateTime.now());
+        simpleResponse.setModifiedAt(LocalDateTime.now());
         simpleResponse.setCategory("야구");
         simpleResponse.setSeriesId(1L);
         simpleResponse.setComments(10);
@@ -319,7 +310,6 @@ public class PostControllerTest {
 
         given(postService.findAllByMember(anyLong(),any(PageRequest.class))).willReturn(pagePost);
         given(postMapper.postToSimpleResponse(any(Post.class))).willReturn(simpleResponse);
-        willDoNothing().given(postMapper).setProperties(any(PostDto.Response.class), anyLong());
 
         ResultActions actions = mockMvc.perform(
                 get("/members/{member-id}/posts", 1)

@@ -16,7 +16,7 @@ public interface FileInfoMapper {
 	@Named("Query")
 	default List<FileResponseDto> fileInfosToResponsesForQuery(List<FileInfo> infos) {
 		return infos.stream()
-			.map(info -> new FileResponseDto(info.getIndex(), info.getFileURL(), null, null))
+			.map(info -> new FileResponseDto(info.getFileIndex(), info.getFileURL(), null, null))
 			.collect(Collectors.toList());
 	}
 
@@ -30,7 +30,7 @@ public interface FileInfoMapper {
 
 	default FileResponseDto fileInfoToResponse(FileInfo fileInfo) {
 		return new FileResponseDto(
-			fileInfo.getIndex(),
+			fileInfo.getFileIndex(),
 			fileInfo.getFileURL(),
 			fileInfo.getSignedURL(),
 			fileInfo.getImageType());

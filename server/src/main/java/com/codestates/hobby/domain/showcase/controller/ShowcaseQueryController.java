@@ -1,20 +1,20 @@
 package com.codestates.hobby.domain.showcase.controller;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
-import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.mapper.ShowcaseMapper;
 import com.codestates.hobby.domain.showcase.service.ShowcaseService;
 import com.codestates.hobby.global.config.support.InfiniteScrollRequest;
+import com.codestates.hobby.global.dto.InfinitePageInfo;
 import com.codestates.hobby.global.dto.MultiResponseDto;
 
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class ShowcaseQueryController {
 
 	@GetMapping("/showcases/{showcase-id}")
 	public ResponseEntity<?> get(@PathVariable("showcase-id") long showcaseId) {
-		Showcase showcase = showcaseService.findById(showcaseId);
+		Showcase showcase = showcaseService.findByIdUsingFetch(showcaseId);
 
 		ShowcaseDto.Response response = mapper.showcaseToResponse(showcase);
 
@@ -37,32 +37,33 @@ public class ShowcaseQueryController {
 
 	@GetMapping("/showcases")
 	public ResponseEntity<?> getAll(InfiniteScrollRequest isRequest) {
-		Page<Showcase> showcases = showcaseService.findAll(isRequest);
+		Slice<Showcase> showcases = showcaseService.findAll(isRequest);
 
 		return toResponseEntity(showcases);
 	}
 
 	@GetMapping("/categories/{category-name}/showcases")
 	public ResponseEntity<?> getAllByCategory(
-		@SessionAttribute(required = false) Member loginMember,
 		@PathVariable("category-name") String category,
 		InfiniteScrollRequest isRequest
 	) {
-		Page<Showcase> showcases = showcaseService.findAllByCategory(category, isRequest);
+		Slice<Showcase> showcases = showcaseService.findAllByCategory(category, isRequest);
 
 		return toResponseEntity(showcases);
 	}
 
 	@GetMapping("/members/{member-id}/showcases")
 	public ResponseEntity<?> getAllByMember(@PathVariable("member-id") long memberId, InfiniteScrollRequest isRequest) {
-		Page<Showcase> showcases = showcaseService.findAllByMember(memberId, isRequest);
+		Slice<Showcase> showcases = showcaseService.findAllByMember(memberId, isRequest);
 
 		return toResponseEntity(showcases);
 	}
 
-	private ResponseEntity<?> toResponseEntity(Page<Showcase> showcases) {
-		Page<ShowcaseDto.SimpleResponse> responses = showcases.map(mapper::showcaseToSimpleResponse);
+	private ResponseEntity<?> toResponseEntity(Slice<Showcase> showcases) {
+		Slice<ShowcaseDto.SimpleResponse> responses = showcases.map(mapper::showcaseToSimpleResponse);
 
-		return new ResponseEntity<>(new MultiResponseDto<>(responses), HttpStatus.OK);
+		InfinitePageInfo info = new InfinitePageInfo(responses.hasNext());
+
+		return new ResponseEntity<>(new MultiResponseDto<>(responses.getContent(), info), HttpStatus.OK);
 	}
 }

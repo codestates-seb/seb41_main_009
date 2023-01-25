@@ -50,7 +50,7 @@ public class PostCommentDto {
         private long id;
         private String content;
         private LocalDateTime createdAt;
-        private LocalDateTime lastModifiedAt;
+        private LocalDateTime modifiedAt;
         private MemberDto.SimpleResponse writer;
     }
 }

@@ -31,15 +31,9 @@ public class ShowcaseCommentController {
 	private final ShowcaseCommentMapper mapper;
 
 	@GetMapping
-	public ResponseEntity<?> getAll(
-		@SessionAttribute(required = false) Member loginMember,
-		@PathVariable("showcase-id") long showcaseId,
-		CustomPageRequest pageRequest
-	) {
+	public ResponseEntity<?> getAll(@PathVariable("showcase-id") long showcaseId, CustomPageRequest pageRequest) {
 		Page<ShowcaseCommentDto.Response> comments
 			= commentService.findAll(showcaseId, pageRequest.to()).map(mapper::entityToResponse);
-
-		comments.forEach(response -> mapper.setProperties(response, loginMember != null ? loginMember.getId() : null));
 
 		return new ResponseEntity<>(new MultiResponseDto<>(comments), HttpStatus.OK);
 	}
@@ -49,7 +43,7 @@ public class ShowcaseCommentController {
 		@PathVariable("showcase-id") long showcaseId,
 		@RequestBody ShowcaseCommentDto.Post post,
 		@SessionAttribute Member loginMember
-		) {
+	) {
 		post.setProperties(showcaseId, loginMember.getId());
 
 		ShowcaseComment comment = commentService.comment(post);

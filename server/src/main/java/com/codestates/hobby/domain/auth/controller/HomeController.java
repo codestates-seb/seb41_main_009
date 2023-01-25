@@ -1,7 +1,6 @@
 package com.codestates.hobby.domain.auth.controller;
 
 import com.codestates.hobby.domain.auth.Session.SessionConst;
-import com.codestates.hobby.domain.auth.Session.SessionManager;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpSession;
 @RequiredArgsConstructor
 public class HomeController {
     private final MemberRepository memberRepository;
-    private final SessionManager sessionManager;
 
     @GetMapping("/")
     public String homeLogin(HttpServletRequest request, Model model) {

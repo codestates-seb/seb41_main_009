@@ -61,7 +61,7 @@ public class PostServiceTest {
             Member member = new Member("aaa@gmail.com",
                 "홍길동",
                 "Codestates11!","introduction",
-                false, "http://domain.com/bucket/basepath/file.png");
+                false, "http://domain.com/bucket/basepath/file.png", List.of("TestUser"));
             Category patentCategory = Category.createParent("운동","exercise");
             Category childCategory = Category.createChild("야구","baseball",patentCategory);
             Series series = new Series(member, childCategory, "입문", "Content", urls.get(0));
@@ -97,7 +97,7 @@ public class PostServiceTest {
             Member member = new Member("aaa@gmail.com",
                     "홍길동",
                     "Codestates11!","introduction",
-                    false, "http://domain.com/bucket/basepath/file.png");
+                    false, "http://domain.com/bucket/basepath/file.png", List.of("TestUser"));
 
             Category patentCategory = Category.createParent("운동","exercise");
             Category childCategory = Category.createChild("야구","baseball",patentCategory);
