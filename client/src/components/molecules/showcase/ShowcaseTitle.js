@@ -12,7 +12,7 @@ const ShowcaseTitle = () => {
   return (
     <Container>
       <Title>Showcase</Title>
-      <BlueShadowButton to="/showcase/create">Create</BlueShadowButton>
+      <BlueShadowButton to="/showcase/new">Create</BlueShadowButton>
     </Container>
   );
 };
