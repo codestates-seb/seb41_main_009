@@ -50,7 +50,7 @@ public class SecurityConfig {
 			.formLogin().disable()
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
-			// TODO: 추가하기 
+			// TODO: 추가하기 asdadad
 			.mvcMatchers(HttpMethod.GET, "/**").permitAll()
 			.mvcMatchers(HttpMethod.POST, "/members", "/login").permitAll()
 			.anyRequest().authenticated());
