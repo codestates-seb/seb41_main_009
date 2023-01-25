@@ -18,6 +18,7 @@ import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.service.FileInfoService;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.member.service.MemberService;
+import com.codestates.hobby.domain.showcase.dto.CommentProjection;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
@@ -113,8 +114,15 @@ public class ShowcaseService {
 		Map<Long, Showcase> map = showcases.stream()
 			.collect(Collectors.toMap(Showcase::getId, Function.identity()));
 
-		commentRepository.findListAllByShowcaseIdOrderByIdDesc(map.keySet())
-			.forEach(comment -> map.get(comment.getShowcase().getId()).setLastComment(comment));
+		Map<Long, CommentProjection> projs = commentRepository.findAllLastIdByShowcaseId(map.keySet()).stream()
+			.collect(Collectors.toMap(CommentProjection::getId, Function.identity()));
+
+		commentRepository.findAllByIdUsingFetch(projs.keySet())
+			.forEach(comment -> {
+				Showcase showcase = map.get(comment.getShowcase().getId());
+				showcase.setCommentCount(projs.get(comment.getId()).getCount());
+				showcase.setComments(List.of(comment));
+			});
 
 		return showcases;
 	}

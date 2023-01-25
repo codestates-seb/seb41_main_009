@@ -62,7 +62,7 @@ public class ShowcaseDto {
 		private long id;
 		private String content;
 		private String category;
-		private int comments;
+		private long commentCount;
 		private String thumbnailUrl;
 		private LocalDateTime createdAt;
 		private LocalDateTime modifiedAt;

@@ -51,7 +51,7 @@ public class Showcase extends BaseEntity {
 	private Category category;
 
 	@Transient
-	private ShowcaseComment lastComment;
+	private long commentCount;
 
 	@OrderBy("fileIndex asc")
 	@BatchSize(size = 100)
@@ -59,6 +59,7 @@ public class Showcase extends BaseEntity {
 	private List<FileInfo> fileInfos = new ArrayList<>();
 
 	@OrderBy("id desc")
+	@BatchSize(size = 100)
 	@LazyCollection(LazyCollectionOption.EXTRA)
 	@OneToMany(mappedBy = "showcase", orphanRemoval = true)
 	private List<ShowcaseComment> comments = new ArrayList<>();
@@ -102,8 +103,8 @@ public class Showcase extends BaseEntity {
 		});
 	}
 
-	public void setLastComment(ShowcaseComment comment) {
-		lastComment = comment;
+	public void setCommentCount(long commentCount) {
+		this.commentCount = commentCount;
 	}
 
 	public void setComments(List<ShowcaseComment> comments) {

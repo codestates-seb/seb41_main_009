@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.codestates.hobby.domain.showcase.dto.CommentProjection;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
 
@@ -23,7 +24,9 @@ public interface ShowcaseCommentRepository extends JpaRepository<ShowcaseComment
 
 	List<ShowcaseComment> findAllByShowcase(Showcase showcase, Pageable pageable);
 
-	@Query("select c from ShowcaseComment c join fetch c.member where c.id in "
-		+ "(select max(cc.id) from ShowcaseComment cc where cc.showcase.id in (:showcaseId) group by cc.showcase.id)")
-	List<ShowcaseComment> findListAllByShowcaseIdOrderByIdDesc(Set<Long> showcaseId);
+	@Query("select c from ShowcaseComment c join fetch c.member m join fetch m.image where c.id in (:ids)")
+	List<ShowcaseComment> findAllByIdUsingFetch(Set<Long> ids);
+
+	@Query("select max(cc.id) as id, count(cc.id) as count from ShowcaseComment cc where cc.showcase.id in (:showcaseId) group by cc.showcase.id")
+	List<CommentProjection> findAllLastIdByShowcaseId(Set<Long> showcaseId);
 }
