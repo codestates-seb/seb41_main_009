@@ -37,16 +37,21 @@ const SearchInput = () => {
     setSearchValue(e.target.value);
   };
 
+  // 검색어가 아무 것도 없으면 아무런 행동을 취하지 않음
+  // 엔터 누르면 해당 검색어로 이동
   const onKeyDown = e => {
     if (e.key === 'Enter') {
-      navigate(`/search/${searchValue}`);
+      if (searchValue === '') {
+        return;
+      }
+      navigate(`/search?value=${searchValue}`);
     }
   };
 
   return (
     <Container>
       <Input placeholder="Search" onKeyDown={onKeyDown} onChange={onChange} />
-      <SearchButton to={`/search/${searchValue}`}>
+      <SearchButton to={`/search?value=${searchValue}`}>
         <MdSearch size="22" />
       </SearchButton>
     </Container>

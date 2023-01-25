@@ -48,7 +48,7 @@ const App = () => {
             <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
             <Route path="/users/:userId" element={<PublicRoute component={<User />} />} />
             <Route path="/users/:userId/edit" element={<PrivateRoute component={<UserEdit />} />} />
-            <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
+            <Route path="/search" element={<PublicRoute component={<Search />} />} />
             <Route path="*" element={<PublicRoute component={<ErrorPage />} />} />
           </Routes>
         </Main>
