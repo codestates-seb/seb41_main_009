@@ -43,4 +43,11 @@ const CATEGORIES = [
   [CREATIVITY, KNITTING, CRAFTING, DRAWING],
 ];
 
-export { MAIN, CATEGORIES };
+const TAGS = CATEGORIES.reduce((acc, cur) => {
+  cur.forEach((el, idx) => {
+    if (idx >= 1) acc.push(el);
+  });
+  return acc;
+}, []);
+
+export { MAIN, CATEGORIES, TAGS };
