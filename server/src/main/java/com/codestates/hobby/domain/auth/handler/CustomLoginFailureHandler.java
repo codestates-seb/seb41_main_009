@@ -1,6 +1,6 @@
 package com.codestates.hobby.domain.auth.handler;
 
-import com.codestates.hobby.global.response.ErrorResponse;
+import com.codestates.hobby.global.dto.ErrorResponse;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

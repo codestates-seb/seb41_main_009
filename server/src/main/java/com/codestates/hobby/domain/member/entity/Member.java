@@ -69,8 +69,7 @@ public class Member extends BaseEntity {
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles = new ArrayList<>();
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name = "file_info_id")
+	@OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	private FileInfo image;
 
 	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, String profileUrl, List<String> roles) {
