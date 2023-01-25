@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PostHeaderLayer from '../organisms/posts/PostHeaderLayer';
 import PostSubHeaderLayer from '../organisms/posts/PostSubHeaderLayer';
 import PostContentLayer from '../organisms/posts/PostContentLayer';
-import Comments from '../organisms/Comments';
+import Comments from '../organisms/comment/Comments';
 import useGetPost from '../../hooks/useGetPost';
 
 const Container = styled.div`
@@ -20,14 +20,14 @@ const Container = styled.div`
 
 // isLoading, isLoadingError 나중에 추가
 const PostPage = () => {
-  const [postId] = useSearchParams();
+  const { id } = useParams();
 
   // `${HOST}/posts/${category}/${postId}` 해당하는 정보를 가져옴
-  const { post } = useGetPost(postId);
+  const { post } = useGetPost(id);
 
   return (
     <Container>
-      <PostHeaderLayer post={post} />
+      <PostHeaderLayer post={post} id={id} />
       <PostSubHeaderLayer post={post} />
       <PostContentLayer post={post} />
       <Comments />
