@@ -1,12 +1,13 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { UPLOAD_SIZE_EXCEEDED } from '../constants/Messages';
+import useShowcaseCreateStore from '../store/showcaseCreateStore';
 import config from '../config';
 
 const useInputImage = () => {
   const InputRef = useRef(null);
   const [file, setFile] = useState(null);
-  const [imgSrc, setImgScr] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const { imageSrc, setImageSrc, setFileInfos } = useShowcaseCreateStore();
   const { MAX_UPLOAD_SIZE } = config;
 
   // encode file to base64
@@ -15,7 +16,7 @@ const useInputImage = () => {
     reader.readAsDataURL(blob);
     return new Promise(res => {
       reader.onload = () => {
-        setImgScr(reader.result);
+        setImageSrc(reader.result);
         res();
       };
     });
@@ -33,11 +34,26 @@ const useInputImage = () => {
       return;
     }
 
-    setFile(imageFile);
-    await encodeFileToBase64(imageFile);
+    await encodeFileToBase64(imageFile).then(() => {
+      setFileInfos([
+        {
+          index: 1,
+          size: imageFile.size,
+          type: imageFile.type.split('/')[1],
+        },
+      ]);
+      setFile(imageFile);
+    });
   });
 
-  return { InputRef, file, imgSrc, errorMsg, handleInputOnChange };
+  useEffect(() => {
+    // hook 이 언마운트 될때 전역저장소에서 이미지소스 지우기
+    return () => {
+      setImageSrc('');
+    };
+  }, []);
+
+  return { InputRef, file, imageSrc, errorMsg, handleInputOnChange };
 };
 
 export default useInputImage;
