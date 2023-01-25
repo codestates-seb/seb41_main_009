@@ -50,9 +50,8 @@ public class SecurityConfig {
 			.formLogin().disable()
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
-			// TODO: 추가하기
-			.mvcMatchers(HttpMethod.GET, "**").permitAll()
-			.mvcMatchers(HttpMethod.POST, "/members").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/**").permitAll()
+			.mvcMatchers(HttpMethod.POST, "/members", "/login").permitAll()
 			.anyRequest().authenticated());
 		http.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
