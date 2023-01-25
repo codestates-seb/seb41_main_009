@@ -29,7 +29,7 @@ const ShowcaseCreatePage = () => {
             <UserInfoSmall />
           </DefaultBox>
           <DefaultBox>
-            <TextArea placeholder="내용을 입력하세요(최대 300자)" handleContent={handleTextOnChange} />
+            <TextArea placeholder="내용을 입력하세요(최대 300자)" maxLength="300" handleContent={handleTextOnChange} />
           </DefaultBox>
           <Dropdown>Categorie</Dropdown>
         </ContentInputContiner>
