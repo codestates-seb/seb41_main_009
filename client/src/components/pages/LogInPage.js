@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Openidbox from '../organisms/Openidbox';
 import Loginbox from '../organisms/Loginbox';
 import { SplashProfileStickerLabel } from '../molecules/stickerLabel/SplashStickerLabel';
 
@@ -30,7 +29,6 @@ const LogInPage = () => {
       />
       <Body>
         <Loginbox />
-        <Openidbox />
       </Body>
     </Container>
   );
