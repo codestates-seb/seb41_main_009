@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { ParagraphMedium } from '../../styles/typo';
 
-const TextArea = ({ placeholder, handleContent }) => {
-  return <Container placeholder={placeholder} onChange={handleContent} />;
+const TextArea = ({ maxLength, placeholder, handleContent }) => {
+  return <Container maxLength={maxLength} placeholder={placeholder} onChange={handleContent} />;
 };
 
 const Container = styled.textarea`
@@ -11,6 +11,7 @@ const Container = styled.textarea`
   height: 310px;
   border: none;
   outline-color: white;
+  overflow-x: hidden;
 `;
 
 export default TextArea;
