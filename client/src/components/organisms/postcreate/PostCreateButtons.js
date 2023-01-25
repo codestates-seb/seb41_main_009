@@ -1,19 +1,29 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { CANCELPOSTCREATE } from '../../../constants/Messages';
+import { BlackShadowButton, WhiteShadowButton } from '../../atoms/Buttons';
 
 const Container = styled.div`
   display: flex;
-  width: inherit;
+  width: 100%;
   height: 50px;
   align-items: center;
   justify-content: flex-end;
-  background-color: greenyellow;
 `;
 
-const PostCreateButtons = () => {
+const PostCreateButtons = ({ submitNewPost }) => {
+  const navigate = useNavigate();
+
+  const cancelPostCreate = () => {
+    if (window.confirm(CANCELPOSTCREATE)) navigate(-1);
+  };
+
   return (
     <Container>
-      <button type="button">Cancel</button>
-      <button type="button">Submit</button>
+      <WhiteShadowButton margin="0 30px" onClick={cancelPostCreate}>
+        Cancel
+      </WhiteShadowButton>
+      <BlackShadowButton onClick={submitNewPost}>Submit</BlackShadowButton>
     </Container>
   );
 };
