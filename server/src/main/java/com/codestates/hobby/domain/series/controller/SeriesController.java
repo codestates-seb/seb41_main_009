@@ -1,32 +1,41 @@
 package com.codestates.hobby.domain.series.controller;
 
+import com.codestates.hobby.domain.member.entity.Member;
+import com.codestates.hobby.domain.post.mapper.PostMapper;
 import com.codestates.hobby.domain.series.dto.SeriesDto;
 import com.codestates.hobby.domain.series.entity.Series;
 import com.codestates.hobby.domain.series.mapper.SeriesMapper;
 import com.codestates.hobby.domain.series.service.SeriesService;
+
 import com.codestates.hobby.global.config.support.CustomPageRequest;
 import com.codestates.hobby.global.dto.MultiResponseDto;
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping
-
 public class SeriesController {
     private final SeriesService seriesService;
     private final SeriesMapper seriesMapper;
 
-    @PostMapping(value = "/series")
-    public ResponseEntity post(@RequestBody SeriesDto.Post post,
-                               @AuthenticationPrincipal Long memberId) {
-        post.setMemberId(memberId);
+    private final PostMapper postMapper;
+
+    @PostMapping("/series")
+    public ResponseEntity<?> post(@Valid @RequestBody SeriesDto.Post post,
+                                  @SessionAttribute Member loginMember) {
+        post.setMemberId(loginMember.getId());
 
         Series series =  seriesService.create(post);
 
@@ -36,10 +45,10 @@ public class SeriesController {
 
     @PatchMapping("/series/{series-id}")
     public ResponseEntity patch(@PathVariable("series-id") long seriesId,
-                                @RequestBody SeriesDto.Patch patch,
-                                @AuthenticationPrincipal Long memberId) {
-        patch.serProperties(memberId, seriesId);
-        seriesService.edit(patch);
+                                @Valid @RequestBody SeriesDto.Patch patch,
+                                @SessionAttribute Member loginMember) {
+        patch.setSeriesId(seriesId);
+        seriesService.edit(patch, loginMember.getId());
 
         log.info("\n\n--시리즈 수정--\n");
         return new ResponseEntity(seriesId, HttpStatus.OK);
@@ -47,33 +56,58 @@ public class SeriesController {
 
     @DeleteMapping("/series/{series-id}")
     public ResponseEntity delete(@PathVariable("series-id") long seriesId,
-                                 @AuthenticationPrincipal Long memberId) {
-        seriesService.delete(memberId, seriesId);
+                                 @SessionAttribute Member loginMember) {
+        seriesService.delete(seriesId, loginMember.getId());
 
         log.info("\n\n--시리즈 삭제--\n");
         return new ResponseEntity(seriesId, HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/series/{series-id}")
+    public ResponseEntity get(@PathVariable("series-id") long seriesId,
+                              CustomPageRequest pageRequest) {
+        Series series = seriesService.findById(seriesId);
+
+        SeriesDto.SimpleResponse response = seriesMapper.SeriesToSimpleResponseDto(series);
+
+        log.info("\n\n--시리즈 단건 조회--\n");
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/series")
+    public ResponseEntity getAll(CustomPageRequest pageRequest) {
+        Page<Series> series = seriesService.findAll(pageRequest.to());
+
+        Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
+
+        log.info("\n\n--시리즈 전체 조회--\n");
+        return new ResponseEntity(new MultiResponseDto<>(responses), HttpStatus.OK);
     }
 
     @GetMapping("/categories/{category-name}/series")
     public ResponseEntity getAllByCategory(@PathVariable("category-name") String category,
                                            CustomPageRequest pageRequest) {
         Page<Series> series = seriesService.findAllByCategory(category, pageRequest.to());
+        Page<SeriesDto.Response> responses = series.map(aSeries -> {
+            SeriesDto.Response response = seriesMapper.SeriesToResponseDto(aSeries);
+            response.setPost(aSeries.getPosts().isEmpty() ? null : postMapper.postToSimpleResponse(aSeries.getPosts().get(0)));
+            return response;
+        });
 
-        Page<SeriesDto.Response> responses = series.map(seriesMapper::SeriesToResponseDto);
-
-        log.info("\n\n--시리즈 리스트 조회--\n");
+        log.info("\n\n--카테고리에 해당하는 시리즈 조회--\n");
         return new ResponseEntity(new MultiResponseDto<>(responses), HttpStatus.OK);
     }
 
     @GetMapping("/members/{member-id}/series")
     public ResponseEntity getAllByMember(@PathVariable("member-id") long memberId,
-                                         @AuthenticationPrincipal Long authId,
+                                         @SessionAttribute Member loginMember,
                                          CustomPageRequest pageRequest) {
+        if(memberId != loginMember.getId()) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         Page<Series> series = seriesService.findAllByMember(memberId, pageRequest.to());
 
         Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
 
-        log.info("\n\n--시리즈 for 마이페이지--\n");
+        log.info("\n\n--멤버에 해당하는 시리즈 조회--\n");
         return new ResponseEntity<>(new MultiResponseDto<>(responses), HttpStatus.OK);
     }
 }

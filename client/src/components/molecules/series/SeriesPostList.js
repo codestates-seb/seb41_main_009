@@ -1,10 +1,54 @@
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
 import { PostListStack, PostCard } from '../list/PostCard';
 import { LabelListTitle, LabelMedium } from '../../../styles/typo';
 import Pagination from '../Pagination';
+import useGetSeriesPostList from '../../../hooks/useGetSeriesPostList';
+
+const SeriesHeaderPostList = ({ seriesId, page }) => {
+  const [isListOpen, setIsListOpen] = useState(false); // list 숨기기
+
+  const { postList, postPageInfo } = useGetSeriesPostList(seriesId, page);
+
+  const PostListToggle = () => {
+    setIsListOpen(!isListOpen);
+  };
+  return (
+    <Container>
+      <InnerLayer>
+        <UpperSection>
+          <TextGroup>
+            <Title> Series Name Post List</Title>
+            <SeriesPostNumLayer>
+              <p>All Post</p>
+              <p> {postPageInfo.totalPage} 개</p>
+            </SeriesPostNumLayer>
+          </TextGroup>
+          {isListOpen ? <PostListStack postId={postList[0].id} /> : ''}
+        </UpperSection>
+        <LowerSection>
+          {isListOpen ? (
+            ''
+          ) : (
+            <PostListSection>
+              {postList && postList.length > 0
+                ? postList.map(post => {
+                    return <PostCard key={post.id} postId={post.id} />;
+                  })
+                : ''}
+              <Pagination totalPages={Number(postPageInfo.totalPage)} />
+            </PostListSection>
+          )}
+          <button type="button" onClick={PostListToggle}>
+            자세히 보기
+          </button>
+        </LowerSection>
+      </InnerLayer>
+    </Container>
+  );
+};
+
+export default SeriesHeaderPostList;
 
 const Container = styled.div`
   display: flex;
@@ -142,55 +186,3 @@ const SeriesPostNumLayer = styled.div`
   align-self: stretch;
   flex-grow: 0;
 `;
-const SeriesHeaderPostList = ({ width, number = '10' }) => {
-  const [isListOpen, setIsListOpen] = useState(false); // list 숨기기
-  const [series, setSeries] = useState({ tagList: [] });
-  const { seriesId } = useParams();
-
-  useEffect(() => {
-    const getData = async () => {
-      await axios(`URL/${seriesId}`)
-        .then(res => setSeries(res.data.data))
-        .catch(error => console.log(error));
-    };
-
-    getData();
-  }, [seriesId]);
-
-  const PostListToggle = () => {
-    setIsListOpen(!isListOpen);
-  };
-
-  return (
-    <Container>
-      <InnerLayer>
-        <UpperSection>
-          <TextGroup>
-            <Title width={width}> {series.title || 'Series Name'} Post List</Title>
-            <SeriesPostNumLayer>
-              <p>All Post</p>
-              <p> {number} 개</p>
-            </SeriesPostNumLayer>
-          </TextGroup>
-          {isListOpen ? <PostListStack /> : ''}
-        </UpperSection>
-        <LowerSection>
-          {isListOpen ? (
-            ''
-          ) : (
-            <PostListSection>
-              <PostCard />
-              <PostCard />
-              <Pagination totalPages={10} />
-            </PostListSection>
-          )}
-          <button type="button" onClick={PostListToggle}>
-            자세히 보기
-          </button>
-        </LowerSection>
-      </InnerLayer>
-    </Container>
-  );
-};
-
-export default SeriesHeaderPostList;

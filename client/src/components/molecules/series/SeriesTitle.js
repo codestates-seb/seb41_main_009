@@ -8,7 +8,7 @@ import { LabelListTitle, LabelMedium, ParagraphSmall } from '../../../styles/typ
  * @param {string} postCount - 포스트의 개수
  * @returns {JSX.Element} - 내부 태그들을 포함한 컴포넌트
  */
-const SeriesTitle = ({ title, description, postCount }) => {
+const SeriesTitle = ({ title, description = '디스크림션이 없음', postCount = '포스트 카운트가 없음' }) => {
   return (
     <Container>
       <Title>{title}</Title>

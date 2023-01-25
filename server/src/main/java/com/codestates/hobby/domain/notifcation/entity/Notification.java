@@ -44,8 +44,7 @@ public class Notification {
 	@JoinColumn(name = "subscriber_id", nullable = false)
 	private Member requester;
 
-	@ColumnDefault(value = "CURRENT_TIMESTAMP")
-	@Column(nullable = false, updatable = false)
+	@Column(nullable = false, updatable = false, columnDefinition = "timestamp")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
 	public Notification(Member target, Member requester, ResourceType resourceType, long resourceId) {

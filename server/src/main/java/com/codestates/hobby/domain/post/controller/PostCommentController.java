@@ -1,5 +1,6 @@
 package com.codestates.hobby.domain.post.controller;
 
+import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.post.dto.PostCommentDto;
 import com.codestates.hobby.domain.post.entity.PostComment;
 import com.codestates.hobby.domain.post.mapper.PostCommentMapper;
@@ -22,8 +23,8 @@ public class PostCommentController {
     @PostMapping
     public ResponseEntity<?> post(@PathVariable("post-id") long postId,
                                   @RequestBody PostCommentDto.Post postDto,
-                                  @AuthenticationPrincipal Long memberId) {
-        postDto.setProperties(postId, memberId);
+                                  @SessionAttribute Member loginMember) {
+        postDto.setProperties(postId, loginMember.getId());
         postCommentService.post(postDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -33,9 +34,9 @@ public class PostCommentController {
             @PathVariable("post-id") long postId,
             @PathVariable("comment-id") long commentId,
             @RequestBody PostCommentDto.Patch patchDto,
-            @AuthenticationPrincipal Long memberId
+            @SessionAttribute Member loginMember
     ) {
-        patchDto.setProperties(memberId, postId, commentId);
+        patchDto.setProperties(loginMember.getId(), postId, commentId);
         postCommentService.update(patchDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -44,18 +45,17 @@ public class PostCommentController {
     public ResponseEntity<?> delete(
             @PathVariable("post-id") long postId,
             @PathVariable("comment-id") long commentId,
-            @AuthenticationPrincipal Long memberId
+            @SessionAttribute Member loginMember
     ) {
-        postCommentService.delete(memberId, postId, commentId);
+        postCommentService.delete(loginMember.getId(), postId, commentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
     public ResponseEntity<?> getAll(@PathVariable("post-id") long postId,
-                                    @AuthenticationPrincipal Long memberId,
+                                    @SessionAttribute Member loginMember,
                                     CustomPageRequest pageRequest) {
         Page<PostCommentDto.Response> postComments = postCommentService.findAll(postId,pageRequest.to()).map(mapper::postCommentToPostCommentResponse);
-        postComments.forEach(response -> mapper.setProperties(response, memberId));
         return new ResponseEntity<>(new MultiResponseDto<>(postComments), HttpStatus.OK);
     }
 }

@@ -28,7 +28,7 @@ public class PostCommentService {
         Member member = memberService.findMemberById(postDto.getMemberId());
         Post post = postService.findVerifiedPost(postDto.getPostId());
 
-        return postCommentRepository.save(new PostComment(post.getContent(), member, post));
+        return postCommentRepository.save(new PostComment(postDto.getContent(), member, post));
     }
 
     @Transactional

@@ -9,13 +9,13 @@ import { LabelMedium } from '../../styles/typo';
  * @param {string} padding - 적용할 패딩값
  * @returns {JSX.Element} - Link 태그
  */
-const Category = ({ id, children, padding }) => {
+const Category = ({ id, children, padding, color }) => {
   const Container = styled(Link)`
     ${LabelMedium};
     width: 100%;
     font-weight: 700;
     color: white;
-    background-color: black;
+    background-color: ${() => color || 'black'};
     box-sizing: border-box;
     padding: ${() => padding || '10px'};
     text-decoration: none;

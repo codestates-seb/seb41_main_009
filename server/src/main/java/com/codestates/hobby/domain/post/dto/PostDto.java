@@ -58,12 +58,11 @@ public class PostDto {
         private int views;
         private String category;
         private Long seriesId;
-        private boolean isItWriter;
         private List<PostCommentDto.Response> comments;
         private MemberDto.SimpleResponse writer;
         private List<String> seriesPosts;
-        private LocalDateTime createdDate;
-        private LocalDateTime modifiedDate;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
     }
 
     @Getter
@@ -77,10 +76,9 @@ public class PostDto {
         private int views;
         private int comments;
         private Long seriesId;
-        private boolean isItWriter;
         private String thumbnailUrl;
         private MemberDto.SimpleResponse writer;
-        private LocalDateTime createdDate;
-        private LocalDateTime modifiedDate;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
     }
 }

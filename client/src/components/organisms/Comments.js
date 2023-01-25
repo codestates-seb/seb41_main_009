@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import CommentContentsContainer from '../molecules/comments/CommentContentsContainer';
 import CommentHeader from '../molecules/comments/CommentHeader';
 import CommentInputContainer from '../molecules/comments/CommentInputContainer';
+import useShowcaseModal from '../../store/showcaseModalStore';
 
 const Container = styled.div`
   display: flex;
@@ -12,10 +13,12 @@ const Container = styled.div`
 `;
 
 const Comments = ({ comments }) => {
+  const { postComment } = useShowcaseModal();
+
   return (
     <Container>
-      <CommentHeader />
-      <CommentInputContainer />
+      <CommentHeader count={comments.length} />
+      <CommentInputContainer postComment={postComment} />
       <CommentContentsContainer comments={comments} />
     </Container>
   );

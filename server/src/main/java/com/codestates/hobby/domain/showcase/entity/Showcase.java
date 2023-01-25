@@ -16,7 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -48,7 +50,11 @@ public class Showcase extends BaseEntity {
 	@JoinColumn(name = "category_id", nullable = false)
 	private Category category;
 
-	@OrderBy("index asc")
+	@Transient
+	private ShowcaseComment lastComment;
+
+	@OrderBy("fileIndex asc")
+	@BatchSize(size = 100)
 	@OneToMany(mappedBy = "showcase", cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private List<FileInfo> fileInfos = new ArrayList<>();
 
@@ -70,7 +76,7 @@ public class Showcase extends BaseEntity {
 	}
 
 	public void addImage(FileInfo info) {
-		FileInfo newInfo = new FileInfo(this, info.getFileURL(), info.getIndex());
+		FileInfo newInfo = new FileInfo(this, info.getFileURL(), info.getFileIndex());
 		Optional.ofNullable(info.getSignedURL())
 			.ifPresent(newInfo::setSignedURL);
 		fileInfos.add(newInfo);
@@ -92,8 +98,16 @@ public class Showcase extends BaseEntity {
 			if (idx == -1)
 				addImage(info);
 			else
-				fileInfos.get(idx).updateIndex(info.getIndex());
+				fileInfos.get(idx).updateIndex(info.getFileIndex());
 		});
+	}
+
+	public void setLastComment(ShowcaseComment comment) {
+		lastComment = comment;
+	}
+
+	public void setComments(List<ShowcaseComment> comments) {
+		this.comments = comments;
 	}
 
 	@Override

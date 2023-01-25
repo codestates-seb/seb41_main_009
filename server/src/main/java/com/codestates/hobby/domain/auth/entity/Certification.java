@@ -1,7 +1,4 @@
-package com.codestates.hobby.domain.certification.entity;
-
-import java.time.LocalDateTime;
-import java.util.Random;
+package com.codestates.hobby.domain.auth.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
