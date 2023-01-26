@@ -4,8 +4,10 @@ import static org.springframework.security.config.Customizer.*;
 
 import java.util.List;
 
+import com.codestates.hobby.domain.auth.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -24,7 +26,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.codestates.hobby.domain.auth.filter.JsonAuthenticationFilter;
 import com.codestates.hobby.domain.auth.handler.CustomLoginFailureHandler;
 import com.codestates.hobby.domain.auth.handler.CustomLoginSuccessHandler;
-import com.codestates.hobby.domain.auth.service.LoginService;
 import com.codestates.hobby.domain.member.repository.MemberRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -37,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	private final ObjectMapper objectMapper;
-	private final LoginService loginService;
+	private final UserDetailsServiceImpl userDetailsService;
 	private final MemberRepository memberRepository;
 
 	@Bean
@@ -50,6 +51,10 @@ public class SecurityConfig {
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
 			// TODO: 추가하기
+/*			.antMatchers(HttpMethod.POST,"/series", "/showcases", "/posts").authenticated()
+			.antMatchers(HttpMethod.PATCH,"/members", "/series", "/showcases", "/posts").authenticated()
+            .antMatchers(HttpMethod.DELETE,"/members", "/series", "/showcases", "/posts").authenticated()
+            .antMatchers(HttpMethod.GET,"/members").authenticated()*/
 			.anyRequest().permitAll());
 		http.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
@@ -84,7 +89,7 @@ public class SecurityConfig {
 	public AuthenticationManager authenticationManager() {
 		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
 		provider.setPasswordEncoder(passwordEncoder());
-		provider.setUserDetailsService(loginService);
+		provider.setUserDetailsService(userDetailsService);
 		return new ProviderManager(provider);
 	}
 
