@@ -22,11 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final CustomAuthorityUtils authorityUtils;
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Member member = memberRepository.findByEmail(email).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_MEMBER));
         return new UserDetailsImpl(member);
     }
-    @Transactional(readOnly = true)
+
     private final class UserDetailsImpl extends Member implements UserDetails {
         UserDetailsImpl(Member member) {
             setUser(member);
