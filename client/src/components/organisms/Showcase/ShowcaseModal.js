@@ -5,7 +5,7 @@ import useShowcaseModal from '../../../store/showcaseModalStore';
 import { UserInfoSmall } from '../../molecules/UserInfo';
 import { ParagraphMedium } from '../../../styles/typo';
 import Category from '../../atoms/Category';
-import Comments from '../Comments';
+import Comments from '../comment/Comments';
 
 const ShowcaseModal = ({ isModalOpen }) => {
   const modalRef = useRef(null);
@@ -50,7 +50,8 @@ const ShowcaseModal = ({ isModalOpen }) => {
           </ShowcaseContents>
         </TopContainer>
         <CommentListContainer>
-          <Comments comments={modalItem.comments} />
+          {/* 코멘트 불러올때 오류 발생 */}
+          <Comments comments={modalItem.id || '1'} />
         </CommentListContainer>
       </Body>
     </Container>
