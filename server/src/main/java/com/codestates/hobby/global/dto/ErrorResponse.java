@@ -38,6 +38,10 @@ public class ErrorResponse {
         return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
     }
 
+    public static ErrorResponse of(HttpStatus httpStatus, String message) {
+        return new ErrorResponse(httpStatus.value(), message);
+    }
+
     @Getter
     public static class FieldError {
         private String field;

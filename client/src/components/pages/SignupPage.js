@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { SplashProfileStickerLabel } from '../molecules/stickerLabel/SplashStickerLabel';
-import Openidbox from '../organisms/Openidbox';
 import Signupbox from '../organisms/Signupbox';
 
 const Container = styled.div`
@@ -30,7 +29,6 @@ const Signup = () => {
       />
       <Body>
         <Signupbox />
-        <Openidbox />
       </Body>
     </Container>
   );

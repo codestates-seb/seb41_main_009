@@ -6,6 +6,7 @@ const IMAGESIZELIMIT = '이미지 크기는 최대 2MB까지만 가능합니다.
 const INVALIDNICKNAME = '2자 이상 15자 이하 영문, 한글, 숫자만 가능합니다.';
 const INVALIDDESCRIPTION = '소개글은 50자 이하로 작성해 주세요.';
 const CANCELPOSTCREATE = '사이트에서 나가시겠습니까?\n변경사항이 저장되지 않을 수 있습니다.';
+const UPLOAD_SIZE_EXCEEDED = '업로드 가능한 크기를 초과했습니다.';
 
 export {
   INVALIDEMAIL,
@@ -16,4 +17,5 @@ export {
   INVALIDNICKNAME,
   INVALIDDESCRIPTION,
   CANCELPOSTCREATE,
+  UPLOAD_SIZE_EXCEEDED,
 };
