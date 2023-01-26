@@ -30,7 +30,7 @@ const PostPage = () => {
       <PostHeaderLayer post={post} id={id} />
       <PostSubHeaderLayer post={post} />
       <PostContentLayer post={post} />
-      <Comments />
+      <Comments id={id} />
     </Container>
   );
 };
