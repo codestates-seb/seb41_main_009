@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ACTIVITIES, STATS } from '../../constants/UserPageDataLists';
 import useGetUser from '../../hooks/useGetUser';
 import CardContainer from '../atoms/CardContainer';
+import Loading from '../atoms/Loading';
 import { SplashStickerLabelDefault } from '../molecules/stickerLabel/SplashStickerLabel';
 import { UserInfo } from '../molecules/UserInfo';
 import UserActivitiesBox from '../organisms/user/UserActivitiesBox';
@@ -13,39 +14,45 @@ const User = () => {
   const { userId } = params;
   const { userInfo, isLoadingUser, isLoadingUserError } = useGetUser(userId);
 
-  console.log(isLoadingUser, isLoadingUserError);
+  console.log(isLoadingUserError);
 
   return (
     <Container>
-      <UserInfo
-        id={userInfo.id}
-        name={userInfo.nickname}
-        introduction={userInfo.introduction}
-        image={userInfo.imgUrl}
-      />
-      <TabHeader> Stats </TabHeader>
-      <TabContentContainer>
-        {STATS.map(stat => {
-          const [displayName, name] = stat;
-          return (
-            <UserContentBox key={name} tag={displayName}>
-              <CardContainer>{userInfo[name]}</CardContainer>
-            </UserContentBox>
-          );
-        })}
-      </TabContentContainer>
-      <TabHeader> Activities </TabHeader>
-      <TabContentContainer>
-        {ACTIVITIES.map(activity => {
-          return <UserActivitiesBox key={activity} activity={activity} id={userId} />;
-        })}
-      </TabContentContainer>
-      <SplashStickerLabelDefault
-        boyMessage={userInfo.nickname}
-        girlMessage={userInfo.nickname}
-        emailMessage={userInfo.email}
-        createdAtMessage={userInfo.createdAt}
-      />
+      {isLoadingUser ? (
+        <Loading />
+      ) : (
+        <>
+          <UserInfo
+            id={userInfo.id}
+            name={userInfo.nickname}
+            introduction={userInfo.introduction}
+            image={userInfo.imgUrl}
+          />
+          <TabHeader> Stats </TabHeader>
+          <TabContentContainer>
+            {STATS.map(stat => {
+              const [displayName, name] = stat;
+              return (
+                <UserContentBox key={name} tag={displayName}>
+                  <CardContainer>{userInfo[name]}</CardContainer>
+                </UserContentBox>
+              );
+            })}
+          </TabContentContainer>
+          <TabHeader> Activities </TabHeader>
+          <TabContentContainer>
+            {ACTIVITIES.map(activity => {
+              return <UserActivitiesBox key={activity} activity={activity} id={userId} />;
+            })}
+          </TabContentContainer>
+          <SplashStickerLabelDefault
+            boyMessage={userInfo.nickname}
+            girlMessage={userInfo.nickname}
+            emailMessage={userInfo.email}
+            createdAtMessage={userInfo.createdAt}
+          />
+        </>
+      )}
     </Container>
   );
 };
