@@ -15,6 +15,7 @@ public interface SeriesMapper {
     @Mapping(target = "thumbnailUrl", expression = "java(series.getImage().getFileURL())")
     SeriesDto.Response SeriesToResponseDto(Series series);
 
+    @Mapping(target = "totalPosts", expression = "java(series.getPosts().size())")
     @Mapping(target = "thumbnailUrl", expression = "java(series.getImage().getFileURL())")
     SeriesDto.SimpleResponse SeriesToSimpleResponseDto(Series series);
 
