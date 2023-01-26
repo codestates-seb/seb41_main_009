@@ -50,7 +50,7 @@ const ShowcaseModal = ({ isModalOpen }) => {
           </ShowcaseContents>
         </TopContainer>
         <CommentListContainer>
-          {/* 코멘트 불러올때 오류 발생 */}
+          {/* 코멘트 불러올때 오류 발생 아예 다른 이름을 줘야할 것 같음 */}
           <Comments comments={modalItem.id || '1'} />
         </CommentListContainer>
       </Body>
