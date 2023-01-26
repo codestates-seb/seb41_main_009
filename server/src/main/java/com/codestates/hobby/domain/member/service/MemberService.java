@@ -1,5 +1,6 @@
 package com.codestates.hobby.domain.member.service;
 
+import com.codestates.hobby.domain.auth.service.CertificationService;
 import com.codestates.hobby.domain.auth.utils.CustomAuthorityUtils;
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.codestates.hobby.domain.member.repository.MemberRepository;
@@ -23,11 +24,13 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository repository;
     private final PasswordEncoder passwordEncoder;
-
+    private final CertificationService certificationService;
     private final CustomAuthorityUtils authorityUtils;
 
     @Transactional
     public Member create(MemberDto.Post post) {
+        certificationService.verifyEmail(post.getEmail());
+
         verifyExistEmail(post.getEmail());
         verifyExistNickname(post.getNickname());
         String encryptedPassword = passwordEncoder.encode(post.getPassword());
@@ -65,13 +68,13 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    private void verifyExistEmail(String email) {
+    protected void verifyExistEmail(String email) {
         Optional<Member> member = repository.findByEmail(email);
         if(member.isPresent()) throw new BusinessLogicException(ExceptionCode.EXISTS_EMAIL);
     }
 
     @Transactional(readOnly = true)
-    private void verifyExistNickname(String nickname) {
+    protected void verifyExistNickname(String nickname) {
         Optional<Member> member = repository.findByNickname(nickname);
         if(member.isPresent()) throw new BusinessLogicException(ExceptionCode.EXISTS_NICKNAME);
     }
