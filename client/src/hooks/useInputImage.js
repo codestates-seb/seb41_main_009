@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { UPLOAD_SIZE_EXCEEDED } from '../constants/Messages';
 import useShowcaseCreateStore from '../store/showcaseCreateStore';
-import config from '../config';
+import config from '../constants/config';
 
 const useInputImage = () => {
   const InputRef = useRef(null);
