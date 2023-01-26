@@ -40,14 +40,15 @@ public class SeriesService {
 
         series.edit(category, patch.getTitle(), patch.getContent(), patch.getThumbnail());
 
-        return seriesRepository.save(series);
+        return series;
     }
 
     @Transactional
     public void delete(long seriesId, long loginId) {
         Series series = findById(seriesId);
         if(series.getMember().getId() != loginId) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
-        seriesRepository.deleteById(seriesId);
+        series.getPosts().stream().forEach(post -> post.deleteSeries());
+        seriesRepository.delete(series);
     }
 
     @Transactional(readOnly = true)

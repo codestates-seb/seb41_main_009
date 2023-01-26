@@ -26,8 +26,7 @@ public class Series extends Writing {
 	@OneToMany(mappedBy = "series")
 	private List<Post> posts;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name = "file_info_id", updatable = false)
+	@OneToOne(mappedBy = "series", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private FileInfo image;
 
 	public Series(Member member, Category category, String title, String content, String thumbnail) {

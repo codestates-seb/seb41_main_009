@@ -69,7 +69,7 @@ public class Member extends BaseEntity {
 	@ElementCollection(fetch = FetchType.LAZY)
 	private List<String> roles = new ArrayList<>();
 
-	@OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private FileInfo image;
 
 	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, String profileUrl, List<String> roles) {
@@ -96,6 +96,12 @@ public class Member extends BaseEntity {
 		this.image = new FileInfo(this, url, 0);
 	}
 
+	public void setUser(Member member) {
+		this.id = member.getId();
+		this.email = member.getEmail();
+		this.password = member.getPassword();
+		this.roles = member.getRoles();
+	}
 	public enum MemberStatus {
 		MEMBER_ACTIVE("활동중"),
 		MEMBER_QUIT("탈퇴 상태");

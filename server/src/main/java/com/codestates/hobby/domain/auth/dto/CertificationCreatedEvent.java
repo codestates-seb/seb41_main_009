@@ -1,4 +1,4 @@
-package com.codestates.hobby.domain.auth.event;
+package com.codestates.hobby.domain.auth.dto;
 
 import lombok.Getter;
 

@@ -83,4 +83,8 @@ public class Post extends Writing {
 		new ArrayList<>(images).stream().filter(image -> !urls.contains(image.getFileURL())).forEach(image -> images.remove(image));
 		urls.stream().filter(url -> !olds.contains(url)).forEach(this::addImageFromUrl);
 	}
+
+	public void deleteSeries() {
+		this.series = null;
+	}
 }
