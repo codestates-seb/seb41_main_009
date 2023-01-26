@@ -5,7 +5,7 @@ import Menu from '../molecules/sidbar/SidebarMenu';
 import { SidebarMainButton } from '../atoms/Buttons';
 import Selected from '../../styles/Selected';
 
-const Container = styled.div`
+const Container = styled.aside`
   width: var(--sidebar-width);
   height: auto;
 `;
