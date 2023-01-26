@@ -1,14 +1,19 @@
 package com.codestates.hobby.domain.auth.entity;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.ColumnDefault;
+import org.apache.commons.lang3.RandomUtils;
 
 import com.codestates.hobby.domain.common.BaseEntity;
+import com.codestates.hobby.global.exception.BusinessLogicException;
+import com.codestates.hobby.global.exception.ExceptionCode;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -25,20 +30,50 @@ public class Certification extends BaseEntity {
 	@Column(nullable = false, unique = true, updatable = false)
 	private String email;
 
-	@Column(nullable = false, unique = true, updatable = false)
+	@Column(nullable = false, columnDefinition = "int(11)")
 	private int code;
 
-	@Column
-	@ColumnDefault("0")
+	@Column(nullable = false, columnDefinition = "tinyint")
 	private int attemptCount;
 
-	public Certification(String email, int code) {
-		this(email, code, 0);
+	@Column(nullable = false)
+	private boolean isCertified;
+
+	public Certification(String email) {
+		this.email = email;
 	}
 
-	public Certification(String email, int code, int attemptCount) {
-		this.email = email;
-		this.code = code;
-		this.attemptCount = attemptCount;
+	public void initCode() {
+		this.code = RandomUtils.nextInt(0, 100_000_000);
+		this.attemptCount++;
+	}
+
+	public boolean matches(int code) {
+		if (this.code != code)
+			return false;
+
+		return isCertified = true;
+	}
+
+	public void validate() {
+		LocalDateTime fiveMinAgo = LocalDateTime.now().minusMinutes(5);
+
+		if (getModifiedAt().isBefore(fiveMinAgo))
+			throw new BusinessLogicException(ExceptionCode.CODE_EXPIRATION);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (!(o instanceof Certification))
+			return false;
+
+		return Objects.equals(getId(), ((Certification)o).getId());
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
 	}
 }
