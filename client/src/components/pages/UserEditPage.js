@@ -9,6 +9,7 @@ import useGetUser from '../../hooks/useGetUser';
 import UserImage from '../atoms/UserImage';
 import { IMAGESIZELIMIT, INVALIDDESCRIPTION, INVALIDNICKNAME } from '../../constants/Messages';
 import { isValidIntroduction, isValidNickname } from '../../functions/isValid';
+import Loading from '../atoms/Loading';
 
 const UserEdit = () => {
   const params = useParams('id');
@@ -22,7 +23,7 @@ const UserEdit = () => {
   const [descriptionMessage, setDescriptionMessage] = useState('');
   const MAXIMAGESIZE = 2097152;
 
-  console.log(isLoadingUser, isLoadingUserError);
+  console.log(isLoadingUserError);
 
   const uploadNewImage = e => {
     const image = e.currentTarget.files[0];
@@ -69,39 +70,45 @@ const UserEdit = () => {
 
   return (
     <Container>
-      <TabHeader> Change Info </TabHeader>
-      <TabContentContainer>
-        <UserInputContainer>
-          <UserContentBox tag="Nickname">
-            <InputCard
-              placeholder="변경하실 닉네임을 입력해 주세요."
-              inputWidth="100%"
-              defaultValue={nickname}
-              onChange={changeNewNickname}
-              messageColor="red"
-              message={nicknameMessage}
-            />
-          </UserContentBox>
-          <UserContentBox tag="Description">
-            <InputCard
-              placeholder="내 소개를 입력해 주세요."
-              inputWidth="100%"
-              defaultValue={introduction}
-              onChange={changeNewIntroduction}
-              messageColor="red"
-              message={descriptionMessage}
-            />
-          </UserContentBox>
-          <UserContentBox tag="Upload Profile">
-            <InputCard type="file" accept="image/*" inputWidth="100%" onChange={uploadNewImage} />
-          </UserContentBox>
-        </UserInputContainer>
-        <UserImage src={newImage} sizes="193px" />
-      </TabContentContainer>
-      <ButtonList>
-        <WhiteShadowButton> Cancel </WhiteShadowButton>
-        <BlackShadowButton onClick={submitNewUserInfo}> Submit </BlackShadowButton>
-      </ButtonList>
+      {isLoadingUser ? (
+        <Loading />
+      ) : (
+        <>
+          <TabHeader> Change Info </TabHeader>
+          <TabContentContainer>
+            <UserInputContainer>
+              <UserContentBox tag="Nickname">
+                <InputCard
+                  placeholder="변경하실 닉네임을 입력해 주세요."
+                  inputWidth="100%"
+                  defaultValue={nickname}
+                  onChange={changeNewNickname}
+                  messageColor="red"
+                  message={nicknameMessage}
+                />
+              </UserContentBox>
+              <UserContentBox tag="Description">
+                <InputCard
+                  placeholder="내 소개를 입력해 주세요."
+                  inputWidth="100%"
+                  defaultValue={introduction}
+                  onChange={changeNewIntroduction}
+                  messageColor="red"
+                  message={descriptionMessage}
+                />
+              </UserContentBox>
+              <UserContentBox tag="Upload Profile">
+                <InputCard type="file" accept="image/*" inputWidth="100%" onChange={uploadNewImage} />
+              </UserContentBox>
+            </UserInputContainer>
+            <UserImage src={newImage} sizes="193px" />
+          </TabContentContainer>
+          <ButtonList>
+            <WhiteShadowButton> Cancel </WhiteShadowButton>
+            <BlackShadowButton onClick={submitNewUserInfo}> Submit </BlackShadowButton>
+          </ButtonList>
+        </>
+      )}
     </Container>
   );
 };
