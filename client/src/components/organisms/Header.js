@@ -25,6 +25,7 @@ const Body = styled.div`
   width: 1440px;
   justify-content: space-between;
   align-items: center;
+  margin: 0 10px;
 `;
 
 const Logo = styled(Link)`

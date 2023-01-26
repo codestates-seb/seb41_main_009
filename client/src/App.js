@@ -61,9 +61,8 @@ const App = () => {
 
 export default App;
 
-const Main = styled.div`
+const Main = styled.main`
   display: flex;
   justify-content: center;
-  /* margin-top: calc(var(--header-height) + 50px); */
-  padding-top: calc(var(--header-height) + 50px);
+  padding: calc(var(--header-height) + 50px) 10px 0 10px;
 `;
