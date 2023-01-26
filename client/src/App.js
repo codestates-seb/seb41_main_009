@@ -18,6 +18,7 @@ import Search from './components/pages/SearchPage';
 import SeriesPage from './components/pages/SeriesPage';
 import Signup from './components/pages/SignupPage';
 import ErrorPage from './components/pages/404ErrorPage';
+import ShowcaseCratePage from './components/pages/ShowcaseCreatePage';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
@@ -40,6 +41,7 @@ const App = () => {
             <Route path="/" element={<PublicRoute component={<Showcase />} />} />
             <Route path="/login" element={<PublicRoute component={<LogIn />} />} />
             <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
+            <Route path="/showcase/new" element={<PublicRoute component={<ShowcaseCratePage />} />} />
             <Route path="/posts/" element={<PublicRoute component={<PostList />} />} />
             <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
             <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />

@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import useShowcaseStore from '../../store/showcaseStore';
-import ShowcaseTitle from '../molecules/ShowcaseTitle';
+import ShowcaseTitle from '../molecules/showcase/ShowcaseTitle';
 import Showcasebox from '../organisms/showcase/Showcasebox';
 import ShowcaseModal from '../organisms/showcase/ShowcaseModal';
 import useIntersect from '../../hooks/useIntersect';

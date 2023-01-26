@@ -1,19 +1,18 @@
 import styled from 'styled-components';
-import { DisplaySmall } from '../../styles/typo';
-import { BlueShadowButton } from '../atoms/Buttons';
+import { DisplaySmall } from '../../../styles/typo';
+import { BlueShadowButton } from '../../atoms/Buttons';
 
 /**
  * 포스트 헤더 molecule
  * @param {string} title - 포스트 타이틀
- * @param {function} handleClick - 포스트의 설명
  * @param {string} postCount - 포스트의 개수
  * @returns {JSX.Element} - 내부 태그들을 포함한 컴포넌트
  */
-const ShowcaseTitle = ({ handleClick }) => {
+const ShowcaseTitle = () => {
   return (
     <Container>
       <Title>Showcase</Title>
-      <BlueShadowButton onClick={handleClick}>Create</BlueShadowButton>
+      <BlueShadowButton to="/showcase/new">Create</BlueShadowButton>
     </Container>
   );
 };
