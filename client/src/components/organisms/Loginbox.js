@@ -107,9 +107,10 @@ const Loginbox = () => {
           withCredentials: true,
         },
       )
-      .then(({ data }) => {
-        setUserId(data);
+      .then(data => {
+        setUserId(data.data);
         navigate('/');
+        console.log(data);
       })
       .catch(err => {
         console.log(err.message);
