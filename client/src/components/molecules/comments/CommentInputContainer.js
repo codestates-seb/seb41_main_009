@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import Input from '../../atoms/Input';
 import { OrangeButton } from '../../atoms/Buttons';
-import { usePostComment } from '../../../hooks/useCommentAPI';
+import useCommentAPI from '../../../hooks/useCommentAPI';
 
 const Container = styled.div`
   display: flex;
@@ -15,17 +15,20 @@ const Container = styled.div`
 
 const CommentInputContainer = ({ id }) => {
   const [content, setContent] = useState('');
+  const { postComment } = useCommentAPI();
 
   const onChangeContent = e => {
     e.preventDefault();
     setContent(e.target.value);
   };
 
-  const onClickCommentSubmit = async () => {
+  const onClickCommentSubmit = () => {
     if (content.length < 10) {
       alert('Minimum 10 characters.');
+    } else if (content.length > 300) {
+      alert('Maximum 300 characters.');
     } else {
-      usePostComment(id, content);
+      postComment(id, content);
     }
   };
   return (

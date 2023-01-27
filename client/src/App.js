@@ -24,6 +24,7 @@ import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
+import Footer from './components/organisms/Footer';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.headers.common.Authorization = 'AUTH_TOKEN';
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="*" element={<PublicRoute component={<ErrorPage />} />} />
           </Routes>
         </Main>
+        <Footer />
       </BrowserRouter>
     </>
   );

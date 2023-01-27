@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useDeleteComment, usePatchComment } from '../../../hooks/useCommentAPI';
+import useCommentAPI from '../../../hooks/useCommentAPI';
 import { UserInfoSmall } from '../UserInfo';
 import Input from '../../atoms/Input';
 
@@ -45,17 +45,17 @@ const CommentButton = styled.button`
 `;
 
 const Comment = ({ comment }) => {
-  const { content, id } = comment;
+  const { content, id, writer } = comment;
   const [editMode, setEditMode] = useState(false);
-
   const [editContent, setEditContent] = useState(content);
+  const { deleteComment, postComment } = useCommentAPI();
 
   const onClickEditAnswers = () => {
     setEditMode(!editMode);
   };
 
   const onClickDeleteAnswers = () => {
-    useDeleteComment(id);
+    deleteComment(id);
   };
 
   const onChangeContent = e => {
@@ -63,19 +63,15 @@ const Comment = ({ comment }) => {
     setEditContent(e.target.value);
   };
 
-  const onClickCommentSubmit = async () => {
-    if (content.length < 10) {
-      alert('Minimum 10 characters.');
-    } else {
-      setEditMode(!editMode);
-      usePatchComment(id, editContent);
-    }
+  const onClickCommentSubmit = () => {
+    setEditMode(!editMode);
+    postComment(id, editContent);
   };
 
   return (
     <Container>
       <InfoContainer>
-        <UserInfoSmall id={comment.writer.id} name={comment.writer.nickname} image={comment.writer.profileImageUrl} />
+        <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileImageUrl} />
       </InfoContainer>
       <CommentContainer>
         {!editMode ? (
@@ -95,6 +91,9 @@ const Comment = ({ comment }) => {
         </InfoContainer>
       ) : (
         <InfoContainer>
+          <CommentButton type="button" onClick={onClickCommentSubmit}>
+            Cancel
+          </CommentButton>
           <CommentButton type="button" onClick={onClickCommentSubmit}>
             Submit
           </CommentButton>
