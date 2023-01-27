@@ -44,12 +44,11 @@ public class MemberService {
         Member findMember = findMemberById(patch.getMemberId());
         if(patch.getMemberId() != loginId) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
 
-        //Optional<String>
         verifyExistNickname(patch.getNickname());
 
         findMember.edit(patch.getNickname(), patch.getIntroduction(), patch.getProfileUrl());
 
-        return repository.save(findMember);
+        return findMember;
     }
 
     @Transactional

@@ -1,17 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useSidebarStore from '../../store/sidebarStore';
 import { DisplayLarge } from '../../styles/typo';
 import { BlackShadowButton, WhiteShadowButton } from '../atoms/Buttons';
 import { SplashStickerLabelDefault } from '../molecules/stickerLabel/SplashStickerLabel';
 
 const ErrorPage = () => {
   const navigate = useNavigate();
+  const { setCurrentTab } = useSidebarStore(state => state);
+
+  const handleCurrentTab = () => {
+    setCurrentTab('Home');
+  };
 
   return (
     <Container>
       <Heading>404 Not Found</Heading>
       <Buttons>
-        <BlackShadowButton to="/" width="170px" height="70px">
+        <BlackShadowButton to="/" width="170px" height="70px" onClick={handleCurrentTab}>
           홈으로
         </BlackShadowButton>
         <WhiteShadowButton width="170px" height="70px" onClick={() => navigate(-1)}>

@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.codestates.hobby.domain.auth.Session.SessionConst;
+import com.codestates.hobby.domain.auth.session.SessionConst;
 import com.codestates.hobby.domain.member.entity.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
