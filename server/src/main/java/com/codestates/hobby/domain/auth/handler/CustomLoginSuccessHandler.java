@@ -34,7 +34,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         ResponseCookie cookie = ResponseCookie.from("JSESSIONID", session.getId())
             .path("/")
             .secure(false)
-            .sameSite("None")
+            .sameSite("=")
             .httpOnly(true)
             .build();
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
