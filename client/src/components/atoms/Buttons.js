@@ -67,10 +67,10 @@ const TextButton = styled(Link)`
   align-items: center;
   text-decoration: none;
   ${LabelLarge}
-  color: black;
+  color: var(--gray-800);
 
   &:visited {
-    color: black;
+    color: var(--gray-800);
   }
 
   &:hover {
@@ -78,6 +78,21 @@ const TextButton = styled(Link)`
   }
 `;
 
+const WhiteTextButton = styled(TextButton)`
+  margin-top: 15px;
+  color: var(--gray-50);
+  background-color: rgba(207, 207, 207, 20%);
+  padding: 10px;
+
+  ${LabelSmall}
+
+  &:visited {
+    color: var(--gray-50);
+  }
+  &:hover {
+    color: var(--gray-300);
+  }
+`;
 const SidebarMainButton = styled(TextButton)`
   margin-top: 15px;
 `;
@@ -120,6 +135,7 @@ export {
   BlackShadowButton,
   BlueShadowButton,
   TextButton,
+  WhiteTextButton,
   SidebarMainButton,
   SidebarTagsButton,
   ClearBlurButton,
