@@ -7,6 +7,7 @@ import { isValidNickname, isValidPassword } from '../../functions/isValid';
 import { BlackShadowButton } from '../atoms/Buttons';
 import EmailBox from '../molecules/signup/EmailBox';
 import EmailValidationBox from '../molecules/signup/EmailValidationBox';
+import NicknameBox from '../molecules/signup/NicknameBox';
 import { LoginMessage } from '../molecules/SignUpMessage';
 
 const Container = styled.div`
@@ -31,17 +32,6 @@ const Signupbox = () => {
   const [emailValidation, setEmailValidation] = useState(false);
   const [emailValidationCode, setEmailValidationCode] = useState('');
   const [emailValidationMessage, setEmailValidationMessage] = useState('');
-
-  const onNicknameInput = e => {
-    const nicknameValue = e.target.value;
-    setNickname(nicknameValue);
-
-    if (isValidNickname(nicknameValue) || nicknameValue.length === 0) {
-      setNicknameMessage('');
-    } else {
-      setNicknameMessage(INVALIDNICKNAME);
-    }
-  };
 
   const onPasswordInput = e => {
     const passwordValue = e.target.value;
@@ -119,10 +109,11 @@ const Signupbox = () => {
         emailValidationMessage={emailValidationMessage}
         setEmailValidationMessage={setEmailValidationMessage}
       />
-      <Box>
-        <Label>Nickname</Label>
-        <SignupInput placeholder="Enter Your Nickname" onChange={onNicknameInput} message={nicknameMessage} />
-      </Box>
+      <NicknameBox
+        setNickname={setNickname}
+        nicknameMessage={nicknameMessage}
+        setNicknameMessage={setNicknameMessage}
+      />
       <Box>
         <Label>Password</Label>
         <SignupInput
