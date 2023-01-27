@@ -91,27 +91,28 @@ const Loginbox = () => {
 
   const onLoginClick = () => {
     if (!email || !password || emailMessage || passwordMessage) {
-      return;
+      // return;
     }
 
     const url = 'login';
 
     axios
-      .post(url, {
-        email,
-        password,
-      })
+      .post(
+        url,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        },
+      )
       .then(({ data }) => {
         setUserId(data);
         navigate('/');
       })
       .catch(err => {
         console.log(err.message);
-      })
-      .finally(() => {
-        console.log('finally');
-        setUserId(1);
-        navigate('/');
       });
   };
 

@@ -25,8 +25,7 @@ import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 
-axios.defaults.baseURL = 'http://localhost:8080';
-axios.defaults.headers.common.Authorization = 'AUTH_TOKEN';
+axios.defaults.baseURL = 'http://34.64.243.160';
 
 const App = () => {
   return (

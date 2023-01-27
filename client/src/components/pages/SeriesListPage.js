@@ -25,7 +25,7 @@ const CreateSeriesButton = styled(BlueShadowButton)`
 const SeriesListPage = () => {
   const { category } = useParams();
   const [searchParams] = useSearchParams();
-  const curPage = searchParams.get('page');
+  const curPage = searchParams.get('page') || 1;
 
   // seriesList에 seriesListDummy.data
   // seriesPageInfo에 seriesListDummy.pageInfo
@@ -43,7 +43,7 @@ const SeriesListPage = () => {
       />
       <Lnb />
       <SeriesListContainer seriesList={seriesList} />
-      <Pagination totalPages={seriesPageInfo.totalPage} />
+      <Pagination totalPages={seriesPageInfo.totalPages} />
     </Container>
   );
 };

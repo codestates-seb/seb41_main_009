@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { userInfoDummy } from '../constants/dummyData';
+// import { userInfoDummy } from '../constants/dummyData';
 
 /**
  *
@@ -19,7 +19,7 @@ const useGetUser = id => {
 
     axios
       .get(url)
-      .then(({ data }) => {
+      .then(data => {
         setUserInfo(data);
         setIsLoading(false);
       })
@@ -27,13 +27,8 @@ const useGetUser = id => {
         console.log(err);
         setIsLoading(false);
         setIsLoadingUserError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsLoadingUserError(false);
-        setUserInfo(userInfoDummy);
       });
-  }, []);
+  }, [id]);
 
   return { userInfo, isLoadingUser, isLoadingUserError };
 };

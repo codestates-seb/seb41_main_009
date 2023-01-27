@@ -5,6 +5,7 @@ import { PostListStack } from './PostCard';
 import { ParagraphMedium, LabelListTitle, LabelMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { PARAGRAPH } from '../../../constants/Paragraph';
+import NoPost from './NoPost';
 
 const Container = styled.div`
   display: flex;
@@ -40,6 +41,10 @@ const SeriesInfoLayer = styled.div`
 
   width: fit-content;
   height: fit-content;
+
+  > a {
+    text-decoration: none;
+  }
 `;
 
 const SeriesPostNumLayer = styled.div`
@@ -117,7 +122,7 @@ const Paragraph = styled.div`
 // seriesdummy에 id 단위의 데이터들이 들어감
 
 const SeriesCard = ({ width, series }) => {
-  const { id, title, content, member, createdAt, modifiedAt, views, postId, totalPosts } = series;
+  const { id, title, content, member, createdAt, modifiedAt, views, post, totalPosts } = series;
   const { nickname, profileImageUrl } = member;
 
   return (
@@ -136,12 +141,12 @@ const SeriesCard = ({ width, series }) => {
           <Paragraph width={width}>{content || PARAGRAPH}</Paragraph>
           <ContextLayer>
             <UserBox>
-              <UserInfoSmall name={nickname} image={profileImageUrl} />
+              <UserInfoSmall name={nickname} image={profileImageUrl} id={member.id} />
               <span>{(modifiedAt || createdAt).slice(0, 10)}</span>
             </UserBox>
           </ContextLayer>
         </InfoLayer>
-        <PostListStack postId={postId} />
+        {post ? <PostListStack post={post} /> : <NoPost />}
       </AcrylicBase>
     </Container>
   );

@@ -30,7 +30,7 @@ const useGetUserActivity = (activity, id, page) => {
         setUserContents([...userContents, ...userActivitiesDummy]);
         setTotalPages(10);
       });
-  }, [page]);
+  }, [activity, id, page]);
 
   return { userContents, totalPages, isLoadingActivity, isLoadingActivityError };
 };
