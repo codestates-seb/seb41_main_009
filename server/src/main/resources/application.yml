@@ -39,6 +39,8 @@ server:
       force-response: true
     session:
       tracking-mode: cookie
+      cookie:
+        http-only: false
 
 mail:
   address:

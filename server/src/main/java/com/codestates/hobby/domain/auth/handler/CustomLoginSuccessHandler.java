@@ -31,13 +31,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         Member member = (Member)authentication.getPrincipal();
         HttpSession session = request.getSession(true);
         session.setAttribute(SessionConst.LOGIN_MEMBER, member);
-        ResponseCookie cookie = ResponseCookie.from("JSESSIONID", session.getId())
-            .path("/")
-            .secure(false)
-            .sameSite("=")
-            .httpOnly(true)
-            .build();
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json");
         response.getWriter().print(member.getId());
