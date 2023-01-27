@@ -6,6 +6,7 @@ import { INVALIDNICKNAME, INVALIDPASSWORD, PASSWORDNOTMATCH, SIGNUP_SUCCESS } fr
 import { isValidNickname, isValidPassword } from '../../functions/isValid';
 import { BlackShadowButton } from '../atoms/Buttons';
 import EmailBox from '../molecules/signup/EmailBox';
+import EmailValidationBox from '../molecules/signup/EmailValidationBox';
 import { LoginMessage } from '../molecules/SignUpMessage';
 
 const Container = styled.div`
@@ -66,12 +67,6 @@ const Signupbox = () => {
     }
   };
 
-  const onEmailValidationInput = e => {
-    const emailValdationValue = e.target.value;
-
-    setEmailValidationCode(emailValdationValue);
-  };
-
   const onSignUpClick = async () => {
     if (
       !email ||
@@ -107,25 +102,6 @@ const Signupbox = () => {
       });
   };
 
-  const verifyEmailValidation = () => {
-    const url = 'auth/certifications';
-    const body = {
-      email,
-      emailValidationCode,
-    };
-
-    axios
-      .patch(url, body)
-      .then(res => {
-        console.log(res);
-        setEmailValidationMessage('인증 완료!');
-      })
-      .catch(err => {
-        console.log(err);
-        setEmailValidationMessage('인증번호를 확인해주세요');
-      });
-  };
-
   return (
     <Container>
       <EmailBox
@@ -135,17 +111,14 @@ const Signupbox = () => {
         setEmailMessage={setEmailMessage}
         setEmailValidation={setEmailValidation}
       />
-      {emailValidation ? (
-        <Box>
-          <Label>Email Validation</Label>
-          <SignupInput
-            placeholder="Enter Your Validation Code"
-            onChange={onEmailValidationInput}
-            message={emailValidationMessage}
-            asideInput={<CheckButton onClick={verifyEmailValidation}>인증번호 확인</CheckButton>}
-          />
-        </Box>
-      ) : null}
+      <EmailValidationBox
+        email={email}
+        emailValidation={emailValidation}
+        emailValidationCode={emailValidationCode}
+        setEmailValidationCode={setEmailValidationCode}
+        emailValidationMessage={emailValidationMessage}
+        setEmailValidationMessage={setEmailValidationMessage}
+      />
       <Box>
         <Label>Nickname</Label>
         <SignupInput placeholder="Enter Your Nickname" onChange={onNicknameInput} message={nicknameMessage} />
