@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Box, Label, SignupInput, CheckButton } from '../../atoms/signup/SignupComponents';
 import { isValidEmail } from '../../../functions/isValid';
-import { INVALIDEMAIL } from '../../../constants/Messages';
+import { INVALID_EMAIL } from '../../../constants/Messages';
 
 const EmailBox = ({ email, setEmail, emailMessage, setEmailMessage, setEmailValidation }) => {
   const onEmailInput = e => {
@@ -12,7 +12,7 @@ const EmailBox = ({ email, setEmail, emailMessage, setEmailMessage, setEmailVali
     if (isValidEmail(emailValue) || emailValue.length === 0) {
       setEmailMessage('');
     } else {
-      setEmailMessage(INVALIDEMAIL);
+      setEmailMessage(INVALID_EMAIL);
     }
   };
 

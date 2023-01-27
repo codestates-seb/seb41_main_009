@@ -2,14 +2,15 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { INVALIDPASSWORD, PASSWORDNOTMATCH, SIGNUP_SUCCESS } from '../../constants/Messages';
-import { isValidPassword } from '../../functions/isValid';
+import { SIGNUP_SUCCESS } from '../../constants/Messages';
 import { BlackShadowButton } from '../atoms/Buttons';
 import EmailBox from '../molecules/signup/EmailBox';
 import EmailValidationBox from '../molecules/signup/EmailValidationBox';
 import NicknameBox from '../molecules/signup/NicknameBox';
 import PasswordBox from '../molecules/signup/PasswordBox';
+import PasswordCheckBox from '../molecules/signup/PasswordCheckBox';
 import { LoginMessage } from '../molecules/SignUpMessage';
+import { Box } from '../atoms/signup/SignupComponents';
 
 const Container = styled.div`
   display: flex;
@@ -33,18 +34,6 @@ const Signupbox = () => {
   const [emailValidation, setEmailValidation] = useState(false);
   const [emailValidationCode, setEmailValidationCode] = useState('');
   const [emailValidationMessage, setEmailValidationMessage] = useState('');
-
-  const onPasswordCheckInput = e => {
-    const passwordCheckValue = e.target.value;
-
-    setPasswordCheck(passwordCheckValue);
-
-    if (password === passwordCheckValue || passwordCheckValue.length === 0) {
-      setPasswordCheckMessage('');
-    } else {
-      setPasswordCheckMessage(PASSWORDNOTMATCH);
-    }
-  };
 
   const onSignUpClick = async () => {
     if (
@@ -108,15 +97,12 @@ const Signupbox = () => {
         passwordMessage={passwordMessage}
         setPasswordMessage={setPasswordMessage}
       />
-      <Box>
-        <Label>Password Check</Label>
-        <SignupInput
-          type="password"
-          placeholder="Re-Enter Your Password"
-          onChange={onPasswordCheckInput}
-          message={passwordCheckMessage}
-        />
-      </Box>
+      <PasswordCheckBox
+        password={password}
+        setPasswordCheck={setPasswordCheck}
+        passwordCheckMessage={passwordCheckMessage}
+        setPasswordCheckMessage={setPasswordCheckMessage}
+      />
       <Box>
         <BlackShadowButton type="button" width="512px" onClick={onSignUpClick}>
           Sign Up
