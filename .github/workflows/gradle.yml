@@ -1,15 +1,15 @@
 name: Deploy server
 
 on:
+  push:
+    branches:
+      - 'deploy'
   pull_request:
     types:
       - closed
     branches:
       - 'main'
-  push:
-    branches:
-      - 'deploy'
-      
+
 jobs:
   deploy:
     # if: github.event.pull_request.merged
@@ -35,19 +35,19 @@ jobs:
         run: ./gradlew build -x test
       - name: Move jar to root
         run: mv ./server/build/libs/*.jar ./server.jar
-        
+
       - name: Deploy gcp
         uses: appleboy/scp-action@master
-        with: 
+        with:
           key: '${{ secrets.SSH_KEY }}'
           host: '${{ secrets.SSH_HOST }}'
           username: '${{ secrets.SSH_USERNAME }}'
-          source: "server.jar"
-          target: "~"
+          source: 'server.jar'
+          target: '~'
 
       - name: Run Application
         uses: appleboy/ssh-action@master
-        with: 
+        with:
           key: '${{ secrets.SSH_KEY }}'
           host: '${{ secrets.SSH_HOST }}'
           username: '${{ secrets.SSH_USERNAME }}'

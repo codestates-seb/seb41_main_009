@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useSidebarStore from '../../store/sidebarStore';
 import useAuthStore from '../../store/useAuthStore';
 import { LabelMedium } from '../../styles/typo';
 import { TextButton } from '../atoms/Buttons';
@@ -50,6 +51,8 @@ const UserButton = styled(TextButton)`
 
 const Header = () => {
   const { currentUserId, setUserId } = useAuthStore(state => state);
+  const { setCurrentTab } = useSidebarStore(state => state);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     const url = 'logout';
@@ -58,30 +61,48 @@ const Header = () => {
       .get(url)
       .then(() => {
         setUserId(0);
+        navigate('/');
+        window.location.reload();
       })
       .catch(err => {
         console.log(err);
       })
       .finally(() => {
         setUserId(0);
+        navigate('/');
+        window.location.reload();
       });
+  };
+
+  const handleClickHome = () => {
+    setCurrentTab('Home');
+  };
+
+  const handleClickOthers = () => {
+    setCurrentTab('');
   };
 
   return (
     <Container>
       <Body>
-        <Logo to="/" alt="logo" />
+        <Logo to="/" alt="logo" onClick={handleClickHome} />
         <SearchInput height="40px" />
         <ButtonList>
           {currentUserId ? (
             <>
-              <UserButton to={`users/${currentUserId}`}>My Page</UserButton>
+              <UserButton to={`users/${currentUserId}`} onClick={handleClickOthers}>
+                My Page
+              </UserButton>
               <UserButton onClick={handleLogout}>Log Out</UserButton>
             </>
           ) : (
             <>
-              <UserButton to="/login">Log In</UserButton>
-              <UserButton to="/signup">Sign Up</UserButton>
+              <UserButton to="/login" onClick={handleClickOthers}>
+                Log In
+              </UserButton>
+              <UserButton to="/signup" onClick={handleClickOthers}>
+                Sign Up
+              </UserButton>
             </>
           )}
         </ButtonList>
