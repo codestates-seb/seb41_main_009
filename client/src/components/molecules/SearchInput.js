@@ -3,6 +3,7 @@ import { MdSearch } from 'react-icons/md';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextButton } from '../atoms/Buttons';
+import useSidebarStore from '../../store/sidebarStore';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -32,6 +33,7 @@ const SearchButton = styled(TextButton)`
 const SearchInput = () => {
   const [searchValue, setSearchValue] = useState('');
   const navigate = useNavigate();
+  const { setCurrentTab } = useSidebarStore(state => state);
 
   const onChange = e => {
     setSearchValue(e.target.value);
@@ -41,17 +43,15 @@ const SearchInput = () => {
   // 엔터 누르면 해당 검색어로 이동
   const onKeyDown = e => {
     if (e.key === 'Enter') {
-      if (searchValue === '') {
-        return;
-      }
-      navigate(`/search?value=${searchValue}`);
+      setCurrentTab('');
+      navigate(`/search/${searchValue}`);
     }
   };
 
   return (
     <Container>
       <Input placeholder="Search" onKeyDown={onKeyDown} onChange={onChange} />
-      <SearchButton to={`/search?value=${searchValue}`}>
+      <SearchButton to={`/search/${searchValue}`} onClick={() => setCurrentTab('')}>
         <MdSearch size="22" />
       </SearchButton>
     </Container>

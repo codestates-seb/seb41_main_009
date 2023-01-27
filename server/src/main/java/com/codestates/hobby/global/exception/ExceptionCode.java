@@ -3,8 +3,13 @@ package com.codestates.hobby.global.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
+    // BAD REQUEST
+    CERTIFICATION_NOT_MATCH(400, "Invalid code."),
+    CODE_EXPIRATION(400, "This code has expired."),
+
     // UNAUTHORIZED
     UNAUTHORIZED(401,"Unauthorized"),
+    NOT_CERTIFIED(401,"Certification required."),
 
     // FORBIDDEN
     NO_PERMISSION_TO_EDIT(403, ""),
@@ -14,6 +19,8 @@ public enum ExceptionCode {
     NOT_MATCH_MEMBER(500, "Doesn't Belong This Member"),
 
     // NOT FOUND
+    NOT_CERTIFICATION(404, "It is not certified"),
+    NOT_FOUND_EMAIL(404, "Email not found"),
     NOT_FOUND_POST(404, "Post Not Found"),
     NOT_FOUND_MEMBER(404, "Member Not Found"),
     NOT_FOUND_SERIES(404,"Series Not Found"),

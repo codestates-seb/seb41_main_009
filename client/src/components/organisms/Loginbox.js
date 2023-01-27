@@ -104,6 +104,7 @@ const Loginbox = () => {
       .then(({ data }) => {
         setUserId(data);
         navigate('/');
+        window.location.reload();
       })
       .catch(err => {
         console.log(err.message);
@@ -112,6 +113,7 @@ const Loginbox = () => {
         console.log('finally');
         setUserId(1);
         navigate('/');
+        window.location.reload();
       });
   };
 
