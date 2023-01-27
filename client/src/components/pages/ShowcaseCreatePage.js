@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import TextArea from '../atoms/TextArea';
 import Box from '../atoms/Box';
@@ -9,19 +9,25 @@ import Dropdown from '../organisms/Dropdown';
 import useShowcaseCreateStore from '../../store/showcaseCreateStore';
 
 const ShowcaseCreatePage = () => {
-  const { setContent } = useShowcaseCreateStore();
+  const { setContent, initStore, postShowcase } = useShowcaseCreateStore();
 
   // save text to content state
   const handleTextOnChange = useCallback(event => {
     setContent(event.target.value);
   });
 
+  useEffect(() => {
+    return () => {
+      initStore();
+    };
+  }, []);
+
   return (
     <>
       <Container>
         <FileInputContainer>
           <DefaultBox>
-            <ShowcaseImageInput />
+            <ShowcaseImageInput>최소 한장 이상의 사진을 업로드</ShowcaseImageInput>
           </DefaultBox>
         </FileInputContainer>
         <ContentInputContiner>
@@ -36,7 +42,7 @@ const ShowcaseCreatePage = () => {
       </Container>
       <ButtonContainer>
         <WhiteShadowButton>Cancel</WhiteShadowButton>
-        <BlackShadowButton>Submit</BlackShadowButton>
+        <BlackShadowButton onClick={postShowcase}>Submit</BlackShadowButton>
       </ButtonContainer>
     </>
   );
