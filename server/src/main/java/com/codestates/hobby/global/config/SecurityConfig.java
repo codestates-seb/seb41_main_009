@@ -75,7 +75,7 @@ public class SecurityConfig {
 
 		configuration.setExposedHeaders(List.of("Authorization", "Content-Type", HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS));
 		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS));
-		configuration.setAllowedOrigins(List.of("http://127.0.0.1:3000", "http://127.0.0.1:3000"/, "http://localhost:3000", "http://localhost:3000/", "http://127.0.0.1:8080", "http://localhost:8080"));
+		configuration.setAllowedOrigins(List.of("http://127.0.0.1:3000", "http://127.0.0.1:3000/", "http://localhost:3000", "http://localhost:3000/", "http://127.0.0.1:8080", "http://localhost:8080"));
 		configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
 		configuration.setAllowCredentials(true);
 		
