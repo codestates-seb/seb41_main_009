@@ -2,10 +2,16 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { INVALIDEMAIL, INVALIDPASSWORD, PASSWORDNOTMATCH, SIGNUP_SUCCESS } from '../../constants/Messages';
-import { isValidEmail, isValidPassword } from '../../functions/isValid';
-import { LabelListTitle } from '../../styles/typo';
-import { BlackShadowButton } from '../atoms/Buttons';
+import {
+  INVALIDEMAIL,
+  INVALIDNICKNAME,
+  INVALIDPASSWORD,
+  PASSWORDNOTMATCH,
+  SIGNUP_SUCCESS,
+} from '../../constants/Messages';
+import { isValidEmail, isValidNickname, isValidPassword } from '../../functions/isValid';
+import { LabelListTitle, LabelXSmall } from '../../styles/typo';
+import { BlackShadowButton, TextButton } from '../atoms/Buttons';
 import InputCard from '../molecules/InputCard';
 import { LoginMessage } from '../molecules/SignUpMessage';
 
@@ -18,16 +24,16 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const SignupInput = ({ height, type, placeholder, onChange, message, asideInput }) => {
+const SignupInput = ({ type, placeholder, onChange, message, asideInput }) => {
   return (
     <InputCard
       width="512px"
-      height={height}
+      height="90px"
       boxShadow="var(--boxShadow-00) black"
       type={'' || type}
       placeholder={placeholder}
       inputWidth="100%"
-      inputHeight="20px"
+      inputHeight="30px"
       onChange={onChange}
       asideInput={asideInput}
       message={message}
@@ -50,16 +56,23 @@ const Label = styled.div`
   ${LabelListTitle}
 `;
 
+const CheckButton = styled(TextButton)`
+  ${LabelXSmall};
+`;
+
 const Signupbox = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
   const [nickname, setNickname] = useState('');
-  // const [nicknameMessage, setNicknameMessage] = useState('');
+  const [nicknameMessage, setNicknameMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordCheckMessage, setPasswordCheckMessage] = useState('');
+  const [emailValidation, setEmailValidation] = useState(false);
+  const [emailValidationCode, setEmailValidationCode] = useState('');
+  const [emailValidationMessage, setEmailValidationMessage] = useState('');
 
   /**
    *
@@ -83,11 +96,11 @@ const Signupbox = () => {
     const nicknameValue = e.target.value;
     setNickname(nicknameValue);
 
-    // if (isValidNickname(nicknameValue) || nicknameValue.length === 0) {
-    //   setNicknameMessage('');
-    // } else {
-    //   setNicknameMessage(INVALIDNICKNAME);
-    // }
+    if (isValidNickname(nicknameValue) || nicknameValue.length === 0) {
+      setNicknameMessage('');
+    } else {
+      setNicknameMessage(INVALIDNICKNAME);
+    }
   };
 
   const onPasswordInput = e => {
@@ -114,8 +127,23 @@ const Signupbox = () => {
     }
   };
 
+  const onEmailValidationInput = e => {
+    const emailValdationValue = e.target.value;
+
+    setEmailValidationCode(emailValdationValue);
+  };
+
   const onSignUpClick = async () => {
-    if (!email || !password || !passwordCheck || !nickname || emailMessage || passwordMessage || passwordCheckMessage) {
+    if (
+      !email ||
+      !password ||
+      !passwordCheck ||
+      !nickname ||
+      emailMessage ||
+      passwordMessage ||
+      passwordCheckMessage ||
+      nicknameMessage
+    ) {
       return;
     }
 
@@ -140,15 +168,70 @@ const Signupbox = () => {
       });
   };
 
+  const verifyEmail = () => {
+    const url = 'auth/certifications';
+    const body = {
+      email,
+    };
+
+    if (emailMessage || email.length === 0) return;
+
+    axios
+      .post(url, body)
+      .then(res => {
+        console.log(res);
+        setEmailValidation(true);
+      })
+      .catch(err => console.log(err))
+      .finally(() => {
+        setEmailValidation(true);
+      });
+  };
+
+  const verifyEmailValidation = () => {
+    const url = 'auth/certifications';
+    const body = {
+      email,
+      emailValidationCode,
+    };
+
+    axios
+      .patch(url, body)
+      .then(res => {
+        console.log(res);
+        setEmailValidationMessage('인증 완료!');
+      })
+      .catch(err => {
+        console.log(err);
+        setEmailValidationMessage('인증번호를 확인해주세요');
+      });
+  };
+
   return (
     <Container>
       <Box>
         <Label>Email</Label>
-        <SignupInput placeholder="Enter Your Email" onChange={onEmailInput} message={emailMessage} />
+        <SignupInput
+          placeholder="Enter Your Email"
+          onChange={onEmailInput}
+          message={emailMessage}
+          asideInput={<CheckButton onClick={verifyEmail}>이메일 인증</CheckButton>}
+        />
       </Box>
+      {emailValidation ? (
+        <Box>
+          <Label>Email Validation</Label>
+          <SignupInput
+            placeholder="Enter Your Validation Code"
+            onChange={onEmailValidationInput}
+            message={emailValidationMessage}
+            asideInput={<CheckButton onClick={verifyEmailValidation}>인증번호 확인</CheckButton>}
+          />
+        </Box>
+      ) : null}
       <Box>
         <Label>Nickname</Label>
-        <SignupInput placeholder="Enter Your Nickname" onChange={onNicknameInput} />
+        <SignupInput placeholder="Enter Your Nickname" onChange={onNicknameInput} message={nicknameMessage} />
       </Box>
       <Box>
         <Label>Password</Label>
