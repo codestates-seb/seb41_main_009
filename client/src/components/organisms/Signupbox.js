@@ -2,17 +2,10 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import {
-  INVALIDEMAIL,
-  INVALIDNICKNAME,
-  INVALIDPASSWORD,
-  PASSWORDNOTMATCH,
-  SIGNUP_SUCCESS,
-} from '../../constants/Messages';
-import { isValidEmail, isValidNickname, isValidPassword } from '../../functions/isValid';
-import { LabelListTitle, LabelXSmall } from '../../styles/typo';
-import { BlackShadowButton, TextButton } from '../atoms/Buttons';
-import InputCard from '../molecules/InputCard';
+import { INVALIDNICKNAME, INVALIDPASSWORD, PASSWORDNOTMATCH, SIGNUP_SUCCESS } from '../../constants/Messages';
+import { isValidNickname, isValidPassword } from '../../functions/isValid';
+import { BlackShadowButton } from '../atoms/Buttons';
+import EmailBox from '../molecules/signup/EmailBox';
 import { LoginMessage } from '../molecules/SignUpMessage';
 
 const Container = styled.div`
@@ -22,42 +15,6 @@ const Container = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
-`;
-
-const SignupInput = ({ type, placeholder, onChange, message, asideInput }) => {
-  return (
-    <InputCard
-      width="512px"
-      height="90px"
-      boxShadow="var(--boxShadow-00) black"
-      type={'' || type}
-      placeholder={placeholder}
-      inputWidth="100%"
-      inputHeight="30px"
-      onChange={onChange}
-      asideInput={asideInput}
-      message={message}
-      messageColor="red"
-    />
-  );
-};
-
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 20px 0;
-`;
-
-const Label = styled.div`
-  width: 100%;
-  margin-bottom: 5px;
-  ${LabelListTitle}
-`;
-
-const CheckButton = styled(TextButton)`
-  ${LabelXSmall};
 `;
 
 const Signupbox = () => {
@@ -73,24 +30,6 @@ const Signupbox = () => {
   const [emailValidation, setEmailValidation] = useState(false);
   const [emailValidationCode, setEmailValidationCode] = useState('');
   const [emailValidationMessage, setEmailValidationMessage] = useState('');
-
-  /**
-   *
-   * @param {Event} e
-   * @returns {void}
-   */
-
-  const onEmailInput = e => {
-    const emailValue = e.target.value;
-
-    setEmail(emailValue);
-
-    if (isValidEmail(emailValue) || emailValue.length === 0) {
-      setEmailMessage('');
-    } else {
-      setEmailMessage(INVALIDEMAIL);
-    }
-  };
 
   const onNicknameInput = e => {
     const nicknameValue = e.target.value;
@@ -168,26 +107,6 @@ const Signupbox = () => {
       });
   };
 
-  const verifyEmail = () => {
-    const url = 'auth/certifications';
-    const body = {
-      email,
-    };
-
-    if (emailMessage || email.length === 0) return;
-
-    axios
-      .post(url, body)
-      .then(res => {
-        console.log(res);
-        setEmailValidation(true);
-      })
-      .catch(err => console.log(err))
-      .finally(() => {
-        setEmailValidation(true);
-      });
-  };
-
   const verifyEmailValidation = () => {
     const url = 'auth/certifications';
     const body = {
@@ -209,15 +128,13 @@ const Signupbox = () => {
 
   return (
     <Container>
-      <Box>
-        <Label>Email</Label>
-        <SignupInput
-          placeholder="Enter Your Email"
-          onChange={onEmailInput}
-          message={emailMessage}
-          asideInput={<CheckButton onClick={verifyEmail}>이메일 인증</CheckButton>}
-        />
-      </Box>
+      <EmailBox
+        email={email}
+        setEmail={setEmail}
+        emailMessage={emailMessage}
+        setEmailMessage={setEmailMessage}
+        setEmailValidation={setEmailValidation}
+      />
       {emailValidation ? (
         <Box>
           <Label>Email Validation</Label>
