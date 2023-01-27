@@ -7,7 +7,10 @@ import com.codestates.hobby.global.exception.BusinessLogicException;
 import com.codestates.hobby.global.exception.ExceptionCode;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
@@ -28,7 +31,13 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         Member member = (Member)authentication.getPrincipal();
         HttpSession session = request.getSession(true);
         session.setAttribute(SessionConst.LOGIN_MEMBER, member);
-
+        ResponseCookie cookie = ResponseCookie.from("JSESSIONID", session.getId())
+            .path("/")
+            .secure(false)
+            .sameSite("None")
+            .httpOnly(true)
+            .build();
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         response.setStatus(HttpStatus.OK.value());
         response.setContentType("application/json");
         response.getWriter().print(member.getId());
