@@ -98,17 +98,16 @@ const ClearBlurButton = ({ handleClick }) => {
     color: white;
     padding: 10px;
     gap: 10px;
+    cursor: pointer;
   `;
 
   const Button = styled.button`
     all: unset;
   `;
   return (
-    <Container>
+    <Container type="button" onClick={handleClick}>
       <Icon icon="mdi:shimmer" style={{ fontSize: '20px' }} />
-      <Button type="button" onClick={handleClick}>
-        Clear Blur
-      </Button>
+      <Button>Clear Blur</Button>
     </Container>
   );
 };
