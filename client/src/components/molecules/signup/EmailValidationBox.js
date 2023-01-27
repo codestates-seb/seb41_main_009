@@ -36,9 +36,9 @@ const EmailValidationBox = ({
   };
 
   return (
-    <Box>
+    <div>
       {emailValidation ? (
-        <>
+        <Box>
           <Label>Email Validation</Label>
           <SignupInput
             placeholder="Enter Your Validation Code"
@@ -46,9 +46,9 @@ const EmailValidationBox = ({
             message={emailValidationMessage}
             asideInput={<CheckButton onClick={verifyEmailValidation}>인증번호 확인</CheckButton>}
           />
-        </>
+        </Box>
       ) : null}
-    </Box>
+    </div>
   );
 };
 
