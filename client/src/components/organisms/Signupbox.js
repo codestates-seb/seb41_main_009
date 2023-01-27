@@ -2,12 +2,13 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { INVALIDNICKNAME, INVALIDPASSWORD, PASSWORDNOTMATCH, SIGNUP_SUCCESS } from '../../constants/Messages';
-import { isValidNickname, isValidPassword } from '../../functions/isValid';
+import { INVALIDPASSWORD, PASSWORDNOTMATCH, SIGNUP_SUCCESS } from '../../constants/Messages';
+import { isValidPassword } from '../../functions/isValid';
 import { BlackShadowButton } from '../atoms/Buttons';
 import EmailBox from '../molecules/signup/EmailBox';
 import EmailValidationBox from '../molecules/signup/EmailValidationBox';
 import NicknameBox from '../molecules/signup/NicknameBox';
+import PasswordBox from '../molecules/signup/PasswordBox';
 import { LoginMessage } from '../molecules/SignUpMessage';
 
 const Container = styled.div`
@@ -32,18 +33,6 @@ const Signupbox = () => {
   const [emailValidation, setEmailValidation] = useState(false);
   const [emailValidationCode, setEmailValidationCode] = useState('');
   const [emailValidationMessage, setEmailValidationMessage] = useState('');
-
-  const onPasswordInput = e => {
-    const passwordValue = e.target.value;
-
-    setPassword(passwordValue);
-
-    if (isValidPassword(passwordValue) || passwordValue.length === 0) {
-      setPasswordMessage('');
-    } else {
-      setPasswordMessage(INVALIDPASSWORD);
-    }
-  };
 
   const onPasswordCheckInput = e => {
     const passwordCheckValue = e.target.value;
@@ -114,15 +103,11 @@ const Signupbox = () => {
         nicknameMessage={nicknameMessage}
         setNicknameMessage={setNicknameMessage}
       />
-      <Box>
-        <Label>Password</Label>
-        <SignupInput
-          type="password"
-          placeholder="Enter Your Password"
-          onChange={onPasswordInput}
-          message={passwordMessage}
-        />
-      </Box>
+      <PasswordBox
+        setPassword={setPassword}
+        passwordMessage={passwordMessage}
+        setPasswordMessage={setPasswordMessage}
+      />
       <Box>
         <Label>Password Check</Label>
         <SignupInput

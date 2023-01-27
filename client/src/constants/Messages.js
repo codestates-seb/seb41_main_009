@@ -1,5 +1,5 @@
 const INVALIDEMAIL = '유효한 이메일을 입력해주세요.';
-const INVALIDPASSWORD = '비밀번호는 8자 이상이며, 영문, 숫자, 특수문자가 각 1개 이상 포함되어야 합니다.';
+const INVALID_PASSWORD = '비밀번호는 8자 이상이며, 영문, 숫자, 특수문자가 각 1개 이상 포함되어야 합니다.';
 const PASSWORDNOTMATCH = '일치하지 않는 비밀번호입니다.';
 const SIGNUP_SUCCESS = '회원가입에 성공했습니다.\n로그인해주세요.';
 const IMAGESIZELIMIT = '이미지 크기는 최대 2MB까지만 가능합니다.\n다른 이미지를 선택해 주세요.';
@@ -12,7 +12,7 @@ const EMAIL_VALIDATION_FAILURE = '인증번호를 확인해주세요';
 
 export {
   INVALIDEMAIL,
-  INVALIDPASSWORD,
+  INVALID_PASSWORD,
   PASSWORDNOTMATCH,
   SIGNUP_SUCCESS,
   IMAGESIZELIMIT,
