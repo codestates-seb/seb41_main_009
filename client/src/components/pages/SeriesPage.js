@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 import SeriesHeader from '../organisms/SeriesHeader';
-import PostPage from './PostPage';
 import useGetSeries from '../../hooks/useGetSeries';
+import PostInSeriesPage from './PostInSeriesPage';
 
 const Container = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const SeriesPage = () => {
   return (
     <Container>
       <SeriesHeader series={series} />
-      <PostPage />
+      <PostInSeriesPage />
     </Container>
   );
 };
