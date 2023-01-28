@@ -51,7 +51,7 @@ const SearchInput = () => {
   return (
     <Container>
       <Input placeholder="Search" onKeyDown={onKeyDown} onChange={onChange} />
-      <SearchButton to={`/search/${searchValue}`} onClick={() => setCurrentTab('')}>
+      <SearchButton to={`/search?value=${searchValue}`} onClick={() => setCurrentTab('')}>
         <MdSearch size="22" />
       </SearchButton>
     </Container>
