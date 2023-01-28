@@ -85,25 +85,7 @@ const SeriesPostLIstDummy = {
   data: [
     {
       id: 1, // 포스트 식별자
-      title: 'title', // 제목
-      content: 'content', // 내용
-      category: 'category', // 카테고리
-      views: 100, // 조회수
-      comments: 100, // 댓글수
-      seriesId: 1, // 시리즈Id
-      thumbnailUrl: 'thumbnailUrl', // 대표 이미지
-      createdAt: '2023-01-10 12:00:00', // 작성일
-      modifiedAt: '2023-01-10 18:00:00', // 수정일
-      writer: {
-        // 작성자 정보
-        id: 1, // 포스트 작성자 식별자
-        nickname: 'nickname', // 포스트 작성자 닉네임
-        profileImageUrl: 'url', // 포스트 작성자 프로필 사진
-      },
-    },
-    {
-      id: 1, // 포스트 식별자
-      title: 'title', // 제목
+      title: 'title1', // 제목
       content: 'content', // 내용
       category: 'category', // 카테고리
       views: 100, // 조회수
@@ -121,7 +103,7 @@ const SeriesPostLIstDummy = {
     },
     {
       id: 2, // 포스트 식별자
-      title: 'title', // 제목
+      title: 'title2', // 제목
       content: 'content', // 내용
       category: 'category', // 카테고리
       views: 100, // 조회수
@@ -139,7 +121,25 @@ const SeriesPostLIstDummy = {
     },
     {
       id: 3, // 포스트 식별자
-      title: 'title', // 제목
+      title: 'title3', // 제목
+      content: 'content', // 내용
+      category: 'category', // 카테고리
+      views: 100, // 조회수
+      comments: 100, // 댓글수
+      seriesId: 1, // 시리즈Id
+      thumbnailUrl: 'thumbnailUrl', // 대표 이미지
+      createdAt: '2023-01-10 12:00:00', // 작성일
+      modifiedAt: '2023-01-10 18:00:00', // 수정일
+      writer: {
+        // 작성자 정보
+        id: 1, // 포스트 작성자 식별자
+        nickname: 'nickname', // 포스트 작성자 닉네임
+        profileImageUrl: 'url', // 포스트 작성자 프로필 사진
+      },
+    },
+    {
+      id: 4, // 포스트 식별자
+      title: 'title4', // 제목
       content: 'content', // 내용
       category: 'category', // 카테고리
       views: 100, // 조회수
@@ -158,9 +158,9 @@ const SeriesPostLIstDummy = {
   ],
   pageInfo: {
     page: '1', // 페이지 번호
-    size: '10', // 포스트 수
+    size: '4', // 포스트 수
     totalPage: '10', // 존재하는 총 페이지 수
-    totalElements: '100', // 존재하는 총 포스트 수
+    totalElements: '4', // 존재하는 총 포스트 수
   },
 };
 
@@ -170,7 +170,7 @@ const postListDummy = {
       id: 1, // 포스트 식별자
       title: 'title', // 제목
       content: 'content', // 내용
-      category: 'category', // 카테고리
+      category: 'baseball', // 카테고리
       views: 100, // 조회수
       comments: 100, // 댓글수
       seriesId: 1, // 시리즈Id
