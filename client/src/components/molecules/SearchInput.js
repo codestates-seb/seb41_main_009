@@ -44,14 +44,14 @@ const SearchInput = () => {
   const onKeyDown = e => {
     if (e.key === 'Enter') {
       setCurrentTab('');
-      navigate(`/search/${searchValue}`);
+      navigate(`/search?value=${searchValue}&type=All`);
     }
   };
 
   return (
     <Container>
       <Input placeholder="Search" onKeyDown={onKeyDown} onChange={onChange} />
-      <SearchButton to={`/search?value=${searchValue}`} onClick={() => setCurrentTab('')}>
+      <SearchButton to={`/search?value=${searchValue}&type=All`} onClick={() => setCurrentTab('')}>
         <MdSearch size="22" />
       </SearchButton>
     </Container>
