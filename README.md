@@ -17,8 +17,7 @@
 
 ## ⛳️ 팀 소개
 
-|   FE   |        |   ![image](https://user-images.githubusercontent.com/52552097/215330307-52d0742b-c3ab-496b-b0bf-8e4a5963f7fa.png)
-     |        |
+|   FE   |        |        |        |
 | :----: | :----: | :----: | :----: |
 |        | 김회철 | 박종효 | 정호정 |
 | **BE** |        |        |        |
