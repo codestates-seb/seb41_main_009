@@ -1,4 +1,6 @@
+import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PostCreateBody from '../organisms/postcreate/PostCreateBody';
 import PostCreateButtons from '../organisms/postcreate/PostCreateButtons';
@@ -18,17 +20,25 @@ const PostCreatePage = () => {
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
   const [body, setBody] = useState('내용을 입력해주세요.');
+  const navigate = useNavigate();
 
   const submitNewPost = () => {
+    const url = 'posts';
     const postData = {
       title,
       category,
       description,
-      body,
+      content: body,
     };
 
     if (title && category && description && body) {
-      console.log(postData);
+      axios
+        .post(url, postData)
+        .then(res => {
+          console.log(res);
+          navigate(`/posts/${category}/${res.data.id}`);
+        })
+        .catch(err => console.log(err));
     }
   };
 
