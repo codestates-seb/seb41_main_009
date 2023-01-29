@@ -50,11 +50,11 @@ const Comment = ({ comment }) => {
   const [editContent, setEditContent] = useState(content);
   const { deleteComment, postComment } = useCommentAPI();
 
-  const onClickEditAnswers = () => {
+  const onClickEditComment = () => {
     setEditMode(!editMode);
   };
 
-  const onClickDeleteAnswers = () => {
+  const onClickDeleteComment = () => {
     deleteComment(id);
   };
 
@@ -63,6 +63,7 @@ const Comment = ({ comment }) => {
     setEditContent(e.target.value);
   };
 
+  // CommentInputContainer 에 있는 submit 형태로 수정 해보기
   const onClickCommentSubmit = () => {
     setEditMode(!editMode);
     postComment(id, editContent);
@@ -82,10 +83,10 @@ const Comment = ({ comment }) => {
       </CommentContainer>
       {!editMode ? (
         <InfoContainer>
-          <CommentButton type="button" onClick={onClickEditAnswers}>
+          <CommentButton type="button" onClick={onClickEditComment}>
             Edit
           </CommentButton>
-          <CommentButton type="button" onClick={onClickDeleteAnswers}>
+          <CommentButton type="button" onClick={onClickDeleteComment}>
             Delete
           </CommentButton>
         </InfoContainer>
