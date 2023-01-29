@@ -39,6 +39,8 @@ const SearchInput = () => {
     setSearchValue(e.target.value);
   };
 
+  // 검색어가 아무 것도 없으면 아무런 행동을 취하지 않음
+  // 엔터 누르면 해당 검색어로 이동
   const onKeyDown = e => {
     if (e.key === 'Enter') {
       setCurrentTab('');
