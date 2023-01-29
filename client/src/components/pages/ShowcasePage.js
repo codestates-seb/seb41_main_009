@@ -31,17 +31,18 @@ const Showcase = () => {
 
   const renderItem = line => {
     return itemList.map((el, idx) => {
-      const { id, thumbnailUrl, category, content, writer, commentUserName, commentContent } = el;
+      const { id, thumbnailUrl, category, content, writer, lastComment } = el;
       return idx % 3 === line ? (
         <Showcasebox
           key={id}
+          id={id}
           thumnail={thumbnailUrl}
           tagName={category}
           summary={content}
           userImg={writer.profileImageUrl}
           userName={writer.nickname}
-          commentUserName={commentUserName}
-          commentContent={commentContent}
+          commentUserName={lastComment ? lastComment.writer.nickname : null}
+          commentContent={lastComment ? lastComment.content : null}
           handle={() => handleModal(id)}
         />
       ) : null;
