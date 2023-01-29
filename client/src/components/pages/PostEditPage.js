@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useGetPost from '../../hooks/useGetPost';
@@ -19,11 +19,20 @@ const Container = styled.div`
 const PostEditPage = () => {
   const params = useParams('id');
   const { post } = useGetPost(params);
-  const [title, setTitle] = useState(post.title);
-  const [category, setCategory] = useState(post.category);
-  const [description, setDescription] = useState(post.description);
-  const [body, setBody] = useState(post.content);
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [body, setBody] = useState('');
+  const [seriesId, setSeriesId] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setTitle(post.title);
+    setCategory(post.category);
+    setDescription(post.description);
+    setBody(post.content);
+    setSeriesId(post.seriesId);
+  }, [post]);
 
   const editPost = () => {
     const url = `posts/${params}`;
@@ -34,7 +43,7 @@ const PostEditPage = () => {
       content: body,
     };
 
-    if (post.seriesId) postData.seriesId = post.seriesId;
+    if (seriesId) postData.seriesId = seriesId;
 
     if (title && category && description && body) {
       axios
