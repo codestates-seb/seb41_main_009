@@ -13,12 +13,16 @@ const Showcase = () => {
   const { itemList, isLoading, getItemListForTest } = useShowcaseStore();
   const { isModalOpen, getModalItemTest } = useShowcaseModal();
 
-  const ref = useIntersect(async (entry, observer) => {
-    // TODO: 너무 빠른 업데이트 요청 방지로직 추가
+  useEffect(() => {
+    console.log('Component Mounted');
+    getItemListForTest(9);
+  }, []);
 
-    observer.unobserve(entry.target);
-    await getItemListForTest();
-    observer.observe(entry.target);
+  const ref = useIntersect(async (entry, observer) => {
+    await getItemListForTest(9, () => {
+      observer.unobserve(entry.target);
+      console.log('observer is unobserved');
+    });
   });
 
   const handleModal = async id => {
@@ -44,12 +48,9 @@ const Showcase = () => {
     });
   };
 
-  useEffect(() => {
-    getItemListForTest();
-  }, []);
   return (
     <>
-      <ShowcaseModal isModalOpen={isModalOpen} />
+      {isModalOpen ? <ShowcaseModal isModalOpen={isModalOpen} /> : null}
       <Container>
         <ShowcaseTitle />
         <Body>
