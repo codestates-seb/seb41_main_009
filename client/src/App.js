@@ -25,6 +25,7 @@ import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 import SeriesCreatePage from './components/pages/SeriesCreatePage';
+import PostEditPage from './components/pages/PostEditPage';
 
 axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.headers.common.Authorization = 'AUTH_TOKEN';
@@ -47,6 +48,7 @@ const App = () => {
             <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
             <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
             <Route path="/posts/new" element={<ProtectedRoute component={<PostCreatePage />} />} />
+            <Route path="/posts/:id/edit" element={<PrivateRoute component={<PostEditPage />} />} />
             <Route path="/series/:category" element={<PublicRoute component={<SeriesListPage />} />} />
             <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
             <Route path="/series/new" element={<ProtectedRoute component={<SeriesCreatePage />} />} />
