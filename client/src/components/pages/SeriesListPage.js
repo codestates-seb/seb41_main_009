@@ -6,6 +6,7 @@ import { BlueShadowButton } from '../atoms/Buttons';
 import Pagination from '../molecules/Pagination';
 import SeriesListContainer from '../organisms/listContainter/SeriesListContainer';
 import useGetSeriesList from '../../hooks/useGetSeriesList';
+import Loading from '../atoms/Loading';
 
 const Container = styled.div`
   display: flex;
@@ -42,8 +43,14 @@ const SeriesListPage = () => {
         asideHeader={<CreateSeriesButton to="/series/new">Create Series</CreateSeriesButton>}
       />
       <Lnb />
-      <SeriesListContainer seriesList={seriesList} />
-      <Pagination totalPages={seriesPageInfo.totalPages} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <SeriesListContainer seriesList={seriesList} />
+          <Pagination totalPages={seriesPageInfo.totalPage} />
+        </>
+      )}
     </Container>
   );
 };

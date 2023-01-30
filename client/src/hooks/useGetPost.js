@@ -6,12 +6,12 @@ import { useState, useEffect } from 'react';
  * @param {string | number} postId
  * @returns {post{}, boolean, boolean}
  */
-const useGetPost = ({ postId }) => {
+const useGetPost = ({ id }) => {
   const [post, setPost] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const url = `posts/${postId}`;
+  const url = `posts/${id}`;
 
   useEffect(() => {
     setIsLoading(true);

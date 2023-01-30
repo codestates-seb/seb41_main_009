@@ -121,6 +121,7 @@ const Paragraph = styled.div`
 
 // seriesdummy에 id 단위의 데이터들이 들어감
 
+// 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
 const SeriesCard = ({ width, series }) => {
   const { id, title, content, member, createdAt, modifiedAt, views, post, totalPosts } = series;
   const { nickname, profileImageUrl } = member;

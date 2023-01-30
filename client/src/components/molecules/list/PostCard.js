@@ -115,6 +115,7 @@ const PostCard = ({ boxShadow, width, postId }) => {
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
+  // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
   console.log(isLoading, isLoadingError);
   return (
     <Container boxShadow={boxShadow}>

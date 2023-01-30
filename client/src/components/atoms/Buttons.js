@@ -98,6 +98,7 @@ const ClearBlurButton = ({ handleClick }) => {
     color: white;
     padding: 10px;
     gap: 10px;
+    cursor: pointer;
   `;
 
   const Button = styled.button`

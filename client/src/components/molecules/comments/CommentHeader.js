@@ -8,8 +8,8 @@ const Container = styled.div`
   font-size: var(--label-m);
 `;
 
-const CommentHeader = ({ count }) => {
-  return <Container>총 댓글 {count}개 </Container>;
+const CommentHeader = ({ comments }) => {
+  return <Container>총 댓글 {comments.pageInfo.size}개 </Container>;
 };
 
 export default CommentHeader;

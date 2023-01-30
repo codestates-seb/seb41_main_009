@@ -22,9 +22,9 @@ const SeriesHeader = ({ series }) => {
       <AcrylicBase flexDirection="column">
         <SeriesInfo
           title={series.title}
-          userId={series.member.id}
-          userName={series.member.nickname}
-          userImage={series.member.profileUrl}
+          userId={series.title}
+          userName={series.title}
+          userImage={series.title}
           createdAt={series.createdAt}
           modifiedAt={series.modifiedAt}
         />

@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { MAIN, CATEGORIES } from '../../constants/Categories';
 import Menu from '../molecules/sidbar/SidebarMenu';
 import { SidebarMainButton } from '../atoms/Buttons';
 import Selected from '../../styles/Selected';
+import useSidebarStore from '../../store/sidebarStore';
 
 const Container = styled.div`
   width: var(--sidebar-width);
@@ -23,16 +23,16 @@ const SelectedButton = styled(SidebarMainButton)`
 `;
 
 const Sidebar = () => {
-  const [selectedTab, setSelectedTab] = useState('Home');
+  const { currentTab, setCurrentTab } = useSidebarStore(state => state);
 
-  const onClick = e => setSelectedTab(e.target.textContent);
+  const onClick = e => setCurrentTab(e.target.textContent);
 
   return (
     <Container>
       <MenuList>
         {MAIN.map(mainArr => {
           const [path, name] = mainArr;
-          return selectedTab === name ? (
+          return currentTab === name ? (
             <SelectedButton key={name} to={path} onClick={onClick}>
               {name}
             </SelectedButton>
@@ -44,7 +44,7 @@ const Sidebar = () => {
         })}
         {CATEGORIES.map(categoryArr => {
           const [category, ...tags] = categoryArr;
-          return <Menu key={category} category={category} tags={tags} onClick={onClick} selectedTab={selectedTab} />;
+          return <Menu key={category} category={category} tags={tags} onClick={onClick} />;
         })}
       </MenuList>
     </Container>
