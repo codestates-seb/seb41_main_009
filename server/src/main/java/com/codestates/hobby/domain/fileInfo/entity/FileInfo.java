@@ -1,5 +1,6 @@
 package com.codestates.hobby.domain.fileInfo.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -29,7 +30,8 @@ import lombok.Setter;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FileInfo {
+public class FileInfo implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

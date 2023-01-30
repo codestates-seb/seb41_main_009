@@ -1,5 +1,6 @@
 package com.codestates.hobby.domain.fileInfo.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,8 +19,9 @@ import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FileURL {
+public class FileURL implements Serializable {
 	private static final Pattern PATTERN = Pattern.compile("([\\w\\-.]+)");
+	private static final long serialVersionUID = 1L;
 
 	@Getter
 	@Column(unique = true, nullable = false, updatable = false)
