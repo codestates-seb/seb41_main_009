@@ -9,6 +9,7 @@ import ShowcaseModal from '../organisms/showcase/ShowcaseModal';
 import useIntersect from '../../hooks/useIntersect';
 import useShowcaseModal from '../../store/showcaseModalStore';
 
+// comment 부분 오류 있음 수정해야됨
 const Showcase = () => {
   const { itemList, isLoading, getItemListForTest } = useShowcaseStore();
   const { isModalOpen, getModalItemTest } = useShowcaseModal();
@@ -28,6 +29,8 @@ const Showcase = () => {
   const handleModal = async id => {
     await getModalItemTest(id);
   };
+
+  // comment 부분 오류 있음 수정해야됨
 
   const renderItem = line => {
     return itemList.map((el, idx) => {

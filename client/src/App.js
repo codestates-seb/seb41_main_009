@@ -9,7 +9,6 @@ import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
-import SeriesCreatePage from './components/pages/SeriesCreatePage';
 
 axios.defaults.baseURL = 'http://34.64.243.160';
 axios.defaults.headers.common.Authorization = 'AUTH_TOKEN';
@@ -30,6 +29,8 @@ const SeriesPage = lazy(() => import('./components/pages/SeriesPage'));
 const Signup = lazy(() => import('./components/pages/SignupPage'));
 const ErrorPage = lazy(() => import('./components/pages/404ErrorPage'));
 const ShowcaseCratePage = lazy(() => import('./components/pages/ShowcaseCreatePage'));
+const SeriesCreatePage = lazy(() => import('./components/pages/SeriesCreatePage'));
+const PostEditPage = lazy(() => import('./components/pages/PostEditPage'));
 
 const App = () => {
   return (
@@ -49,6 +50,7 @@ const App = () => {
               <Route path="/posts/" element={<PublicRoute component={<PostList />} />} />
               <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
               <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
+              <Route path="/posts/:id/edit" element={<PrivateRoute component={<PostEditPage />} />} />
               <Route path="/posts/new" element={<ProtectedRoute component={<PostCreatePage />} />} />
               <Route path="/series/:category" element={<PublicRoute component={<SeriesListPage />} />} />
               <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />

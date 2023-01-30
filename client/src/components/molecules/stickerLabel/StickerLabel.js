@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Sticker from '../../atoms/Icons';
+import Sticker from '../../atoms/Icon';
 import { LabelListTitle } from '../../../styles/typo';
 
 const Container = styled.div`
