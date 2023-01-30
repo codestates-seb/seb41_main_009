@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { LabelListTitle, ParagraphMedium } from '../../../styles/typo';
+import { LabelListTitle, LabelMedium, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { PARAGRAPH, TITLE } from '../../../constants/Paragraph';
 import useGetPost from '../../../hooks/useGetPost';
@@ -14,7 +14,7 @@ const Container = styled.div`
   align-items: center;
   padding: 0px;
 
-  border: ${props => (props.selected ? '2px solid var(--blue-400)' : '2px solid #333333')};
+  border: ${props => (props.selected ? '2px solid var(--gray-400)' : '2px solid #333333')};
   box-shadow: ${props => props.boxShadow || 'none'};
 `;
 
@@ -27,8 +27,8 @@ const InfoLayer = styled.div`
   width: fit-content;
   height: fit-content;
 
-  background: ${props => (props.selected ? 'var(--orange-400)' : '#efefef')};
-  color: ${props => (props.selected ? 'var(--blue-400)' : '')};
+  background: ${props => (props.selected ? 'var(--gray-600)' : '#efefef')};
+  color: ${props => (props.selected ? 'var(--gray-300)' : '')};
 
   /* Inside auto layout */
 
@@ -65,6 +65,7 @@ const Box = styled.div`
 
   width: fit-content;
   height: fit-content;
+  ${LabelMedium}
 `;
 const Title = styled.div`
   width: ${props => props.width || '534px'};
@@ -86,7 +87,7 @@ const Paragraph = styled.div`
 `;
 
 const ImageLayer = styled.img`
-  width: 280px;
+  width: ${props => props.imgWidth || '280px'};
   height: 180px;
 
   background: var(--gray-800);
@@ -97,7 +98,7 @@ const ImageLayer = styled.img`
 const Layer = styled.div`
   cursor: pointer;
   &:hover {
-    color: var(--blue-600);
+    color: var(--gray-600);
   }
 `;
 const CreatedAtText = styled.div`
@@ -148,10 +149,10 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
  * @param {string} width - text의 길이
  * @returns {JSX.Element} - PostListStack을 나타내는 컴포넌트
  */
-const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId }) => {
+const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId, imgWidth = '100px' }) => {
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
-  const { title, desc, createdAt, modifiedAt, viewed, comments } = post;
+  const { title, desc, createdAt, modifiedAt } = post;
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   console.log(isLoading, isLoadingError);
@@ -166,13 +167,9 @@ const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', 
             <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
             <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>
           </Box>
-          <Box>
-            <span> {viewed}</span>
-            <span> {comments.length}</span>
-          </Box>
         </ContextLayer>
       </InfoLayer>
-      <ImageLayer />
+      <ImageLayer width={imgWidth} />
     </Container>
   );
 };
