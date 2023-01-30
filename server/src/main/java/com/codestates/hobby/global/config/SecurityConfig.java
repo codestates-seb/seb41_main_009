@@ -52,7 +52,7 @@ public class SecurityConfig {
 			.antMatchers(HttpMethod.POST, "/series", "/showcases", "/posts").authenticated()
 			.antMatchers(HttpMethod.PATCH, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
 			.antMatchers(HttpMethod.DELETE, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
-			.antMatchers(HttpMethod.GET, "/members").authenticated()
+			//.antMatchers(HttpMethod.GET, "/members").authenticated()
 			.anyRequest().permitAll());
 		http.sessionManagement()
 			.sessionFixation().changeSessionId()
