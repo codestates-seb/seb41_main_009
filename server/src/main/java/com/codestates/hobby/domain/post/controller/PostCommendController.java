@@ -21,7 +21,7 @@ public class PostCommendController {
 
     @PostMapping
     public ResponseEntity<?> post(@Valid @RequestBody PostDto.Post postDto,
-                                  @SessionAttribute Member loginMember) {
+                                  @AuthenticationPrincipal Member loginMember) {
         postDto.setMemberId(loginMember.getId());
         Post post = postService.post(postDto);
         return new ResponseEntity<>(post.getId(), HttpStatus.CREATED);
@@ -30,7 +30,7 @@ public class PostCommendController {
     @PatchMapping("/{post-id}")
     public ResponseEntity<?> patch(@Valid @RequestBody PostDto.Patch patchDto,
                                    @PathVariable("post-id") long postId,
-                                   @SessionAttribute Member loginMember) {
+                                   @AuthenticationPrincipal Member loginMember) {
         patchDto.setProperties(loginMember.getId(), postId);
         Post post = postService.update(patchDto);
         return new ResponseEntity<>(post.getId(),HttpStatus.OK);
@@ -38,7 +38,7 @@ public class PostCommendController {
 
     @DeleteMapping("/{post-id}")
     public ResponseEntity<?> delete(@PathVariable("post-id") long postId,
-                                    @SessionAttribute Member loginMember) {
+                                    @AuthenticationPrincipal Member loginMember) {
         postService.delete(postId, loginMember.getId());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

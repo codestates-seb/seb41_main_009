@@ -66,11 +66,6 @@ const Header = () => {
       })
       .catch(err => {
         console.log(err);
-      })
-      .finally(() => {
-        setUserId(0);
-        navigate('/');
-        window.location.reload();
       });
   };
 
