@@ -255,7 +255,8 @@ const PostDummy = {
     content:
       '<h1> h1제목입니다</h1><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h2> h2제목입니다</h2> <p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h3> h3제목입니다</h3><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p><img src="https://unsplash.it/1920/1080/?random" alt="#ImageTag"> ',
     views: 100, // 조회수
-    category: 'category', // 카테고리
+    category: 'football', // 카테고리
+    description: 'hihi',
     seriesId: 1, // 시리즈 Id
     isItWriter: false, // 작성자 여부
     createdAt: '2023-01-10 12:00:00', // 작성일

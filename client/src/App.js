@@ -1,24 +1,9 @@
+import { lazy, Suspense } from 'react';
 import { Reset } from 'styled-reset';
-import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-
 import axios from 'axios';
-import LogIn from './components/pages/LogInPage';
-import Header from './components/organisms/Header';
-import PostList from './components/pages/PostListPage';
-import Showcase from './components/pages/ShowcasePage';
-import Sidebar from './components/organisms/Sidebar';
-import User from './components/pages/UserPage';
-import UserEdit from './components/pages/UserEditPage';
-import SeriesListPage from './components/pages/SeriesListPage';
-import PostPage from './components/pages/PostPage';
-import PostCreatePage from './components/pages/PostCreatePage';
-import Search from './components/pages/SearchPage';
-import SeriesPage from './components/pages/SeriesPage';
-import Signup from './components/pages/SignupPage';
-import ErrorPage from './components/pages/404ErrorPage';
-import ShowcaseCratePage from './components/pages/ShowcaseCreatePage';
+import './App.css';
 
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
@@ -26,10 +11,30 @@ import PrivateRoute from './routes/PrivateRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Footer from './components/organisms/Footer';
 
-axios.defaults.baseURL = 'http://localhost:8080';
-axios.defaults.headers.common.Authorization = 'AUTH_TOKEN';
+const LogIn = lazy(() => import('./components/pages/LogInPage'));
+const Header = lazy(() => import('./components/organisms/Header'));
+const PostList = lazy(() => import('./components/pages/PostListPage'));
+const Showcase = lazy(() => import('./components/pages/ShowcasePage'));
+const Sidebar = lazy(() => import('./components/organisms/Sidebar'));
+const User = lazy(() => import('./components/pages/UserPage'));
+const UserEdit = lazy(() => import('./components/pages/UserEditPage'));
+const SeriesListPage = lazy(() => import('./components/pages/SeriesListPage'));
+const PostPage = lazy(() => import('./components/pages/PostPage'));
+const PostCreatePage = lazy(() => import('./components/pages/PostCreatePage'));
+const Search = lazy(() => import('./components/pages/SearchPage'));
+const SeriesPage = lazy(() => import('./components/pages/SeriesPage'));
+const Signup = lazy(() => import('./components/pages/SignupPage'));
+const ErrorPage = lazy(() => import('./components/pages/404ErrorPage'));
+const ShowcaseCratePage = lazy(() => import('./components/pages/ShowcaseCreatePage'));
+const SeriesCreatePage = lazy(() => import('./components/pages/SeriesCreatePage'));
+const PostEditPage = lazy(() => import('./components/pages/PostEditPage'));
 
 const App = () => {
+  const { authorization } = useAuthStore(state => state);
+
+  axios.defaults.baseURL = 'http://34.64.243.160/';
+  axios.defaults.headers.authorization = authorization;
+
   return (
     <>
       <Reset />
@@ -38,22 +43,26 @@ const App = () => {
         <Header />
         <Main>
           <Sidebar />
-          <Routes>
-            <Route path="/" element={<PublicRoute component={<Showcase />} />} />
-            <Route path="/login" element={<PublicRoute component={<LogIn />} />} />
-            <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
-            <Route path="/showcase/new" element={<PublicRoute component={<ShowcaseCratePage />} />} />
-            <Route path="/posts/" element={<PublicRoute component={<PostList />} />} />
-            <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
-            <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
-            <Route path="/posts/new" element={<ProtectedRoute component={<PostCreatePage />} />} />
-            <Route path="/series/:category" element={<PublicRoute component={<SeriesListPage />} />} />
-            <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
-            <Route path="/users/:userId" element={<PublicRoute component={<User />} />} />
-            <Route path="/users/:userId/edit" element={<PrivateRoute component={<UserEdit />} />} />
-            <Route path="/search" element={<PublicRoute component={<Search />} />} />
-            <Route path="*" element={<PublicRoute component={<ErrorPage />} />} />
-          </Routes>
+          <Suspense>
+            <Routes>
+              <Route path="/" element={<PublicRoute component={<Showcase />} />} />
+              <Route path="/login" element={<PublicRoute component={<LogIn />} />} />
+              <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
+              <Route path="/showcase/new" element={<PublicRoute component={<ShowcaseCratePage />} />} />
+              <Route path="/posts/" element={<PublicRoute component={<PostList />} />} />
+              <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
+              <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
+              <Route path="/posts/:id/edit" element={<PrivateRoute component={<PostEditPage />} />} />
+              <Route path="/posts/new" element={<ProtectedRoute component={<PostCreatePage />} />} />
+              <Route path="/series/:category" element={<PublicRoute component={<SeriesListPage />} />} />
+              <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
+              <Route path="/series/new" element={<PublicRoute component={<SeriesCreatePage />} />} />
+              <Route path="/users/:userId" element={<PublicRoute component={<User />} />} />
+              <Route path="/users/:userId/edit" element={<PrivateRoute component={<UserEdit />} />} />
+              <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
+              <Route path="*" element={<PublicRoute component={<ErrorPage />} />} />
+            </Routes>
+          </Suspense>
         </Main>
         <Footer />
       </BrowserRouter>

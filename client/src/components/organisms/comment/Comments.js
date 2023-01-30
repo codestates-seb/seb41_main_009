@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import useCommentAPI from '../../../hooks/useCommentAPI';
+
 import CommentContentsContainer from '../../molecules/comments/CommentContentsContainer';
 import CommentHeader from '../../molecules/comments/CommentHeader';
 import CommentInputContainer from '../../molecules/comments/CommentInputContainer';
@@ -16,6 +17,7 @@ const Comments = ({ id }) => {
   const { getComment } = useCommentAPI();
 
   const { comments } = getComment(id);
+
 
   console.log('comments', comments);
   return (

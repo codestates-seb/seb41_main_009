@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { useRef, useState } from 'react';
 import Box from '../../atoms/Box';
+import useShowcaseStore from '../../../store/showcaseStore';
 import { UserInfoSmall } from '../../molecules/UserInfo';
 import { ParagraphMedium } from '../../../styles/typo';
 import Nickname from '../../atoms/Nickname';
@@ -19,6 +21,7 @@ import Input from '../../atoms/Input';
  * @returns {JSX.Element} - 메인페이지 쇼케이스박스 컴포넌트
  */
 const Showcasebox = ({
+  id,
   thumnail,
   tagId,
   tagName,
@@ -30,6 +33,16 @@ const Showcasebox = ({
   commentContent,
   handle,
 }) => {
+  const commentRef = useRef(null);
+  const [commentInput, setCommentInput] = useState('');
+  const { postComment } = useShowcaseStore();
+
+  const handleOnKeyEnter = e => {
+    if (e.key === 'Enter') {
+      postComment(id, commentInput);
+    }
+  };
+
   return (
     <Container>
       <ImageCard thumnail={thumnail} id={tagId} name={tagName} handle={handle} />
@@ -42,7 +55,12 @@ const Showcasebox = ({
           <Nickname name={commentUserName} typo={ParagraphMedium} color="var(--gray-500)" />
           <CommentSummary>{commentContent}</CommentSummary>
         </CommentLine>
-        <CommentInput placeholder="댓글 작성" />
+        <CommentInput
+          placeholder="댓글 작성"
+          ref={commentRef}
+          onKeyDown={e => handleOnKeyEnter(e)}
+          onChange={e => setCommentInput(e.target.value)}
+        />
       </Box>
     </Container>
   );
@@ -81,7 +99,7 @@ const CommentSummary = styled.div`
 const CommentInput = styled(Input)`
   margin-top: 11px;
   background-color: var(--gray-100);
-  color: var(--gray-400);
+  color: var(--gray-900);
   border-radius: 15px;
 `;
 

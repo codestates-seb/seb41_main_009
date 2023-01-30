@@ -3,6 +3,7 @@ package com.codestates.hobby.domain.showcase.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseCommentDto;
@@ -42,7 +42,7 @@ public class ShowcaseCommentController {
 	public ResponseEntity<?> post(
 		@PathVariable("showcase-id") long showcaseId,
 		@RequestBody ShowcaseCommentDto.Post post,
-		@SessionAttribute Member loginMember
+		@AuthenticationPrincipal Member loginMember
 	) {
 		post.setProperties(showcaseId, loginMember.getId());
 
@@ -56,7 +56,7 @@ public class ShowcaseCommentController {
 		@PathVariable("showcase-id") long showcaseId,
 		@PathVariable("comment-id") long commentId,
 		@RequestBody ShowcaseCommentDto.Patch patch,
-		@SessionAttribute Member loginMember
+		@AuthenticationPrincipal Member loginMember
 	) {
 		patch.setProperties(loginMember.getId(), showcaseId, commentId);
 
@@ -69,7 +69,7 @@ public class ShowcaseCommentController {
 	public ResponseEntity<?> delete(
 		@PathVariable("showcase-id") long showcaseId,
 		@PathVariable("comment-id") long commentId,
-		@SessionAttribute Member loginMember
+		@AuthenticationPrincipal Member loginMember
 	) {
 		commentService.delete(loginMember.getId(), showcaseId, commentId);
 

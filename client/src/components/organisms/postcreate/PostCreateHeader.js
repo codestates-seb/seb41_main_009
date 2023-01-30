@@ -40,7 +40,11 @@ const PostCreateHeader = ({ title, setTitle, curCategory, setCategory }) => {
             return (
               <optgroup key={category[0]} label={category[1]}>
                 {tags.map(tag => {
-                  return (
+                  return curCategory === tag[0] ? (
+                    <option key={tag[1]} value={tag[0]} selected>
+                      {tag[1]}
+                    </option>
+                  ) : (
                     <option key={tag[1]} value={tag[0]}>
                       {tag[1]}
                     </option>

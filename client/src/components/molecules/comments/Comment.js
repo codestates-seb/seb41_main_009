@@ -56,6 +56,7 @@ const Comment = ({ comment }) => {
 
   const onClickDeleteComment = () => {
     deleteComment(id);
+
   };
 
   const onChangeContent = e => {
@@ -67,12 +68,14 @@ const Comment = ({ comment }) => {
   const onClickCommentSubmit = () => {
     setEditMode(!editMode);
     postComment(id, editContent);
+
   };
 
   return (
     <Container>
       <InfoContainer>
         <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileImageUrl} />
+
       </InfoContainer>
       <CommentContainer>
         {!editMode ? (
@@ -87,6 +90,7 @@ const Comment = ({ comment }) => {
             Edit
           </CommentButton>
           <CommentButton type="button" onClick={onClickDeleteComment}>
+
             Delete
           </CommentButton>
         </InfoContainer>
@@ -96,6 +100,7 @@ const Comment = ({ comment }) => {
             Cancel
           </CommentButton>
           <CommentButton type="button" onClick={onClickCommentSubmit}>
+
             Submit
           </CommentButton>
         </InfoContainer>
