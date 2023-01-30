@@ -1,19 +1,24 @@
 package com.codestates.hobby.domain.member.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import com.codestates.hobby.domain.common.BaseEntity;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
-import com.codestates.hobby.domain.notifcation.entity.Notification;
-import com.codestates.hobby.domain.post.entity.Post;
-import com.codestates.hobby.domain.post.entity.PostComment;
-import com.codestates.hobby.domain.series.entity.Series;
-import com.codestates.hobby.domain.showcase.entity.Showcase;
-import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
-import com.codestates.hobby.domain.subscription.entity.Subscription;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,7 +27,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member extends BaseEntity {
+public class Member extends BaseEntity implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -41,39 +48,18 @@ public class Member extends BaseEntity {
 
 	private boolean isOauth2;
 
-	@OneToMany(mappedBy = "member")
-	private List<Series> series;
-
-	@OneToMany(mappedBy = "member")
-	private List<Post> posts;
-
-	@OneToMany(mappedBy = "member")
-	private List<Showcase> showcases;
-
-	@OneToMany(mappedBy = "member")
-	private List<PostComment> postComments;
-
-	@OneToMany(mappedBy = "member")
-	private List<ShowcaseComment> showcaseComments;
-
-	@OneToMany(mappedBy = "target")
-	private List<Notification> notifications;
-
-	@OneToMany(mappedBy = "target")
-	private List<Subscription> subscriptions;
-
 	@Enumerated(value = EnumType.STRING)
 	@Column
 	private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
-	@ElementCollection(fetch = FetchType.EAGER)
+	@ElementCollection(fetch = FetchType.LAZY)
 	private List<String> roles = new ArrayList<>();
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinColumn(name = "file_info_id")
+	@OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private FileInfo image;
 
-	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, String profileUrl, List<String> roles) {
+	public Member(String email, String nickname, String password, String introduction, boolean isOauth2,
+		String profileUrl, List<String> roles) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
@@ -84,9 +70,12 @@ public class Member extends BaseEntity {
 	}
 
 	public void edit(String nickname, String introduction, String profileUrl) {
-		if(Optional.ofNullable(nickname).isPresent()) this.nickname = nickname;
-		if(Optional.ofNullable(introduction).isPresent()) this.introduction = introduction;
-		if(Optional.ofNullable(profileUrl).isPresent()) setImage(profileUrl);
+		if (Optional.ofNullable(nickname).isPresent())
+			this.nickname = nickname;
+		if (Optional.ofNullable(introduction).isPresent())
+			this.introduction = introduction;
+		if (Optional.ofNullable(profileUrl).isPresent())
+			setImage(profileUrl);
 	}
 
 	public void setStatus(MemberStatus memberStatus) {
@@ -95,6 +84,13 @@ public class Member extends BaseEntity {
 
 	public void setImage(String url) {
 		this.image = new FileInfo(this, url, 0);
+	}
+
+	public void setUser(Member member) {
+		this.id = member.getId();
+		this.email = member.getEmail();
+		this.password = member.getPassword();
+		this.roles = member.getRoles();
 	}
 
 	public enum MemberStatus {

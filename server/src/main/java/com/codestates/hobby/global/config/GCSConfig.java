@@ -10,7 +10,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
-@Profile("gcs")
+@Profile("prod & gcs")
 @Configuration
 public class GCSConfig {
 	@Bean
@@ -18,7 +18,7 @@ public class GCSConfig {
 		GoogleCredentials credentials =
 			GoogleCredentials.fromStream(getClass().getResourceAsStream("/key.json"));
 
-		return StorageOptions.newBuilder().setProjectId("intorest")
+		return StorageOptions.newBuilder()
 			.setCredentials(credentials)
 			.build().getService();
 	}

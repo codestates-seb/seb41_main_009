@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { INVALIDEMAIL, INVALIDPASSWORD } from '../../constants/Messages';
 import { isValidEmail, isValidPassword } from '../../functions/isValid';
 import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
 import InputCard from '../molecules/InputCard';
 import { FindPasswordMessage, SignUpMessage } from '../molecules/SignUpMessage';
+import useAuthStore from '../../store/useAuthStore';
 
 const Container = styled.div`
   display: flex;
@@ -49,10 +52,12 @@ const Label = styled.div`
 `;
 
 const Loginbox = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
+  const { setUserId, setAuthorization } = useAuthStore(state => state);
 
   /**
    *
@@ -86,11 +91,32 @@ const Loginbox = () => {
 
   const onLoginClick = () => {
     if (!email || !password || emailMessage || passwordMessage) {
-      return;
+      // return;
     }
 
-    console.log(email);
-    console.log(password);
+    const url = 'login';
+
+    axios
+      .post(
+        url,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then(data => {
+        setUserId(data.data);
+        setAuthorization(data.headers.authorization);
+        navigate('/');
+        console.log(data);
+        console.log(data.headers.authorization);
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
   };
 
   return (

@@ -1,68 +1,72 @@
 package com.codestates.hobby.domain.auth.controller;
 
-import com.codestates.hobby.domain.auth.Session.SessionConst;
-import com.codestates.hobby.domain.auth.dto.LoginDto;
-import com.codestates.hobby.domain.auth.service.LoginService;
-import com.codestates.hobby.domain.member.entity.Member;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.codestates.hobby.domain.auth.dto.CertificationPatchRequest;
+import com.codestates.hobby.domain.auth.service.CertificationService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Validated
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class LoginController {
-    private final LoginService loginService;
+	private final CertificationService certificationService;
 
-    @PostMapping("/login")
-    public String login(@RequestBody LoginDto loginDto,
-                      BindingResult bindingResult,
-                      HttpServletRequest request) {
-        if(bindingResult.hasErrors()) {
-            return "에러";
-        }
+	@PostMapping("/certifications")
+	public ResponseEntity<?> attempt(@RequestBody @Email String email) {
+		certificationService.attempt(email);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
 
-        Member loginMember = loginService.login(loginDto.getEmail(), loginDto.getPassword());
+	@PatchMapping("/certifications")
+	public ResponseEntity<?> certify(@RequestBody @Valid CertificationPatchRequest request) {
+		certificationService.certify(request);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
-        if (loginMember == null) {
-            bindingResult.reject("loginFail", "이메일 또는 비밀번호가 일치하지 않습니다");
-            return "이메일 또는 비밀번호가 일치하지 않습니다";
-        }
-        HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-        log.info("\n\n--로그인 성공--\n");
-        return "로그인 성공";
-    }
+	@GetMapping("/logout")
+	public ResponseEntity logout(HttpSession session) {
+		if (session != null)
+			session.invalidate(); //세션 제거
 
-    @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if(session != null) session.invalidate(); //세션 제거
+		log.info("\n\n--로그아웃 성공--\n");
+		return new ResponseEntity("로그아웃 성공", HttpStatus.OK);
+	}
 
-        log.info("\n\n--로그아웃 성공--\n");
-        return "로그아웃 성공";
-    }
+	@GetMapping("/session-info")
+	public String sessionInfo(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			return "세션이 없습니다.";
+		}
+		session.getAttributeNames().asIterator()
+			.forEachRemaining(name -> log.info("session name={},value={}", name, session.getAttribute(name)));
 
-    @GetMapping("/session-info")
-    public String sessionInfo(HttpServletRequest request){
-        HttpSession session = request.getSession(false);
-        if(session == null){
-            return "세션이 없습니다.";
-        }
-        session.getAttributeNames().asIterator()
-                .forEachRemaining(name -> log.info("session name={},value={}", name, session.getAttribute(name)));
+		log.info("sessionId={}", session.getId());
+		log.info("getMaxInactiveInterval={}", session.getMaxInactiveInterval());
+		log.info("creationTime={}", new Date(session.getCreationTime()));
+		log.info("lastAccessedTime={}", new Date(session.getLastAccessedTime()));
+		log.info("isNew={}", session.isNew());
 
-        log.info("sessionId={}",session.getId());
-        log.info("getMaxInactiveInterval={}",session.getMaxInactiveInterval());
-        log.info("creationTime={}", new Date(session.getCreationTime()));
-        log.info("lastAccessedTime={}", new Date(session.getLastAccessedTime()));
-        log.info("isNew={}", session.isNew());
-
-        return "세션 출력";
-    }
+		return "세션 출력";
+	}
 }

@@ -6,7 +6,6 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
@@ -14,12 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-@Profile("!mock")
+@Profile("prod")
 @RequiredArgsConstructor
 public class GoogleEmailService implements EmailService {
 	private final JavaMailSender mailSender;
 
-	@Async
 	public void send(String to, String subject, String text) {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 

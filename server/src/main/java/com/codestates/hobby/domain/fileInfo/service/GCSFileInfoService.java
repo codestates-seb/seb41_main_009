@@ -22,7 +22,7 @@ import com.google.cloud.storage.HttpMethod;
 import com.google.cloud.storage.Storage;
 
 @Service
-@Profile("gcs")
+@Profile("prod & gcs")
 public class GCSFileInfoService extends FileInfoService {
 	private final Storage storage;
 

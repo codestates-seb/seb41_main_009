@@ -1,4 +1,4 @@
-package com.codestates.hobby.global.advice;
+package com.codestates.hobby.global.exception;
 
 import javax.validation.ConstraintViolationException;
 
@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MultipartException;
 
-import com.codestates.hobby.global.exception.BusinessLogicException;
-import com.codestates.hobby.global.response.ErrorResponse;
+import com.codestates.hobby.global.dto.ErrorResponse;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,7 +53,8 @@ public class GlobalExceptionAdvice {
 	@ExceptionHandler
 	public ResponseEntity<?> handleBusinessLogicException(BusinessLogicException e) {
 		log.debug("Business logic exception ocurred: {}", e.getMessage());
-		return new ResponseEntity<>(HttpStatus.valueOf(e.getExceptionCode().getStatus()));
+		HttpStatus status = HttpStatus.valueOf(e.getExceptionCode().getStatus());
+		return new ResponseEntity<>(ErrorResponse.of(status, e.getExceptionCode().getMessage()), status);
 	}
 
 	@ExceptionHandler

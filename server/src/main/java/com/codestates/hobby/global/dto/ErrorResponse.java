@@ -1,4 +1,4 @@
-package com.codestates.hobby.global.response;
+package com.codestates.hobby.global.dto;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -36,6 +36,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(HttpStatus httpStatus) {
         return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
+    }
+
+    public static ErrorResponse of(HttpStatus httpStatus, String message) {
+        return new ErrorResponse(httpStatus.value(), message);
     }
 
     @Getter

@@ -3,53 +3,58 @@ import { useEffect } from 'react';
 import { ClipLoader } from 'react-spinners';
 
 import useShowcaseStore from '../../store/showcaseStore';
-import ShowcaseTitle from '../molecules/ShowcaseTitle';
+import ShowcaseTitle from '../molecules/showcase/ShowcaseTitle';
 import Showcasebox from '../organisms/showcase/Showcasebox';
 import ShowcaseModal from '../organisms/showcase/ShowcaseModal';
 import useIntersect from '../../hooks/useIntersect';
 import useShowcaseModal from '../../store/showcaseModalStore';
 
+// comment 부분 오류 있음 수정해야됨
 const Showcase = () => {
   const { itemList, isLoading, getItemListForTest } = useShowcaseStore();
   const { isModalOpen, getModalItemTest } = useShowcaseModal();
 
-  const ref = useIntersect(async (entry, observer) => {
-    // TODO: 너무 빠른 업데이트 요청 방지로직 추가
+  useEffect(() => {
+    console.log('Component Mounted');
+    getItemListForTest(9);
+  }, []);
 
-    observer.unobserve(entry.target);
-    await getItemListForTest();
-    observer.observe(entry.target);
+  const ref = useIntersect(async (entry, observer) => {
+    await getItemListForTest(9, () => {
+      observer.unobserve(entry.target);
+      console.log('observer is unobserved');
+    });
   });
 
   const handleModal = async id => {
     await getModalItemTest(id);
   };
 
+  // comment 부분 오류 있음 수정해야됨
+
   const renderItem = line => {
     return itemList.map((el, idx) => {
-      const { id, thumbnailUrl, category, content, writer, commentUserName, commentContent } = el;
+      const { id, thumbnailUrl, category, content, writer, lastComment } = el;
       return idx % 3 === line ? (
         <Showcasebox
           key={id}
+          id={id}
           thumnail={thumbnailUrl}
           tagName={category}
           summary={content}
           userImg={writer.profileImageUrl}
           userName={writer.nickname}
-          commentUserName={commentUserName}
-          commentContent={commentContent}
+          commentUserName={lastComment ? lastComment.writer.nickname : null}
+          commentContent={lastComment ? lastComment.content : null}
           handle={() => handleModal(id)}
         />
       ) : null;
     });
   };
 
-  useEffect(() => {
-    getItemListForTest();
-  }, []);
   return (
     <>
-      <ShowcaseModal isModalOpen={isModalOpen} />
+      {isModalOpen ? <ShowcaseModal isModalOpen={isModalOpen} /> : null}
       <Container>
         <ShowcaseTitle />
         <Body>

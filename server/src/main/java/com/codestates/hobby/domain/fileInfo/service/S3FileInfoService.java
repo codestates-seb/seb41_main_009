@@ -11,7 +11,7 @@ import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.fileInfo.repository.FileInfoRepository;
 
 @Service
-@Profile("aws")
+@Profile("prod & aws")
 public class S3FileInfoService extends FileInfoService {
 	// https://docs.aws.amazon.com/ko_kr/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html
 

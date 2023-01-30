@@ -1,19 +1,24 @@
 import styled from 'styled-components';
+import { HeadingMedium } from '../../../styles/typo';
+import TextEditor from '../../atoms/TextEditor';
 
 const Container = styled.div`
   display: flex;
-  width: inherit;
-  height: 300px;
-  align-items: center;
-  justify-content: space-between;
-  background-color: rebeccapurple;
+  flex-direction: column;
+  width: 100%;
   margin-bottom: 50px;
 `;
 
-const PostCreateBody = () => {
+const HeaderTitleContainer = styled.div`
+  ${HeadingMedium}
+  margin-bottom: 10px;
+`;
+
+const PostCreateBody = ({ body, setBody }) => {
   return (
     <Container>
-      <textarea value="Editor" />
+      <HeaderTitleContainer>Body</HeaderTitleContainer>
+      <TextEditor body={body} setBody={setBody} />
     </Container>
   );
 };

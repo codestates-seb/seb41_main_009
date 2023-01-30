@@ -85,25 +85,7 @@ const SeriesPostLIstDummy = {
   data: [
     {
       id: 1, // 포스트 식별자
-      title: 'title', // 제목
-      content: 'content', // 내용
-      category: 'category', // 카테고리
-      views: 100, // 조회수
-      comments: 100, // 댓글수
-      seriesId: 1, // 시리즈Id
-      thumbnailUrl: 'thumbnailUrl', // 대표 이미지
-      createdAt: '2023-01-10 12:00:00', // 작성일
-      modifiedAt: '2023-01-10 18:00:00', // 수정일
-      writer: {
-        // 작성자 정보
-        id: 1, // 포스트 작성자 식별자
-        nickname: 'nickname', // 포스트 작성자 닉네임
-        profileImageUrl: 'url', // 포스트 작성자 프로필 사진
-      },
-    },
-    {
-      id: 1, // 포스트 식별자
-      title: 'title', // 제목
+      title: 'title1', // 제목
       content: 'content', // 내용
       category: 'category', // 카테고리
       views: 100, // 조회수
@@ -121,7 +103,7 @@ const SeriesPostLIstDummy = {
     },
     {
       id: 2, // 포스트 식별자
-      title: 'title', // 제목
+      title: 'title2', // 제목
       content: 'content', // 내용
       category: 'category', // 카테고리
       views: 100, // 조회수
@@ -139,7 +121,25 @@ const SeriesPostLIstDummy = {
     },
     {
       id: 3, // 포스트 식별자
-      title: 'title', // 제목
+      title: 'title3', // 제목
+      content: 'content', // 내용
+      category: 'category', // 카테고리
+      views: 100, // 조회수
+      comments: 100, // 댓글수
+      seriesId: 1, // 시리즈Id
+      thumbnailUrl: 'thumbnailUrl', // 대표 이미지
+      createdAt: '2023-01-10 12:00:00', // 작성일
+      modifiedAt: '2023-01-10 18:00:00', // 수정일
+      writer: {
+        // 작성자 정보
+        id: 1, // 포스트 작성자 식별자
+        nickname: 'nickname', // 포스트 작성자 닉네임
+        profileImageUrl: 'url', // 포스트 작성자 프로필 사진
+      },
+    },
+    {
+      id: 4, // 포스트 식별자
+      title: 'title4', // 제목
       content: 'content', // 내용
       category: 'category', // 카테고리
       views: 100, // 조회수
@@ -158,9 +158,9 @@ const SeriesPostLIstDummy = {
   ],
   pageInfo: {
     page: '1', // 페이지 번호
-    size: '10', // 포스트 수
+    size: '4', // 포스트 수
     totalPage: '10', // 존재하는 총 페이지 수
-    totalElements: '100', // 존재하는 총 포스트 수
+    totalElements: '4', // 존재하는 총 포스트 수
   },
 };
 
@@ -170,7 +170,7 @@ const postListDummy = {
       id: 1, // 포스트 식별자
       title: 'title', // 제목
       content: 'content', // 내용
-      category: 'category', // 카테고리
+      category: 'baseball', // 카테고리
       views: 100, // 조회수
       comments: 100, // 댓글수
       seriesId: 1, // 시리즈Id
@@ -238,7 +238,8 @@ const PostDummy = {
     content:
       '<h1> h1제목입니다</h1><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h2> h2제목입니다</h2> <p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h3> h3제목입니다</h3><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p>',
     views: 100, // 조회수
-    category: 'category', // 카테고리
+    category: 'football', // 카테고리
+    description: 'hihi',
     seriesId: 1, // 시리즈 Id
     isItWriter: false, // 작성자 여부
     createdAt: '2023-01-10 12:00:00', // 작성일
@@ -270,6 +271,63 @@ const PostDummy = {
   },
 };
 
+const COMMENT_DUMMY = {
+  data: [
+    {
+      id: 1, // 식별자
+      content: '댓글내용', // 내용
+      isItWriter: false, // 작성자여부
+      createdAt: '2023-01-09 13:00:00', // 작성일
+      modifiedAt: '2023-01-09 18:00:00', // 수정일
+      writer: {
+        id: 1, // 작성자 식별자
+        nickname: '닉네임', // 작성자 닉네임
+        profileImageUrl: '프로필 이미지 URL', // 작성자 프로필 이미지
+      },
+    },
+  ],
+  pageInfo: {
+    page: '1', // 페이지 번호
+    size: '10', // 댓글수
+    totalPage: '10', // 존재하는 총 페이지 수
+    totalElements: '100', // 존재하는 총 댓글수
+  },
+};
+
+const COMMENT_DUMMY2 = {
+  data: [
+    {
+      id: 1, // 식별자
+      content: 'COMMENT_DUMMY1', // 내용
+      isItWriter: false, // 작성자여부
+      createdAt: '2023-01-09 13:00:00', // 작성일
+      modifiedAt: '2023-01-09 18:00:00', // 수정일
+      writer: {
+        id: 1, // 작성자 식별자
+        nickname: '닉네임', // 작성자 닉네임
+        profileImageUrl: '프로필 이미지 URL', // 작성자 프로필 이미지
+      },
+    },
+    {
+      id: 2, // 식별자
+      content: 'COMMENT_DUMMY2', // 내용
+      isItWriter: false, // 작성자여부
+      createdAt: '2023-01-09 13:00:00', // 작성일
+      modifiedAt: '2023-01-09 18:00:00', // 수정일
+      writer: {
+        id: 1, // 작성자 식별자
+        nickname: '닉네임', // 작성자 닉네임
+        profileImageUrl: '프로필 이미지 URL', // 작성자 프로필 이미지
+      },
+    },
+  ],
+  pageInfo: {
+    page: '1', // 페이지 번호
+    size: '10', // 댓글수
+    totalPage: '10', // 존재하는 총 페이지 수
+    totalElements: '100', // 존재하는 총 댓글수
+  },
+};
 const userInfoDummy = {
   id: 1,
   email: 'java@gmail.com',
@@ -337,4 +395,6 @@ export {
   PostDummy,
   userInfoDummy,
   userActivitiesDummy,
+  COMMENT_DUMMY,
+  COMMENT_DUMMY2,
 };
