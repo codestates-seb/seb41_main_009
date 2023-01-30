@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { LabelListTitle, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
-import { TextButton } from '../../atoms/Buttons';
 import { PARAGRAPH, TITLE } from '../../../constants/Paragraph';
 import useGetPost from '../../../hooks/useGetPost';
 
@@ -46,7 +45,7 @@ const ContextLayer = styled.div`
   align-items: center;
   padding: 5px 0px;
   gap: 10px;
-  width: fit-content;
+  width: 100%;
   height: fit-content;
 
   /* Inside auto layout */
@@ -57,11 +56,11 @@ const ContextLayer = styled.div`
   flex-grow: 0;
 `;
 
-const UserBox = styled.div`
+const Box = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0px;
   gap: 20px;
 
   width: fit-content;
@@ -101,7 +100,9 @@ const Layer = styled.div`
     color: var(--blue-600);
   }
 `;
-
+const CreatedAtText = styled.div`
+  color: var(--gray-400);
+`;
 /**
  * 쇼케이스에서 사용하는 이미지 썸네일 molecules
  * @param {string|number} boxShadow - 전체컨테이너의 그림자 효과
@@ -112,6 +113,8 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
   // 현재는postId와 관계없이 PostDummy에 있는 데이터를 가져옴
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
+  const { title, desc, createdAt, modifiedAt, views, comments } = post;
+
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
   // currentPost 일때 시각적으로 달라지는 부분이 필요할듯
@@ -120,15 +123,18 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
     <Container boxShadow={boxShadow} selected={selected}>
       <InfoLayer selected={selected}>
         <Layer onClick={handleClick}>
-          <Title width={width}>{post.title || TITLE}</Title>
-          <Paragraph width={width}>{post.Paragraph || PARAGRAPH}</Paragraph>
+          <Title width={width}>{title || TITLE}</Title>
+          <Paragraph width={width}>{desc || PARAGRAPH}</Paragraph>
         </Layer>
         <ContextLayer>
-          <UserBox>
+          <Box>
             <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
-          </UserBox>
-          <TextButton width="30px"> text</TextButton>
-          <TextButton width="30px"> text</TextButton>
+            <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>
+          </Box>
+          <Box>
+            <span> viewed {Number(views)}</span>
+            <span> comments {Number(comments)}</span>
+          </Box>
         </ContextLayer>
       </InfoLayer>
       <ImageLayer />
@@ -145,25 +151,25 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
 const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId }) => {
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
+  const { title, desc, createdAt, modifiedAt, viewed, comments } = post;
+
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   console.log(isLoading, isLoadingError);
 
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
-        <Title width={width}>
-          {post.title || 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.'}{' '}
-        </Title>
-        <Paragraph width={width}>
-          {post.Paragraph ||
-            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim            velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sitaliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequatsunt nostrud ame.'}
-        </Paragraph>
+        <Title width={width}>{title || '.....'} </Title>
+        <Paragraph width={width}>{desc || '.....'}</Paragraph>
         <ContextLayer>
-          <UserBox>
+          <Box>
             <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
-          </UserBox>
-          <TextButton width="30px"> text</TextButton>
-          <TextButton width="30px"> text</TextButton>
+            <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>
+          </Box>
+          <Box>
+            <span> {viewed}</span>
+            <span> {comments.length}</span>
+          </Box>
         </ContextLayer>
       </InfoLayer>
       <ImageLayer />
