@@ -1,19 +1,22 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import { MdMenu } from 'react-icons/md';
+import { useState } from 'react';
 import { MAIN, CATEGORIES } from '../../constants/Categories';
 import Menu from '../molecules/sidbar/SidebarMenu';
 import { SidebarMainButton } from '../atoms/Buttons';
 import Selected from '../../styles/Selected';
+import useSidebarStore from '../../store/sidebarStore';
 
 const Sidebar = () => {
-  const [selectedTab, setSelectedTab] = useState('Home');
+  const { currentTab, setCurrentTab } = useSidebarStore(state => state);
   const [isListHidden, setIsListHidden] = useState(true);
 
-  const handleSideMenuClick = e => setSelectedTab(e.target.textContent);
+  const handleSideMenuClick = e => setCurrentTab(e.target.textContent);
+
   const handleMenuButtonClick = () => {
     setIsListHidden(!isListHidden);
   };
+
   const handleModalClick = () => {
     setIsListHidden(!isListHidden);
   };
@@ -26,7 +29,7 @@ const Sidebar = () => {
       <MenuList isListHidden={isListHidden}>
         {MAIN.map(mainArr => {
           const [path, name] = mainArr;
-          return selectedTab === name ? (
+          return currentTab === name ? (
             <SelectedButton key={name} to={path} onClick={handleSideMenuClick}>
               {name}
             </SelectedButton>
@@ -38,15 +41,7 @@ const Sidebar = () => {
         })}
         {CATEGORIES.map(categoryArr => {
           const [category, ...tags] = categoryArr;
-          return (
-            <Menu
-              key={category}
-              category={category}
-              tags={tags}
-              onClick={handleSideMenuClick}
-              selectedTab={selectedTab}
-            />
-          );
+          return <Menu key={category} category={category} tags={tags} onClick={handleSideMenuClick} />;
         })}
       </MenuList>
       <Modal onClick={handleModalClick} isListHidden={isListHidden} />

@@ -16,8 +16,8 @@ cloud:
 
 logging:
   level:
-    org: warn
-    com: warn
+    org: info
+    com: info
 
 server:
   port: 80

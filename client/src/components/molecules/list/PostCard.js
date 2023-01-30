@@ -115,6 +115,7 @@ const PostCard = ({ boxShadow, width, postId }) => {
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
+  // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
   console.log(isLoading, isLoadingError);
   return (
     <Container boxShadow={boxShadow}>
@@ -142,28 +143,18 @@ const PostCard = ({ boxShadow, width, postId }) => {
  * @param {string} width - text의 길이
  * @returns {JSX.Element} - PostListStack을 나타내는 컴포넌트
  */
-const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId }) => {
-  const { post, isLoading, isLoadingError } = useGetPost(postId);
-
-  // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
-  console.log(isLoading, isLoadingError);
+const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', post }) => {
+  const { title, content, writer } = post;
 
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
-        <Title width={width}>
-          {post.title || 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.'}{' '}
-        </Title>
-        <Paragraph width={width}>
-          {post.Paragraph ||
-            'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim            velit mollit. Exercitation veniam consequat sunt nostrud amet Amet minim mollit non deserunt ullamco est sitaliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequatsunt nostrud ame.'}
-        </Paragraph>
+        <Title width={width}>{title} </Title>
+        <Paragraph width={width}>{content}</Paragraph>
         <ContextLayer>
           <UserBox>
-            <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
+            <UserInfoSmall name={writer.nickname} image={writer.profileUrl} />
           </UserBox>
-          <TextButton width="30px"> text</TextButton>
-          <TextButton width="30px"> text</TextButton>
         </ContextLayer>
       </InfoLayer>
       <ImageLayer />

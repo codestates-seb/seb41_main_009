@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import useUploadImage from '../../../hooks/useInputImage';
 import { ParagraphSmall } from '../../../styles/typo';
 
-const ShowcaseImageInput = () => {
+const ShowcaseImageInput = ({ children }) => {
   const { InputRef, imageSrc, handleInputOnChange } = useUploadImage();
   const handleImageUpload = () => {
     InputRef.current.click();
@@ -17,7 +17,7 @@ const ShowcaseImageInput = () => {
         ) : (
           <>
             <Icon icon="mdi:image-plus-outline" style={{ fontSize: 40 }} />
-            <FileInputLabel>최소 한장 이상의 사진을 업로드</FileInputLabel>
+            <FileInputLabel>{children}</FileInputLabel>
           </>
         )}
       </FileInputButton>
