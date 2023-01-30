@@ -4,7 +4,7 @@ import useUploadImage from '../../../hooks/useInputImage';
 import { ParagraphSmall } from '../../../styles/typo';
 
 const ShowcaseImageInput = ({ children }) => {
-  const { InputRef, imageSrc, handleInputOnChange } = useUploadImage();
+  const { InputRef, imageBase64, handleInputOnChange } = useUploadImage();
   const handleImageUpload = () => {
     InputRef.current.click();
   };
@@ -12,8 +12,8 @@ const ShowcaseImageInput = ({ children }) => {
     <>
       <input type="file" accept="image/*" style={{ display: 'none' }} ref={InputRef} onChange={handleInputOnChange} />
       <FileInputButton onClick={handleImageUpload}>
-        {imageSrc !== '' ? (
-          <PreviewImage src={imageSrc} alt="preview_image" />
+        {imageBase64 !== '' ? (
+          <PreviewImage src={imageBase64} alt="preview_image" />
         ) : (
           <>
             <Icon icon="mdi:image-plus-outline" style={{ fontSize: 40 }} />
