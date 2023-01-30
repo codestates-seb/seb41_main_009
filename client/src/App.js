@@ -26,10 +26,14 @@ import PrivateRoute from './routes/PrivateRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 import SeriesCreatePage from './components/pages/SeriesCreatePage';
 import PostEditPage from './components/pages/PostEditPage';
-
-axios.defaults.baseURL = 'http://localhost:8080';
+import useAuthStore from './store/useAuthStore';
 
 const App = () => {
+  const { authorization } = useAuthStore(state => state);
+
+  axios.defaults.baseURL = 'http://34.64.243.160/';
+  axios.defaults.headers.authorization = authorization;
+
   return (
     <>
       <Reset />

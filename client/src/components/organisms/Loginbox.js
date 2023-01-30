@@ -57,7 +57,7 @@ const Loginbox = () => {
   const [emailMessage, setEmailMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
-  const { setUserId } = useAuthStore(state => state);
+  const { setUserId, setAuthorization } = useAuthStore(state => state);
 
   /**
    *
@@ -109,8 +109,10 @@ const Loginbox = () => {
       )
       .then(data => {
         setUserId(data.data);
+        setAuthorization(data.headers.authorization);
         navigate('/');
         console.log(data);
+        console.log(data.headers.authorization);
       })
       .catch(err => {
         console.log(err.message);
