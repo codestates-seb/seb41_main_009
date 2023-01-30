@@ -28,7 +28,6 @@ import SeriesCreatePage from './components/pages/SeriesCreatePage';
 import PostEditPage from './components/pages/PostEditPage';
 
 axios.defaults.baseURL = 'http://localhost:8080';
-axios.defaults.headers.common.Authorization = 'AUTH_TOKEN';
 
 const App = () => {
   return (

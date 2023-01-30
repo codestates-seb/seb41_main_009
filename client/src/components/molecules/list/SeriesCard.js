@@ -5,6 +5,7 @@ import { PostListStack } from './PostCard';
 import { ParagraphMedium, LabelListTitle, LabelMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { PARAGRAPH } from '../../../constants/Paragraph';
+import NoPost from './NoPost';
 
 const Container = styled.div`
   display: flex;
@@ -40,6 +41,10 @@ const SeriesInfoLayer = styled.div`
 
   width: fit-content;
   height: fit-content;
+
+  > a {
+    text-decoration: none;
+  }
 `;
 
 const SeriesPostNumLayer = styled.div`
@@ -118,7 +123,7 @@ const Paragraph = styled.div`
 
 // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
 const SeriesCard = ({ width, series }) => {
-  const { id, title, content, member, createdAt, modifiedAt, views, postId, totalPosts } = series;
+  const { id, title, content, member, createdAt, modifiedAt, views, post, totalPosts } = series;
   const { nickname, profileImageUrl } = member;
 
   return (
@@ -137,12 +142,12 @@ const SeriesCard = ({ width, series }) => {
           <Paragraph width={width}>{content || PARAGRAPH}</Paragraph>
           <ContextLayer>
             <UserBox>
-              <UserInfoSmall name={nickname} image={profileImageUrl} />
+              <UserInfoSmall name={nickname} image={profileImageUrl} id={member.id} />
               <span>{(modifiedAt || createdAt).slice(0, 10)}</span>
             </UserBox>
           </ContextLayer>
         </InfoLayer>
-        <PostListStack postId={postId} />
+        {post ? <PostListStack post={post} /> : <NoPost />}
       </AcrylicBase>
     </Container>
   );

@@ -12,7 +12,7 @@ import { LabelMedium } from '../../styles/typo';
  */
 const Nickname = ({ name, id, color, typo }) => {
   return (
-    <Container to={`/user/${id}`} color={color} typo={typo}>
+    <Container to={`/users/${id}`} color={color} typo={typo}>
       {name}
     </Container>
   );
