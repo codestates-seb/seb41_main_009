@@ -11,7 +11,7 @@ import com.codestates.hobby.global.exception.BusinessLogicException;
 import com.codestates.hobby.global.exception.ExceptionCode;
 
 @Service
-@Profile("local")
+//@Profile("local")
 public class MockFileInfoService extends FileInfoService {
 	MockFileInfoService(FileInfoRepository fileInfoRepository) {
 		super(fileInfoRepository);

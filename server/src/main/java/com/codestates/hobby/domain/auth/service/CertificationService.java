@@ -1,3 +1,4 @@
+/*
 package com.codestates.hobby.domain.auth.service;
 
 import org.springframework.context.ApplicationEventPublisher;
@@ -64,3 +65,4 @@ public class CertificationService {
 			throw new BusinessLogicException(ExceptionCode.EXISTS_EMAIL);
 	}
 }
+*/

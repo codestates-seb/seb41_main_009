@@ -1,3 +1,4 @@
+/*
 package com.codestates.hobby.domain.auth.dto;
 
 import javax.validation.constraints.Email;
@@ -16,3 +17,4 @@ public class CertificationPatchRequest {
 	@Range(min = 0, max = 100_000_000, message = "Code must be between 0 and 1000000.")
 	private int code;
 }
+*/

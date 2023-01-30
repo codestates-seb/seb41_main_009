@@ -17,7 +17,7 @@ import java.util.Collection;
 
 @Component
 @RequiredArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService  {
     private final MemberRepository memberRepository;
     private final CustomAuthorityUtils authorityUtils;
 

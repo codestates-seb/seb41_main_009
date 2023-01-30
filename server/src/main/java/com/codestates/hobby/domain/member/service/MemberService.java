@@ -1,6 +1,5 @@
 package com.codestates.hobby.domain.member.service;
 
-import com.codestates.hobby.domain.auth.service.CertificationService;
 import com.codestates.hobby.domain.auth.utils.CustomAuthorityUtils;
 import com.codestates.hobby.domain.member.dto.MemberDto;
 import com.codestates.hobby.domain.member.repository.MemberRepository;
@@ -24,12 +23,12 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository repository;
     private final PasswordEncoder passwordEncoder;
-    private final CertificationService certificationService;
+    //private final CertificationService certificationService;
     private final CustomAuthorityUtils authorityUtils;
 
     @Transactional
     public Member create(MemberDto.Post post) {
-        certificationService.verifyEmail(post.getEmail());
+        //certificationService.verifyEmail(post.getEmail());
 
         verifyExistEmail(post.getEmail());
         verifyExistNickname(post.getNickname());

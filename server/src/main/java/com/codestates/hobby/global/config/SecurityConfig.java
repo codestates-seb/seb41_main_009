@@ -4,15 +4,18 @@ import static org.springframework.security.config.Customizer.*;
 
 import java.util.List;
 
+//import com.codestates.hobby.domain.auth.repository.MemberRedisRepository;
 import com.codestates.hobby.domain.auth.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +35,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.servlet.http.HttpSession;
+
 @Slf4j
 @Configuration
 @EnableWebSecurity
@@ -40,6 +45,9 @@ public class SecurityConfig {
 	private final ObjectMapper objectMapper;
 	private final UserDetailsServiceImpl userDetailsService;
 	private final MemberRepository memberRepository;
+	private final HttpSession httpSession;
+	//MemberRedisRepository redisRepository;
+	RedisTemplate<Long, Object> redisTemplate;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -51,12 +59,13 @@ public class SecurityConfig {
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
 			// TODO: 추가하기
-/*			.antMatchers(HttpMethod.POST,"/series", "/showcases", "/posts").authenticated()
+			.antMatchers(HttpMethod.POST,"/series", "/showcases", "/posts").authenticated()
 			.antMatchers(HttpMethod.PATCH,"/members", "/series", "/showcases", "/posts").authenticated()
             .antMatchers(HttpMethod.DELETE,"/members", "/series", "/showcases", "/posts").authenticated()
-            .antMatchers(HttpMethod.GET,"/members").authenticated()*/
+            .antMatchers(HttpMethod.GET,"/members").authenticated()
 			.anyRequest().permitAll());
 		http.sessionManagement()
+			.sessionFixation().changeSessionId()
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 			.maximumSessions(1)
 			.maxSessionsPreventsLogin(false);
@@ -97,7 +106,7 @@ public class SecurityConfig {
 	public JsonAuthenticationFilter jsonLoginFilter() {
 		JsonAuthenticationFilter jsonLoginFilter = new JsonAuthenticationFilter(objectMapper);
 		jsonLoginFilter.setAuthenticationManager(authenticationManager());
-		jsonLoginFilter.setAuthenticationSuccessHandler(new CustomLoginSuccessHandler(memberRepository));
+		jsonLoginFilter.setAuthenticationSuccessHandler(new CustomLoginSuccessHandler());
 		jsonLoginFilter.setAuthenticationFailureHandler(new CustomLoginFailureHandler());
 		return jsonLoginFilter;
 	}

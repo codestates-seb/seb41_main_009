@@ -17,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codestates.hobby.domain.auth.dto.CertificationPatchRequest;
-import com.codestates.hobby.domain.auth.service.CertificationService;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class LoginController {
-	private final CertificationService certificationService;
+/*	private final CertificationService certificationService;
 
 	@PostMapping("/certifications")
 	public ResponseEntity<?> attempt(@RequestBody @Email String email) {
@@ -41,7 +38,7 @@ public class LoginController {
 	public ResponseEntity<?> certify(@RequestBody @Valid CertificationPatchRequest request) {
 		certificationService.certify(request);
 		return new ResponseEntity<>(HttpStatus.OK);
-	}
+	}*/
 
 	@GetMapping("/logout")
 	public ResponseEntity logout(HttpSession session) {

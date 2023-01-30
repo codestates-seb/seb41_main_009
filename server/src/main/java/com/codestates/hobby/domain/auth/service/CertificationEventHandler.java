@@ -1,3 +1,4 @@
+/*
 package com.codestates.hobby.domain.auth.service;
 
 import org.springframework.scheduling.annotation.Async;
@@ -32,3 +33,4 @@ public class CertificationEventHandler {
 		emailService.send(event.getEmail(), SUBJECT, html);
 	}
 }
+*/

@@ -67,7 +67,7 @@ public class PostService {
         postRepository.delete(findPost);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Post findById(long postId) {
         return findVerifiedPost(postId);
     }
@@ -97,6 +97,8 @@ public class PostService {
         return postRepository.findAllBySeriesIdOrderByIdDesc(seriesId, pageRequest);
     }
 
+
+    @Transactional(readOnly = true)
     public Post findVerifiedPost(long postId){
         Optional<Post> optionalPost = postRepository.findById(postId);
         Post findPost = optionalPost.orElseThrow(() ->new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));

@@ -21,8 +21,8 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.HttpMethod;
 import com.google.cloud.storage.Storage;
 
-@Service
-@Profile("prod & gcs")
+//@Service
+//@Profile("prod & gcs")
 public class GCSFileInfoService extends FileInfoService {
 	private final Storage storage;
 

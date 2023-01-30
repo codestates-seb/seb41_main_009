@@ -1,3 +1,4 @@
+/*
 package com.codestates.hobby.domain.auth.dto;
 
 import lombok.Getter;
@@ -12,3 +13,4 @@ public class CertificationCreatedEvent {
 		this.code = code;
 	}
 }
+*/
