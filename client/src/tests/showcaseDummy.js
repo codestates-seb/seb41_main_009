@@ -6,10 +6,24 @@ export const TEST_SHOWCASE_LIST_RES = {
   views: 100,
   comments: 100,
   isItWriter: false,
-  thumbnailUrl:
-    'https://images.pexels.com/photos/3558637/pexels-photo-3558637.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  thumbnailUrl: `https://picsum.photos/${Math.floor(Math.random() * 400 + 300)}/${Math.floor(
+    Math.random() * 400 + 300,
+  )}`,
   createdAt: '2023-01-08 12:00:00',
   modifiedAt: '2023-01-08 18:00:00',
+  lastComment: {
+    // **댓글이 없으면 lastComment도 없습니다.**
+    id: 1, // 댓글 식별자
+    content: 'content', // 댓글 내용
+    createdAt: '2023-01-08 12:00:00', // 작성일
+    modifiedAt: '2023-01-08 18:00:00', // 수정일
+    writer: {
+      // 댓글 작성자 정보
+      id: 1, // 댓글 작성자 식별자
+      nickname: 'nickname', // 댓글 작성자 닉네임
+      profileImageUrl: 'url', // 댓글 작성자 프로필 사진
+    },
+  },
   writer: {
     // 작성자 정보
     id: 1, // 쇼케이스 작성자 식별자

@@ -7,7 +7,7 @@ const useInputImage = () => {
   const InputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
-  const { imageSrc, setImageSrc, setFileInfos } = useShowcaseCreateStore();
+  const { imageBase64, setImageBase64, setFileInfos } = useShowcaseCreateStore();
   const { MAX_UPLOAD_SIZE } = config;
 
   // encode file to base64
@@ -16,7 +16,8 @@ const useInputImage = () => {
     reader.readAsDataURL(blob);
     return new Promise(res => {
       reader.onload = () => {
-        setImageSrc(reader.result);
+        setImageBase64(reader.result);
+        console.log(reader.result);
         res();
       };
     });
@@ -39,7 +40,7 @@ const useInputImage = () => {
         {
           index: 1,
           size: imageFile.size,
-          type: imageFile.type.split('/')[1],
+          contentType: imageFile.type.split('/')[1],
         },
       ]);
       setFile(imageFile);
@@ -49,11 +50,11 @@ const useInputImage = () => {
   useEffect(() => {
     // hook 이 언마운트 될때 전역저장소에서 이미지소스 지우기
     return () => {
-      setImageSrc('');
+      setImageBase64('');
     };
   }, []);
 
-  return { InputRef, file, imageSrc, errorMsg, handleInputOnChange };
+  return { InputRef, file, imageBase64, errorMsg, handleInputOnChange };
 };
 
 export default useInputImage;

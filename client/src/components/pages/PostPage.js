@@ -27,7 +27,7 @@ const PostPage = () => {
 
   return (
     <Container>
-      <PostHeaderLayer post={post} />
+      <PostHeaderLayer post={post} id={id} />
       <PostSubHeaderLayer post={post} />
       <PostContentLayer post={post} />
       <Comments id={id} />

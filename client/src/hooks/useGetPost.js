@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { PostDummy } from '../constants/dummyData';
 
 /**
  *
@@ -20,6 +19,7 @@ const useGetPost = ({ id }) => {
     axios
       .get(url)
       .then(({ data }) => {
+        console.log(data);
         setPost(data);
         setIsLoading(false);
       })
@@ -33,6 +33,7 @@ const useGetPost = ({ id }) => {
         setPost(PostDummy.data);
         setIsLoading(false);
         setIsLoadingError(false);
+
       });
   }, []);
 

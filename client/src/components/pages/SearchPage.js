@@ -8,8 +8,7 @@ import SearchResultTitle from '../organisms/search/SearchResultTitle';
 import PostListContainer from '../organisms/listContainter/PostListContainer';
 import useGetSeriesList from '../../hooks/useGetSeriesList';
 import useGetPostList from '../../hooks/useGetPostList';
-import Pagination from '../molecules/Pagination';
-import { TextButton } from '../atoms/Buttons';
+
 
 const Container = styled.div`
   display: flex;
@@ -17,6 +16,7 @@ const Container = styled.div`
   width: 100%;
   justify-content: center;
   align-items: center;
+  gap: 30px;
 `;
 
 const ResultContainer = styled.div`
@@ -91,6 +91,7 @@ const Search = () => {
       ) : (
         ''
       )}
+
     </Container>
   );
 };
