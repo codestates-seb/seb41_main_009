@@ -101,9 +101,9 @@ public class SeriesController {
 
     @GetMapping("/members/{member-id}/series")
     public ResponseEntity getAllByMember(@PathVariable("member-id") long memberId,
-                                         @AuthenticationPrincipal Member loginMember,
+                                         //@AuthenticationPrincipal Member loginMember,
                                          CustomPageRequest pageRequest) {
-        if(memberId != loginMember.getId()) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
+        //if(memberId != loginMember.getId()) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         Page<Series> series = seriesService.findAllByMember(memberId, pageRequest.to());
 
         Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
