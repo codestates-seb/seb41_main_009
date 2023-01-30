@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useParams, useSearchParams } from 'react-router-dom';
 import PageHeader from '../organisms/PageHeader';
-import Lnb from '../organisms/Lnb';
+import { Lnb } from '../organisms/Lnb';
 import { BlueShadowButton } from '../atoms/Buttons';
 import Pagination from '../molecules/Pagination';
 import SeriesListContainer from '../organisms/listContainter/SeriesListContainer';
@@ -42,7 +42,7 @@ const SeriesListPage = () => {
         headerTitle={`Series In ${category}`}
         asideHeader={<CreateSeriesButton to="/series/new">Create Series</CreateSeriesButton>}
       />
-      <Lnb />
+      <Lnb currentTab="Series" category={category} />
       {isLoading ? (
         <Loading />
       ) : (

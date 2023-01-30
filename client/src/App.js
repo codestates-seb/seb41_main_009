@@ -9,6 +9,7 @@ import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
+import Footer from './components/organisms/Footer';
 
 const LogIn = lazy(() => import('./components/pages/LogInPage'));
 const Header = lazy(() => import('./components/organisms/Header'));
@@ -63,6 +64,7 @@ const App = () => {
             </Routes>
           </Suspense>
         </Main>
+        <Footer />
       </BrowserRouter>
     </>
   );

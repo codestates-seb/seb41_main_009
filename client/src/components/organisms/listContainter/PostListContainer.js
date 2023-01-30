@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { PostCard } from '../../molecules/list/PostCard';
@@ -14,10 +15,16 @@ const Container = styled.div`
 `;
 
 const PostListContainer = ({ postList }) => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       {postList.map(post => {
-        return <PostCard key={post.id} postId={post.id} />;
+        const handleClick = () => {
+          navigate(`/posts/${post.category}/${post.id}`);
+        };
+
+        return <PostCard key={post.id} postId={post.id} handleClick={handleClick} />;
       })}
     </Container>
   );

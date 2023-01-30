@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { LabelListTitle, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
 import { TextButton } from '../../atoms/Buttons';
@@ -16,10 +15,8 @@ const Container = styled.div`
   align-items: center;
   padding: 0px;
 
-  border: 2px solid #333333;
+  border: ${props => (props.selected ? '2px solid var(--blue-400)' : '2px solid #333333')};
   box-shadow: ${props => props.boxShadow || 'none'};
-
-  /* box-shadow: ${props => props.boxShadow || 'var(--boxShadow-02) var(--gray-700)'}; */
 `;
 
 const InfoLayer = styled.div`
@@ -30,16 +27,11 @@ const InfoLayer = styled.div`
   padding: 18px 20px;
   width: fit-content;
   height: fit-content;
-  & > .link {
-    text-decoration: none;
-    color: var(--gray-800);
-    &:hover {
-      color: var(--gray-500);
-    }
-  }
+
+  background: ${props => (props.selected ? 'var(--orange-400)' : '#efefef')};
+  color: ${props => (props.selected ? 'var(--blue-400)' : '')};
 
   /* Inside auto layout */
-  background: #efefef;
 
   flex: none;
   order: 0;
@@ -58,7 +50,6 @@ const ContextLayer = styled.div`
   height: fit-content;
 
   /* Inside auto layout */
-  background: #efefef;
 
   flex: none;
   order: 2;
@@ -104,26 +95,35 @@ const ImageLayer = styled.img`
   object-fit: cover;
 `;
 
+const Layer = styled.div`
+  cursor: pointer;
+  &:hover {
+    color: var(--blue-600);
+  }
+`;
+
 /**
  * 쇼케이스에서 사용하는 이미지 썸네일 molecules
  * @param {string|number} boxShadow - 전체컨테이너의 그림자 효과
  * @param {string} width - text의 길이
  * @returns {JSX.Element} - PostList 개별 항목을 나타내는 컴포넌트
  */
-const PostCard = ({ boxShadow, width, postId }) => {
+const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
   // 현재는postId와 관계없이 PostDummy에 있는 데이터를 가져옴
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
+  // currentPost 일때 시각적으로 달라지는 부분이 필요할듯
+
   console.log(isLoading, isLoadingError);
   return (
-    <Container boxShadow={boxShadow}>
-      <InfoLayer>
-        <Link className="link" to={`/posts/category/${postId}`}>
+    <Container boxShadow={boxShadow} selected={selected}>
+      <InfoLayer selected={selected}>
+        <Layer onClick={handleClick}>
           <Title width={width}>{post.title || TITLE}</Title>
           <Paragraph width={width}>{post.Paragraph || PARAGRAPH}</Paragraph>
-        </Link>
+        </Layer>
         <ContextLayer>
           <UserBox>
             <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />

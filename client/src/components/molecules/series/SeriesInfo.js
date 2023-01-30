@@ -3,6 +3,7 @@ import SeriesTitle from './SeriesTitle';
 import { UserInfoSmall } from '../UserInfo';
 import { LabelSmall, LabelXSmall } from '../../../styles/typo';
 import { ClearBlurButton } from '../../atoms/Buttons';
+import useSeriesStore from '../../../store/seriesStore';
 
 /**
  * 포스트 상세페이지와 검색결과에 활용할수 있는 포스트헤더 organism
@@ -19,39 +20,42 @@ import { ClearBlurButton } from '../../atoms/Buttons';
  * @param {string} height - 컨테이너 높이 고정설정
  * @returns {JSX.Element} -
  */
-const SeriesInfo = ({
-  title,
-  userId,
-  userName,
-  userImage,
-  // postCount={series.postCount}
-  createdAt,
-  modifiedAt,
-}) => {
+const SeriesInfo = ({ series }) => {
+  const { setBlur } = useSeriesStore();
+  const { title, content, views, createdAt, modifiedAt } = series;
   // TODO: 페이지 구현시 createAt, modifiedAt 은 Date 타입으로 받아 컴포넌트 내에서 변환
+
+  const handleClickBlurButton = () => {
+    setBlur();
+  };
   return (
     <Container>
-      <SeriesTitle title={title} />
+      <SeriesTitle title={title} description={content} postCount={views} />
       <SeriesInfoContainer>
         <SeriesInfoList>
-          <ClearBlurButton />
-          <UserInfoSmall id={userId} name={userName} image={userImage} typo={LabelXSmall} size="24px" />
+          <ClearBlurButton handleClick={handleClickBlurButton} />
+          {/* series.member.id 하면 오류남 */}
+          <UserInfoSmall typo={LabelXSmall} size="24px" />
         </SeriesInfoList>
         <IconList>
-          <div>{createdAt}</div>
-          <div>{modifiedAt}</div>
-          <Icon>Icon</Icon>
-          <Icon>Icon</Icon>
+          <CreatedAtText>createAt {new Date().toDateString(createdAt)}</CreatedAtText>
+          <CreatedAtText>modifiedAt {new Date().toDateString(modifiedAt)}</CreatedAtText>
+          <Icon>Edit</Icon>
+          <Icon>Delete</Icon>
         </IconList>
       </SeriesInfoContainer>
     </Container>
   );
 };
 
+const CreatedAtText = styled.div`
+  color: var(--gray-400);
+`;
+
 const Container = styled.div`
   display: flex;
   padding: 20px 40px;
-  width: ${props => props.width || '82.5%'};
+  width: ${props => props.width || '91.5%'};
   border: ${props => (props.border ? '2px solid black' : 'none')};
   height: ${props => props.height || '104px'};
   justify-content: space-between;
