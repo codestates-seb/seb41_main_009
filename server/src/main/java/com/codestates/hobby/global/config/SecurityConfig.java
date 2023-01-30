@@ -4,7 +4,6 @@ import static org.springframework.security.config.Customizer.*;
 
 import java.util.List;
 
-import com.codestates.hobby.domain.auth.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,7 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.codestates.hobby.domain.auth.filter.JsonAuthenticationFilter;
 import com.codestates.hobby.domain.auth.handler.CustomLoginFailureHandler;
 import com.codestates.hobby.domain.auth.handler.CustomLoginSuccessHandler;
-import com.codestates.hobby.domain.member.repository.MemberRepository;
+import com.codestates.hobby.domain.auth.service.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -39,7 +38,6 @@ import lombok.extern.slf4j.Slf4j;
 public class SecurityConfig {
 	private final ObjectMapper objectMapper;
 	private final UserDetailsServiceImpl userDetailsService;
-	private final MemberRepository memberRepository;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -51,12 +49,13 @@ public class SecurityConfig {
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
 			// TODO: 추가하기
-/*			.antMatchers(HttpMethod.POST,"/series", "/showcases", "/posts").authenticated()
-			.antMatchers(HttpMethod.PATCH,"/members", "/series", "/showcases", "/posts").authenticated()
-            .antMatchers(HttpMethod.DELETE,"/members", "/series", "/showcases", "/posts").authenticated()
-            .antMatchers(HttpMethod.GET,"/members").authenticated()*/
+			.antMatchers(HttpMethod.POST, "/members", "/series", "/showcases", "/posts").authenticated()
+			.antMatchers(HttpMethod.PATCH, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
+			.antMatchers(HttpMethod.DELETE, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
+			.antMatchers(HttpMethod.GET, "/members").authenticated()
 			.anyRequest().permitAll());
 		http.sessionManagement()
+			.sessionFixation().changeSessionId()
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 			.maximumSessions(1)
 			.maxSessionsPreventsLogin(false);
@@ -71,9 +70,12 @@ public class SecurityConfig {
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(List.of("*"));
-		configuration.setAllowedHeaders(List.of("*"));
+		configuration.setAllowedOrigins(
+			List.of("http://localhost:3000", "http://127.0.0.1:3000", "http://intorest.s3-website.ap-northeast-2.amazonaws.com"));
 		configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE", "OPTIONS", "HEAD"));
+		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Cache-Control"));
+		configuration.setExposedHeaders(List.of("Authorization"));
+		configuration.setAllowCredentials(true);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
@@ -97,7 +99,7 @@ public class SecurityConfig {
 	public JsonAuthenticationFilter jsonLoginFilter() {
 		JsonAuthenticationFilter jsonLoginFilter = new JsonAuthenticationFilter(objectMapper);
 		jsonLoginFilter.setAuthenticationManager(authenticationManager());
-		jsonLoginFilter.setAuthenticationSuccessHandler(new CustomLoginSuccessHandler(memberRepository));
+		jsonLoginFilter.setAuthenticationSuccessHandler(new CustomLoginSuccessHandler());
 		jsonLoginFilter.setAuthenticationFailureHandler(new CustomLoginFailureHandler());
 		return jsonLoginFilter;
 	}

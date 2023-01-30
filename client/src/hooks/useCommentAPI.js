@@ -1,21 +1,23 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { COMMENT_DUMMY2 } from '../constants/dummyData';
 
-/**
- * 댓글을 가져올때 사용
- * @param {string | number} postId
- * @returns {post{}, boolean, boolean}
- */
-const useGetComment = ({ id }) => {
+const useCommentAPI = () => {
+
   const [comments, setcomments] = useState(COMMENT_DUMMY2);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const url = `posts/${id}/comments`;
+  /**
+   * 댓글을 가져올때 사용
+   * @param {string | number} postId
+   * @returns {post{}, boolean, boolean}
+   */
+  const getComment = ({ id }) => {
+    const url = `posts/${id}/comments`;
 
-  useEffect(() => {
+
     axios
       .get(url)
       .then(() => {
@@ -28,26 +30,18 @@ const useGetComment = ({ id }) => {
         setIsLoading(false);
         setIsLoadingError(false);
       });
-  }, []);
+    return { comments, isLoading, isLoadingError };
+  };
 
-  return { comments, isLoading, isLoadingError };
-};
+  /**
+   * 댓글을 업로드 할 때 사용
+   * @param {string | number} postId : comment가 종속되어 있는 글의 아이디
+   * @param {string} content : 댓글 내용
+   * @returns {post{}, boolean, boolean}
+   */
+  const postComment = ({ id, content }) => {
+    const url = `posts/${id}/comments`;
 
-/**
- * 댓글을 업로드 할 때 사용
- * @param {string | number} postId : comment가 종속되어 있는 글의 아이디
- * @param {string} content : 댓글 내용
- * @returns {post{}, boolean, boolean}
- */
-const usePostComment = ({ id, content }) => {
-  const [comments, setcomments] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingError, setIsLoadingError] = useState(false);
-
-  const url = `posts/${id}/comments`;
-
-  useEffect(() => {
-    setIsLoading(true);
 
     axios
       .post(url, {
@@ -67,27 +61,18 @@ const usePostComment = ({ id, content }) => {
         setcomments(COMMENT_DUMMY2);
         setIsLoading(false);
         setIsLoadingError(false);
+        console.log('Comment');
       });
-  }, []);
-
-  return { comments, isLoading, isLoadingError };
-};
-
-/**
- * 댓글 내용을 수정할 때 사용
- * @param {string | number} postId : comment가 종속되어 있는 글의 아이디
- * @param {string} content : 댓글 내용
- * @returns {post{}, boolean, boolean}
- */
-const usePatchComment = ({ id, content }) => {
-  const [comments, setcomments] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingError, setIsLoadingError] = useState(false);
-
-  const url = `posts/${id}/comments`;
-
-  useEffect(() => {
-    setIsLoading(true);
+    return { comments, isLoading, isLoadingError };
+  };
+  /**
+   * 댓글 내용을 수정할 때 사용
+   * @param {string | number} postId : comment가 종속되어 있는 글의 아이디
+   * @param {string} content : 댓글 내용
+   * @returns {post{}, boolean, boolean}
+   */
+  const patchComment = ({ id, content }) => {
+    const url = `posts/${id}/comments`;
 
     axios
       .patch(url, {
@@ -108,21 +93,18 @@ const usePatchComment = ({ id, content }) => {
         setIsLoading(false);
         setIsLoadingError(false);
       });
-  }, []);
+    return { comments, isLoading, isLoadingError };
+  };
 
-  return { comments, isLoading, isLoadingError };
-};
+  /**
+   * 댓글을 삭제할 때 사용 사용
+   * @param {string | number} postId
+   * @returns {post{}, boolean, boolean}
+   */
+  const deleteComment = ({ id }) => {
+    const navigate = useNavigate();
+    const url = `posts/${id}/comments`;
 
-/**
- * 댓글을 삭제할 때 사용 사용
- * @param {string | number} postId
- * @returns {post{}, boolean, boolean}
- */
-const useDeleteComment = ({ id }) => {
-  const navigate = useNavigate();
-  const url = `posts/${id}/comments`;
-
-  useEffect(() => {
     axios
       .delete(url, {
         headers: {
@@ -134,7 +116,10 @@ const useDeleteComment = ({ id }) => {
         navigate('/questions');
       })
       .catch(err => console.log(err));
-  }, []);
+    return { comments, isLoading, isLoadingError };
+  };
+
+  return { getComment, postComment, patchComment, deleteComment };
 };
 
-export { usePostComment, useGetComment, usePatchComment, useDeleteComment };
+export default useCommentAPI;
