@@ -10,11 +10,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.web.servlet.ResultActions;
 
-import com.codestates.hobby.domain.showcase.controller.ShowcaseCommendController;
-import com.codestates.hobby.domain.showcase.controller.ShowcaseQueryController;
+import com.codestates.hobby.domain.showcase.controller.ShowcaseController;
 import com.codestates.hobby.domain.showcase.dto.ShowcaseDto;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
 import com.codestates.hobby.domain.showcase.mapper.ShowcaseMapper;
@@ -24,7 +22,7 @@ import com.codestates.hobby.domain.stub.ShowcaseStub;
 import com.codestates.hobby.global.config.support.InfiniteScrollRequest;
 import com.codestates.hobby.utils.ControllerTest;
 
-@WebMvcTest({ShowcaseCommendController.class, ShowcaseQueryController.class})
+@WebMvcTest({ShowcaseController.class})
 class ShowcaseControllerTest extends ControllerTest {
 	@MockBean
 	ShowcaseService service;
