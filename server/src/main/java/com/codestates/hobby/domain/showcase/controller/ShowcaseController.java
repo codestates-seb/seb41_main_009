@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,7 +38,7 @@ public class ShowcaseController {
 	private final ShowcaseMapper mapper;
 
 	@PostMapping("/showcases")
-	public ResponseEntity<?> post(@SessionAttribute Member loginMember, @RequestBody @Valid ShowcaseDto.Post post) {
+	public ResponseEntity<?> post(@AuthenticationPrincipal Member loginMember, @RequestBody @Valid ShowcaseDto.Post post) {
 		post.setMemberId(loginMember.getId());
 
 		Showcase showcase = showcaseService.post(post);
@@ -48,7 +49,7 @@ public class ShowcaseController {
 	@PatchMapping("/showcases/{showcase-id}")
 	public ResponseEntity<?> patch(
 		@PathVariable("showcase-id") long showcaseId,
-		@SessionAttribute Member loginMember,
+		@AuthenticationPrincipal Member loginMember,
 		@RequestBody @Valid ShowcaseDto.Patch patch
 	) {
 		patch.setMemberId(loginMember.getId());
@@ -62,7 +63,7 @@ public class ShowcaseController {
 	@DeleteMapping("/showcases/{showcase-id}")
 	public ResponseEntity<?> delete(
 		@PathVariable("showcase-id") long showcaseId,
-		@SessionAttribute Member loginMember
+		@AuthenticationPrincipal Member loginMember
 	) {
 		showcaseService.delete(loginMember.getId(), showcaseId);
 
