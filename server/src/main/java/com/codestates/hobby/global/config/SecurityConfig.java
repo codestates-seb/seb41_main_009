@@ -43,13 +43,13 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().sameOrigin()
 			.and()
-			.csrf().disable() //로그인 시 post 요청이라 해제해도 됨
+			.csrf().disable()
 			.cors(withDefaults())
 			.formLogin().disable()
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
 			// TODO: 추가하기
-			.antMatchers(HttpMethod.POST, "/members", "/series", "/showcases", "/posts").authenticated()
+			.antMatchers(HttpMethod.POST, "/series", "/showcases", "/posts").authenticated()
 			.antMatchers(HttpMethod.PATCH, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
 			.antMatchers(HttpMethod.DELETE, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
 			.antMatchers(HttpMethod.GET, "/members").authenticated()
