@@ -20,7 +20,7 @@ const useGetUser = id => {
     axios
       .get(url)
       .then(data => {
-        setUserInfo(data);
+        setUserInfo(data.data);
         setIsLoading(false);
       })
       .catch(err => {
