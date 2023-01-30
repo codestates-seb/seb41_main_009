@@ -27,7 +27,7 @@ const UserActivitiesBox = ({ activity, id }) => {
             </ActivityButton>
           );
         })}
-        {page < totalPages ? <MoreButton onClick={() => setPage(page + 1)}>더보기</MoreButton> : null}
+        {totalPages || page < totalPages ? <MoreButton onClick={() => setPage(page + 1)}>더보기</MoreButton> : null}
       </CardContainer>
     </UserContentBox>
   );

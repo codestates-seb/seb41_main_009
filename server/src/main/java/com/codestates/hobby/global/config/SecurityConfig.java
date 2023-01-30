@@ -4,10 +4,8 @@ import static org.springframework.security.config.Customizer.*;
 
 import java.util.List;
 
-import com.codestates.hobby.domain.auth.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -27,7 +25,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.codestates.hobby.domain.auth.filter.JsonAuthenticationFilter;
 import com.codestates.hobby.domain.auth.handler.CustomLoginFailureHandler;
 import com.codestates.hobby.domain.auth.handler.CustomLoginSuccessHandler;
-import com.codestates.hobby.domain.member.repository.MemberRepository;
+import com.codestates.hobby.domain.auth.service.UserDetailsServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -40,7 +38,6 @@ import lombok.extern.slf4j.Slf4j;
 public class SecurityConfig {
 	private final ObjectMapper objectMapper;
 	private final UserDetailsServiceImpl userDetailsService;
-	private final MemberRepository memberRepository;
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -51,12 +48,14 @@ public class SecurityConfig {
 			.formLogin().disable()
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
-			.antMatchers(HttpMethod.POST,"/series", "/showcases", "/posts").authenticated()
-			.antMatchers(HttpMethod.PATCH,"/members", "/series", "/showcases", "/posts").authenticated()
-			.antMatchers(HttpMethod.DELETE,"/members", "/series", "/showcases", "/posts").authenticated()
-			.antMatchers(HttpMethod.GET,"/members").authenticated()
+			// TODO: 추가하기
+			.antMatchers(HttpMethod.POST, "/members", "/series", "/showcases", "/posts").authenticated()
+			.antMatchers(HttpMethod.PATCH, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
+			.antMatchers(HttpMethod.DELETE, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
+			.antMatchers(HttpMethod.GET, "/members").authenticated()
 			.anyRequest().permitAll());
 		http.sessionManagement()
+			.sessionFixation().changeSessionId()
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
 			.maximumSessions(1)
 			.maxSessionsPreventsLogin(false);
@@ -69,16 +68,16 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public CorsConfigurationSource corsConfigurationSource() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-
-		configuration.setExposedHeaders(List.of("Authorization", "Content-Type", HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS));
-		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS));
-		configuration.setAllowedOrigins(List.of("http://127.0.0.1:3000", "http://127.0.0.1:3000/", "http://localhost:3000", "http://localhost:3000/", "http://127.0.0.1:8080", "http://localhost:8080"));
-		configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE", "OPTIONS"));
+		configuration.setAllowedOrigins(
+			List.of("http://localhost:3000", "http://127.0.0.1:3000", "http://intorest.s3-website.ap-northeast-2.amazonaws.com"));
+		configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE", "OPTIONS", "HEAD"));
+		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Cache-Control"));
+		configuration.setExposedHeaders(List.of("Authorization"));
 		configuration.setAllowCredentials(true);
-		
+
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
@@ -100,7 +99,7 @@ public class SecurityConfig {
 	public JsonAuthenticationFilter jsonLoginFilter() {
 		JsonAuthenticationFilter jsonLoginFilter = new JsonAuthenticationFilter(objectMapper);
 		jsonLoginFilter.setAuthenticationManager(authenticationManager());
-		jsonLoginFilter.setAuthenticationSuccessHandler(new CustomLoginSuccessHandler(memberRepository));
+		jsonLoginFilter.setAuthenticationSuccessHandler(new CustomLoginSuccessHandler());
 		jsonLoginFilter.setAuthenticationFailureHandler(new CustomLoginFailureHandler());
 		return jsonLoginFilter;
 	}

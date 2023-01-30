@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import useSidebarStore from '../../../store/sidebarStore';
 import Selected from '../../../styles/Selected';
 import { SidebarTagsButton } from '../../atoms/Buttons';
 
@@ -12,12 +13,14 @@ const SelectedButton = styled(SidebarTagsButton)`
   ${Selected}
 `;
 
-const SidebarTagsContainer = ({ isClicked, tags, onClick, selectedTab }) => {
+const SidebarTagsContainer = ({ isClicked, tags, onClick }) => {
+  const { currentTab } = useSidebarStore(state => state);
+
   return (
     <Container isClicked={isClicked} tags={tags}>
       {tags.map(tag => {
         const [enName, krName] = tag;
-        return selectedTab === krName ? (
+        return currentTab === krName ? (
           <SelectedButton to={`/posts/${enName}`} key={enName} onClick={onClick}>
             {krName}
           </SelectedButton>
