@@ -41,10 +41,10 @@ public class Category {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "group_id")
-	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = CachingConfig.CATEGORY_CACHE)
 	private Category group;
 
 	@OneToMany(mappedBy = "group")
+	@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = CachingConfig.CATEGORY_CACHE)
 	private List<Category> categories = new ArrayList<>();
 
 	private Category(String korName, String engName, Category group) {

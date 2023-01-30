@@ -1,6 +1,6 @@
 package com.codestates.hobby.domain.post.mapper;
 
-import com.codestates.hobby.domain.category.entity.Category;
+import com.codestates.hobby.domain.category.mapper.CategoryMapper;
 import com.codestates.hobby.domain.member.mapper.MemberMapper;
 import com.codestates.hobby.domain.post.dto.PostDto;
 import com.codestates.hobby.domain.post.entity.Post;
@@ -9,13 +9,12 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        uses = {MemberMapper.class, PostCommentMapper.class})
+        uses = {MemberMapper.class, PostCommentMapper.class, CategoryMapper.class})
 public interface PostMapper {
     @Mapping(target = "writer", source = "member")
     PostDto.Response postToResponse(Post post);
@@ -23,10 +22,6 @@ public interface PostMapper {
     @Mapping(target = "writer", source = "member")
     @Mapping(target = "comments", expression = "java(post.getComments().size())")
     PostDto.SimpleResponse postToSimpleResponse(Post post);
-
-    default String toString(Category value){
-        return value.getKorName();
-    }
 
     default Long toLong(Series value){
         return value.getId();
