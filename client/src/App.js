@@ -10,6 +10,7 @@ import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Footer from './components/organisms/Footer';
+import useAuthStore from './store/useAuthStore';
 
 const LogIn = lazy(() => import('./components/pages/LogInPage'));
 const Header = lazy(() => import('./components/organisms/Header'));
