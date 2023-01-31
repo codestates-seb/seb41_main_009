@@ -51,6 +51,23 @@ const seriesListDummy = {
         profileImageUrl: 'url',
       },
     },
+    {
+      id: 4,
+      title: '제목',
+      content: '내용',
+      category: '카테고리',
+      views: 100,
+      thumbnailUrl: 'url~',
+      postId: 3,
+      totalPosts: 10,
+      createdAt: '2023-01-17 12:00:00',
+      modifiedAt: '2023-01-17 18:00:00',
+      member: {
+        id: 1,
+        nickname: 'nickname',
+        profileImageUrl: 'url',
+      },
+    },
   ],
   pageInfo: {
     page: '1',
@@ -236,7 +253,7 @@ const PostDummy = {
     id: 1, // 포스트 식별자
     title: 'title', // 제목
     content:
-      '<h1> h1제목입니다</h1><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h2> h2제목입니다</h2> <p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h3> h3제목입니다</h3><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p>',
+      '<h1> h1제목입니다</h1><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h2> h2제목입니다</h2> <p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p> <h3> h3제목입니다</h3><p> 사용자가 코치의 도움없이 여러 훈련을 개인적으로 할 수 있도록 도와주는 어플리케이션입니다. </p><img src="https://unsplash.it/1920/1080/?random" alt="#ImageTag"> ',
     views: 100, // 조회수
     category: 'football', // 카테고리
     description: 'hihi',
