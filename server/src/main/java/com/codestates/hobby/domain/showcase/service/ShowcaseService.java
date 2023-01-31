@@ -105,6 +105,8 @@ public class ShowcaseService {
 		Map<Long, Showcase> map = showcases.stream()
 			.collect(Collectors.toMap(Showcase::getId, Function.identity()));
 
+		if (map.isEmpty()) return showcases;
+
 		setThumbnail(map);
 		setLastComment(map);
 
