@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import useGetPost from '../../hooks/useGetPost';
 import PostCreateBody from '../organisms/postcreate/PostCreateBody';
 import PostCreateButtons from '../organisms/postcreate/PostCreateButtons';
 import PostCreateDescription from '../organisms/postcreate/PostCreateDescription';
@@ -15,15 +16,26 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const PostCreatePage = () => {
+const PostEditPage = () => {
+  const params = useParams('id');
+  const { post } = useGetPost(params);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
-  const [body, setBody] = useState('내용을 입력해주세요.');
+  const [body, setBody] = useState('');
+  const [seriesId, setSeriesId] = useState(0);
   const navigate = useNavigate();
 
-  const submitNewPost = () => {
-    const url = 'posts';
+  useEffect(() => {
+    setTitle(post.title);
+    setCategory(post.category);
+    setDescription(post.description);
+    setBody(post.content);
+    setSeriesId(post.seriesId);
+  }, [post]);
+
+  const editPost = () => {
+    const url = `posts/${params}`;
     const postData = {
       title,
       category,
@@ -31,9 +43,11 @@ const PostCreatePage = () => {
       content: body,
     };
 
+    if (seriesId) postData.seriesId = seriesId;
+
     if (title && category && description && body) {
       axios
-        .post(url, postData)
+        .patch(url, postData)
         .then(res => {
           console.log(res);
           navigate(`/posts/${category}/${res.data.id}`);
@@ -47,9 +61,9 @@ const PostCreatePage = () => {
       <PostCreateHeader title={title} setTitle={setTitle} curCategory={category} setCategory={setCategory} />
       <PostCreateDescription description={description} setDescription={setDescription} />
       <PostCreateBody body={body} setBody={setBody} />
-      <PostCreateButtons submitNewPost={submitNewPost} />
+      <PostCreateButtons submitNewPost={editPost} />
     </Container>
   );
 };
 
-export default PostCreatePage;
+export default PostEditPage;

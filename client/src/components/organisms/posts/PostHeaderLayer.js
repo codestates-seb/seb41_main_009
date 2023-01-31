@@ -18,32 +18,26 @@ import { LabelSmall } from '../../../styles/typo';
  * @param {string} height - 컨테이너 높이 고정설정
  * @returns {JSX.Element} -
  */
-const PostHeaderLayer = ({
-  id,
-  userName,
-  userImage,
-  title,
-  desc,
-  categoryName,
-  createdAt,
-  modifiedAt,
-  border,
-  width,
-  height,
-}) => {
-  // TODO: 페이지 구현시 createAt, modifiedAt 은 Date 타입으로 받아 컴포넌트 내에서 변환하기?
+const PostHeaderLayer = ({ post }) => {
+  const { title, desc, category, createdAt, modifiedAt } = post;
+  // const { id, nickname, profileImageUrl } = writer;
+  // TODO: 페이지 구현시 createAt, modifiedAt 은 Date 타입으로 받아 컴포넌트 내에서 변환하기
+  console.log(desc);
+
+  // UserInfoSmall 에 해당하는 props는 내려주면 오류가 뜸
   return (
-    <Container border={border} width={width} height={height}>
-      <PostTitle title={title} description={desc} categoryName={categoryName || 'Category'} />
+    <Container>
+      <PostTitle title={title} description="not found" categoryName={category || 'Category'} />
       <DeatilInfoList>
-        <UserInfoSmall id={id} name={userName} image={userImage}>
-          <CreatedAtText>{createdAt}</CreatedAtText>
-          <CreatedAtText>{modifiedAt}</CreatedAtText>
-        </UserInfoSmall>
-        <IconList>
-          <Icon>Icon</Icon>
-          <Icon>Icon</Icon>
-        </IconList>
+        <List>
+          <UserInfoSmall />
+          <CreatedAtText>createAt {new Date().toDateString(createdAt)}</CreatedAtText>
+          <CreatedAtText>modifiedAt {new Date().toDateString(modifiedAt)}</CreatedAtText>
+        </List>
+        <List>
+          <Button type="button">Edit</Button>
+          <Button type="button">Delete</Button>
+        </List>
       </DeatilInfoList>
     </Container>
   );
@@ -66,17 +60,30 @@ const DeatilInfoList = styled.div`
   align-items: center;
   gap: 20px;
 `;
-const IconList = styled.div`
+const List = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-`;
-const Icon = styled.div`
-  ${LabelSmall}
 `;
 
 const CreatedAtText = styled.div`
   color: var(--gray-400);
 `;
 
+const Button = styled.button`
+  width: ${props => (props.width ? props.width : '51px')};
+  height: ${props => (props.height ? props.height : '36px')};
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: none;
+  color: black;
+  ${LabelSmall}
+  &:hover {
+    background-color: var(--gray-50);
+    cursor: pointer;
+  }
+`;
 export default PostHeaderLayer;

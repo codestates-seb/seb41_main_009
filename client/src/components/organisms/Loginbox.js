@@ -57,7 +57,7 @@ const Loginbox = () => {
   const [emailMessage, setEmailMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
-  const { setUserId } = useAuthStore(state => state);
+  const { setUserId, setAuthorization } = useAuthStore(state => state);
 
   /**
    *
@@ -91,29 +91,31 @@ const Loginbox = () => {
 
   const onLoginClick = () => {
     if (!email || !password || emailMessage || passwordMessage) {
-      return;
+      // return;
     }
 
     const url = 'login';
 
     axios
-      .post(url, {
-        email,
-        password,
-      })
-      .then(({ data }) => {
-        setUserId(data);
+      .post(
+        url,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then(data => {
+        setUserId(data.data);
+        setAuthorization(data.headers.authorization);
         navigate('/');
-        window.location.reload();
+        console.log(data);
+        console.log(data.headers.authorization);
       })
       .catch(err => {
         console.log(err.message);
-      })
-      .finally(() => {
-        console.log('finally');
-        setUserId(1);
-        navigate('/');
-        window.location.reload();
       });
   };
 

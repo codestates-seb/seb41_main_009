@@ -50,7 +50,7 @@ const UserButton = styled(TextButton)`
 `;
 
 const Header = () => {
-  const { currentUserId, setUserId } = useAuthStore(state => state);
+  const { currentUserId, setUserId, setAuthorization } = useAuthStore(state => state);
   const { setCurrentTab } = useSidebarStore(state => state);
   const navigate = useNavigate();
 
@@ -61,16 +61,12 @@ const Header = () => {
       .get(url)
       .then(() => {
         setUserId(0);
+        setAuthorization('');
         navigate('/');
         window.location.reload();
       })
       .catch(err => {
         console.log(err);
-      })
-      .finally(() => {
-        setUserId(0);
-        navigate('/');
-        window.location.reload();
       });
   };
 

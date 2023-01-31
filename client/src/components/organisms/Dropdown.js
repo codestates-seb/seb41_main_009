@@ -14,9 +14,10 @@ const Dropdown = () => {
   };
 
   const handleSelectTag = event => {
-    setCategoryKey(event.target.getAttribute('key'));
+    setCategoryKey(event.target.getAttribute('categoryKey'));
     setCategoryName(event.target.textContent);
     setIsOpen(false);
+    console.log(event.target.textContent);
   };
 
   return (
@@ -26,7 +27,7 @@ const Dropdown = () => {
         <DropdownListContainer>
           {TAGS.map(el => {
             return (
-              <DropdownItem onClick={handleSelectTag} key={el[0]}>
+              <DropdownItem onClick={handleSelectTag} key={el[0]} categoryKey={el[0]}>
                 {el[1]}
               </DropdownItem>
             );

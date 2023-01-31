@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import useUploadImage from '../../../hooks/useInputImage';
 import { ParagraphSmall } from '../../../styles/typo';
 
-const ShowcaseImageInput = () => {
-  const { InputRef, imageSrc, handleInputOnChange } = useUploadImage();
+const ShowcaseImageInput = ({ children }) => {
+  const { InputRef, imageBase64, handleInputOnChange } = useUploadImage();
   const handleImageUpload = () => {
     InputRef.current.click();
   };
@@ -12,12 +12,12 @@ const ShowcaseImageInput = () => {
     <>
       <input type="file" accept="image/*" style={{ display: 'none' }} ref={InputRef} onChange={handleInputOnChange} />
       <FileInputButton onClick={handleImageUpload}>
-        {imageSrc !== '' ? (
-          <PreviewImage src={imageSrc} alt="preview_image" />
+        {imageBase64 !== '' ? (
+          <PreviewImage src={imageBase64} alt="preview_image" />
         ) : (
           <>
             <Icon icon="mdi:image-plus-outline" style={{ fontSize: 40 }} />
-            <FileInputLabel>최소 한장 이상의 사진을 업로드</FileInputLabel>
+            <FileInputLabel>{children}</FileInputLabel>
           </>
         )}
       </FileInputButton>
