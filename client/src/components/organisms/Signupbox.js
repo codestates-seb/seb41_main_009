@@ -2,12 +2,15 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { INVALIDEMAIL, INVALIDPASSWORD, PASSWORDNOTMATCH, SIGNUP_SUCCESS } from '../../constants/Messages';
-import { isValidEmail, isValidPassword } from '../../functions/isValid';
-import { LabelListTitle } from '../../styles/typo';
+import { SIGNUP_SUCCESS } from '../../constants/Messages';
 import { BlackShadowButton } from '../atoms/Buttons';
-import InputCard from '../molecules/InputCard';
+import EmailBox from '../molecules/signup/EmailBox';
+import EmailValidationBox from '../molecules/signup/EmailValidationBox';
+import NicknameBox from '../molecules/signup/NicknameBox';
+import PasswordBox from '../molecules/signup/PasswordBox';
+import PasswordCheckBox from '../molecules/signup/PasswordCheckBox';
 import { LoginMessage } from '../molecules/SignUpMessage';
+import { Box } from '../atoms/signup/SignupComponents';
 
 const Container = styled.div`
   display: flex;
@@ -18,104 +21,31 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const SignupInput = ({ height, type, placeholder, onChange, message, asideInput }) => {
-  return (
-    <InputCard
-      width="512px"
-      height={height}
-      boxShadow="var(--boxShadow-00) black"
-      type={'' || type}
-      placeholder={placeholder}
-      inputWidth="100%"
-      inputHeight="20px"
-      onChange={onChange}
-      asideInput={asideInput}
-      message={message}
-      messageColor="red"
-    />
-  );
-};
-
-const Box = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 20px 0;
-`;
-
-const Label = styled.div`
-  width: 100%;
-  margin-bottom: 5px;
-  ${LabelListTitle}
-`;
-
 const Signupbox = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
   const [nickname, setNickname] = useState('');
-  // const [nicknameMessage, setNicknameMessage] = useState('');
+  const [nicknameMessage, setNicknameMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
   const [passwordCheckMessage, setPasswordCheckMessage] = useState('');
-
-  /**
-   *
-   * @param {Event} e
-   * @returns {void}
-   */
-
-  const onEmailInput = e => {
-    const emailValue = e.target.value;
-
-    setEmail(emailValue);
-
-    if (isValidEmail(emailValue) || emailValue.length === 0) {
-      setEmailMessage('');
-    } else {
-      setEmailMessage(INVALIDEMAIL);
-    }
-  };
-
-  const onNicknameInput = e => {
-    const nicknameValue = e.target.value;
-    setNickname(nicknameValue);
-
-    // if (isValidNickname(nicknameValue) || nicknameValue.length === 0) {
-    //   setNicknameMessage('');
-    // } else {
-    //   setNicknameMessage(INVALIDNICKNAME);
-    // }
-  };
-
-  const onPasswordInput = e => {
-    const passwordValue = e.target.value;
-
-    setPassword(passwordValue);
-
-    if (isValidPassword(passwordValue) || passwordValue.length === 0) {
-      setPasswordMessage('');
-    } else {
-      setPasswordMessage(INVALIDPASSWORD);
-    }
-  };
-
-  const onPasswordCheckInput = e => {
-    const passwordCheckValue = e.target.value;
-
-    setPasswordCheck(passwordCheckValue);
-
-    if (password === passwordCheckValue || passwordCheckValue.length === 0) {
-      setPasswordCheckMessage('');
-    } else {
-      setPasswordCheckMessage(PASSWORDNOTMATCH);
-    }
-  };
+  const [emailValidation, setEmailValidation] = useState(false);
+  const [emailValidationCode, setEmailValidationCode] = useState('');
+  const [emailValidationMessage, setEmailValidationMessage] = useState('');
 
   const onSignUpClick = async () => {
-    if (!email || !password || !passwordCheck || !nickname || emailMessage || passwordMessage || passwordCheckMessage) {
+    if (
+      !email ||
+      !password ||
+      !passwordCheck ||
+      !nickname ||
+      emailMessage ||
+      passwordMessage ||
+      passwordCheckMessage ||
+      nicknameMessage
+    ) {
       return;
     }
 
@@ -142,32 +72,37 @@ const Signupbox = () => {
 
   return (
     <Container>
-      <Box>
-        <Label>Email</Label>
-        <SignupInput placeholder="Enter Your Email" onChange={onEmailInput} message={emailMessage} />
-      </Box>
-      <Box>
-        <Label>Nickname</Label>
-        <SignupInput placeholder="Enter Your Nickname" onChange={onNicknameInput} />
-      </Box>
-      <Box>
-        <Label>Password</Label>
-        <SignupInput
-          type="password"
-          placeholder="Enter Your Password"
-          onChange={onPasswordInput}
-          message={passwordMessage}
-        />
-      </Box>
-      <Box>
-        <Label>Password Check</Label>
-        <SignupInput
-          type="password"
-          placeholder="Re-Enter Your Password"
-          onChange={onPasswordCheckInput}
-          message={passwordCheckMessage}
-        />
-      </Box>
+      <EmailBox
+        email={email}
+        setEmail={setEmail}
+        emailMessage={emailMessage}
+        setEmailMessage={setEmailMessage}
+        setEmailValidation={setEmailValidation}
+      />
+      <EmailValidationBox
+        email={email}
+        emailValidation={emailValidation}
+        emailValidationCode={emailValidationCode}
+        setEmailValidationCode={setEmailValidationCode}
+        emailValidationMessage={emailValidationMessage}
+        setEmailValidationMessage={setEmailValidationMessage}
+      />
+      <NicknameBox
+        setNickname={setNickname}
+        nicknameMessage={nicknameMessage}
+        setNicknameMessage={setNicknameMessage}
+      />
+      <PasswordBox
+        setPassword={setPassword}
+        passwordMessage={passwordMessage}
+        setPasswordMessage={setPasswordMessage}
+      />
+      <PasswordCheckBox
+        password={password}
+        setPasswordCheck={setPasswordCheck}
+        passwordCheckMessage={passwordCheckMessage}
+        setPasswordCheckMessage={setPasswordCheckMessage}
+      />
       <Box>
         <BlackShadowButton type="button" width="512px" onClick={onSignUpClick}>
           Sign Up
