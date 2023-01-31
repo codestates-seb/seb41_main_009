@@ -4,7 +4,6 @@ import Input from '../../atoms/Input';
 import { OrangeButton } from '../../atoms/Buttons';
 import useCommentAPI from '../../../hooks/useCommentAPI';
 
-
 const Container = styled.div`
   display: flex;
   width: 100%;
@@ -18,7 +17,6 @@ const CommentInputContainer = ({ id }) => {
   const [content, setContent] = useState('');
   const { postComment } = useCommentAPI();
 
-
   const onChangeContent = e => {
     e.preventDefault();
     setContent(e.target.value);
@@ -31,7 +29,6 @@ const CommentInputContainer = ({ id }) => {
       alert('Maximum 300 characters.');
     } else {
       postComment(id, content);
-
     }
   };
   return (
