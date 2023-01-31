@@ -62,8 +62,8 @@ const Container = styled.div`
   }
   .toastui-editor-contents img {
     // 본문 P 태그 스타일 지정
-    width: minmax(fit-content, 100%);
-    height: minmax(fit-content, 100%);
+    width: 100%;
+    height: 100%;
     margin: 0px;
   }
 `;
