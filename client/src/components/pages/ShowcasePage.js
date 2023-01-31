@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import { ClipLoader } from 'react-spinners';
+import { Masonry } from 'masonic';
 
 import useShowcaseStore from '../../store/showcaseStore';
 import ShowcaseTitle from '../molecules/showcase/ShowcaseTitle';
@@ -9,47 +10,40 @@ import ShowcaseModal from '../organisms/showcase/ShowcaseModal';
 import useIntersect from '../../hooks/useIntersect';
 import useShowcaseModal from '../../store/showcaseModalStore';
 
-// comment 부분 오류 있음 수정해야됨
 const Showcase = () => {
-  const { itemList, isLoading, getItemListForTest } = useShowcaseStore();
-  const { isModalOpen, getModalItemTest } = useShowcaseModal();
+  const { itemList, isLoading, getItemList, setOffset } = useShowcaseStore();
+  const { isModalOpen, getModalItem } = useShowcaseModal();
 
   useEffect(() => {
-    console.log('Component Mounted');
-    getItemListForTest(9);
+    getItemList(9);
+    return () => setOffset(-1);
   }, []);
 
   const ref = useIntersect(async (entry, observer) => {
-    await getItemListForTest(9, () => {
+    await getItemList(9, () => {
       observer.unobserve(entry.target);
-      console.log('observer is unobserved');
     });
   });
 
   const handleModal = async id => {
-    await getModalItemTest(id);
+    await getModalItem(id);
   };
 
-  // comment 부분 오류 있음 수정해야됨
-
-  const renderItem = line => {
-    return itemList.map((el, idx) => {
-      const { id, thumbnailUrl, category, content, writer, lastComment } = el;
-      return idx % 3 === line ? (
-        <Showcasebox
-          key={id}
-          id={id}
-          thumnail={thumbnailUrl}
-          tagName={category}
-          summary={content}
-          userImg={writer.profileImageUrl}
-          userName={writer.nickname}
-          commentUserName={lastComment ? lastComment.writer.nickname : null}
-          commentContent={lastComment ? lastComment.content : null}
-          handle={() => handleModal(id)}
-        />
-      ) : null;
-    });
+  const renderMasonicCard = ({ data: { id, thumbnailUrl, category, content, writer, lastComment } }) => {
+    return (
+      <Showcasebox
+        key={id}
+        id={id}
+        thumnail={thumbnailUrl}
+        tagName={category}
+        summary={content}
+        userImg={writer.profileImageUrl}
+        userName={writer.nickname}
+        commentUserName={lastComment ? lastComment.writer.nickname : null}
+        commentContent={lastComment ? lastComment.content : null}
+        handle={() => handleModal(id)}
+      />
+    );
   };
 
   return (
@@ -57,11 +51,7 @@ const Showcase = () => {
       {isModalOpen ? <ShowcaseModal isModalOpen={isModalOpen} /> : null}
       <Container>
         <ShowcaseTitle />
-        <Body>
-          <CaseContainer>{renderItem(0)}</CaseContainer>
-          <CaseContainer>{renderItem(1)}</CaseContainer>
-          <CaseContainer>{renderItem(2)}</CaseContainer>
-        </Body>
+        <Masonry items={itemList} columnGutter={32} columnWidth={330} overscanBy={9} render={renderMasonicCard} />
         {isLoading ? <ClipLoader /> : null}
         <InfinityScrollSection ref={ref} />
       </Container>
@@ -76,25 +66,7 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: auto;
-`;
-
-const Body = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 20px;
-  width: 100%;
-  height: auto;
-`;
-
-const CaseContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding-right: 32px;
-
-  &:last-child {
-    padding-right: 0px;
-  }
+  gap: 20px;
 `;
 
 const InfinityScrollSection = styled.div`
