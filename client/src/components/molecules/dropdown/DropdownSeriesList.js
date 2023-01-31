@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import { BlackButton, WhiteButton } from '../../atoms/Buttons';
 import { LabelListTitle } from '../../../styles/typo';
 import usePostStore from '../../../store/postStore';
@@ -72,8 +71,6 @@ const DropdownItem = styled.li`
 
 // writer의 정보를 못가져옴
 const DropdownSeriesList = ({ post }) => {
-  const navigate = useNavigate();
-
   const { currentSeriesId, setCurrentSeriesId, setIsOpen } = usePostStore();
   const { seriesList } = useGetSeriesListbyUser(post.writer.id);
 
@@ -89,7 +86,6 @@ const DropdownSeriesList = ({ post }) => {
       })
       .then(res => {
         console.log(res);
-        navigate('/login');
       })
       .catch(err => {
         console.log(err);

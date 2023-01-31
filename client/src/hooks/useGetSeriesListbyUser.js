@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { seriesListDummy } from '../constants/dummyData';
-import HOST from '../constants/URL';
 
 /**
  *
@@ -17,7 +16,7 @@ const useGetSeriesListbyUser = ({ writer }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `${HOST}/member/${writer}`;
+  const URL = `/member/${writer}`;
 
   useEffect(() => {
     setIsLoading(true);
