@@ -1,5 +1,6 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
+
 import TextArea from '../atoms/TextArea';
 import Box from '../atoms/Box';
 import { UserInfoSmall } from '../molecules/UserInfo';
@@ -12,9 +13,13 @@ const ShowcaseCreatePage = () => {
   const { setContent, initStore, postShowcase } = useShowcaseCreateStore();
 
   // save text to content state
-  const handleTextOnChange = useCallback(event => {
+  const handleTextOnChange = event => {
     setContent(event.target.value);
-  });
+  };
+
+  const handlePostShowcase = async () => {
+    await postShowcase();
+  };
 
   useEffect(() => {
     return () => {
@@ -42,7 +47,7 @@ const ShowcaseCreatePage = () => {
       </Container>
       <ButtonContainer>
         <WhiteShadowButton>Cancel</WhiteShadowButton>
-        <BlackShadowButton onClick={postShowcase}>Submit</BlackShadowButton>
+        <BlackShadowButton onClick={handlePostShowcase}>Submit</BlackShadowButton>
       </ButtonContainer>
     </>
   );
