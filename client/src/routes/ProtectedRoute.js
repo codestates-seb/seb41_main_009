@@ -4,7 +4,7 @@ import useAuthStore from '../store/useAuthStore';
 
 const Container = styled.div`
   width: var(--content-width);
-  padding-right: calc(var(--body-width) - var(--content-width) - var(--sidebar-width));
+  /* padding-right: calc(var(--body-width) - var(--content-width) - var(--sidebar-width)); */
 `;
 
 const ProtectedRoute = ({ component: Component }) => {

@@ -10,6 +10,7 @@ import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
 import ProtectedRoute from './routes/ProtectedRoute';
 import Footer from './components/organisms/Footer';
+import useAuthStore from './store/useAuthStore';
 
 const LogIn = lazy(() => import('./components/pages/LogInPage'));
 const Header = lazy(() => import('./components/organisms/Header'));
@@ -72,9 +73,8 @@ const App = () => {
 
 export default App;
 
-const Main = styled.div`
+const Main = styled.main`
   display: flex;
   justify-content: center;
-  /* margin-top: calc(var(--header-height) + 50px); */
-  padding-top: calc(var(--header-height) + 50px);
+  padding: calc(var(--header-height) + 50px) 10px 0 10px;
 `;

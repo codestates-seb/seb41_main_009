@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { INVALIDEMAIL, INVALIDPASSWORD } from '../../constants/Messages';
+import { INVALID_EMAIL, INVALID_PASSWORD } from '../../constants/Messages';
 import { isValidEmail, isValidPassword } from '../../functions/isValid';
 import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
@@ -73,7 +73,7 @@ const Loginbox = () => {
     if (isValidEmail(emailValue) || emailValue.length === 0) {
       setEmailMessage('');
     } else {
-      setEmailMessage(INVALIDEMAIL);
+      setEmailMessage(INVALID_EMAIL);
     }
   };
 
@@ -85,7 +85,7 @@ const Loginbox = () => {
     if (isValidPassword(passwordValue) || passwordValue.length === 0) {
       setPasswordMessage('');
     } else {
-      setPasswordMessage(INVALIDPASSWORD);
+      setPasswordMessage(INVALID_PASSWORD);
     }
   };
 

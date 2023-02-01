@@ -7,7 +7,7 @@ import { DisplayMedium } from '../../styles/typo';
 import InputCard from '../molecules/InputCard';
 import useGetUser from '../../hooks/useGetUser';
 import UserImage from '../atoms/UserImage';
-import { IMAGESIZELIMIT, INVALIDDESCRIPTION, INVALIDNICKNAME } from '../../constants/Messages';
+import { IMAGE_SIZE_LIMIT, INVALID_DESCRIPTION, INVALID_NICKNAME } from '../../constants/Messages';
 import { isValidIntroduction, isValidNickname } from '../../functions/isValid';
 import Loading from '../atoms/Loading';
 
@@ -34,7 +34,7 @@ const UserEdit = () => {
       console.log(image);
       setNewImage(imagePath);
     } else {
-      alert(IMAGESIZELIMIT);
+      alert(IMAGE_SIZE_LIMIT);
       setNewImage(imgUrl);
     }
   };
@@ -43,7 +43,7 @@ const UserEdit = () => {
     const nicknameValue = e.target.value;
 
     if (!nicknameValue || !isValidNickname(nicknameValue)) {
-      setNicknameMessage(INVALIDNICKNAME);
+      setNicknameMessage(INVALID_NICKNAME);
     } else {
       setNicknameMessage('');
       setNewNickname(nicknameValue);
@@ -54,7 +54,7 @@ const UserEdit = () => {
     const descriptionValue = e.target.value;
 
     if (!isValidIntroduction(descriptionValue)) {
-      setDescriptionMessage(INVALIDDESCRIPTION);
+      setDescriptionMessage(INVALID_DESCRIPTION);
     } else {
       setDescriptionMessage('');
       setNewDescription(descriptionValue);
