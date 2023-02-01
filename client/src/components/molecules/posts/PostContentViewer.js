@@ -18,6 +18,7 @@ const Container = styled.div`
     margin-top: 30px;
     ${HeadingLarge}
     color: var(--gray-900);
+    border-bottom: none;
 
     &:hover {
       color: var(--gray-700);
@@ -29,6 +30,7 @@ const Container = styled.div`
     margin-top: 20px;
     ${HeadingMedium}
     color: var(--gray-800);
+    border-bottom: none;
 
     &:hover {
       color: var(--gray-700);
@@ -39,6 +41,7 @@ const Container = styled.div`
     // 본문 H3s 태그 스타일 지정
     padding-left: 5px;
     margin-top: 15px;
+    border-bottom: none;
 
     color: var(--gray-800);
 
@@ -56,6 +59,12 @@ const Container = styled.div`
     color: var(--gray-600);
 
     ${ParagraphMedium}
+  }
+  .toastui-editor-contents img {
+    // 본문 P 태그 스타일 지정
+    width: 100%;
+    height: 100%;
+    margin: 0px;
   }
 `;
 

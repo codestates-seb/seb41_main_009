@@ -59,10 +59,7 @@ public class MemberController {
     }
 
     @GetMapping("/{member-id}")
-    public ResponseEntity get(@PathVariable("member-id") long memberId,
-                              @AuthenticationPrincipal Member loginMember) {
-        if(memberId != loginMember.getId()) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
-
+    public ResponseEntity get(@PathVariable("member-id") long memberId) {
         Member member = service.find(memberId);
 
         log.info("\n\n--해당 회원의 정보 조회--\n");
