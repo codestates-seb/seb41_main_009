@@ -117,8 +117,6 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
   // currentPost 일때 시각적으로 달라지는 부분이 필요할듯
-  console.log(post, 'post');
-
   console.log(isLoading, isLoadingError);
   return (
     <Container boxShadow={boxShadow} selected={selected}>
@@ -134,7 +132,6 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
           </Box>
           <Box>
             <span> viewed {Number(post?.views)}</span>
-            <span> comments {Number(post?.comments)}</span>
           </Box>
         </ContextLayer>
       </InfoLayer>
