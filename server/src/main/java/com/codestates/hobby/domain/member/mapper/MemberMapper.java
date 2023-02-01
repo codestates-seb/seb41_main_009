@@ -7,9 +7,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
-    @Mapping(target = "profileUrl", expression = "java(member.getImage().getFileURL())")
+    @Mapping(target = "profileUrl", expression = "java(member.getDefaultProfile())")
     MemberDto.Response MemberToResponseDto(Member member);
 
-    @Mapping(target = "profileUrl", expression = "java(member.getImage().getFileURL())")
+    @Mapping(target = "profileUrl", expression = "java(member.getDefaultProfile())")
     MemberDto.SimpleResponse MemberToSimpleResponseDto(Member member);
 }

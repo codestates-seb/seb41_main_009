@@ -29,11 +29,6 @@ public class MemberDto {
         @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
                 message = "최소 하나의 문자, 숫자, 특문를 포함해야하며 8자리 이상")
         private String password;
-
-        @Size(max = 255, message = "255자 이하로 제한됩니다.")
-        private String introduction;
-
-        private String profileUrl;
     }
 
     @Getter
