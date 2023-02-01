@@ -7,7 +7,7 @@ import { isValidEmail, isValidPassword } from '../../functions/isValid';
 import { LabelListTitle } from '../../styles/typo';
 import { BlackShadowButton } from '../atoms/Buttons';
 import InputCard from '../molecules/InputCard';
-import { FindPasswordMessage, SignUpMessage } from '../molecules/SignUpMessage';
+import { SignUpMessage } from '../molecules/SignUpMessage';
 import useAuthStore from '../../store/useAuthStore';
 
 const Container = styled.div`
@@ -64,7 +64,6 @@ const Loginbox = () => {
    * @param {Event} e
    * @returns {void}
    */
-
   const onEmailInput = e => {
     const emailValue = e.target.value;
 
@@ -95,24 +94,20 @@ const Loginbox = () => {
     }
 
     const url = 'login';
+    const body = {
+      email,
+      password,
+    };
+    const header = {
+      withCredentials: true,
+    };
 
     axios
-      .post(
-        url,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        },
-      )
+      .post(url, body, header)
       .then(data => {
         setUserId(data.data);
         setAuthorization(data.headers.authorization);
         navigate('/');
-        console.log(data);
-        console.log(data.headers.authorization);
       })
       .catch(err => {
         console.log(err.message);
@@ -139,7 +134,6 @@ const Loginbox = () => {
           Log In
         </BlackShadowButton>
         <SignUpMessage />
-        <FindPasswordMessage />
       </Box>
     </Container>
   );
