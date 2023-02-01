@@ -39,7 +39,10 @@ const Showcasebox = ({
 
   const handleOnKeyEnter = e => {
     if (e.key === 'Enter') {
-      postComment(id, commentInput);
+      postComment(id, commentInput, () => {
+        setCommentInput('');
+        e.target.value = '';
+      });
     }
   };
 

@@ -44,7 +44,7 @@ const CommentButton = styled.button`
   }
 `;
 
-const Comment = ({ comment }) => {
+const Comment = ({ basePath, comment }) => {
   const { content, id, writer } = comment;
   const [editMode, setEditMode] = useState(false);
   const [editContent, setEditContent] = useState(content);
@@ -55,7 +55,7 @@ const Comment = ({ comment }) => {
   };
 
   const onClickDeleteComment = () => {
-    deleteComment(id);
+    deleteComment(basePath, id);
   };
 
   const onChangeContent = e => {
@@ -66,7 +66,7 @@ const Comment = ({ comment }) => {
   // CommentInputContainer 에 있는 submit 형태로 수정 해보기
   const onClickCommentSubmit = () => {
     setEditMode(!editMode);
-    postComment(id, editContent);
+    postComment(basePath, id, editContent);
   };
 
   return (

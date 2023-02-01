@@ -3,13 +3,13 @@ import { useSearchParams } from 'react-router-dom';
 
 import PageHeader from '../organisms/PageHeader';
 import { LnbSearch } from '../organisms/Lnb';
+import { TextButton } from '../atoms/Buttons';
+import Pagination from '../molecules/Pagination';
 import SeriesListContainer from '../organisms/listContainter/SeriesListContainer';
 import SearchResultTitle from '../organisms/search/SearchResultTitle';
 import PostListContainer from '../organisms/listContainter/PostListContainer';
 import useGetSeriesList from '../../hooks/useGetSeriesList';
 import useGetPostList from '../../hooks/useGetPostList';
-import { TextButton } from '../atoms/Buttons';
-import Pagination from '../molecules/Pagination';
 
 const Container = styled.div`
   display: flex;
