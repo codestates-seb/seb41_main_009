@@ -27,9 +27,12 @@ const useShowcaseCreateStore = create((set, get) => ({
     set({ fileInfos });
   },
 
-  // imageBinary
-  imageBinary: '',
-  setImageBinary: imageBinary => set({ imageBinary }),
+  // imageBlob
+  imageBlob: '',
+  setImageBlob: imageBlob => {
+    console.log(imageBlob);
+    set({ imageBlob });
+  },
 
   // error handle
   errorMessage: '',
@@ -70,11 +73,11 @@ const useShowcaseCreateStore = create((set, get) => ({
 
   uploadToGCS: async sigendURL => {
     // 블롭을 리턴
-    const { imageBinary, fileInfos } = get();
+    const { imageBlob } = get();
 
-    const response = await axios.put(sigendURL, imageBinary, {
+    const response = await axios.put(sigendURL, imageBlob, {
       headers: {
-        'Content-Type': `image/${fileInfos.contentType}`,
+        'Content-Type': `${imageBlob.type}`,
       },
       withCredentials: false,
     });
@@ -123,7 +126,7 @@ const useShowcaseCreateStore = create((set, get) => ({
       await uploadToGCS(signedURL);
 
       const response = await axios.post(
-        '/showcases',
+        '/series',
         {
           category: categoryKey,
           title,
