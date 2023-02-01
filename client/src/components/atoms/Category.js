@@ -10,17 +10,22 @@ import { LabelMedium } from '../../styles/typo';
  * @returns {JSX.Element} - Link 태그
  */
 const Category = ({ id, children, padding, color }) => {
-  const Container = styled(Link)`
-    ${LabelMedium};
-    width: 100%;
-    font-weight: 700;
-    color: white;
-    background-color: ${() => color || 'black'};
-    box-sizing: border-box;
-    padding: ${() => padding || '10px'};
-    text-decoration: none;
-  `;
-  return <Container to={`/posts/${id}`}>{children}</Container>;
+  return (
+    <Container color={color} padding={padding} to={`/posts/${id}`}>
+      {children}
+    </Container>
+  );
 };
+
+const Container = styled(Link)`
+  ${LabelMedium};
+  width: 100%;
+  font-weight: 700;
+  color: white;
+  background-color: ${props => props.color || 'black'};
+  box-sizing: border-box;
+  padding: ${props => props.padding || '10px'};
+  text-decoration: none;
+`;
 
 export default Category;

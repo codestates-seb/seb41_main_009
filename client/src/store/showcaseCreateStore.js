@@ -1,12 +1,14 @@
 import create from 'zustand';
 import axios from 'axios';
-import { Buffer } from 'buffer';
 
 const useShowcaseCreateStore = create((set, get) => ({
   // category
-  categoryKey: '',
+  categoryKey: 'baseball',
   categoryName: 'Category',
-  setCategoryKey: categoryKey => set({ categoryKey }),
+  setCategoryKey: categoryKey => {
+    console.log(categoryKey);
+    set({ categoryKey });
+  },
   setCategoryName: categoryName => set({ categoryName }),
 
   // title
@@ -24,6 +26,10 @@ const useShowcaseCreateStore = create((set, get) => ({
   setFileInfos: fileInfos => {
     set({ fileInfos });
   },
+
+  // imageBinary
+  imageBinary: '',
+  setImageBinary: imageBinary => set({ imageBinary }),
 
   // error handle
   errorMessage: '',
@@ -43,10 +49,18 @@ const useShowcaseCreateStore = create((set, get) => ({
   // FileInfo API 를 사용하여 presigned url 을 받아오는 함수
   getPresignedURL: async (basePath, size, contentType) => {
     try {
-      const response = await axios.post(`/${basePath}/files`, {
-        size,
-        contentType,
-      });
+      const response = await axios.post(
+        `/${basePath}/files`,
+        {
+          size,
+          contentType,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
       return response.data;
     } catch (err) {
       console.log(err);
@@ -54,66 +68,74 @@ const useShowcaseCreateStore = create((set, get) => ({
     }
   },
 
-  // Google Cloud Storage 에 binary string upload
-  uploadToGCS: async (encodedImage, sigendURL) => {
-    const convertBase64ToBlob = base64String => {
-      const dataArray = base64String.split(';base64,');
-      const contentType = dataArray[0].split(':')[1];
-      const raw = Buffer.from(dataArray[1], 'base64').toString('binary');
-      return [raw, contentType];
-      // Blob 을 리턴하는 코드
-      // const rawLength = raw.length;
-      // const uInt8Array = new Uint8Array(rawLength);
-      // for (let i = 0; i < rawLength; i += 1) {
-      //   uInt8Array[i] = raw.charCodeAt(i);
-      // }
-      // return new Blob([uInt8Array], { type: contentType });
-    };
+  uploadToGCS: async sigendURL => {
+    // 블롭을 리턴
+    const { imageBinary, fileInfos } = get();
 
-    const [raw, contentType] = convertBase64ToBlob(encodedImage);
-    const response = await axios.put(sigendURL, raw, {
+    const response = await axios.put(sigendURL, imageBinary, {
       headers: {
-        'Content-Type': `${contentType}`,
+        'Content-Type': `image/${fileInfos.contentType}`,
       },
+      withCredentials: false,
     });
 
     return response;
   },
   postShowcase: async () => {
-    const { categoryKey, content, fileInfos, imageBase64, uploadToGCS } = get();
+    const { categoryKey, content, fileInfos, uploadToGCS } = get();
     try {
       // showcases 로 게시물 업로드
-      const response = await axios.post('/showcases', {
+      const body = {
         content,
         category: categoryKey,
         fileInfos,
+      };
+
+      const response = await axios.post('/showcases', body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
+      // 업로드된 시점에서
+      console.log('쇼케이스 업로드 1차 통과');
+      console.log(response);
 
       // signedURL 을 받아왔다면 해당 URL로 PUT 요청 보내기
       const { signedURL } = response.data.fileInfos[0];
-      await uploadToGCS(imageBase64, signedURL);
+      console.log(`signedURL: ${signedURL}`);
+
+      await uploadToGCS(signedURL);
+      console.log('쇼케이스 업로드 2차 통과');
 
       console.log('showcase 업로드 성공');
-    } catch (errorMessage) {
-      set({ errorMessage });
+    } catch (error) {
+      set({ errorMessage: error });
       console.log('showcase 업로드 실패');
-      console.log(errorMessage);
+      console.log(error);
     }
   },
 
   postSeries: async () => {
-    const { categoryKey, title, content, imageBase64, fileInfos, getPresignedURL, uploadToGCS } = get();
+    const { categoryKey, title, content, fileInfos, getPresignedURL, uploadToGCS } = get();
 
     try {
       const { fileURL, signedURL } = getPresignedURL('series', fileInfos.size, fileInfos.contentType);
-      await uploadToGCS(imageBase64, signedURL);
+      await uploadToGCS(signedURL);
 
-      const response = await axios.post('/showcases', {
-        category: categoryKey,
-        title,
-        content,
-        thumnail: fileURL,
-      });
+      const response = await axios.post(
+        '/showcases',
+        {
+          category: categoryKey,
+          title,
+          content,
+          thumnail: fileURL,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
       console.log(response.data);
     } catch (errorMessage) {
       set({ errorMessage });
