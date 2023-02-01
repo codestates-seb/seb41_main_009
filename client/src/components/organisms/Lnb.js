@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { LabelLarge } from '../../styles/typo';
 
@@ -7,19 +9,59 @@ import { LabelLarge } from '../../styles/typo';
  * @param {function} handleTab - 탭 state 변경 함수
  * @returns
  */
-const Lnb = ({ currentTab, handleTab }) => {
-  const tabList = [{ title: 'All' }, { title: 'Post' }, { title: 'Series' }];
+const Lnb = ({ currentTab, category = '' }) => {
+  const navigate = useNavigate();
+
+  // const tabList = [{ title: 'All' }, { title: 'Posts' }, { title: 'Series' }];
+  const tabList = [{ title: 'Posts' }, { title: 'Series' }];
+
+  const handleTab = tab => {
+    navigate(`/${tab}/${category}`);
+  };
 
   return (
     <Container>
       <LeftButtonList>
-        {tabList.map((el, idx) =>
-          currentTab === idx ? (
-            <TabButton key={el.title} clicked onClick={() => handleTab(idx)}>
+        {tabList.map(el =>
+          currentTab === el.title ? (
+            <TabButton key={el.title} clicked onClick={() => handleTab(el.title)}>
               {el.title}
             </TabButton>
           ) : (
-            <TabButton key={el.title} onClick={() => handleTab(idx)}>
+            <TabButton key={el.title} onClick={() => handleTab(el.title)}>
+              {el.title}
+            </TabButton>
+          ),
+        )}
+      </LeftButtonList>
+      <Filter>Filter</Filter>
+    </Container>
+  );
+};
+
+const LnbSearch = ({ value }) => {
+  const navigate = useNavigate();
+
+  const [nowTab, SetNowTab] = useState();
+
+  // const tabList = [{ title: 'All' }, { title: 'Posts' }, { title: 'Series' }];
+  const tabList = [{ title: 'All' }, { title: 'Posts' }, { title: 'Series' }];
+
+  const handleTab = tab => {
+    SetNowTab(tab);
+    navigate(`?value=${value}&type=${tab}`);
+  };
+
+  return (
+    <Container>
+      <LeftButtonList>
+        {tabList.map(el =>
+          nowTab === el.title ? (
+            <TabButton key={el.title} clicked onClick={() => handleTab(el.title)}>
+              {el.title}
+            </TabButton>
+          ) : (
+            <TabButton key={el.title} onClick={() => handleTab(el.title)}>
               {el.title}
             </TabButton>
           ),
@@ -57,4 +99,4 @@ const TabButton = styled.button`
   cursor: pointer;
 `;
 
-export default Lnb;
+export { Lnb, LnbSearch };

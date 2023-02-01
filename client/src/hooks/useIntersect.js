@@ -21,8 +21,9 @@ const useIntersect = (onIntersect, options) => {
     const observer = new IntersectionObserver(callback, options);
     observer.observe(ref.current);
 
+    // 언마운트될때 옵저버연결 끊기
     return () => observer.disconnect();
-  }, [ref, options, callback]);
+  }, [ref]);
 
   return ref;
 };

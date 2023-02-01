@@ -48,11 +48,8 @@ public class SecurityConfig {
 			.formLogin().disable()
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
-			// TODO: 추가하기
-			.antMatchers(HttpMethod.POST, "/series", "/showcases", "/posts").authenticated()
-			.antMatchers(HttpMethod.PATCH, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
-			.antMatchers(HttpMethod.DELETE, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
-			//.antMatchers(HttpMethod.GET, "/members").authenticated()
+			.mvcMatchers(HttpMethod.GET, "/series", "/showcases", "/posts", "/categories").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/members/**", "/series/**", "/showcases/**", "/posts/**", "/categories/**").permitAll()
 			.anyRequest().permitAll());
 		http.sessionManagement()
 			.sessionFixation().changeSessionId()

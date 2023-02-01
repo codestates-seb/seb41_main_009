@@ -4,8 +4,11 @@ import { PostListStack, PostCard } from '../list/PostCard';
 import { LabelListTitle, LabelMedium } from '../../../styles/typo';
 import Pagination from '../Pagination';
 import useGetSeriesPostList from '../../../hooks/useGetSeriesPostList';
+import useSeriesStore from '../../../store/seriesStore';
+import { WhiteTextButton } from '../../atoms/Buttons';
 
 const SeriesHeaderPostList = ({ seriesId, page }) => {
+  const { currentPostId, setCurrentPostId } = useSeriesStore();
   const [isListOpen, setIsListOpen] = useState(false); // list 숨기기
 
   const { postList, postPageInfo } = useGetSeriesPostList(seriesId, page);
@@ -13,6 +16,7 @@ const SeriesHeaderPostList = ({ seriesId, page }) => {
   const PostListToggle = () => {
     setIsListOpen(!isListOpen);
   };
+
   return (
     <Container>
       <InnerLayer>
@@ -31,17 +35,34 @@ const SeriesHeaderPostList = ({ seriesId, page }) => {
             ''
           ) : (
             <PostListSection>
-              {postList && postList.length > 0
-                ? postList.map(post => {
-                    return <PostCard key={post.id} postId={post.id} />;
-                  })
-                : ''}
+              {postList.map(post =>
+                currentPostId === post.id ? (
+                  <PostCard
+                    key={post.id}
+                    postId={post.id}
+                    selected
+                    handleClick={() => {
+                      setCurrentPostId(post.id);
+                    }}
+                  />
+                ) : (
+                  <PostCard
+                    key={post.id}
+                    postId={post.id}
+                    handleClick={() => {
+                      setCurrentPostId(post.id);
+                    }}
+                  />
+                ),
+              )}
               <Pagination totalPages={Number(postPageInfo.totalPage)} />
             </PostListSection>
           )}
-          <button type="button" onClick={PostListToggle}>
-            자세히 보기
-          </button>
+          {isListOpen ? (
+            <WhiteTextButton onClick={PostListToggle}>자세히 보기</WhiteTextButton>
+          ) : (
+            <WhiteTextButton onClick={PostListToggle}>간략히 보기</WhiteTextButton>
+          )}
         </LowerSection>
       </InnerLayer>
     </Container>

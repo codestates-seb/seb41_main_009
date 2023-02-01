@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { CANCELPOSTCREATE } from '../../../constants/Messages';
+import { CANCEL_POST_CREATE } from '../../../constants/Messages';
 import { BlackShadowButton, WhiteShadowButton } from '../../atoms/Buttons';
 
 const Container = styled.div`
@@ -15,7 +15,7 @@ const PostCreateButtons = ({ submitNewPost }) => {
   const navigate = useNavigate();
 
   const cancelPostCreate = () => {
-    if (window.confirm(CANCELPOSTCREATE)) navigate(-1);
+    if (window.confirm(CANCEL_POST_CREATE)) navigate(-1);
   };
 
   return (

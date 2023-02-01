@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { PostDummy } from '../constants/dummyData';
 
 /**
  *
@@ -27,6 +28,12 @@ const useGetPost = ({ id }) => {
         console.log(err);
         setIsLoading(false);
         setIsLoadingError(true);
+      })
+      .finally(() => {
+        // 현재는 더미데이터에서 가져옴
+        setPost(PostDummy.data);
+        setIsLoading(false);
+        setIsLoadingError(false);
       });
   }, []);
 

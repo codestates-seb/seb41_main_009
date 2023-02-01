@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useDeleteComment, usePatchComment } from '../../../hooks/useCommentAPI';
+import useCommentAPI from '../../../hooks/useCommentAPI';
 import { UserInfoSmall } from '../UserInfo';
 import Input from '../../atoms/Input';
 
@@ -44,18 +44,18 @@ const CommentButton = styled.button`
   }
 `;
 
-const Comment = ({ comment }) => {
-  const { content, id } = comment;
+const Comment = ({ basePath, comment }) => {
+  const { content, id, writer } = comment;
   const [editMode, setEditMode] = useState(false);
-
   const [editContent, setEditContent] = useState(content);
+  const { deleteComment, postComment } = useCommentAPI();
 
-  const onClickEditAnswers = () => {
+  const onClickEditComment = () => {
     setEditMode(!editMode);
   };
 
-  const onClickDeleteAnswers = () => {
-    useDeleteComment(id);
+  const onClickDeleteComment = () => {
+    deleteComment(basePath, id);
   };
 
   const onChangeContent = e => {
@@ -63,19 +63,16 @@ const Comment = ({ comment }) => {
     setEditContent(e.target.value);
   };
 
-  const onClickCommentSubmit = async () => {
-    if (content.length < 10) {
-      alert('Minimum 10 characters.');
-    } else {
-      setEditMode(!editMode);
-      usePatchComment(id, editContent);
-    }
+  // CommentInputContainer 에 있는 submit 형태로 수정 해보기
+  const onClickCommentSubmit = () => {
+    setEditMode(!editMode);
+    postComment(basePath, id, editContent);
   };
 
   return (
     <Container>
       <InfoContainer>
-        <UserInfoSmall id={comment.writer.id} name={comment.writer.nickname} image={comment.writer.profileImageUrl} />
+        <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileImageUrl} />
       </InfoContainer>
       <CommentContainer>
         {!editMode ? (
@@ -86,15 +83,18 @@ const Comment = ({ comment }) => {
       </CommentContainer>
       {!editMode ? (
         <InfoContainer>
-          <CommentButton type="button" onClick={onClickEditAnswers}>
+          <CommentButton type="button" onClick={onClickEditComment}>
             Edit
           </CommentButton>
-          <CommentButton type="button" onClick={onClickDeleteAnswers}>
+          <CommentButton type="button" onClick={onClickDeleteComment}>
             Delete
           </CommentButton>
         </InfoContainer>
       ) : (
         <InfoContainer>
+          <CommentButton type="button" onClick={onClickCommentSubmit}>
+            Cancel
+          </CommentButton>
           <CommentButton type="button" onClick={onClickCommentSubmit}>
             Submit
           </CommentButton>

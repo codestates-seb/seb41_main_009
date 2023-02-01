@@ -1,72 +1,71 @@
 import styled from 'styled-components';
-import { Icon } from '@iconify/react';
-import { LabelMedium } from '../../../styles/typo';
+import { Viewer } from '@toast-ui/react-editor';
+import { LabelXSmall } from '../../../styles/typo';
 
-const IndexLabeldepth1 = styled.h1`
+import { PostDummy } from '../../../constants/dummyData';
+
+const Container = styled.div`
+  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  padding-left: 5px;
-  ${LabelMedium}
-  color: var(--gray-500);
-  gap: 6px;
+  width: calc(100% / 12 * 10);
+  height: fit-content;
+  margin-bottom: 10px;
+  margin-top: 0px;
 
-  &:hover {
-    color: var(--gray-700);
+  .toastui-editor-contents h1 {
+    ${LabelXSmall}
+    color: var(--gray-500);
+    margin: 0px;
+    border-bottom: none;
+
+    &:hover {
+      color: var(--gray-700);
+    }
+  }
+  .toastui-editor-contents h2 {
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+    color: var(--gray-500);
+    ${LabelXSmall}
+    gap: 6px;
+    margin: 0px;
+    border-bottom: none;
+
+    &:hover {
+      color: var(--gray-700);
+    }
+  }
+
+  .toastui-editor-contents h3 {
+    display: flex;
+    flex-direction: row;
+    padding-left: 40px;
+    color: var(--gray-500);
+    gap: 6px;
+    margin: 0px;
+    border-bottom: none;
+
+    ${LabelXSmall}
+    &:hover {
+      color: var(--gray-700);
+    }
+  }
+
+  .toastui-editor-contents p {
+    display: none;
+  }
+
+  .toastui-editor-contents img {
+    display: none;
   }
 `;
-const IndexLabeldepth2 = styled.h2`
-  display: flex;
-  flex-direction: row;
-  padding-left: 20px;
-  color: var(--gray-500);
-  ${LabelMedium}
-  gap: 6px;
 
-  &:hover {
-    color: var(--gray-700);
-  }
-`;
-const IndexLabeldepth3 = styled.h3`
-  display: flex;
-  flex-direction: row;
-  padding-left: 40px;
-  color: var(--gray-500);
-  gap: 6px;
-
-  ${LabelMedium}
-  &:hover {
-    color: var(--gray-700);
-  }
-`;
-
-const PostIndexLIstRender = ({ item }) => {
+const PostIndexLIstRender = () => {
   return (
-    <div>
-      {item.htmlTag && item.htmlTag === 'h1' ? (
-        <IndexLabeldepth1>
-          {item.content}
-          {item.image ? <Icon icon="mdi:image-outline" style={{ fontSize: '20px' }} /> : null}
-        </IndexLabeldepth1>
-      ) : (
-        ''
-      )}
-      {item.htmlTag && item.htmlTag === 'h2' ? (
-        <IndexLabeldepth2>
-          {item.content}
-          {item.image ? <Icon icon="mdi:image-outline" style={{ fontSize: '20px' }} /> : null}
-        </IndexLabeldepth2>
-      ) : (
-        ''
-      )}
-      {item.htmlTag && item.htmlTag === 'h3' ? (
-        <IndexLabeldepth3>
-          {item.content}
-          {item.image ? <Icon icon="mdi:image-outline" style={{ fontSize: '20px' }} /> : null}
-        </IndexLabeldepth3>
-      ) : (
-        ''
-      )}
-    </div>
+    <Container>
+      <Viewer initialValue={PostDummy.data.content} />
+    </Container>
   );
 };
 
