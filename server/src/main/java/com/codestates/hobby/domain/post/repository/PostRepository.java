@@ -11,25 +11,26 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post,Long> {
-    @Query("select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.id = :postId")
-    Optional<Post> findByIdUsingFetch(@Param("postId") long postId);
+//    @Query("select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.id = :postId")
+    Optional<Post> findById(@Param("postId") long postId);
 
-    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles order by p.id desc")
-    Page<Post> findAllOrderByIdDesc(Pageable pageable);
+//    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles order by p.id desc",
+//            countQuery = "select p from Post p")
+    Page<Post> findAllByOrderByIdDesc(Pageable pageable);
 
-    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.member.id = :memberId order by p.id desc",
-            countQuery = "select p from Post p where p.member.id = :memberId")
+//    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.member.id = :memberId order by p.id desc",
+//            countQuery = "select p from Post p where p.member.id = :memberId")
     Page<Post> findAllByMemberIdOrderByIdDesc(@Param("memberId")long memberId, Pageable pageable);
 
-    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.category = :category order by p.id desc",
-            countQuery = "select p from Post p where p.category = :category")
+//    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.category = :category order by p.id desc",
+//            countQuery = "select p from Post p where p.category = :category")
     Page<Post> findAllByCategoryOrderByIdDesc(@Param("category")Category category, Pageable pageable);
 
-    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.series.id = :seriesId order by p.id desc",
-            countQuery = "select p from Post p where p.series.id = :seriesId")
+//    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.series.id = :seriesId order by p.id desc",
+//            countQuery = "select p from Post p where p.series.id = :seriesId")
     Page<Post> findAllBySeriesIdOrderByIdDesc(@Param("seriesId")long seriesId, Pageable pageable);
 
-    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.content like concat('%',:content,'%') order by p.id desc",
-            countQuery = "select p from Post p where p.content like concat('%',:content,'%')")
+//    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.content like concat('%',:content,'%') order by p.id desc",
+//            countQuery = "select p from Post p where p.content like concat('%',:content,'%')")
     Page<Post> findAllByContentContainsOrderByIdDesc(@Param("content")String content, Pageable pageable);
 }
