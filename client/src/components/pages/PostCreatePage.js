@@ -30,8 +30,8 @@ const PostCreatePage = () => {
       category,
       description,
       content: body,
-      imgUrls: image,
     };
+    if (image.length) postData.imgUrls = image;
 
     if (title && category && description && body) {
       axios
