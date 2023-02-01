@@ -79,6 +79,6 @@ public class GlobalExceptionAdvice {
 	}
 
 	private void writeLog(Exception e) {
-		log.warn("{} Exception occurred: {}", e.getClass().getSimpleName(), e.getMessage(), e);
+		log.warn("{} occurred: {}", e.getClass().getSimpleName(), e.getMessage(), e);
 	}
 }
