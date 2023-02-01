@@ -3,11 +3,9 @@ package com.codestates.hobby.domain.post.entity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.*;
-
 import com.codestates.hobby.domain.common.Writing;
-
+import org.hibernate.annotations.ColumnDefault;
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
 import com.codestates.hobby.domain.member.entity.Member;
@@ -21,6 +19,15 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("Post")
 @NoArgsConstructor
 public class Post extends Writing {
+	@Column
+	@ColumnDefault("0")
+	private int commentCount;
+
+	@Column
+	private String  description;
+
+	@Column
+	private String thumbnailUrl;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "series_id")
@@ -32,45 +39,34 @@ public class Post extends Writing {
 	@OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
 	private List<PostComment> comments = new ArrayList<>();
 
-	public Post(Member member, String title, Category category, String content, List<String> imageURLs) {
-		this(member, title, null, category, content, imageURLs);
-	}
-
-	public Post(Member member, String title, Category category, String content) {
-		this(member, title, null, category, content,null);
-	}
-
-	public Post(Member member, String title, Series series,Category category, String content) {
-		this(member,title,series,category,content,null);
-	}
-
-	public Post(Member member, String title, Series series, Category category, String content, List<String> imageURLs) {
+	public Post(Member member, String title, Series series, Category category, String content, String description, List<String> imageURLs) {
 		super(member, title, category, content);
 		this.series = series;
+		this.description = description;
 
-		if (imageURLs == null) this.images = null;
-		else imageURLs.forEach(this::addImageFromUrl);
+		if (imageURLs == null) {
+			this.thumbnailUrl = "default image url";
+			this.images = null;
+		}
+		else {
+			this.thumbnailUrl = imageURLs.get(0);
+			imageURLs.forEach(this::addImageFromUrl);
+		}
 	}
 
-	public void updatePost (String title, String content, Category category, Series series, List<String> imageURLs) {
+	public void updatePost (String title, String content, String description, Category category, Series series, List<String> imageURLs) {
 		super.update(title, content, category);
 		this.series = series;
+		this.description = description;
 
-		if (imageURLs == null) this.images = null;
-		else updateImage(imageURLs);
-	}
-
-	public void updatePost (String title, String content, Category category, Series series) {
-		this.updatePost(title, content, category, series, null);
-	}
-
-	public void updatePost (String title, String content, Category category, List<String> imageURLs) {
-		this.updatePost(title, content, category, null, imageURLs);
-	}
-
-	public void updatePost (String title, String content, Category category) {
-		this.updatePost(title, content, category, null, null);
-
+		if (imageURLs == null) {
+			this.thumbnailUrl = "default image url";
+			this.images = null;
+		}
+		else {
+			this.thumbnailUrl = imageURLs.get(0);
+			updateImage(imageURLs);
+		}
 	}
 
 	public void addImageFromUrl(String url) {
@@ -83,8 +79,11 @@ public class Post extends Writing {
 		new ArrayList<>(images).stream().filter(image -> !urls.contains(image.getFileURL())).forEach(image -> images.remove(image));
 		urls.stream().filter(url -> !olds.contains(url)).forEach(this::addImageFromUrl);
 	}
-
 	public void deleteSeries() {
 		this.series = null;
+	}
+
+	public void updateCommentCount(int num){
+		this.commentCount += num;
 	}
 }

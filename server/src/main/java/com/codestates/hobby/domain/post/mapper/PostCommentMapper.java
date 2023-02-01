@@ -4,6 +4,7 @@ import com.codestates.hobby.domain.member.mapper.MemberMapper;
 import com.codestates.hobby.domain.post.dto.PostCommentDto;
 import com.codestates.hobby.domain.post.entity.PostComment;
 
+import com.codestates.hobby.domain.series.entity.Series;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
