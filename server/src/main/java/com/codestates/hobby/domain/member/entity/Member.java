@@ -58,15 +58,13 @@ public class Member extends BaseEntity implements Serializable {
 	@OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private FileInfo image;
 
-	public Member(String email, String nickname, String password, String introduction, boolean isOauth2,
-		String profileUrl, List<String> roles) {
+	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, List<String> roles) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
 		this.introduction = introduction;
 		this.isOauth2 = isOauth2;
 		this.roles = roles;
-		this.setImage(profileUrl);
 	}
 
 	public void edit(String nickname, String introduction, String profileUrl) {
