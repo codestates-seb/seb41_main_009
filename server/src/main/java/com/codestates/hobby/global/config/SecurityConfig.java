@@ -48,11 +48,8 @@ public class SecurityConfig {
 			.formLogin().disable()
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
-			// TODO: 추가하기
-			.antMatchers(HttpMethod.POST, "/series", "/showcases", "/posts").authenticated()
-			.antMatchers(HttpMethod.PATCH, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
-			.antMatchers(HttpMethod.DELETE, "/members/**", "/series/**", "/showcases/**", "/posts/**").authenticated()
-			//.antMatchers(HttpMethod.GET, "/members").authenticated()
+			.mvcMatchers(HttpMethod.GET, "/series", "/showcases", "/posts", "/categories").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/members/**", "/series/**", "/showcases/**", "/posts/**", "/categories/**").permitAll()
 			.anyRequest().permitAll());
 		http.sessionManagement()
 			.sessionFixation().changeSessionId()
@@ -71,7 +68,8 @@ public class SecurityConfig {
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(
-			List.of("http://localhost:3000", "http://127.0.0.1:3000", "http://intorest.s3-website.ap-northeast-2.amazonaws.com"));
+			List.of("http://localhost:3000", "http://127.0.0.1:3000",
+				"http://intorest.s3-website.ap-northeast-2.amazonaws.com", "http://intorestbackup.s3-website.ap-northeast-2.amazonaws.com"));
 		configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE", "OPTIONS", "HEAD"));
 		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Cache-Control"));
 		configuration.setExposedHeaders(List.of("Authorization"));

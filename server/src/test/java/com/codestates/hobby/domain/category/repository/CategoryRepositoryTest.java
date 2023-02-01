@@ -10,11 +10,13 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.codestates.hobby.domain.category.entity.Category;
 
 @DataJpaTest
+@ActiveProfiles("local")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CategoryRepositoryTest {
 	@Autowired

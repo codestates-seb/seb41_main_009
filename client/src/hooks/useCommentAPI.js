@@ -13,22 +13,19 @@ const useCommentAPI = () => {
    * @param {string | number} postId
    * @returns {post{}, boolean, boolean}
    */
-  const getComment = ({ id }) => {
-    const url = `posts/${id}/comments`;
-
+  const getComment = (basePath, id, params) => {
+    const url = `/${basePath}/${id}/comments`;
     axios
-      .get(url)
-      .then(() => {
-        setcomments(COMMENT_DUMMY2);
+      .get(url, {
+        params,
       })
-
+      .then(res => {
+        setcomments(res.data);
+      })
       .finally(() => {
-        // 현재는 더미데이터에서 가져옴
-        setcomments(COMMENT_DUMMY2);
         setIsLoading(false);
         setIsLoadingError(false);
       });
-    return { comments, isLoading, isLoadingError };
   };
 
   /**
@@ -37,8 +34,8 @@ const useCommentAPI = () => {
    * @param {string} content : 댓글 내용
    * @returns {post{}, boolean, boolean}
    */
-  const postComment = ({ id, content }) => {
-    const url = `posts/${id}/comments`;
+  const postComment = ({ basePath, id, content }) => {
+    const url = `${basePath}/${id}/comments`;
 
     axios
       .post(url, {
@@ -60,7 +57,6 @@ const useCommentAPI = () => {
         setIsLoadingError(false);
         console.log('Comment');
       });
-    return { comments, isLoading, isLoadingError };
   };
   /**
    * 댓글 내용을 수정할 때 사용
@@ -68,8 +64,8 @@ const useCommentAPI = () => {
    * @param {string} content : 댓글 내용
    * @returns {post{}, boolean, boolean}
    */
-  const patchComment = ({ id, content }) => {
-    const url = `posts/${id}/comments`;
+  const patchComment = ({ basePath, id, content }) => {
+    const url = `${basePath}/${id}/comments`;
 
     axios
       .patch(url, {
@@ -90,7 +86,6 @@ const useCommentAPI = () => {
         setIsLoading(false);
         setIsLoadingError(false);
       });
-    return { comments, isLoading, isLoadingError };
   };
 
   /**
@@ -98,25 +93,20 @@ const useCommentAPI = () => {
    * @param {string | number} postId
    * @returns {post{}, boolean, boolean}
    */
-  const deleteComment = ({ id }) => {
+  const deleteComment = ({ basePath, id }) => {
     const navigate = useNavigate();
-    const url = `posts/${id}/comments`;
+    const url = `${basePath}/${id}/comments`;
 
     axios
-      .delete(url, {
-        headers: {
-          Authorization: '인증수단필요',
-        },
-      })
+      .delete(url)
       .then(res => {
         console.log(res);
         navigate('/questions');
       })
       .catch(err => console.log(err));
-    return { comments, isLoading, isLoadingError };
   };
 
-  return { getComment, postComment, patchComment, deleteComment };
+  return { comments, isLoading, isLoadingError, getComment, postComment, patchComment, deleteComment };
 };
 
 export default useCommentAPI;

@@ -3,6 +3,8 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import PageHeader from '../organisms/PageHeader';
 import { LnbSearch } from '../organisms/Lnb';
+import { TextButton } from '../atoms/Buttons';
+import Pagination from '../molecules/Pagination';
 import SeriesListContainer from '../organisms/listContainter/SeriesListContainer';
 import SearchResultTitle from '../organisms/search/SearchResultTitle';
 import PostListContainer from '../organisms/listContainter/PostListContainer';
