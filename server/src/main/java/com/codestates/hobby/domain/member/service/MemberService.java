@@ -29,14 +29,15 @@ public class MemberService {
 
     @Transactional
     public Member create(MemberDto.Post post) {
-//        certificationService.verifyEmail(post.getEmail());
+        certificationService.verifyEmail(post.getEmail());
 
         verifyExistEmail(post.getEmail());
         verifyExistNickname(post.getNickname());
         String encryptedPassword = passwordEncoder.encode(post.getPassword());
         List<String> roles = authorityUtils.createRoles(post.getEmail());
+        String url = "https://cdn-icons-png.flaticon.com/512/1946/1946429.png";
 
-        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword, post.getIntroduction(), false, roles));
+        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword,false, roles, url));
     }
 
     @Transactional

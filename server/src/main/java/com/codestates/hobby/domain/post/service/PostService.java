@@ -75,9 +75,7 @@ public class PostService {
 
     @Transactional
     public Post findById(long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
-        log.info("Post의 ID in Controller:" + post.getId());
-        return post;
+        return postRepository.findById(postId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
     }
 
     @Transactional(readOnly = true)
