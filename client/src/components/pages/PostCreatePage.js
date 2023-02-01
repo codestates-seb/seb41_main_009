@@ -20,6 +20,7 @@ const PostCreatePage = () => {
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
   const [body, setBody] = useState('내용을 입력해주세요.');
+  const [image, setImage] = useState([]);
   const navigate = useNavigate();
 
   const submitNewPost = () => {
@@ -29,6 +30,7 @@ const PostCreatePage = () => {
       category,
       description,
       content: body,
+      image,
     };
 
     if (title && category && description && body) {
@@ -46,7 +48,7 @@ const PostCreatePage = () => {
     <Container>
       <PostCreateHeader title={title} setTitle={setTitle} curCategory={category} setCategory={setCategory} />
       <PostCreateDescription description={description} setDescription={setDescription} />
-      <PostCreateBody body={body} setBody={setBody} />
+      <PostCreateBody body={body} setBody={setBody} setImage={setImage} />
       <PostCreateButtons submitNewPost={submitNewPost} />
     </Container>
   );

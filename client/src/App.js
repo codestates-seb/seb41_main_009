@@ -8,7 +8,7 @@ import './App.css';
 import GlobalStyled from './GlobalStyle';
 import PublicRoute from './routes/PublicRoute';
 import PrivateRoute from './routes/PrivateRoute';
-import ProtectedRoute from './routes/ProtectedRoute';
+// import ProtectedRoute from './routes/ProtectedRoute';
 import Footer from './components/organisms/Footer';
 import useAuthStore from './store/useAuthStore';
 
@@ -54,7 +54,7 @@ const App = () => {
               <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
               <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
               <Route path="/posts/:id/edit" element={<PrivateRoute component={<PostEditPage />} />} />
-              <Route path="/posts/new" element={<ProtectedRoute component={<PostCreatePage />} />} />
+              <Route path="/posts/new" element={<PublicRoute component={<PostCreatePage />} />} />
               <Route path="/series/:category" element={<PublicRoute component={<SeriesListPage />} />} />
               <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
               <Route path="/series/new" element={<PublicRoute component={<SeriesCreatePage />} />} />
