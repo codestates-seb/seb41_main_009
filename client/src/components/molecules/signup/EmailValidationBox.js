@@ -20,7 +20,7 @@ const EmailValidationBox = ({
     const url = 'auth/certifications';
     const body = {
       email,
-      emailValidationCode,
+      code: emailValidationCode,
     };
 
     axios
