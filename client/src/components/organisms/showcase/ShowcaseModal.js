@@ -1,21 +1,34 @@
 import styled from 'styled-components';
 import { useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Box from '../../atoms/Box';
 import useShowcaseModal from '../../../store/showcaseModalStore';
 import { UserInfoSmall } from '../../molecules/UserInfo';
-import { ParagraphMedium } from '../../../styles/typo';
+import { ParagraphMedium, LabelSmall } from '../../../styles/typo';
 import Category from '../../atoms/Category';
 import Comments from '../comment/Comments';
+import useAuthStore from '../../../store/useAuthStore';
 
 const ShowcaseModal = ({ isModalOpen }) => {
   const modalRef = useRef(null);
-  const { modalItem, toggleModalOpen } = useShowcaseModal();
+  const { modalItem, toggleModalOpen, deleteShowcase } = useShowcaseModal();
+  const { currentUserId } = useAuthStore(state => state);
+  const { id, content, category, imageUrls, writer } = modalItem;
+  const navigate = useNavigate();
 
   const handleClickOutside = e => {
     const condition = isModalOpen && !modalRef.current.contains(e.target);
     if (condition) {
       toggleModalOpen();
     }
+  };
+
+  const handleDeleteShowcase = async () => {
+    await deleteShowcase(id);
+    toggleModalOpen();
+    navigate('/');
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -31,27 +44,23 @@ const ShowcaseModal = ({ isModalOpen }) => {
       <Body ref={modalRef}>
         <TopContainer>
           <ImageBox padding="0px">
-            <Image src={modalItem.images[0].fileURL} />
+            <Image src={imageUrls[0].fileURL} />
+            {currentUserId === writer.id ? <EditButton onClick={handleDeleteShowcase}> X </EditButton> : null}
           </ImageBox>
           <ShowcaseContents>
             <Box>
-              <UserInfoSmall
-                id={modalItem.writer.id}
-                name={modalItem.writer.nickname}
-                image={modalItem.writer.profileImageUrl}
-              />
+              <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileImageUrl} />
             </Box>
             <Box margin="15px 0px 35px 0px">
-              <Content>{modalItem.content}</Content>
+              <Content>{content}</Content>
             </Box>
             <Category padding="20px" color="rgba(51, 51, 51, 1)">
-              {modalItem.category}
+              {category}
             </Category>
           </ShowcaseContents>
         </TopContainer>
         <CommentListContainer>
-          {/* 코멘트 불러올때 오류 발생 아예 다른 이름을 줘야할 것 같음 */}
-          <Comments comments={modalItem.id || '1'} />
+          <Comments basePath="showcases" id={id} />
         </CommentListContainer>
       </Body>
     </Container>
@@ -89,12 +98,35 @@ const TopContainer = styled.div`
 `;
 
 const ImageBox = styled(Box)`
+  position: relative;
   max-width: 693px;
   margin-right: 32px;
 `;
 
 const Image = styled.img`
   height: 100%;
+`;
+
+const EditButton = styled.button`
+  position: absolute;
+  ${LabelSmall};
+  color: white;
+  background-color: var(--gray-600);
+  border: 2px solid var(--gray-900);
+  &.focus {
+    border: 2px solid var(--gray-700);
+    background-color: var(--gray-700);
+    color: white;
+    box-shadow: var(--boxShadow-00) var(--gray-700);
+
+    &:hover {
+      background-color: var(--gray-500);
+    }
+  }
+
+  &:hover {
+    background-color: var(--gray-500);
+  }
 `;
 
 const Content = styled.div`

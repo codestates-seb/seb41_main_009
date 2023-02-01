@@ -7,13 +7,13 @@ const useInputImage = () => {
   const InputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
-  const { imageBase64, setImageBase64, setFileInfos } = useShowcaseCreateStore();
+  const { imageBase64, setImageBase64, setImageBinary, setFileInfos } = useShowcaseCreateStore();
   const { MAX_UPLOAD_SIZE } = config;
 
-  // encode file to base64
-  const encodeFileToBase64 = useCallback(blob => {
+  // 이미지 프리뷰를 위한 dataURL 저장
+  const encodeFileToBase64 = useCallback(inputFile => {
     const reader = new FileReader();
-    reader.readAsDataURL(blob);
+    reader.readAsDataURL(inputFile);
     return new Promise(res => {
       reader.onload = () => {
         setImageBase64(reader.result);
@@ -22,6 +22,17 @@ const useInputImage = () => {
       };
     });
   });
+
+  const convertFileToBinary = inputFile => {
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(inputFile);
+    return new Promise(res => {
+      reader.onloadend = () => {
+        setImageBinary(new Uint8Array(reader.result));
+        res();
+      };
+    });
+  };
 
   const handleInputOnChange = useCallback(async event => {
     const imageFile = event.target.files[0];
@@ -35,6 +46,7 @@ const useInputImage = () => {
       return;
     }
 
+    await convertFileToBinary(imageFile);
     await encodeFileToBase64(imageFile).then(() => {
       setFileInfos([
         {

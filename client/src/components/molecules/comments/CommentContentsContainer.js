@@ -7,12 +7,12 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const CommentContentsContainer = ({ comments }) => {
+const CommentContentsContainer = ({ basePath, comments }) => {
   return (
     <Container>
       {comments && comments.length > 0
         ? comments.map(el => {
-            return <Comment key={el.id} comment={el} />;
+            return <Comment key={el.id} comment={el} basePath={basePath} />;
           })
         : ''}
     </Container>
