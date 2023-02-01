@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Viewer } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
 
 import { ParagraphMedium, HeadingLarge, HeadingSmall, HeadingMedium } from '../../../styles/typo';
 // import { PostDummy } from '../../../constants/dummyData';
@@ -69,9 +70,12 @@ const Container = styled.div`
 `;
 
 const PostContentViewer = ({ post }) => {
+  console.log(post, 'post in PostContentViewer');
   return (
     <Container>
-      <Viewer initialValue={post.content} />
+      <Viewer initialValue={post.content || ''} language="ko-KR">
+        {post.content}
+      </Viewer>
     </Container>
   );
 };

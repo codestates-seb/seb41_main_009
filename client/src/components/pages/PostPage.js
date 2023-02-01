@@ -24,11 +24,12 @@ const PostPage = () => {
   // `${HOST}/posts/${category}/${postId}` 해당하는 정보를 가져옴
   const { post } = useGetPost(id);
 
+  console.log(post, 'post');
   return (
     <Container>
       <PostHeaderLayer post={post} />
       <PostSubHeaderLayer post={post} />
-      <PostContentLayer id={id} />
+      <PostContentLayer post={post} />
       <Comments basePath="posts" id={id} />
     </Container>
   );

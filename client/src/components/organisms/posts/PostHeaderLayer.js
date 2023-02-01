@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import PostTitle from '../../molecules/posts/PostTitle';
 import { UserInfoSmall } from '../../molecules/UserInfo';
 import { LabelSmall } from '../../../styles/typo';
@@ -19,24 +22,62 @@ import { LabelSmall } from '../../../styles/typo';
  * @returns {JSX.Element} -
  */
 const PostHeaderLayer = ({ post }) => {
-  const { title, desc, category, createdAt, modifiedAt } = post;
-  // const { id, nickname, profileImageUrl } = writer;
-  // TODO: 페이지 구현시 createAt, modifiedAt 은 Date 타입으로 받아 컴포넌트 내에서 변환하기
-  console.log(desc);
+  const [title, setTitle] = useState('title');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('no description');
+  const [writer, setWriter] = useState({
+    id: 7,
+    nickname: 'iamgroot',
+    profileUrl: '',
+  });
+  const [createdAt, setCreatedAt] = useState('Not Created');
+  const [modifiedAt, setModifiedAt] = useState('Not Modified');
+
+  const navigate = useNavigate();
+
+  const handleClickRemove = () => {
+    const url = `posts/${post?.id}`;
+
+    axios
+      .delete(url)
+      .then(res => {
+        console.log(res);
+        navigate(`/posts/`);
+      })
+      .catch(err => console.log(err));
+  };
+  useEffect(() => {
+    setTitle(post.title);
+    setCategory(post.category);
+    setDescription('no description');
+    setWriter(post.writer);
+    setCreatedAt(post.createdAt);
+    setModifiedAt(post.modifiedAt);
+  }, [post]);
 
   // UserInfoSmall 에 해당하는 props는 내려주면 오류가 뜸
   return (
     <Container>
-      <PostTitle title={title} description="not found" categoryName={category || 'Category'} />
+      <PostTitle title={title} description={description} categoryName={category || 'Category'} />
       <DeatilInfoList>
+        <List2>
+          <UserInfoSmall id={writer?.id} name={writer?.nickname} image={writer?.profileUrl} />
+          <List>
+            createAt
+            <CreatedAtText> {new Date().toDateString(createdAt)}</CreatedAtText>
+          </List>
+          <List>
+            modifiedAt
+            <CreatedAtText> {new Date().toDateString(modifiedAt)}</CreatedAtText>
+          </List>
+        </List2>
         <List>
-          <UserInfoSmall />
-          <CreatedAtText>createAt {new Date().toDateString(createdAt)}</CreatedAtText>
-          <CreatedAtText>modifiedAt {new Date().toDateString(modifiedAt)}</CreatedAtText>
-        </List>
-        <List>
-          <Button type="button">Edit</Button>
-          <Button type="button">Delete</Button>
+          <Button type="button" to={`/posts/${post?.id}/edit`}>
+            Edit
+          </Button>
+          <Button type="button" onClick={handleClickRemove}>
+            Delete
+          </Button>
         </List>
       </DeatilInfoList>
     </Container>
@@ -66,13 +107,20 @@ const List = styled.div`
   gap: 10px;
 `;
 
+const List2 = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 30px;
+`;
+
 const CreatedAtText = styled.div`
   color: var(--gray-400);
 `;
 
-const Button = styled.button`
+const Button = styled(Link)`
   width: ${props => (props.width ? props.width : '51px')};
   height: ${props => (props.height ? props.height : '36px')};
+  text-decoration: none;
   box-sizing: border-box;
   display: flex;
   align-items: center;
