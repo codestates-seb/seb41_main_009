@@ -68,7 +68,8 @@ public class SecurityConfig {
 	CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(
-			List.of("http://localhost:3000", "http://127.0.0.1:3000", "http://intorest.s3-website.ap-northeast-2.amazonaws.com"));
+			List.of("http://localhost:3000", "http://127.0.0.1:3000",
+				"http://intorest.s3-website.ap-northeast-2.amazonaws.com", "http://intorestbackup.s3-website.ap-northeast-2.amazonaws.com"));
 		configuration.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE", "OPTIONS", "HEAD"));
 		configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Cache-Control"));
 		configuration.setExposedHeaders(List.of("Authorization"));
