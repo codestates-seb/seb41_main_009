@@ -5,6 +5,8 @@
 ## ⛳️ 취미를 나누고 관계를 잇다 - IntoRest
 
 ### [Intorest 바로가기](http://intorest.s3-website.ap-northeast-2.amazonaws.com/)
+- Guest ID: intorest@intorest.com
+- Guest PW: intorest1!
 
 <br>
 
@@ -13,19 +15,19 @@
 1. [팀 소개](#%EF%B8%8F-팀-소개)
 2. [기술 스택](#%EF%B8%8F-기술-스택)
 3. [기능 소개](#%EF%B8%8F-기능-소개)
+
    <br>
 
 ## ⛳️ 팀 소개
+<div align="center">
+  <img width="801" alt="image" src="https://user-images.githubusercontent.com/110910408/215974924-752b9c06-8c7d-493b-bb42-08ed8714a15b.png">
+</div>
 
-|   FE   |        |        |        |
-| :----: | :----: | :----: | :----: |
-|        | 김회철 | 박종효 | 정호정 |
-| **BE** |        |        |        |
-|        | 남상민 | 윤소영 | 한규현 |
 
 <br>
 
 ## ⛳️ 기술 스택
+[IntoRest의 기술이 궁금하다면? - 기술 발표 영상 보러가기](https://youtu.be/FTdrjWbG-B4)
 
 ### FE
 
@@ -62,46 +64,56 @@
   <img src="https://img.shields.io/badge/Google%20Cloud-4285F4?style=for-the-badge&logo=Google%20Cloud&logoColor=white">
   <img src="https://img.shields.io/badge/github actions-2088FF?style=for-the-badge&logo=github actions&logoColor=white">
 </div>
+
 <br>
 
 ## ⛳️ 기능 소개
 
 ### 1. 회원가입 & 로그인
-
 #### 1-1. 회원가입
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215976403-44d1330f-0898-4511-b994-77a4fc634baf.png">
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215976552-ad13671f-0651-4141-95f3-f5086a0f923c.png">
 
 #### 1-2. 로그인
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215976645-927bffc9-cabd-42e5-a0ec-49fa0bdcfa67.png">
 
 ### 2. 쇼케이스
 
-#### 2-1. 쇼케이스 조회
+#### 2-1. 쇼케이스
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215976782-397db250-9b2a-4144-879a-224eb68a3327.png">
 
-#### 2-2. 쇼케이스 작성
+#### 2-2. 쇼케이스 상세
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215976829-f58a86b3-e584-4081-ba96-b6ca13d49a12.png">
 
-#### 2-3. 쇼케이스 수정
-
-#### 2-4. 쇼케이스 댓글 달기
+#### 2-3. 쇼케이스 생성
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215976982-1e8e741d-e340-43fd-913d-49de334baa32.png">
 
 ### 3. 시리즈
 
-#### 3-1. 시리즈 조회
+#### 3-1. 시리즈
+<img width="1022" alt="스크린샷 2023-02-01 오후 4 19 18" src="https://user-images.githubusercontent.com/110910408/215977258-3fe8a62d-aedb-459e-acd8-574241d4c437.png">
 
-#### 3-2. 새로운 시리즈 생성
+#### 3-2. 시리즈 상세
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215977086-3d3bee8c-9f7e-462e-bbee-d076ea57bb3b.png">
 
-#### 3-3. 시리즈 컨텐츠 추가
+#### 3-3. 시리즈 생성
+<img width="1022" alt="스크린샷 2023-02-01 오후 4 19 51" src="https://user-images.githubusercontent.com/110910408/215977293-38911cb0-37c5-48ae-beb1-a12263d1bdb3.png">
 
 ### 4. 포스트
 
-#### 4-1. 포스트 조회
+#### 4-1. 포스트
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215977462-9b79fc28-d2a5-4e8c-9c48-51a2079f709f.png">
 
-#### 4-2. 포스트 작성
+#### 4-2. 포스트 상세
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215977511-379d9f6e-82db-444c-84ca-ee05b3d13ba1.png">
 
 #### 4-3. 포스트 수정
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215977560-0e9d046d-2a5f-4822-b3db-6e7eddbf1802.png">
 
-#### 4-4. 포스트 댓글 달기
+### 5. 유저 페이지
 
-### 5. 마이페이지
-
-#### 5-1. 유저 정보 조회
+#### 5-1. 유저 페이지
+<img width="1022" alt="스크린샷 2023-02-01 오후 4 22 50" src="https://user-images.githubusercontent.com/110910408/215977675-849645a1-dd8f-4a80-a4a6-5fb90bcd0ab7.png">
 
 #### 5-2. 유저 정보 수정
+<img width="1022" alt="image" src="https://user-images.githubusercontent.com/110910408/215977706-b185c09c-65a0-46e9-9924-07eb029cc2d7.png">
