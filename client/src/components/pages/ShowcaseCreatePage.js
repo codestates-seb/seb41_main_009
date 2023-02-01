@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 import TextArea from '../atoms/TextArea';
 import Box from '../atoms/Box';
@@ -11,6 +12,7 @@ import useShowcaseCreateStore from '../../store/showcaseCreateStore';
 
 const ShowcaseCreatePage = () => {
   const { setContent, initStore, postShowcase } = useShowcaseCreateStore();
+  const navigate = useNavigate();
 
   // save text to content state
   const handleTextOnChange = event => {
@@ -19,6 +21,8 @@ const ShowcaseCreatePage = () => {
 
   const handlePostShowcase = async () => {
     await postShowcase();
+    navigate('/');
+    window.location.reload();
   };
 
   useEffect(() => {
