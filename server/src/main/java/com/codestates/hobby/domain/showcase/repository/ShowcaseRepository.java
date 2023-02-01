@@ -9,10 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.showcase.entity.Showcase;
+import org.springframework.data.repository.query.Param;
 
 public interface ShowcaseRepository extends JpaRepository<Showcase, Long> {
 	@Query("select s from Showcase s join fetch s.member m join fetch m.image join fetch s.fileInfos where s.id = ?1")
-	Optional<Showcase> findByIdUsingFetch(long showcaseId);
+	Optional<Showcase> findByIdUsingFetch(@Param("showcaseId")long showcaseId);
 
 	@Query("select s from Showcase s join fetch s.member m join fetch m.image where s.member.id = :memberId and s.id < :showcaseId")
 	Slice<Showcase> findAllByMemberIdAndIdLessThan(long memberId, long showcaseId, Pageable pageable);
