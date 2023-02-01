@@ -14,7 +14,8 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     @Query("select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.id = :postId")
     Optional<Post> findByIdUsingFetch(@Param("postId") long postId);
 
-    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles order by p.id desc")
+    @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles order by p.id desc",
+            countQuery = "select p from Post p")
     Page<Post> findAllOrderByIdDesc(Pageable pageable);
 
     @Query(value = "select p from Post p join fetch p.member m join fetch m.image join fetch m.roles where p.member.id = :memberId order by p.id desc",
