@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const useShowcaseCreateStore = create((set, get) => ({
   // category
-  categoryKey: '',
+  categoryKey: 'baseball',
   categoryName: 'Category',
   setCategoryKey: categoryKey => {
     console.log(categoryKey);
@@ -49,10 +49,18 @@ const useShowcaseCreateStore = create((set, get) => ({
   // FileInfo API 를 사용하여 presigned url 을 받아오는 함수
   getPresignedURL: async (basePath, size, contentType) => {
     try {
-      const response = await axios.post(`/${basePath}/files`, {
-        size,
-        contentType,
-      });
+      const response = await axios.post(
+        `/${basePath}/files`,
+        {
+          size,
+          contentType,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
       return response.data;
     } catch (err) {
       console.log(err);
@@ -83,7 +91,11 @@ const useShowcaseCreateStore = create((set, get) => ({
         fileInfos,
       };
 
-      const response = await axios.post('/showcases', body);
+      const response = await axios.post('/showcases', body, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       // 업로드된 시점에서
       console.log('쇼케이스 업로드 1차 통과');
       console.log(response);
@@ -110,12 +122,20 @@ const useShowcaseCreateStore = create((set, get) => ({
       const { fileURL, signedURL } = getPresignedURL('series', fileInfos.size, fileInfos.contentType);
       await uploadToGCS(signedURL);
 
-      const response = await axios.post('/showcases', {
-        category: categoryKey,
-        title,
-        content,
-        thumnail: fileURL,
-      });
+      const response = await axios.post(
+        '/showcases',
+        {
+          category: categoryKey,
+          title,
+          content,
+          thumnail: fileURL,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
       console.log(response.data);
     } catch (errorMessage) {
       set({ errorMessage });
