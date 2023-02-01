@@ -7,10 +7,16 @@ import com.codestates.hobby.domain.post.service.PostService;
 import com.codestates.hobby.global.config.support.CustomPageRequest;
 import com.codestates.hobby.global.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -23,8 +29,6 @@ public class PostQueryController {
     public ResponseEntity<?> get(@PathVariable("post-id") long postId) {
         Post post = postService.findById(postId);
         PostDto.Response response = mapper.postToResponse(post);
-        mapper.setSeries(response,post);
-        mapper.setSeriesPostUrl(response,post);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -61,8 +65,6 @@ public class PostQueryController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             Page<PostDto.SimpleResponse> responses = posts.map(mapper::postToSimpleResponse);
-            responses.forEach(response -> mapper.setSeries(response,postService.findVerifiedPost(response.getId())));
-            responses.forEach(response -> mapper.setThumbnailUrl(response,postService.findVerifiedPost(response.getId())));
             return new ResponseEntity<>(new MultiResponseDto<>(responses), HttpStatus.OK);
         }
     }
