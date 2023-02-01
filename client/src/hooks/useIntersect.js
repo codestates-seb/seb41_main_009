@@ -8,7 +8,6 @@ const useIntersect = (onIntersect, options) => {
     (entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) onIntersect(entry, observer);
-        console.log('entrie');
       });
     },
     [onIntersect],
@@ -21,7 +20,6 @@ const useIntersect = (onIntersect, options) => {
     // 위에서 작성한 함수를 intersectionObserver 의 콜백으로 등록
     const observer = new IntersectionObserver(callback, options);
     observer.observe(ref.current);
-    console.log('connet observer');
 
     // 언마운트될때 옵저버연결 끊기
     return () => observer.disconnect();
