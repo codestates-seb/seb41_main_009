@@ -80,7 +80,6 @@ public class GlobalExceptionAdvice {
 	}
 
 	private void writeLog(Exception e) {
-		ThreadContext.put("type", "debug");
 		log.warn("{} Exception occurred: {}", e.getClass().getSimpleName(), e.getMessage(), e);
 	}
 }
