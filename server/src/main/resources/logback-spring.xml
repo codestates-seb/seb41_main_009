@@ -39,7 +39,6 @@
         </appender>
 
         <appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <filter class="com.codestates.hobby.global.log.DebugLogFilter"/>
             <file>log/debug.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>log/debug/%d{yyyy-MM}/debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
