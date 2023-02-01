@@ -5,7 +5,7 @@ import useShowcaseCreateStore from '../../store/showcaseCreateStore';
 import { TAGS } from '../../constants/Categories';
 import { LabelMedium } from '../../styles/typo';
 
-const Dropdown = () => {
+const Dropdown = ({ padding }) => {
   const { categoryName, setCategoryKey, setCategoryName } = useShowcaseCreateStore();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,7 +22,9 @@ const Dropdown = () => {
 
   return (
     <Container>
-      <SelectedTagname onClick={toggleOpen}> {categoryName} </SelectedTagname>
+      <SelectedTagname padding={padding} onClick={toggleOpen}>
+        {categoryName}
+      </SelectedTagname>
       {isOpen ? (
         <DropdownListContainer>
           {TAGS.map(el => {
@@ -75,7 +77,7 @@ const SelectedTagname = styled.div`
   color: white;
   background-color: rgba(51, 51, 51, 1);
   box-sizing: border-box;
-  padding: 20px;
+  padding: ${props => props.padding || '20px'};
 `;
 
 export default Dropdown;
