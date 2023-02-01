@@ -34,12 +34,11 @@ const Lnb = ({ currentTab, category = '' }) => {
           ),
         )}
       </LeftButtonList>
-      <Filter>Filter</Filter>
     </Container>
   );
 };
 
-const LnbSearch = ({ value }) => {
+const LnbSearch = ({ keyword }) => {
   const navigate = useNavigate();
 
   const [nowTab, SetNowTab] = useState();
@@ -49,7 +48,7 @@ const LnbSearch = ({ value }) => {
 
   const handleTab = tab => {
     SetNowTab(tab);
-    navigate(`?value=${value}&type=${tab}`);
+    navigate(`/search/${keyword}/?type=${tab}`);
   };
 
   return (
@@ -67,7 +66,6 @@ const LnbSearch = ({ value }) => {
           ),
         )}
       </LeftButtonList>
-      <Filter>Filter</Filter>
     </Container>
   );
 };
@@ -85,12 +83,6 @@ const Container = styled.div`
 const LeftButtonList = styled.div`
   display: flex;
   gap: 35px;
-`;
-
-const Filter = styled.button`
-  all: unset;
-  color: var(--gray-900);
-  cursor: pointer;
 `;
 
 const TabButton = styled.button`

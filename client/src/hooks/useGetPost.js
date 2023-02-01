@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
  * @param {string | number} postId
  * @returns {post{}, boolean, boolean}
  */
-const useGetPost = ({ id }) => {
+const useGetPost = id => {
   const [post, setPost] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
@@ -27,15 +27,8 @@ const useGetPost = ({ id }) => {
         console.log(err);
         setIsLoading(false);
         setIsLoadingError(true);
-      })
-      .finally(() => {
-        // 현재는 더미데이터에서 가져옴
-        setPost(PostDummy.data);
-        setIsLoading(false);
-        setIsLoadingError(false);
-
       });
-  }, []);
+  }, [id]);
 
   return { post, isLoading, isLoadingError };
 };

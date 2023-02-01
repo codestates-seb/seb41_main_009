@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { COMMENT_DUMMY2 } from '../constants/dummyData';
 
 const useCommentAPI = () => {
-
   const [comments, setcomments] = useState(COMMENT_DUMMY2);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
@@ -16,7 +15,6 @@ const useCommentAPI = () => {
    */
   const getComment = ({ id }) => {
     const url = `posts/${id}/comments`;
-
 
     axios
       .get(url)
@@ -41,7 +39,6 @@ const useCommentAPI = () => {
    */
   const postComment = ({ id, content }) => {
     const url = `posts/${id}/comments`;
-
 
     axios
       .post(url, {
