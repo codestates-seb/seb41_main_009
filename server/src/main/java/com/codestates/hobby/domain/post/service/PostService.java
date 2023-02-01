@@ -12,6 +12,7 @@ import com.codestates.hobby.domain.post.entity.Post;
 import com.codestates.hobby.domain.series.entity.Series;
 import com.codestates.hobby.domain.series.service.SeriesService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -23,6 +24,7 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -73,7 +75,9 @@ public class PostService {
 
     @Transactional
     public Post findById(long postId) {
-        return postRepository.findByIdUsingFetch(postId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
+        Post post = postRepository.findById(postId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
+        log.info("Post의 ID in Controller:" + post.getId());
+        return post;
     }
 
     @Transactional(readOnly = true)
@@ -83,7 +87,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public Page<Post> findAll(PageRequest pageRequest) {
-        return postRepository.findAllOrderByIdDesc(pageRequest);
+        return postRepository.findAllByOrderByIdDesc(pageRequest);
     }
 
     @Transactional(readOnly = true)
@@ -102,7 +106,7 @@ public class PostService {
     }
 
     public Post findVerifiedPost(long postId){
-        Optional<Post> optionalPost = postRepository.findByIdUsingFetch(postId);
+        Optional<Post> optionalPost = postRepository.findById(postId);
         Post findPost = optionalPost.orElseThrow(() ->new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
         return findPost;
     }

@@ -29,7 +29,7 @@ public class MemberService {
 
     @Transactional
     public Member create(MemberDto.Post post) {
-        certificationService.verifyEmail(post.getEmail());
+//        certificationService.verifyEmail(post.getEmail());
 
         verifyExistEmail(post.getEmail());
         verifyExistNickname(post.getNickname());

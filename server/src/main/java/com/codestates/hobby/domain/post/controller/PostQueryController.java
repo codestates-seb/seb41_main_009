@@ -21,6 +21,7 @@ import java.util.Arrays;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping
+@Slf4j
 public class PostQueryController {
     private final PostService postService;
     private final PostMapper mapper;
@@ -28,6 +29,7 @@ public class PostQueryController {
     @GetMapping("/posts/{post-id}")
     public ResponseEntity<?> get(@PathVariable("post-id") long postId) {
         Post post = postService.findById(postId);
+        log.info("Post의 ID in Controller:" + post.getId());
         PostDto.Response response = mapper.postToResponse(post);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
