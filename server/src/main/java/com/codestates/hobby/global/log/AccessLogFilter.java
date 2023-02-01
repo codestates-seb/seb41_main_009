@@ -10,7 +10,10 @@ import ch.qos.logback.core.spi.FilterReply;
 public class AccessLogFilter extends Filter<ILoggingEvent> {
 	@Override
 	public FilterReply decide(ILoggingEvent event) {
-		if (!event.getLevel().isGreaterOrEqual(Level.WARN) && ThreadContext.get("type").equals("access")) {
+		if (!event.getLevel().equals(Level.INFO))
+			return FilterReply.DENY;
+
+		if (ThreadContext.get("type").equals("access")) {
 			return FilterReply.ACCEPT;
 		} else {
 			return FilterReply.NEUTRAL;

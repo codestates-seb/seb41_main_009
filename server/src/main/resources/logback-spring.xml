@@ -26,7 +26,7 @@
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>/log/access/%d{yyyy-MM}/access.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
                 <maxFileSize>2mb</maxFileSize>
-                <maxHistory>15</maxHistory>
+                <maxHistory>30</maxHistory>
             </rollingPolicy>
             <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
                 <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
@@ -50,7 +50,23 @@
             </encoder>
         </appender>
 
+        <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+            <file>/log/error.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>/log/error/%d{yyyy-MM}/error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxFileSize>2mb</maxFileSize>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+            </encoder>
+        </appender>
+
         <root level="INFO">
+            <appender-ref ref="error"/>
             <appender-ref ref="debug"/>
             <appender-ref ref="access"/>
         </root>
