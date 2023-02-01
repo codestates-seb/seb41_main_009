@@ -17,6 +17,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -26,6 +27,7 @@ import com.codestates.hobby.domain.auth.filter.JsonAuthenticationFilter;
 import com.codestates.hobby.domain.auth.handler.CustomLoginFailureHandler;
 import com.codestates.hobby.domain.auth.handler.CustomLoginSuccessHandler;
 import com.codestates.hobby.domain.auth.service.UserDetailsServiceImpl;
+import com.codestates.hobby.global.log.LoggingFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -50,7 +52,7 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(authorize -> authorize
 			.mvcMatchers(HttpMethod.GET, "/series", "/showcases", "/posts", "/categories").permitAll()
 			.mvcMatchers(HttpMethod.GET, "/members/**", "/series/**", "/showcases/**", "/posts/**", "/categories/**").permitAll()
-			.anyRequest().permitAll());
+			.anyRequest().authenticated());
 		http.sessionManagement()
 			.sessionFixation().changeSessionId()
 			.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
@@ -59,9 +61,15 @@ public class SecurityConfig {
 		http.logout()
 			.logoutRequestMatcher(new AntPathRequestMatcher("logout"))
 			.invalidateHttpSession(true);
-		http.addFilterAfter(jsonLoginFilter(), LogoutFilter.class);
+		http.addFilterAfter(jsonLoginFilter(), LogoutFilter.class)
+			.addFilterBefore(loggingFilter(), SecurityContextHolderFilter.class);
 
 		return http.build();
+	}
+
+	@Bean
+	LoggingFilter loggingFilter() {
+		return new LoggingFilter();
 	}
 
 	@Bean
