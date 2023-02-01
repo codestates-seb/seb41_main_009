@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Viewer } from '@toast-ui/react-editor';
 import { LabelXSmall } from '../../../styles/typo';
 
-import { PostDummy } from '../../../constants/dummyData';
+// import { PostDummy } from '../../../constants/dummyData';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -61,10 +61,10 @@ const Container = styled.div`
   }
 `;
 
-const PostIndexLIstRender = () => {
+const PostIndexLIstRender = ({ post }) => {
   return (
     <Container>
-      <Viewer initialValue={PostDummy.data.content} />
+      <Viewer initialValue={post.content} />
     </Container>
   );
 };

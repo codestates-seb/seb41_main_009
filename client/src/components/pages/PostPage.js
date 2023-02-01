@@ -21,7 +21,6 @@ const Container = styled.div`
 // isLoading, isLoadingError 나중에 추가
 const PostPage = () => {
   const { id } = useParams();
-
   // `${HOST}/posts/${category}/${postId}` 해당하는 정보를 가져옴
   const { post } = useGetPost(id);
 
