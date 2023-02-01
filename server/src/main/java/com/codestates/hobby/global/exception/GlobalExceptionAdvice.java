@@ -1,3 +1,4 @@
+
 package com.codestates.hobby.global.exception;
 
 import javax.validation.ConstraintViolationException;
@@ -6,6 +7,7 @@ import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -40,14 +42,21 @@ public class GlobalExceptionAdvice {
 	})
 	public ErrorResponse handleBadRequestException(Exception e) {
 		log.debug("Bad request exception occurred: {}", e.getMessage(), e);
-		return ErrorResponse.of(HttpStatus.BAD_REQUEST);
+		return ErrorResponse.of(HttpStatus.BAD_REQUEST, e.getMessage());
+	}
+
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+	public ErrorResponse handleMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+		log.debug("MediaTypeNotSupportedException: {}", e.getMessage(), e);
+		return ErrorResponse.of(HttpStatus.UNSUPPORTED_MEDIA_TYPE, e.getMessage());
 	}
 
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	public ErrorResponse handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
 		log.debug("Request method not supported exception: {}", e.getMessage(), e);
-		return ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
+		return ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED, e.getMessage());
 	}
 
 	@ExceptionHandler
@@ -61,6 +70,6 @@ public class GlobalExceptionAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ErrorResponse handleException(Exception e) {
 		log.error("# handle Exception", e);
-		return ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR);
+		return ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 	}
 }
