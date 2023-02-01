@@ -7,11 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.codestates.hobby.domain.fileInfo.support.BasePathConverter;
 import com.codestates.hobby.global.config.support.InfiniteScrollArgumentResolver;
 import com.codestates.hobby.global.config.support.PagingArgumentResolver;
+import com.codestates.hobby.global.log.LoggingInterceptor;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -39,5 +41,10 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
 		registry.addConverter(new BasePathConverter());
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new LoggingInterceptor());
 	}
 }

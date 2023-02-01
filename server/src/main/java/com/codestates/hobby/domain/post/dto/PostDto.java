@@ -19,6 +19,7 @@ public class PostDto {
         private String title;
         @NotBlank(message = "Content must not be empty.")
         private String content;
+        private String description;
         @NotBlank(message = "Category must not be empty.")
         private String category;
         private Long seriesId;
@@ -37,6 +38,7 @@ public class PostDto {
         private String title;
         @NotBlank(message = "Content must not be empty.")
         private String content;
+        private String description;
         @NotBlank(message = "Category must not be empty.")
         private String category;
         private Long seriesId;
@@ -52,15 +54,14 @@ public class PostDto {
     @Setter
     @NoArgsConstructor
     public static class Response {
-        private long Id;
+        private long id;
         private String title;
         private String content;
+        private String description;
         private int views;
         private String category;
         private Long seriesId;
-        private List<PostCommentDto.Response> comments;
         private MemberDto.SimpleResponse writer;
-        private List<String> seriesPosts;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
     }
@@ -69,9 +70,10 @@ public class PostDto {
     @Setter
     @NoArgsConstructor
     public static class SimpleResponse {
-        private long Id;
+        private long id;
         private String title;
         private String content;
+        private String description;
         private String category;
         private int views;
         private int comments;
