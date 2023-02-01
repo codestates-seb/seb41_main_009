@@ -18,7 +18,6 @@ const Comments = ({ id }) => {
 
   const { comments } = getComment(id);
 
-
   console.log('comments', comments);
   return (
     <Container>
