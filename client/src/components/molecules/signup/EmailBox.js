@@ -18,14 +18,15 @@ const EmailBox = ({ email, setEmail, emailMessage, setEmailMessage, setEmailVali
 
   const verifyEmail = () => {
     const url = 'auth/certifications';
-    const body = {
-      email,
-    };
 
     if (emailMessage || email.length === 0) return;
 
     axios
-      .post(url, body)
+      .post(url, email, {
+        headers: {
+          'content-type': 'text/plain',
+        },
+      })
       .then(res => {
         console.log(res);
         setEmailValidation(true);
