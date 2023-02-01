@@ -30,7 +30,7 @@ const PostCreatePage = () => {
       category,
       description,
       content: body,
-      image,
+      imgUrls: image,
     };
 
     if (title && category && description && body) {
