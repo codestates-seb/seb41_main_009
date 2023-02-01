@@ -74,7 +74,6 @@ public class GlobalExceptionAdvice {
 	@ExceptionHandler
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ErrorResponse handleException(Exception e) {
-		ThreadContext.put("type", "error");
 		log.error("Exception occurred: {}", e.getMessage(), e);
 		return ErrorResponse.of(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
 	}
