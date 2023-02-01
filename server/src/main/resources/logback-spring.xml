@@ -22,9 +22,9 @@
     <springProfile name="prod">
         <appender name="access" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <filter class="com.codestates.hobby.global.log.AccessLogFilter"/>
-            <file>log/access.log</file>
+            <file>/log/access.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-                <fileNamePattern>log/access/%d{yyyy-MM}/access.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <fileNamePattern>/log/access/%d{yyyy-MM}/access.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
                 <maxFileSize>2mb</maxFileSize>
                 <maxHistory>15</maxHistory>
             </rollingPolicy>
@@ -39,9 +39,9 @@
         </appender>
 
         <appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>log/debug.log</file>
+            <file>/log/debug.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-                <fileNamePattern>log/debug/%d{yyyy-MM}/debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <fileNamePattern>/log/debug/%d{yyyy-MM}/debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
                 <maxFileSize>2mb</maxFileSize>
                 <maxHistory>15</maxHistory>
             </rollingPolicy>
