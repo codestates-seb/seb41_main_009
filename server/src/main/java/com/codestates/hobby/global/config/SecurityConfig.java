@@ -48,7 +48,7 @@ public class SecurityConfig {
 			.formLogin().disable()
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
-			.mvcMatchers(HttpMethod.GET, "/categories").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/members", "/series", "/showcases", "/posts", "/categories").permitAll()
 			.mvcMatchers(HttpMethod.GET, "/members/**", "/series/**", "/showcases/**", "/posts/**", "/categories/**").permitAll()
 			.anyRequest().permitAll());
 		http.sessionManagement()
