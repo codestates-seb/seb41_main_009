@@ -25,11 +25,11 @@ const Lnb = ({ currentTab, category = '' }) => {
       <LeftButtonList>
         {tabList.map(el =>
           currentTab === el.title ? (
-            <TabButton key={el.title} clicked onClick={() => handleTab(el.title)}>
+            <TabButton key={el.title} clicked onClick={() => handleTab(el.id)}>
               {el.title}
             </TabButton>
           ) : (
-            <TabButton key={el.title} onClick={() => handleTab(el.title)}>
+            <TabButton key={el.title} onClick={() => handleTab(el.id)}>
               {el.title}
             </TabButton>
           ),

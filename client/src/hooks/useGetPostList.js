@@ -8,13 +8,13 @@ import { useState, useEffect } from 'react';
  * @param {string} page
  * @returns {postList[], postPageInfo{}, boolean, boolean}
  */
-const useGetPostList = (category, page) => {
+const useGetPostList = (category, page = 1) => {
   const [postList, setPostList] = useState([]);
   const [postPageInfo, setPostPageInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `categories/${category}/series?page=${page}&size=10`;
+  const URL = `categories/${category}/posts?page=${page}&size=10`;
   useEffect(() => {
     setIsLoading(true);
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { LabelListTitle, LabelMedium, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
-import { PARAGRAPH, TITLE } from '../../../constants/Paragraph';
+import { TITLE } from '../../../constants/Paragraph';
 import useGetPost from '../../../hooks/useGetPost';
 
 const Container = styled.div`
@@ -114,7 +114,7 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
   // 현재는postId와 관계없이 PostDummy에 있는 데이터를 가져옴
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
-  const { title, desc, createdAt, modifiedAt, views, comments } = post;
+  const { title, desc, createdAt, modifiedAt, views, comments, writer } = post;
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
@@ -126,11 +126,11 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
       <InfoLayer selected={selected}>
         <Layer onClick={handleClick}>
           <Title width={width}>{title || TITLE}</Title>
-          <Paragraph width={width}>{desc || PARAGRAPH}</Paragraph>
+          <Paragraph width={width}>{desc || '......'}</Paragraph>
         </Layer>
         <ContextLayer>
           <Box>
-            <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
+            <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileUrl} />
             <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>
           </Box>
           <Box>
@@ -153,7 +153,7 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
 const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId, imgWidth = '100px' }) => {
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
-  const { title, desc, createdAt, modifiedAt } = post;
+  const { title, desc, createdAt, modifiedAt, writer } = post;
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   console.log(isLoading, isLoadingError);
@@ -165,7 +165,7 @@ const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', 
         <Paragraph width={width}>{desc || '.....'}</Paragraph>
         <ContextLayer>
           <Box>
-            <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
+            <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileUrl} />
             <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>
           </Box>
         </ContextLayer>
