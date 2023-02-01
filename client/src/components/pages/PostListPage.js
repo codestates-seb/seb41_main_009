@@ -38,8 +38,9 @@ const PostListPage = () => {
         asideHeader={<CreatePostButton to="/posts/new">Create Post</CreatePostButton>}
       />
       <Lnb currentTab="Post" category={category} />
+
       <PostListContainer postList={postList} />
-      <Pagination totalPages={postPageInfo.totalPage} />
+      <Pagination totalPages={postPageInfo?.totalPages || 1} />
     </Container>
   );
 };

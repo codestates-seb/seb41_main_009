@@ -101,7 +101,7 @@ const useCommentAPI = () => {
       .delete(url)
       .then(res => {
         console.log(res);
-        navigate('/questions');
+        navigate(basePath);
       })
       .catch(err => console.log(err));
   };

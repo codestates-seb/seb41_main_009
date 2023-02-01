@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { seriesListDummy } from '../constants/dummyData';
+// import { seriesListDummy } from '../constants/dummyData';
 
 /**
  *
@@ -10,13 +10,13 @@ import { seriesListDummy } from '../constants/dummyData';
  */
 
 // 내용 수정 필요
-const useGetSeriesListbyUser = ({ writer }) => {
+const useGetSeriesListbyUser = writer => {
   const [seriesList, setSeriesList] = useState([]);
   const [seriesPageInfo, setSeriesPageInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `/member/${writer}`;
+  const URL = `/member/${writer}/series`;
 
   useEffect(() => {
     setIsLoading(true);
@@ -32,13 +32,6 @@ const useGetSeriesListbyUser = ({ writer }) => {
         console.log(err);
         setIsLoading(false);
         setIsLoadingError(true);
-      })
-      .finally(() => {
-        const { data, pageInfo } = seriesListDummy;
-        setSeriesList(data);
-        setSeriesPageInfo(pageInfo);
-        setIsLoading(false);
-        setIsLoadingError(false);
       });
   }, []);
 

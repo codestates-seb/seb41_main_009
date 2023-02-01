@@ -26,10 +26,10 @@ const PostPage = () => {
 
   return (
     <Container>
-      <PostHeaderLayer post={post} id={id} />
+      <PostHeaderLayer post={post} />
       <PostSubHeaderLayer post={post} />
-      <PostContentLayer post={post} />
-      <Comments id={id} />
+      <PostContentLayer id={id} />
+      <Comments basePath="posts" id={id} />
     </Container>
   );
 };

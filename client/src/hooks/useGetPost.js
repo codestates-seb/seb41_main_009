@@ -20,7 +20,7 @@ const useGetPost = id => {
       .get(url)
       .then(({ data }) => {
         console.log(data);
-        setPost(data);
+        setPost(data.data);
         setIsLoading(false);
       })
       .catch(err => {
