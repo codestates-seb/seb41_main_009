@@ -2,6 +2,7 @@ package com.codestates.hobby.domain.post.controller;
 
 import com.codestates.hobby.domain.member.entity.Member;
 import com.codestates.hobby.domain.post.dto.PostCommentDto;
+import com.codestates.hobby.domain.post.entity.PostComment;
 import com.codestates.hobby.domain.post.mapper.PostCommentMapper;
 import com.codestates.hobby.domain.post.service.PostCommentService;
 import com.codestates.hobby.global.config.support.CustomPageRequest;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class PostCommentController {
     private final PostCommentService postCommentService;
     private final PostCommentMapper mapper;
+
     @PostMapping
     public ResponseEntity<?> post(@PathVariable("post-id") long postId,
                                   @RequestBody PostCommentDto.Post postDto,
@@ -52,7 +54,6 @@ public class PostCommentController {
 
     @GetMapping
     public ResponseEntity<?> getAll(@PathVariable("post-id") long postId,
-                                    @AuthenticationPrincipal Member loginMember,
                                     CustomPageRequest pageRequest) {
         Page<PostCommentDto.Response> postComments = postCommentService.findAll(postId,pageRequest.to()).map(mapper::postCommentToPostCommentResponse);
         return new ResponseEntity<>(new MultiResponseDto<>(postComments), HttpStatus.OK);

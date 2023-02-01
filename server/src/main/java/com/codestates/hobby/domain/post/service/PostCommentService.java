@@ -27,6 +27,7 @@ public class PostCommentService {
     public PostComment post(PostCommentDto.Post postDto) {
         Member member = memberService.findMemberById(postDto.getMemberId());
         Post post = postService.findVerifiedPost(postDto.getPostId());
+        post.updateCommentCount(1);
 
         return postCommentRepository.save(new PostComment(postDto.getContent(), member, post));
     }
@@ -43,7 +44,8 @@ public class PostCommentService {
     public void delete(long memberId, long postId, long commentId) {
         PostComment findComment = findVerifiedComment(commentId);
         isMatchMember(findComment,memberId);
-        postService.findVerifiedPost(postId);
+        Post post = postService.findVerifiedPost(postId);
+        post.updateCommentCount(-1);
         postCommentRepository.delete(findComment);
 
     }
@@ -68,9 +70,9 @@ public class PostCommentService {
         if (!isMatch) throw new BusinessLogicException(ExceptionCode.NOT_MATCH_MEMBER);
         return postComment.getMember().getId().equals(memberId);
     }
+
     private PostComment findVerifiedComment(long commentId) {
         Optional<PostComment> optionalComment = postCommentRepository.findById(commentId);
-        PostComment findPostComment = optionalComment.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
-        return findPostComment;
+        return optionalComment.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
     }
 }

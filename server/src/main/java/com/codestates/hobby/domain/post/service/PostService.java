@@ -15,10 +15,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 
 @Service
 @RequiredArgsConstructor
@@ -27,37 +30,38 @@ public class PostService {
     private final MemberService memberService;
     private final CategoryService categoryService;
     private final SeriesService seriesService;
+    private final Executor executor;
 
     @Transactional
     public Post post(PostDto.Post postDto){
-        Member member = memberService.findMemberById(postDto.getMemberId());
-        Category category = categoryService.findHobbyByName(postDto.getCategory());
-        if (postDto.getSeriesId() != null){
-            Series series = seriesService.findById(postDto.getSeriesId());
-            if (postDto.getImgUrls() != null) return postRepository.save(new Post(member,postDto.getTitle(),series,category,postDto.getContent(),postDto.getImgUrls()));
-            else return postRepository.save(new Post(member,postDto.getTitle(),series,category,postDto.getContent()));
-        }
-        else {
-            if (postDto.getImgUrls() != null) return postRepository.save(new Post(member,postDto.getTitle(),category,postDto.getContent(),postDto.getImgUrls()));
-            else return postRepository.save(new Post(member,postDto.getTitle(),category,postDto.getContent()));
-        }
+        CompletableFuture<Member> member = CompletableFuture.supplyAsync(()->memberService.findMemberById(postDto.getMemberId()),executor);
+        CompletableFuture<Category> category = CompletableFuture.supplyAsync(()->categoryService.findHobbyByName(postDto.getCategory()),executor);
+        CompletableFuture<Series> series = CompletableFuture.supplyAsync(()->seriesService.findById(postDto.getSeriesId()),executor);
+
+        Post post = new Post(member.join(), postDto.getTitle(),
+                postDto.getSeriesId() != null ? series.join():null,
+                category.join(),
+                postDto.getContent(),
+                postDto.getDescription(),
+                postDto.getImgUrls() != null ? postDto.getImgUrls():null);
+
+        return postRepository.save(post);
     }
 
     @Transactional
     public Post update(PostDto.Patch patchDto){
         Post findPost = findVerifiedPost(patchDto.getPostId());
         isMatchMember(findPost, patchDto.getMemberId());
-        if (patchDto.getSeriesId() != null) {
-            if (patchDto.getImgUrls() != null) findPost.updatePost(patchDto.getTitle(), patchDto.getContent(),
-                    categoryService.findHobbyByName(patchDto.getCategory()), seriesService.findById(patchDto.getSeriesId()), patchDto.getImgUrls());
-            else findPost.updatePost(patchDto.getTitle(), patchDto.getContent(), categoryService.findHobbyByName(patchDto.getCategory()),
-                    seriesService.findById(patchDto.getSeriesId()));
-        } else {
-            if (patchDto.getImgUrls() != null) findPost.updatePost(patchDto.getTitle(), patchDto.getContent()
-                    , categoryService.findHobbyByName(patchDto.getCategory()), patchDto.getImgUrls());
-            else findPost.updatePost(patchDto.getTitle(), patchDto.getContent()
-                    , categoryService.findHobbyByName(patchDto.getCategory()));
-        }
+        CompletableFuture<Category> category = CompletableFuture.supplyAsync(()->categoryService.findHobbyByName(patchDto.getCategory()),executor);
+        CompletableFuture<Series> series = CompletableFuture.supplyAsync(()->seriesService.findById(patchDto.getSeriesId()),executor);
+
+        findPost.updatePost(patchDto.getTitle(),
+                patchDto.getContent(),
+                patchDto.getDescription(),
+                category.join(),
+                patchDto.getSeriesId() != null ? series.join():null,
+                patchDto.getImgUrls() != null ? patchDto.getImgUrls():null);
+
         return postRepository.save(findPost);
     }
     @Transactional
@@ -69,7 +73,7 @@ public class PostService {
 
     @Transactional
     public Post findById(long postId) {
-        return findVerifiedPost(postId);
+        return postRepository.findByIdUsingFetch(postId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
     }
 
     @Transactional(readOnly = true)
@@ -79,7 +83,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public Page<Post> findAll(PageRequest pageRequest) {
-        return postRepository.findAll(pageRequest.withSort(Sort.by("id").descending()));
+        return postRepository.findAllOrderByIdDesc(pageRequest);
     }
 
     @Transactional(readOnly = true)
@@ -98,7 +102,7 @@ public class PostService {
     }
 
     public Post findVerifiedPost(long postId){
-        Optional<Post> optionalPost = postRepository.findById(postId);
+        Optional<Post> optionalPost = postRepository.findByIdUsingFetch(postId);
         Post findPost = optionalPost.orElseThrow(() ->new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
         return findPost;
     }
@@ -108,5 +112,4 @@ public class PostService {
         if (!isMatch) throw new BusinessLogicException(ExceptionCode.NOT_MATCH_MEMBER);
         return post.getMember().getId().equals(memberId);
     }
-
 }

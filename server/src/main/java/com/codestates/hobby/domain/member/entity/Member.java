@@ -48,6 +48,9 @@ public class Member extends BaseEntity implements Serializable {
 
 	private boolean isOauth2;
 
+	@Column(nullable = false)
+	private String defaultProfile;
+
 	@Enumerated(value = EnumType.STRING)
 	@Column
 	private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
@@ -58,13 +61,13 @@ public class Member extends BaseEntity implements Serializable {
 	@OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private FileInfo image;
 
-	public Member(String email, String nickname, String password, String introduction, boolean isOauth2, List<String> roles) {
+	public Member(String email, String nickname, String password, boolean isOauth2, List<String> roles, String url) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
-		this.introduction = introduction;
 		this.isOauth2 = isOauth2;
 		this.roles = roles;
+		this.defaultProfile = url;
 	}
 
 	public void edit(String nickname, String introduction, String profileUrl) {
@@ -72,8 +75,10 @@ public class Member extends BaseEntity implements Serializable {
 			this.nickname = nickname;
 		if (Optional.ofNullable(introduction).isPresent())
 			this.introduction = introduction;
-		if (Optional.ofNullable(profileUrl).isPresent())
+		if (Optional.ofNullable(profileUrl).isPresent()) {
 			setImage(profileUrl);
+			this.defaultProfile = profileUrl;
+		}
 	}
 
 	public void setStatus(MemberStatus memberStatus) {
