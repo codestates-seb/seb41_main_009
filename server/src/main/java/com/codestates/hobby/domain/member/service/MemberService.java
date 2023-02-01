@@ -23,19 +23,21 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository repository;
     private final PasswordEncoder passwordEncoder;
-    //private final CertificationService certificationService;
+    private final CertificationService certificationService;
     private final CustomAuthorityUtils authorityUtils;
 
     @Transactional
     public Member create(MemberDto.Post post) {
-        //certificationService.verifyEmail(post.getEmail());
+        certificationService.verifyEmail(post.getEmail());
 
         verifyExistEmail(post.getEmail());
         verifyExistNickname(post.getNickname());
         String encryptedPassword = passwordEncoder.encode(post.getPassword());
         List<String> roles = authorityUtils.createRoles(post.getEmail());
+        String url = "https://cdn-icons-png.flaticon.com/512/1946/1946429.png";
 
-        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword, post.getIntroduction(), false, post.getProfileUrl(), roles));
+        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword, post.getIntroduction(),
+                false, roles, url));
     }
 
     @Transactional

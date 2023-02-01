@@ -22,54 +22,55 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-	private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-	@Override
-	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Member member = memberRepository.findByEmail(email)
-			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_MEMBER));
-		return new UserDetailsImpl(member);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Member member = memberRepository.findByEmail(email)
+            .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_MEMBER));
+        member.getRoles().get(0);
+        return new UserDetailsImpl(member);
+    }
 
-	private static final class UserDetailsImpl extends Member implements UserDetails, Serializable {
-		private static final long serialVersionUID = 1L;
+    private static final class UserDetailsImpl extends Member implements UserDetails, Serializable {
+        private static final long serialVersionUID = 1L;
 
-		UserDetailsImpl(Member member) {
-			setUser(member);
-		}
+        UserDetailsImpl(Member member) {
+            setUser(member);
+        }
 
-		@Override
-		public Collection<? extends GrantedAuthority> getAuthorities() {
-			return this.getRoles()
-				.stream()
-				.map(SimpleGrantedAuthority::new)
-				.collect(Collectors.toList());
-		}
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            return this.getRoles()
+                .stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        }
 
-		@Override
-		public String getUsername() {
-			return getEmail();
-		}
+        @Override
+        public String getUsername() {
+            return getEmail();
+        }
 
-		@Override
-		public boolean isAccountNonExpired() {
-			return true;
-		}
+        @Override
+        public boolean isAccountNonExpired() {
+            return true;
+        }
 
-		@Override
-		public boolean isAccountNonLocked() {
-			return true;
-		}
+        @Override
+        public boolean isAccountNonLocked() {
+            return true;
+        }
 
-		@Override
-		public boolean isCredentialsNonExpired() {
-			return true;
-		}
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
 
-		@Override
-		public boolean isEnabled() {
-			return true;
-		}
-	}
+        @Override
+        public boolean isEnabled() {
+            return true;
+        }
+    }
 }

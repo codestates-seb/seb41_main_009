@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,7 +38,7 @@ public class MemberController {
 
     @PatchMapping("/{member-id}")
     public ResponseEntity patch(@PathVariable("member-id") long memberId,
-                                @SessionAttribute Member loginMember,
+                                @AuthenticationPrincipal Member loginMember,
                                 @Valid @RequestBody MemberDto.Patch patch) {
         patch.setMemberId(memberId);
         Member member = service.edit(patch, loginMember.getId());
@@ -48,7 +49,7 @@ public class MemberController {
 
     @DeleteMapping("/{member-id}")
     public ResponseEntity delete(@PathVariable("member-id") long memberId,
-                                 @SessionAttribute Member loginMember) {
+                                 @AuthenticationPrincipal Member loginMember) {
         if(memberId != loginMember.getId()) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
 
         service.delete(memberId);
@@ -58,14 +59,12 @@ public class MemberController {
     }
 
     @GetMapping("/{member-id}")
-    public ResponseEntity get(@PathVariable("member-id") long memberId,
-                              @SessionAttribute Member loginMember) {
-        if(memberId != loginMember.getId()) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
-
+    public ResponseEntity get(@PathVariable("member-id") long memberId) {
         Member member = service.find(memberId);
+        MemberDto.Response response = mapper.MemberToResponseDto(member);
 
         log.info("\n\n--해당 회원의 정보 조회--\n");
-        return new ResponseEntity(mapper.MemberToResponseDto(member), HttpStatus.OK);
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     @GetMapping

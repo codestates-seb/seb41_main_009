@@ -5,10 +5,12 @@ const useAuthStore = create(
   persist(
     set => ({
       currentUserId: 0,
-      setUserId: userId => set({ currentUserId: userId }),
+      authorization: '',
+      setUserId: userId => set(state => ({ ...state, currentUserId: userId })),
+      setAuthorization: authCode => set(state => ({ ...state, authorization: authCode })),
     }),
     {
-      name: 'userId-storage',
+      name: 'authorization-storage',
       storage: createJSONStorage(() => sessionStorage),
     },
   ),

@@ -102,7 +102,7 @@ export const DisplayMedium = css`
 `;
 
 export const DisplaySmall = css`
-  font-weight: 500;
+  font-weight: 700;
   font-size: 44px;
   line-height: 52px;
 `;

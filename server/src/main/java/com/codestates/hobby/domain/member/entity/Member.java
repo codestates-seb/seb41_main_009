@@ -29,6 +29,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -54,18 +55,21 @@ public class Member extends BaseEntity implements Serializable {
 	@ElementCollection(fetch = FetchType.LAZY)
 	private List<String> roles = new ArrayList<>();
 
+	@Column(nullable = false)
+	private String defaultProfile;
+
 	@OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
 	private FileInfo image;
 
 	public Member(String email, String nickname, String password, String introduction, boolean isOauth2,
-		String profileUrl, List<String> roles) {
+				  List<String> roles, String url) {
 		this.email = email;
 		this.nickname = nickname;
 		this.password = password;
 		this.introduction = introduction;
 		this.isOauth2 = isOauth2;
 		this.roles = roles;
-		this.setImage(profileUrl);
+		this.defaultProfile = url;
 	}
 
 	public void edit(String nickname, String introduction, String profileUrl) {
@@ -73,8 +77,10 @@ public class Member extends BaseEntity implements Serializable {
 			this.nickname = nickname;
 		if (Optional.ofNullable(introduction).isPresent())
 			this.introduction = introduction;
-		if (Optional.ofNullable(profileUrl).isPresent())
+		if (Optional.ofNullable(profileUrl).isPresent()) {
 			setImage(profileUrl);
+			this.defaultProfile = profileUrl;
+		}
 	}
 
 	public void setStatus(MemberStatus memberStatus) {

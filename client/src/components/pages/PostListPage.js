@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useParams, useSearchParams } from 'react-router-dom';
 import PageHeader from '../organisms/PageHeader';
 import Pagination from '../molecules/Pagination';
-import Lnb from '../organisms/Lnb';
+import { Lnb } from '../organisms/Lnb';
 import PostListContainer from '../organisms/listContainter/PostListContainer';
 import { BlueShadowButton } from '../atoms/Buttons';
 import useGetPostList from '../../hooks/useGetPostList';
@@ -10,7 +10,6 @@ import useGetPostList from '../../hooks/useGetPostList';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1060px;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
@@ -38,7 +37,7 @@ const PostListPage = () => {
         headerTitle={`Posts In ${category}`}
         asideHeader={<CreatePostButton to="/posts/new">Create Post</CreatePostButton>}
       />
-      <Lnb />
+      <Lnb currentTab="Post" category={category} />
       <PostListContainer postList={postList} />
       <Pagination totalPages={postPageInfo.totalPage} />
     </Container>

@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,7 +35,7 @@ public class SeriesController {
 
     @PostMapping("/series")
     public ResponseEntity<?> post(@Valid @RequestBody SeriesDto.Post post,
-                                  @SessionAttribute Member loginMember) {
+                                  @AuthenticationPrincipal Member loginMember) {
         post.setMemberId(loginMember.getId());
 
         Series series =  seriesService.create(post);
@@ -46,7 +47,7 @@ public class SeriesController {
     @PatchMapping("/series/{series-id}")
     public ResponseEntity patch(@PathVariable("series-id") long seriesId,
                                 @Valid @RequestBody SeriesDto.Patch patch,
-                                @SessionAttribute Member loginMember) {
+                                @AuthenticationPrincipal Member loginMember) {
         patch.setSeriesId(seriesId);
         seriesService.edit(patch, loginMember.getId());
 
@@ -56,7 +57,7 @@ public class SeriesController {
 
     @DeleteMapping("/series/{series-id}")
     public ResponseEntity delete(@PathVariable("series-id") long seriesId,
-                                 @SessionAttribute Member loginMember) {
+                                 @AuthenticationPrincipal Member loginMember) {
         seriesService.delete(seriesId, loginMember.getId());
 
         log.info("\n\n--시리즈 삭제--\n");
@@ -100,9 +101,9 @@ public class SeriesController {
 
     @GetMapping("/members/{member-id}/series")
     public ResponseEntity getAllByMember(@PathVariable("member-id") long memberId,
-                                         @SessionAttribute Member loginMember,
+                                         //@AuthenticationPrincipal Member loginMember,
                                          CustomPageRequest pageRequest) {
-        if(memberId != loginMember.getId()) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
+        //if(memberId != loginMember.getId()) throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED);
         Page<Series> series = seriesService.findAllByMember(memberId, pageRequest.to());
 
         Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
