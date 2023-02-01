@@ -36,7 +36,7 @@ public class MemberService {
         String encryptedPassword = passwordEncoder.encode(post.getPassword());
         List<String> roles = authorityUtils.createRoles(post.getEmail());
 
-        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword, post.getIntroduction(), false, roles));
+        return repository.save(new Member(post.getEmail(), post.getNickname(), encryptedPassword, post.getIntroduction(), false, post.getProfileUrl(), roles));
     }
 
     @Transactional

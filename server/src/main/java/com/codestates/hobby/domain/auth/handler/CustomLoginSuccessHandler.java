@@ -24,6 +24,6 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
         response.setContentType("application/json");
         response.getWriter().print(member.getId());
         response.getWriter().close();
-        log.info("\n\n--로그인 성공-- Member Id : {}", member.getId());
+        log.info("\n\n--로그인 성공-- Member Id : {}", auth.getPrincipal());
     }
 }
