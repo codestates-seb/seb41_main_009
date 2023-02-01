@@ -62,7 +62,7 @@ public class SecurityConfig {
 			.logoutRequestMatcher(new AntPathRequestMatcher("logout"))
 			.invalidateHttpSession(true);
 		http.addFilterAfter(jsonLoginFilter(), LogoutFilter.class)
-			.addFilterAfter(loggingFilter(), SecurityContextHolderFilter.class);
+			.addFilterBefore(loggingFilter(), SecurityContextHolderFilter.class);
 
 		return http.build();
 	}
