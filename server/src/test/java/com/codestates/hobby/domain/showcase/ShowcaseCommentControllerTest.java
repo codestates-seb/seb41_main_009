@@ -32,7 +32,6 @@ class ShowcaseCommentControllerTest extends ControllerTest {
 
 	@Test
 	void testForGetAll() throws Exception {
-		willDoNothing().given(mapper).setProperties(any(), anyLong());
 		given(mapper.entityToResponse(any())).willReturn(ShowcaseCommentStub.createResponse());
 		given(service.findAll(anyLong(), any(PageRequest.class)))
 			.willReturn(new PageImpl<>(List.of(new ShowcaseComment("content", null, null))));
