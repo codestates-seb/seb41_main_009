@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { PostDummy } from '../constants/dummyData';
 
 /**
  *
@@ -33,7 +34,6 @@ const useGetPost = ({ id }) => {
         setPost(PostDummy.data);
         setIsLoading(false);
         setIsLoadingError(false);
-
       });
   }, []);
 
