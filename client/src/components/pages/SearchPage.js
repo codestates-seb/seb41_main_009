@@ -10,8 +10,6 @@ import SearchResultTitle from '../organisms/search/SearchResultTitle';
 import PostListContainer from '../organisms/listContainter/PostListContainer';
 import useGetSeriesList from '../../hooks/useGetSeriesList';
 import useGetPostList from '../../hooks/useGetPostList';
-import { TextButton } from '../atoms/Buttons';
-import Pagination from '../molecules/Pagination';
 
 const Container = styled.div`
   display: flex;

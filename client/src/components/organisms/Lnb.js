@@ -12,9 +12,10 @@ import { LabelLarge } from '../../styles/typo';
 const Lnb = ({ currentTab, category = '' }) => {
   const navigate = useNavigate();
 
-  // const tabList = [{ title: 'All' }, { title: 'Posts' }, { title: 'Series' }];
-  const tabList = [{ title: 'Posts' }, { title: 'Series' }];
-
+  const tabList = [
+    { title: 'Posts', id: 'posts' },
+    { title: 'Series', id: 'series' },
+  ];
   const handleTab = tab => {
     navigate(`/${tab}/${category}`);
   };
@@ -44,7 +45,11 @@ const LnbSearch = ({ keyword }) => {
   const [nowTab, SetNowTab] = useState();
 
   // const tabList = [{ title: 'All' }, { title: 'Posts' }, { title: 'Series' }];
-  const tabList = [{ title: 'All' }, { title: 'Posts' }, { title: 'Series' }];
+  const tabList = [
+    { title: 'All', id: `all` },
+    { title: 'Posts', id: 'posts' },
+    { title: 'Series', id: 'series' },
+  ];
 
   const handleTab = tab => {
     SetNowTab(tab);
@@ -56,11 +61,11 @@ const LnbSearch = ({ keyword }) => {
       <LeftButtonList>
         {tabList.map(el =>
           nowTab === el.title ? (
-            <TabButton key={el.title} clicked onClick={() => handleTab(el.title)}>
+            <TabButton key={el.title} clicked onClick={() => handleTab(el.id)}>
               {el.title}
             </TabButton>
           ) : (
-            <TabButton key={el.title} onClick={() => handleTab(el.title)}>
+            <TabButton key={el.title} onClick={() => handleTab(el.id)}>
               {el.title}
             </TabButton>
           ),
