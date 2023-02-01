@@ -13,9 +13,9 @@ const useCommentAPI = () => {
    * @param {string | number} postId
    * @returns {post{}, boolean, boolean}
    */
-  const getComment = async (basePath, id, params) => {
+  const getComment = (basePath, id, params) => {
     const url = `/${basePath}/${id}/comments`;
-    await axios
+    axios
       .get(url, {
         params,
       })
