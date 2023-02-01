@@ -49,7 +49,7 @@ const App = () => {
               <Route path="/" element={<PublicRoute component={<Showcase />} />} />
               <Route path="/login" element={<PublicRoute component={<LogIn />} />} />
               <Route path="/signup" element={<PublicRoute component={<Signup />} />} />
-              <Route path="/showcase/new" element={<PublicRoute component={<ShowcaseCratePage />} />} />
+              <Route path="/showcase/new" element={<ProtectedRoute component={<ShowcaseCratePage />} />} />
               <Route path="/posts/" element={<PublicRoute component={<PostList />} />} />
               <Route path="/posts/:category" element={<PublicRoute component={<PostList />} />} />
               <Route path="/posts/:category/:id" element={<PublicRoute component={<PostPage />} />} />
@@ -57,7 +57,7 @@ const App = () => {
               <Route path="/posts/new" element={<ProtectedRoute component={<PostCreatePage />} />} />
               <Route path="/series/:category" element={<PublicRoute component={<SeriesListPage />} />} />
               <Route path="/series/:category/:id" element={<PublicRoute component={<SeriesPage />} />} />
-              <Route path="/series/new" element={<PublicRoute component={<SeriesCreatePage />} />} />
+              <Route path="/series/new" element={<ProtectedRoute component={<SeriesCreatePage />} />} />
               <Route path="/users/:userId" element={<PublicRoute component={<User />} />} />
               <Route path="/users/:userId/edit" element={<PrivateRoute component={<UserEdit />} />} />
               <Route path="/search/:keyword" element={<PublicRoute component={<Search />} />} />
