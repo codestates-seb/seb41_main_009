@@ -20,7 +20,7 @@ const SeriesPage = () => {
   // `${HOST}/series/${postId}` 해당하는 정보를 가져옴
   const { series } = useGetSeries(id);
 
-  console.log(series, 'series in SeriesPage');
+  // console.log(series, 'series in SeriesPage');
   return (
     <Container>
       <SeriesHeader series={series} />

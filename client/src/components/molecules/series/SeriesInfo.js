@@ -22,7 +22,7 @@ import useSeriesStore from '../../../store/seriesStore';
  */
 const SeriesInfo = ({ series }) => {
   const { setBlur } = useSeriesStore();
-  const { title, content, views, createdAt, modifiedAt } = series;
+  const { title, content, views, createdAt, modifiedAt, member } = series;
   // TODO: 페이지 구현시 createAt, modifiedAt 은 Date 타입으로 받아 컴포넌트 내에서 변환
 
   // console.log(series, 'series in SeriesInfo');
@@ -36,7 +36,13 @@ const SeriesInfo = ({ series }) => {
         <SeriesInfoList>
           <ClearBlurButton handleClick={handleClickBlurButton} />
           {/* series.member.id 하면 오류남 */}
-          <UserInfoSmall typo={LabelXSmall} size="24px" />
+          <UserInfoSmall
+            id={member?.id}
+            name={member?.nickname}
+            image={member?.profileUrl}
+            typo={LabelXSmall}
+            size="24px"
+          />
         </SeriesInfoList>
         <IconList>
           <CreatedAtText>createAt {new Date().toDateString(createdAt)}</CreatedAtText>
