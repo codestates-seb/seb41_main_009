@@ -13,7 +13,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const CommentInputContainer = ({ id }) => {
+const CommentInputContainer = ({ basePath, id }) => {
   const [content, setContent] = useState('');
   const { postComment } = useCommentAPI();
 
@@ -28,7 +28,7 @@ const CommentInputContainer = ({ id }) => {
     } else if (content.length > 300) {
       alert('Maximum 300 characters.');
     } else {
-      postComment(id, content);
+      postComment(basePath, id, content);
     }
   };
   return (

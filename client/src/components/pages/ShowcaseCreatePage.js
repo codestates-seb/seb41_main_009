@@ -1,5 +1,7 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
 import TextArea from '../atoms/TextArea';
 import Box from '../atoms/Box';
 import { UserInfoSmall } from '../molecules/UserInfo';
@@ -10,11 +12,18 @@ import useShowcaseCreateStore from '../../store/showcaseCreateStore';
 
 const ShowcaseCreatePage = () => {
   const { setContent, initStore, postShowcase } = useShowcaseCreateStore();
+  const navigate = useNavigate();
 
   // save text to content state
-  const handleTextOnChange = useCallback(event => {
+  const handleTextOnChange = event => {
     setContent(event.target.value);
-  });
+  };
+
+  const handlePostShowcase = async () => {
+    await postShowcase();
+    navigate('/');
+    window.location.reload();
+  };
 
   useEffect(() => {
     return () => {
@@ -42,7 +51,7 @@ const ShowcaseCreatePage = () => {
       </Container>
       <ButtonContainer>
         <WhiteShadowButton>Cancel</WhiteShadowButton>
-        <BlackShadowButton onClick={postShowcase}>Submit</BlackShadowButton>
+        <BlackShadowButton onClick={handlePostShowcase}>Submit</BlackShadowButton>
       </ButtonContainer>
     </>
   );

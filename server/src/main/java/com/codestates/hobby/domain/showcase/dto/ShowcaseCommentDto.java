@@ -5,23 +5,20 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 
 import com.codestates.hobby.domain.member.dto.MemberDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 public class ShowcaseCommentDto {
 	@Getter
-	@Setter
-	@NoArgsConstructor
 	@JsonIgnoreProperties({"showcaseId", "memberId"})
-	public static class Post {
-		private Long showcaseId;
-		private Long memberId;
-
+	public static abstract class Request {
 		@NotBlank(message = "Content must not be empty.")
 		private String content;
+		private Long showcaseId;
+		private Long memberId;
 
 		public void setProperties(Long showcaseId, Long memberId) {
 			this.showcaseId = showcaseId;
@@ -29,28 +26,22 @@ public class ShowcaseCommentDto {
 		}
 	}
 
-	@Getter
-	@Setter
-	@NoArgsConstructor
-	@JsonIgnoreProperties({"memberId", "showcaseId", "commentId"})
-	public static class Patch {
-		private Long showcaseId;
-		private Long commentId;
-		private Long memberId;
+	public static class Post extends Request {
+	}
 
-		@NotBlank(message = "Content must not be empty.")
-		private String content;
+	@Getter
+	public static class Patch  extends Request {
+		@JsonIgnore
+		private Long commentId;
 
 		public void setProperties(Long memberId, Long showcaseId, Long commentId) {
-			this.showcaseId = showcaseId;
+			this.setProperties(showcaseId, memberId);
 			this.commentId = commentId;
-			this.memberId = memberId;
 		}
 	}
 
 	@Getter
 	@Setter
-	@NoArgsConstructor
 	public static class Response {
 		private long id;
 		private String content;
