@@ -70,7 +70,7 @@ const Container = styled.div`
 `;
 
 const PostContentViewer = ({ post }) => {
-  console.log(post, 'post in PostContentViewer');
+  // console.log(post, 'post in PostContentViewer');
   return (
     <Container>
       <Viewer initialValue={post.content || ''} language="ko-KR">

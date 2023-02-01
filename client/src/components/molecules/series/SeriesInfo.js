@@ -25,6 +25,7 @@ const SeriesInfo = ({ series }) => {
   const { title, content, views, createdAt, modifiedAt } = series;
   // TODO: 페이지 구현시 createAt, modifiedAt 은 Date 타입으로 받아 컴포넌트 내에서 변환
 
+  // console.log(series, 'series in SeriesInfo');
   const handleClickBlurButton = () => {
     setBlur();
   };

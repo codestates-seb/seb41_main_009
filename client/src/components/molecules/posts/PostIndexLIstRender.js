@@ -64,7 +64,7 @@ const Container = styled.div`
 `;
 
 const PostIndexLIstRender = ({ post }) => {
-  console.log(post, 'post in PostIndexLIstRender');
+  // console.log(post, 'post in PostIndexLIstRender');
 
   return (
     <Container>
