@@ -45,11 +45,7 @@ public class GCSFileInfoService extends FileInfoService {
 		if (request.isNew()) {
 			ImageType type = request.getContentType();
 			String savedFilename = generateRandomFilename(type, basePath);
-			String fileUrl;
-
-			do {
-				fileUrl = String.join("/", domain, bucketName, savedFilename);
-			} while (fileInfoRepository.existsByFileURL_FileUrl(fileUrl));
+			String fileUrl = String.join("/", domain, bucketName, savedFilename);
 
 			BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, savedFilename)).build();
 			Map<String, String> headers = Collections.singletonMap("Content-Type", type.getFullName());
