@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import UserContentBox from '../organisms/user/UserContentBox';
@@ -11,11 +11,11 @@ import UserImage from '../atoms/UserImage';
 import { IMAGE_SIZE_LIMIT, INVALID_DESCRIPTION, INVALID_NICKNAME } from '../../constants/Messages';
 import { isValidIntroduction, isValidNickname } from '../../functions/isValid';
 import Loading from '../atoms/Loading';
-import uploadNewUserInfo from '../../functions/uploadNewUserInfo';
 import getSignedUrl from '../../functions/getSignedUrl';
 
 const UserEdit = () => {
   const params = useParams('id');
+  const navigate = useNavigate();
   const { userId } = params;
   const { userInfo, isLoadingUser } = useGetUser(userId);
   const { nickname, profileUrl, introduction } = userInfo;
@@ -81,7 +81,22 @@ const UserEdit = () => {
 
   const submitNewUserInfo = () => {
     if (!nicknameMessage && !descriptionMessage && newImage) {
-      uploadNewUserInfo(newNickname, newDescription, newImage, userId);
+      const url = `members/${userId}`;
+      const body = {
+        nickname: newNickname,
+        introduction: newDescription,
+        profileUrl: newImage,
+      };
+
+      axios
+        .patch(url, body)
+        .then(res => {
+          console.log(res);
+          navigate(`users/${userId}`);
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   };
 
