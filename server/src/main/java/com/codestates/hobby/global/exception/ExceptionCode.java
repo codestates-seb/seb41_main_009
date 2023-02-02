@@ -16,7 +16,7 @@ public enum ExceptionCode {
     NO_PERMISSION_TO_CREATE(403, ""),
     NO_PERMISSION_TO_DELETE(403, ""),
     WITHDRAWAL_MEMBER(403,"Member Is Withdrawn"),
-    NOT_MATCH_MEMBER(500, "Doesn't Belong This Member"),
+    NOT_MATCH_MEMBER(403, "Doesn't Belong This Member"),
 
     // NOT FOUND
     NOT_CERTIFICATION(404, "It is not certified"),
@@ -30,7 +30,8 @@ public enum ExceptionCode {
 
     // Conflict
     EXISTS_EMAIL(409,"Email Is Exists"),
-    EXISTS_NICKNAME(409,"NickName Is Exists");
+    EXISTS_NICKNAME(409,"NickName Is Exists"),
+    EXISTS_POST(409,"Post Is Exists");
 
     @Getter
     private final int status;

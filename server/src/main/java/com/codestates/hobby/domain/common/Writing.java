@@ -49,4 +49,7 @@ public abstract class Writing extends BaseEntity{
         this.category = category;
     }
 
+    public void addViews() {
+        ++this.views;
+    }
 }
