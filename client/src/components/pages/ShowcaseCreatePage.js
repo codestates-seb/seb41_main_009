@@ -31,6 +31,10 @@ const ShowcaseCreatePage = () => {
     });
   };
 
+  const handleCancle = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     return () => {
       initStore();
@@ -56,7 +60,7 @@ const ShowcaseCreatePage = () => {
         </ContentInputContiner>
       </Container>
       <ButtonContainer>
-        <WhiteShadowButton>Cancel</WhiteShadowButton>
+        <WhiteShadowButton onClick={handleCancle}>Cancel</WhiteShadowButton>
         <BlackShadowButton onClick={handlePostShowcase}>Submit</BlackShadowButton>
       </ButtonContainer>
     </>

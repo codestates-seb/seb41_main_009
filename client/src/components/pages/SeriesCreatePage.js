@@ -32,6 +32,10 @@ const SeriesCreatePage = () => {
     });
   };
 
+  const handleCancle = () => {
+    navigate(-1);
+  };
+
   useEffect(() => {
     return () => {
       initStore();
@@ -66,7 +70,7 @@ const SeriesCreatePage = () => {
         </FileInputContainer>
       </Container>
       <ButtonContainer>
-        <WhiteShadowButton>Cancel</WhiteShadowButton>
+        <WhiteShadowButton onClick={handleCancle}>Cancel</WhiteShadowButton>
         <BlackShadowButton onClick={handlePostSeries}>Submit</BlackShadowButton>
       </ButtonContainer>
     </BackgroundWrapper>
