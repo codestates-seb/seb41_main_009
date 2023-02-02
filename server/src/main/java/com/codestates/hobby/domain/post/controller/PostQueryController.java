@@ -10,12 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-
 
 @RestController
 @RequiredArgsConstructor
@@ -56,6 +51,13 @@ public class PostQueryController {
     public ResponseEntity<?> getAllBySeries(@PathVariable("series-id") long seriesId,
                                             CustomPageRequest pageRequest) {
         Page<Post> posts = postService.findAllBySeries(seriesId, pageRequest.to());
+        return toResponseEntity(posts);
+    }
+
+    @GetMapping("/posts/search")
+    public ResponseEntity<?> search(@RequestParam String query, CustomPageRequest pageRequest) {
+        Page<Post> posts = postService.findByContent(query, pageRequest.to());
+
         return toResponseEntity(posts);
     }
 

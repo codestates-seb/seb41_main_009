@@ -18,6 +18,7 @@ public interface PostMapper {
     @Mapping(target = "writer", source = "member")
     @Mapping(target = "seriesId", source = "series")
     @Mapping(target = "comments", source = "commentCount")
+    @Mapping(target = "content", ignore = true)
     PostDto.SimpleResponse postToSimpleResponse(Post post);
 
     default String toString(Category value){
