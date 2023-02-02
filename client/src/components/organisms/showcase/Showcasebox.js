@@ -74,6 +74,12 @@ const Showcasebox = ({
 const Container = styled.div`
   width: 100%;
   margin-bottom: 30px;
+  transition: all 0.3s ease-out;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 1px 1px 20px #aaa;
+  }
 
   & > * {
     margin-bottom: 10px;
