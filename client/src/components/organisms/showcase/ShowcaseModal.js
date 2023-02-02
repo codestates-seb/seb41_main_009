@@ -103,6 +103,8 @@ const ImageBox = styled(Box)`
 `;
 
 const Image = styled.img`
+  object-fit: contain;
+  background-color: black;
   height: 100%;
 `;
 
