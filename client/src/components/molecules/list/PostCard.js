@@ -66,6 +66,17 @@ const Box = styled.div`
   height: fit-content;
   ${LabelMedium}
 `;
+
+const Box2 = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+
+  width: fit-content;
+  height: fit-content;
+  ${LabelMedium}
+`;
 const Title = styled.div`
   width: ${props => props.width || '534px'};
   height: 48px;
@@ -110,6 +121,7 @@ const Title2 = styled.div`
   flex-direction: row;
   align-items: center;
   margin: 10px;
+  gap: 10px;
 `;
 
 const PostThinCard = styled.div`
@@ -122,7 +134,7 @@ const PostThinCard = styled.div`
   color: ${props => (props.selected ? 'var(--gray-300)' : '')};
 `;
 
-const PostSeriesCard = ({ postId, handleClick, selected }) => {
+const PostSeriesCard = ({ postId, handleClick, selected, idx }) => {
   // 현재는postId와 관계없이 PostDummy에 있는 데이터를 가져옴
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
@@ -134,7 +146,10 @@ const PostSeriesCard = ({ postId, handleClick, selected }) => {
   console.log(isLoading, isLoadingError);
   return (
     <PostThinCard selected={selected} onclick={handleClick}>
-      <Title2>{title || 'title'}</Title2>
+      <Box2>
+        <Title2>{idx || '1'}</Title2>
+        <Title2>{title || 'title'}</Title2>
+      </Box2>
       <Box>
         <UserInfoSmall id={writer?.id} name={writer?.nickname} image={writer?.profileUrl} />
         <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>

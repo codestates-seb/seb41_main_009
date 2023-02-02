@@ -38,14 +38,10 @@ const SeriesHeaderPostList = ({ seriesId, page = 1, series }) => {
             ''
           ) : (
             <PostListSection>
-              <PostSeriesCard />
-              <PostSeriesCard />
-              <PostSeriesCard />
-              <PostSeriesCard />
-
-              {postList.map(post =>
+              {postList.map((post, idx) =>
                 currentPostId === post.id ? (
                   <PostSeriesCard
+                    idx={idx}
                     key={post.id}
                     postId={post.id}
                     selected
@@ -55,6 +51,7 @@ const SeriesHeaderPostList = ({ seriesId, page = 1, series }) => {
                   />
                 ) : (
                   <PostSeriesCard
+                    idx={idx}
                     key={post.id}
                     postId={post.id}
                     handleClick={() => {
