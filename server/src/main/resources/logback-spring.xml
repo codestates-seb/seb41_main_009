@@ -25,7 +25,7 @@
             <file>/log/access.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>/log/access/%d{yyyy-MM}/access.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
-                <maxFileSize>1mb</maxFileSize>
+                <maxFileSize>2mb</maxFileSize>
                 <maxHistory>30</maxHistory>
             </rollingPolicy>
             <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
@@ -42,7 +42,7 @@
             <file>/log/debug.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>/log/debug/%d{yyyy-MM}/debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
-                <maxFileSize>1mb</maxFileSize>
+                <maxFileSize>2mb</maxFileSize>
                 <maxHistory>15</maxHistory>
             </rollingPolicy>
             <encoder>
@@ -57,7 +57,7 @@
             <file>/log/error.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
                 <fileNamePattern>/log/error/%d{yyyy-MM}/error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
-                <maxFileSize>1mb</maxFileSize>
+                <maxFileSize>2mb</maxFileSize>
                 <maxHistory>30</maxHistory>
             </rollingPolicy>
             <encoder>
