@@ -5,7 +5,7 @@ const uploadImage = async (image, callback) => {
   const { size, type } = image;
   console.log(size, type);
 
-  const { signedURL } = await getSignedUrl('posts', size, type);
+  const { signedURL, fileURL } = await getSignedUrl('posts', size, type);
 
   console.log(signedURL);
 
@@ -26,10 +26,8 @@ const uploadImage = async (image, callback) => {
       },
       withCredentials: false,
     })
-    .then(({ data }) => {
-      console.log(data);
-      console.log(data.url);
-      callback(data.url, 'alt');
+    .then(() => {
+      callback(fileURL, 'alt');
     })
     .catch(err => console.log(err));
 
