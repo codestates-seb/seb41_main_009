@@ -123,21 +123,14 @@ const useContentCreateStore = create((set, get) => ({
           'Content-Type': 'application/json',
         },
       });
-      // 업로드된 시점에서
-      console.log('쇼케이스 업로드 1차 통과');
-      console.log(response);
 
       // signedURL 을 받아왔다면 해당 URL로 PUT 요청 보내기
       const { signedURL } = response.data.fileInfos[0];
-      console.log(`signedURL: ${signedURL}`);
 
       await uploadToGCS(signedURL);
-      console.log('쇼케이스 업로드 2차 통과');
       callback();
     } catch (error) {
       set({ errorMessage: error });
-      console.log('showcase 업로드 실패');
-      console.log(error);
     }
   },
 

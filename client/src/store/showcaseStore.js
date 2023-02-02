@@ -77,6 +77,25 @@ const useShowcaseStore = create((set, get) => ({
       );
       console.log('코멘트를 달았습니다.');
       console.log(response);
+
+      const { itemList } = get();
+      const targetIndex = itemList.findIndex(el => el.id === id);
+      if (itemList[targetIndex]?.lastComment === undefined) {
+        const newArray = [...itemList];
+        newArray[targetIndex].lastComment = {
+          id: 1, // 댓글 식별자
+          content, // 댓글 내용
+          writer: {
+            // 댓글 작성자 정보
+            id: currentUserId, // 댓글 작성자 식별자
+            nickname: '나', // 댓글 작성자 닉네임
+          },
+        };
+        set({
+          itemList: newArray,
+        });
+      }
+
       handleInit();
     } catch (err) {
       console.log(err);
