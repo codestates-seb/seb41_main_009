@@ -72,7 +72,7 @@ export default ShowcaseModal;
 const Container = styled.div`
   display: ${props => (props.isModalOpen ? 'flex' : 'none')};
   position: fixed;
-  top: 0;
+  top: var(--header-height);
   right: 0;
   bottom: 0;
   left: 0;

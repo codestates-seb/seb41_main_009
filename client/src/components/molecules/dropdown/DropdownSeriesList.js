@@ -95,7 +95,7 @@ const DropdownSeriesList = ({ post }) => {
 
     console.log(body, 'body');
 
-    if (post.imgUrls) body.imgUrls = post.imgUrls;
+    // if (post.imgUrls) body.imgUrls = post.imgUrls;
     axios
       .patch(`posts/${post.id}`, body, { withCredentials: true })
       .then(res => {

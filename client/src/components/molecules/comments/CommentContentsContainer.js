@@ -6,17 +6,16 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
-
-const CommentContentsContainer = ({ basePath, contentId, comments, callback }) => {
-const NoComment = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
   align-items: center;
 `;
 
-const CommentContentsContainer = ({ basePath, comments, contentId, totalPages }) => {
+const CommentContentsContainer = ({ basePath, comments, contentId, callback, totalPages }) => {
+  const NoComment = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+  `;
   console.log(totalPages, 'totalPages in CommentContentsContainer');
   return (
     <Container>
