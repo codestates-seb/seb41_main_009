@@ -2,9 +2,11 @@ package com.codestates.hobby.domain.post.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.persistence.*;
 import com.codestates.hobby.domain.common.Writing;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnDefault;
 import com.codestates.hobby.domain.category.entity.Category;
 import com.codestates.hobby.domain.fileInfo.entity.FileInfo;
@@ -56,6 +58,7 @@ public class Post extends Writing {
 	public void updatePost (String title, String content, String description, Category category, Series series, List<String> imageURLs) {
 		super.update(title, content, category);
 		if (this.series != null && !this.series.equals(series)) this.series = series;
+		if (this.series == null && series != null) this.series = series;
 		this.description = description;
 
 		if (imageURLs == null) {
@@ -82,6 +85,18 @@ public class Post extends Writing {
 
 	public void deleteSeries() {
 		this.series = null;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+			return false;
+		}
+		Post post = (Post) o;
+		return getId() != null && Objects.equals(getId(), post.getImages());
 	}
 
 	public void updateCommentCount(int num){
