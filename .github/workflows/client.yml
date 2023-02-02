@@ -31,8 +31,8 @@ jobs:
         working-directory: ./client
       - name: Sync Bucket Backup
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_CLIENT_ACCESS_KEY_ID_BACKUP }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_CLIENT_SECRET_ACCESS_KEY_BACKUP }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_BACKUP }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_BACKUP }}
           AWS_EC2_METADATA_DISABLED: true
         run: |
           aws s3 sync \
