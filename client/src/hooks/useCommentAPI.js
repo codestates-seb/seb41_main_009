@@ -35,8 +35,8 @@ const useCommentAPI = () => {
    * @param {string} content : 댓글 내용
    * @returns {post{}, boolean, boolean}
    */
-  const postComment = (basePath, id, content) => {
-    const url = `/${basePath}/comments/${id}`;
+  const postComment = (basePath, id, content, callback) => {
+    const url = `/${basePath}/${id}/comments`;
 
     axios
       .post(
@@ -49,9 +49,11 @@ const useCommentAPI = () => {
         },
       )
       .then(() => {
+        callback();
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch(err => {
+        console.log(err);
         setIsLoading(false);
         setIsLoadingError(true);
       })
@@ -99,9 +101,12 @@ const useCommentAPI = () => {
    * @param {string | number} postId
    * @returns {post{}, boolean, boolean}
    */
-  const deleteComment = (basePath, contentId, id) => {
+  const deleteComment = (basePath, contentId, id, callback) => {
     const url = `/${basePath}/${contentId}/comments/${id}`;
-    axios.delete(url).catch(err => console.log(err));
+    axios
+      .delete(url)
+      .then(() => callback())
+      .catch(err => console.log(err));
   };
 
   return { comments, commentCount, isLoading, isLoadingError, getComment, postComment, patchComment, deleteComment };
