@@ -4,11 +4,11 @@ import TextArea from '../atoms/TextArea';
 import Dropdown from '../organisms/Dropdown';
 import { WhiteShadowButton, BlackShadowButton, ClearBlurButton } from '../atoms/Buttons';
 import ShowcaseImageInput from '../molecules/showcase/ShowcaseImageInput';
-import useShowcaseCreateStore from '../../store/showcaseCreateStore';
+import useContentCreateStore from '../../store/contentCreateStore';
 
 const SeriesCreatePage = () => {
   const [blur, setBlur] = useState(true);
-  const { setTitle, setContent, initStore, postSeries } = useShowcaseCreateStore();
+  const { setTitle, setContent, initStore, postSeries } = useContentCreateStore();
 
   const handleOnChangeTitle = event => {
     setTitle(event.target.value);

@@ -1,13 +1,15 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import Swal from 'sweetalert2';
+
 import { UPLOAD_SIZE_EXCEEDED } from '../constants/Messages';
-import useShowcaseCreateStore from '../store/showcaseCreateStore';
+import useContentCreateStore from '../store/contentCreateStore';
 import config from '../constants/config';
 
 const useInputImage = () => {
   const InputRef = useRef(null);
   const [file, setFile] = useState(null);
   const [errorMsg, setErrorMsg] = useState('');
-  const { imageBase64, setImageBase64, setImageBlob, setFileInfos } = useShowcaseCreateStore();
+  const { imageBase64, setImageBase64, setImageBlob, setFileInfos } = useContentCreateStore();
   const { MAX_UPLOAD_SIZE } = config;
 
   // 이미지 프리뷰를 위한 dataURL 저장
@@ -37,6 +39,7 @@ const useInputImage = () => {
     // check file size
     if (MAX_UPLOAD_SIZE < imageFile.size) {
       setErrorMsg(UPLOAD_SIZE_EXCEEDED);
+      Swal.fire({ title: UPLOAD_SIZE_EXCEEDED, confirmButtonColor: 'Orange' });
       return;
     }
 
