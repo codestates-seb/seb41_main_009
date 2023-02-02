@@ -24,9 +24,9 @@ const CommentInputContainer = ({ basePath, id, callback }) => {
 
   const onClickCommentSubmit = e => {
     if (content.length < 10) {
-      alert('Minimum 10 characters.');
+      alert('10글자 이상 입력해주세요.');
     } else if (content.length > 300) {
-      alert('Maximum 300 characters.');
+      alert('300글자 이상 입력해주세요.');
     } else {
       postComment(basePath, id, content, callback);
       setContent('');
