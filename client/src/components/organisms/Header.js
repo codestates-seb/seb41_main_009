@@ -56,7 +56,7 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    const url = 'logout';
+    const url = 'auth/logout';
 
     axios
       .get(url)
