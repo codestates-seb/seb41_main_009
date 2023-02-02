@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Pagination from '../Pagination';
 import Comment from './Comment';
 
 const Container = styled.div`
@@ -7,7 +8,14 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const CommentContentsContainer = ({ basePath, comments }) => {
+const NoComment = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+`;
+
+const CommentContentsContainer = ({ basePath, comments, totalPages }) => {
   return (
     <Container>
       {comments && comments.length > 0
@@ -15,6 +23,7 @@ const CommentContentsContainer = ({ basePath, comments }) => {
             return <Comment key={el.id} comment={el} basePath={basePath} />;
           })
         : ''}
+      {totalPages === 0 ? <NoComment>No Comment Here</NoComment> : <Pagination totalPages={totalPages} />}
     </Container>
   );
 };

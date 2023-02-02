@@ -29,7 +29,7 @@ const Comments = ({ basePath, id }) => {
       <CommentHeader comments={comments?.pageInfo?.totalElements} />
       {/* postId -댓글을 제출 할때 어떤 POST에 속해있는지 알려주기 위함 */}
       <CommentInputContainer postId={id} />
-      <CommentContentsContainer comments={comments} basePath={basePath} />
+      <CommentContentsContainer comments={comments} basePath={basePath} totalPages={comments?.pageInfo?.totalPages} />
     </Container>
   );
 };
