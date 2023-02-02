@@ -1,24 +1,25 @@
 import axios from 'axios';
+import getSignedUrl from './getSignedUrl';
 
-const url = '/api/v1/questions/image';
-const host = 'http://HOSTURL';
+const uploadImage = async (image, callback) => {
+  const { size, type } = image;
+  const newBlob = new Blob([image], { type });
 
-const uploadImage = async (blob, callback) => {
-  const img = blob;
-  const base64Image = await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(img);
-    reader.onload = event => resolve(event.target.result);
-    reader.onerror = error => reject(error);
-  });
+  const { signedURL, fileURL } = await getSignedUrl('posts', size, type);
 
   axios
-    .post(`${host}${url}`, {
-      image: base64Image,
+    .put(signedURL, newBlob, {
+      headers: {
+        'Content-Type': type,
+        Authorization: null,
+      },
+      withCredentials: false,
     })
-    .then(({ data }) => {
-      callback(data.url, 'alt');
-    });
+    .then(() => {
+      callback(fileURL, 'alt');
+    })
+    .catch(err => console.log(err));
+
   return false;
 };
 
