@@ -1,15 +1,9 @@
 import styled from 'styled-components';
 import { ParagraphMedium } from '../../styles/typo';
 
-const TextArea = ({ maxLength, placeholder, handleContent, height, padding }) => {
+const TextArea = ({ maxLength, placeholder, onChange, height, padding }) => {
   return (
-    <Container
-      maxLength={maxLength}
-      placeholder={placeholder}
-      onChange={handleContent}
-      height={height}
-      padding={padding}
-    />
+    <Container maxLength={maxLength} placeholder={placeholder} onChange={onChange} height={height} padding={padding} />
   );
 };
 

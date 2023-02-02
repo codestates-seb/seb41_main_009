@@ -19,7 +19,7 @@ const PostListContainer = ({ postList }) => {
 
   return (
     <Container>
-      {postList.map(post => {
+      {postList?.map(post => {
         const handleClick = () => {
           navigate(`/posts/${post.category}/${post.id}`);
         };

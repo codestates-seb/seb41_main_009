@@ -51,7 +51,7 @@ const PostSubHeaderLayer = ({ post }) => {
       <ContainerInner>
         <IndexLabelBox>
           Index
-          <PostIndexLIstRender />
+          <PostIndexLIstRender post={post} />
         </IndexLabelBox>
         <BlueShadowButton onClick={toggleOpen}> Add</BlueShadowButton>
       </ContainerInner>

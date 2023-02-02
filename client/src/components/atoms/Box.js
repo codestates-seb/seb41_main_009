@@ -10,9 +10,9 @@ import { LabelMedium } from '../../styles/typo';
  * @param children - 하위 컴포넌트
  * @returns {JSX.Element} - div 태그
  */
-const Box = ({ color, padding, margin, border, boxShadow, children }) => {
+const Box = ({ width, color, padding, margin, border, boxShadow, children }) => {
   return (
-    <Container color={color} padding={padding} margin={margin} border={border} boxShadow={boxShadow}>
+    <Container width={width} color={color} padding={padding} margin={margin} border={border} boxShadow={boxShadow}>
       {children}
     </Container>
   );
@@ -22,7 +22,7 @@ const Container = styled.div`
   ${LabelMedium};
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: ${props => props.width || '100%'};
   box-sizing: border-box;
   margin: ${props => props.margin || 'null'};
   background-color: ${props => props.color || 'white'};

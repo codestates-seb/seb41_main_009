@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { PostListStack, PostCard } from '../list/PostCard';
+import { PostCard } from '../list/PostCard';
 import { LabelListTitle, LabelMedium } from '../../../styles/typo';
 import Pagination from '../Pagination';
 import useGetSeriesPostList from '../../../hooks/useGetSeriesPostList';
 import useSeriesStore from '../../../store/seriesStore';
 import { WhiteTextButton } from '../../atoms/Buttons';
+import NoPost from '../list/NoPost';
 
-const SeriesHeaderPostList = ({ seriesId, page }) => {
+const SeriesHeaderPostList = ({ seriesId, page = 1 }) => {
   const { currentPostId, setCurrentPostId } = useSeriesStore();
   const [isListOpen, setIsListOpen] = useState(false); // list 숨기기
 
@@ -28,7 +29,7 @@ const SeriesHeaderPostList = ({ seriesId, page }) => {
               <p> {postPageInfo.totalPage} 개</p>
             </SeriesPostNumLayer>
           </TextGroup>
-          {isListOpen ? <PostListStack postId={postList[0].id} /> : ''}
+          {isListOpen ? <NoPost /> : ''}
         </UpperSection>
         <LowerSection>
           {isListOpen ? (

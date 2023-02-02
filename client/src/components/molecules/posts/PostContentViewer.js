@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { Viewer } from '@toast-ui/react-editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
 
+import { useRef, useEffect } from 'react';
 import { ParagraphMedium, HeadingLarge, HeadingSmall, HeadingMedium } from '../../../styles/typo';
-import { PostDummy } from '../../../constants/dummyData';
+// import { PostDummy } from '../../../constants/dummyData';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -68,10 +70,16 @@ const Container = styled.div`
   }
 `;
 
-const PostContentViewer = () => {
+const PostContentViewer = ({ post }) => {
+  const viewerRef = useRef();
+
+  useEffect(() => {
+    viewerRef.current.getInstance().setMarkdown(post.content);
+  }, [post]);
+
   return (
     <Container>
-      <Viewer initialValue={PostDummy.data.content} />
+      <Viewer ref={viewerRef} initialValue={post?.content} />
     </Container>
   );
 };
