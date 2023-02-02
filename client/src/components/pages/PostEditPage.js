@@ -17,8 +17,8 @@ const Container = styled.div`
 `;
 
 const PostEditPage = () => {
-  const params = useParams('id');
-  const { post } = useGetPost(params);
+  const { id } = useParams('id');
+  const { post } = useGetPost(id);
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
@@ -37,7 +37,7 @@ const PostEditPage = () => {
   }, [post]);
 
   const editPost = () => {
-    const url = `posts/${params}`;
+    const url = `posts/${id}`;
     const postData = {
       title,
       category,
@@ -49,11 +49,12 @@ const PostEditPage = () => {
     if (seriesId) postData.seriesId = seriesId;
 
     if (title && category && description && body) {
+      console.log(postData);
       axios
         .patch(url, postData)
         .then(res => {
           console.log(res);
-          navigate(`/posts/${category}/${res.data.id}`);
+          navigate(`/posts/${category}/${res.data}`);
         })
         .catch(err => console.log(err));
     }

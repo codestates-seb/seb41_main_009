@@ -18,18 +18,17 @@ const UserEdit = () => {
   const params = useParams('id');
   const { userId } = params;
   const { userInfo, isLoadingUser } = useGetUser(userId);
-  const { nickname, imgUrl, introduction } = userInfo;
+  const { nickname, profileUrl, introduction } = userInfo;
   const [newNickname, setNewNickname] = useState('');
   const [newImage, setNewImage] = useState('');
   const [newDescription, setNewDescription] = useState('');
   const [nicknameMessage, setNicknameMessage] = useState('');
   const [descriptionMessage, setDescriptionMessage] = useState('');
   const MAXIMAGESIZE = 2097152;
-
   useEffect(() => {
     setNewNickname(nickname);
     setNewDescription(introduction);
-    setNewImage(imgUrl);
+    setNewImage(profileUrl);
   }, [userInfo]);
 
   const uploadNewImage = async e => {
