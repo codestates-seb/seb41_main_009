@@ -44,7 +44,7 @@ const Container = styled.div`
   ${LabelMedium};
   cursor: pointer;
   position: relative;
-  z-index: 9999;
+  z-index: 103;
 `;
 
 const DropdownListContainer = styled.ul`

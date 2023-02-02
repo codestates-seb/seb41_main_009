@@ -63,7 +63,7 @@ const MenuList = styled.div`
 
   @media (max-width: 1179px) {
     display: ${props => (props.isListHidden ? 'none' : 'flex')};
-    z-index: 10001;
+    z-index: 101;
   }
 `;
 
@@ -104,7 +104,7 @@ const Modal = styled.div`
     left: 50%;
     transform: translate(-50%, -50%) scale(1);
     background-color: rgba(255, 255, 255, 0.7);
-    z-index: 10000;
+    z-index: 100;
   }
 `;
 
