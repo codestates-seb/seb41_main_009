@@ -11,6 +11,7 @@ const EMAIL_VALIDATION_SUCCESS = '인증 성공!';
 const EMAIL_VALIDATION_FAILURE = '인증번호를 확인해주세요';
 const SELECT_CATEGORY = '카테고리를 선택해주세요!';
 const EMPTY_CONTENT_ERROR = '내용을 작성해주세요!';
+const EMPTY_TITLE_ERROR = '타이틀을 작성해주세요!';
 const MINIMUM_ONE_IMAGE_ERROR = '업로드 할 이미지를 최소 하나 이상 선택해주세요!';
 
 export {
@@ -27,5 +28,6 @@ export {
   EMAIL_VALIDATION_FAILURE,
   SELECT_CATEGORY,
   EMPTY_CONTENT_ERROR,
+  EMPTY_TITLE_ERROR,
   MINIMUM_ONE_IMAGE_ERROR,
 };

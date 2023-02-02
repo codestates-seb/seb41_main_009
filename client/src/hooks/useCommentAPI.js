@@ -36,7 +36,7 @@ const useCommentAPI = () => {
    * @returns {post{}, boolean, boolean}
    */
   const postComment = (basePath, id, content) => {
-    const url = `/${basePath}/comments/${id}`;
+    const url = `/${basePath}/${id}/comments`;
 
     axios
       .post(
@@ -51,7 +51,8 @@ const useCommentAPI = () => {
       .then(() => {
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch(err => {
+        console.log(err);
         setIsLoading(false);
         setIsLoadingError(true);
       })
