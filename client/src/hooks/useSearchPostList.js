@@ -1,21 +1,19 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import getPostList from '../functions/getPostList';
-// import { postListDummy } from '../constants/dummyData';
 
 /**
  *
  * @param {string} category
- * @param {string} page
- * @returns {postList[], postPageInfo{}, boolean, boolean}
+ * @param {number} page
+ * @returns {seriesList[], seriesPageInfo{}, boolean, boolean}
  */
-const useGetPostList = (category, page = 1) => {
+const useSearchPostList = (query, page = 1) => {
   const [postList, setPostList] = useState([]);
   const [postPageInfo, setPostPageInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = getPostList(category, page);
+  const URL = `posts/search?page=${page}&size=10&query=${query}`;
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,9 +31,10 @@ const useGetPostList = (category, page = 1) => {
         setIsLoading(false);
         setIsLoadingError(true);
       });
-  }, [category, page]);
+  }, [query, page]);
 
+  // 아직은 seriesList에 seriesListDummy의 값을 넣음
   return { postList, postPageInfo, isLoading, isLoadingError };
 };
 
-export default useGetPostList;
+export default useSearchPostList;

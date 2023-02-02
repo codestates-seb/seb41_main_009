@@ -39,7 +39,8 @@ const Showcase = () => {
         thumnail={thumbnailUrl}
         tagName={category}
         summary={content}
-        userImg={writer.profileImageUrl}
+        userId={writer.id}
+        userImg={writer.profileUrl}
         userName={writer.nickname}
         commentUserName={lastComment ? lastComment.writer.nickname : null}
         commentContent={lastComment ? lastComment.content : null}

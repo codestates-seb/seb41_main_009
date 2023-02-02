@@ -24,7 +24,7 @@ const PostListContainer = ({ postList }) => {
           navigate(`/posts/${post.category}/${post.id}`);
         };
 
-        return <PostCard key={post.id} postId={post.id} handleClick={handleClick} />;
+        return <PostCard key={post.id} post={post} handleClick={handleClick} />;
       })}
     </Container>
   );

@@ -15,11 +15,9 @@ const SeriesCreatePage = () => {
 
   const handleOnChangeTitle = event => {
     setTitle(event.target.value);
-    console.log(event.target.value);
   };
   const handleOnChangeContent = event => {
     setContent(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleToggleBlur = () => {
@@ -30,6 +28,10 @@ const SeriesCreatePage = () => {
     postSeries(() => {
       navigate(-1);
     });
+  };
+
+  const handleCancle = () => {
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -66,7 +68,7 @@ const SeriesCreatePage = () => {
         </FileInputContainer>
       </Container>
       <ButtonContainer>
-        <WhiteShadowButton>Cancel</WhiteShadowButton>
+        <WhiteShadowButton onClick={handleCancle}>Cancel</WhiteShadowButton>
         <BlackShadowButton onClick={handlePostSeries}>Submit</BlackShadowButton>
       </ButtonContainer>
     </BackgroundWrapper>

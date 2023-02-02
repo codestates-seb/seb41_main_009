@@ -39,7 +39,7 @@ const Lnb = ({ currentTab, category = '' }) => {
   );
 };
 
-const LnbSearch = ({ keyword }) => {
+const LnbSearch = ({ query }) => {
   const navigate = useNavigate();
 
   const [nowTab, SetNowTab] = useState();
@@ -53,7 +53,7 @@ const LnbSearch = ({ keyword }) => {
 
   const handleTab = tab => {
     SetNowTab(tab);
-    navigate(`/search/${keyword}/?type=${tab}`);
+    navigate(`/search/${tab}?query=${query}&page=1&size=10`);
   };
 
   return (
@@ -92,7 +92,7 @@ const LeftButtonList = styled.div`
 
 const TabButton = styled.button`
   all: unset;
-  color: ${props => (props.clicked ? 'var(--gray-900)' : 'var(--gray-500)')};
+  color: ${props => (props.clicked ? 'var(--orange-400)' : 'var(--gray-500)')};
   cursor: pointer;
 `;
 

@@ -32,10 +32,14 @@ const ShowcaseModal = ({ isModalOpen }) => {
   };
 
   useEffect(() => {
+    const html = document.documentElement;
+    html.style.overflowY = 'hidden';
+
     window.addEventListener('mousedown', handleClickOutside);
 
     return () => {
       window.removeEventListener('mousedown', handleClickOutside);
+      html.style.overflowY = 'auto';
     };
   }, []);
 
@@ -49,7 +53,7 @@ const ShowcaseModal = ({ isModalOpen }) => {
           </ImageBox>
           <ShowcaseContents>
             <Box>
-              <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileImageUrl} />
+              <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileUrl} />
             </Box>
             <Box margin="15px 0px 35px 0px">
               <Content>{content}</Content>
@@ -71,23 +75,25 @@ export default ShowcaseModal;
 
 const Container = styled.div`
   display: ${props => (props.isModalOpen ? 'flex' : 'none')};
+  backdrop-filter: blur(20px) brightness(150%);
   position: fixed;
-  top: var(--header-height);
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   justify-content: center;
-  align-items: center;
-  z-index: 9999;
+  z-index: 102;
   background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
 `;
 
 const Body = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 100px;
   width: 1057px;
   height: 1000px;
-  z-index: 99999;
+  z-index: 103;
   gap: 32px;
 `;
 
@@ -103,6 +109,8 @@ const ImageBox = styled(Box)`
 `;
 
 const Image = styled.img`
+  object-fit: contain;
+  background-color: black;
   height: 100%;
 `;
 

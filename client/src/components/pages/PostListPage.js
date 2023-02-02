@@ -25,10 +25,7 @@ const PostListPage = () => {
   const [searchParams] = useSearchParams();
   const curPage = searchParams.get('page');
 
-  const { postList, postPageInfo, isLoading, isLoadingError } = useGetPostList(category || 'All', curPage);
-
-  // isLoading, isLoadingError 값에 따라 Loading 컴포넌트 변경 예정
-  console.log(isLoading, isLoadingError);
+  const { postList, postPageInfo } = useGetPostList(category || 'All', curPage);
 
   return (
     <Container>
@@ -37,7 +34,7 @@ const PostListPage = () => {
         headerTitle={`Posts In ${category || 'All'}`}
         asideHeader={<CreatePostButton to="/posts/new">Create Post</CreatePostButton>}
       />
-      <Lnb currentTab="Post" category={category} />
+      <Lnb currentTab="Posts" category={category} />
 
       <PostListContainer postList={postList} />
       <Pagination totalPages={postPageInfo?.totalPages || 1} />

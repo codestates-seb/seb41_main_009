@@ -27,6 +27,7 @@ const Container = styled.div`
   border-radius: 15px;
   color: var(--gray-900);
   width: 100%;
+  box-shadow: var(--boxShadow-01) var(--gray-700);
 
   & > a {
     margin-right: 30px;

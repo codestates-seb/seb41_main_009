@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { PostCard } from '../list/PostCard';
+import { PostSeriesCard } from '../list/PostCard';
 import { LabelListTitle, LabelMedium } from '../../../styles/typo';
 import Pagination from '../Pagination';
 import useGetSeriesPostList from '../../../hooks/useGetSeriesPostList';
@@ -38,9 +38,10 @@ const SeriesHeaderPostList = ({ seriesId, page = 1, series }) => {
             ''
           ) : (
             <PostListSection>
-              {postList.map(post =>
+              {postList.map((post, idx) =>
                 currentPostId === post.id ? (
-                  <PostCard
+                  <PostSeriesCard
+                    idx={idx}
                     key={post.id}
                     postId={post.id}
                     selected
@@ -49,7 +50,8 @@ const SeriesHeaderPostList = ({ seriesId, page = 1, series }) => {
                     }}
                   />
                 ) : (
-                  <PostCard
+                  <PostSeriesCard
+                    idx={idx}
                     key={post.id}
                     postId={post.id}
                     handleClick={() => {

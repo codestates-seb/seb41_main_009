@@ -58,7 +58,6 @@ const PostHeaderLayer = ({ post }) => {
     setModifiedAt(post.modifiedAt);
   }, [post]);
 
-  // UserInfoSmall 에 해당하는 props는 내려주면 오류가 뜸
   return (
     <Container>
       <PostTitle title={title} description={description} categoryName={category || 'Category'} />
@@ -66,11 +65,11 @@ const PostHeaderLayer = ({ post }) => {
         <List2>
           <UserInfoSmall id={writer?.id} name={writer?.nickname} image={writer?.profileUrl} />
           <List>
-            createAt
+            작성일
             <CreatedAtText> {new Date().toDateString(createdAt)}</CreatedAtText>
           </List>
           <List>
-            modifiedAt
+            수정일
             <CreatedAtText> {new Date().toDateString(modifiedAt)}</CreatedAtText>
           </List>
         </List2>

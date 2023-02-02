@@ -11,8 +11,8 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 50px;
-  margin-top: 500px;
-  z-index: 9999;
+  /* margin-top: 500px; */
+  z-index: 99;
 `;
 
 const Body = styled.div`
