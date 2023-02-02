@@ -46,9 +46,11 @@ const SeriesInfoContainer = styled.div`
   gap: 20px;
 `;
 
-const SeriesHeader = ({ series }) => {
+const SeriesHeader = ({ series, seriesId }) => {
   const { isToggleBlur } = useSeriesStore();
   const [page] = useSearchParams('page');
+
+  console.log('SeriesHeader_series', series);
 
   return (
     <BackgroundWrapper>
@@ -63,7 +65,7 @@ const SeriesHeader = ({ series }) => {
         </SeriesInfoContainer>
 
         {/* Series Page의 갯수를 알 수있어야함 page 갯수 api response값 필요 */}
-        <SeriesHeaderPostList seriesId={series.id} page={page} series={series} />
+        <SeriesHeaderPostList seriesId={seriesId} page={page} series={series} />
       </Container>
     </BackgroundWrapper>
   );

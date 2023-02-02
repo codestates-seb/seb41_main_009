@@ -8,17 +8,13 @@ import useSeriesStore from '../../../store/seriesStore';
 import { WhiteTextButton } from '../../atoms/Buttons';
 import NoPost from '../list/NoPost';
 
-const SeriesHeaderPostList = ({ seriesId, page = 1, series }) => {
+const SeriesHeaderPostList = ({ seriesId, series }) => {
   const { currentPostId, setCurrentPostId } = useSeriesStore();
   const [isListOpen, setIsListOpen] = useState(false); // list 숨기기
-
-  const { postList, postPageInfo } = useGetSeriesPostList(seriesId, page);
-
+  const { postList, postPageInfo } = useGetSeriesPostList(seriesId);
   const PostListToggle = () => {
     setIsListOpen(!isListOpen);
   };
-
-  console.log(postPageInfo, 'postPageInfo in SeriesHeaderPostList');
 
   return (
     <Container>
@@ -28,7 +24,7 @@ const SeriesHeaderPostList = ({ seriesId, page = 1, series }) => {
             <Title> {series?.title}의 PostList</Title>
             <SeriesPostNumLayer>
               <p>All Post</p>
-              <p> {postPageInfo.totalPage} 개</p>
+              <p> {series?.totalPosts} 개</p>
             </SeriesPostNumLayer>
           </TextGroup>
           {isListOpen ? <NoPost /> : ''}
@@ -38,7 +34,7 @@ const SeriesHeaderPostList = ({ seriesId, page = 1, series }) => {
             ''
           ) : (
             <PostListSection>
-              {postList.map((post, idx) =>
+              {postList?.map((post, idx) =>
                 currentPostId === post.id ? (
                   <PostSeriesCard
                     idx={idx}
@@ -60,7 +56,7 @@ const SeriesHeaderPostList = ({ seriesId, page = 1, series }) => {
                   />
                 ),
               )}
-              <Pagination totalPages={Number(postPageInfo.totalPage) || 1} />
+              <Pagination totalPages={Number(postPageInfo?.totalPages) || 1} />
             </PostListSection>
           )}
           {isListOpen ? (

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import SeriesHeader from '../organisms/SeriesHeader';
@@ -16,16 +17,21 @@ const Container = styled.div`
 `;
 
 const SeriesPage = () => {
-  const { id } = useParams('id');
+  const { id } = useParams();
 
   // `${HOST}/series/${postId}` 해당하는 정보를 가져옴
-  const { series } = useGetSeries(id);
+  const { series, getSeries } = useGetSeries();
   const { currentPostId } = useSeriesStore();
 
-  // console.log(series, 'series in SeriesPage');
+  console.log('SeriesPage_series: ', series);
+
+  useEffect(() => {
+    getSeries(id);
+  }, []);
+
   return (
     <Container>
-      <SeriesHeader series={series} />
+      <SeriesHeader series={series} seriesId={id} />
       {currentPostId === 0 ? '' : <PostInSeriesPage />}
     </Container>
   );
