@@ -66,7 +66,7 @@ public class SeriesService {
 
     @Transactional(readOnly = true)
     public Page<Series> findAll(PageRequest pageRequest) {
-        return seriesRepository.findAll(pageRequest);
+        return seriesRepository.findAllByOrderByIdDesc(pageRequest);
     }
 
     @Transactional(readOnly = true)
