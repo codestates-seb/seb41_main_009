@@ -24,7 +24,6 @@ import useAuthStore from '../../../store/useAuthStore';
 const Showcasebox = ({
   id,
   thumnail,
-  tagId,
   tagName,
   userImg,
   userId,
@@ -51,7 +50,7 @@ const Showcasebox = ({
 
   return (
     <Container>
-      <ImageCard thumnail={thumnail} id={tagId} name={tagName} handle={handle} />
+      <ImageCard thumnail={thumnail} id={tagName} name={tagName} handle={handle} />
       <Box>
         <UserInfoSmall id={userId} name={userName} image={userImg} />
         <ContentSummary>{summary}</ContentSummary>
