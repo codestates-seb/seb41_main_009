@@ -124,7 +124,7 @@ const Paragraph = styled.div`
 // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
 const SeriesCard = ({ width, series }) => {
   const { id, title, content, member, createdAt, modifiedAt, views, post, totalPosts } = series;
-  const { nickname, profileImageUrl } = member;
+  const { nickname, profileUrl } = member;
 
   return (
     <Container>
@@ -142,7 +142,7 @@ const SeriesCard = ({ width, series }) => {
           <Paragraph width={width}>{content || PARAGRAPH}</Paragraph>
           <ContextLayer>
             <UserBox>
-              <UserInfoSmall name={nickname} image={profileImageUrl} id={member.id} />
+              <UserInfoSmall name={nickname} image={profileUrl} id={member.id} />
               <span>{(modifiedAt || createdAt).slice(0, 10)}</span>
             </UserBox>
           </ContextLayer>

@@ -34,6 +34,27 @@ const ALL = ['/posts', 'All'];
 
 const MAIN = [HOME, SHOWCASE, ALL];
 
+const TAGNAME_DICT = {
+  baseball: '야구',
+  soccer: '축구',
+  basketball: '농구',
+  stocks: '주식',
+  virtualcurrency: '가상화폐',
+  realestate: '부동산',
+  leagueoflegends: 'LOL',
+  starcraft: '스타크래프트',
+  boardgame: '보드게임',
+  drinking: '음주',
+  party: '파티',
+  travel: '여행',
+  movie: '영화',
+  music: '음악',
+  book: '도서',
+  knitting: '뜨개질',
+  craft: '공예',
+  drawing: '드로잉',
+};
+
 const CATEGORIES = [
   [SPORTS, BASEBALL, FOOTBALL, BASKETBALL],
   [FINANCE, STOCK, CRYPTO, REALESTATE],
@@ -50,4 +71,4 @@ const TAGS = CATEGORIES.reduce((acc, cur) => {
   return acc;
 }, []);
 
-export { MAIN, CATEGORIES, TAGS };
+export { MAIN, CATEGORIES, TAGS, TAGNAME_DICT };
