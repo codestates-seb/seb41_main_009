@@ -45,11 +45,6 @@ public class ShowcaseCommentService {
 	/************ Query ************/
 
 	@Transactional(readOnly = true)
-	public long getCount(long showcaseId) {
-		return commentRepository.countAllByShowcaseId(showcaseId);
-	}
-
-	@Transactional(readOnly = true)
 	public ShowcaseComment findById(Long commentId) {
 		return commentRepository.findById(commentId)
 			.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
