@@ -52,11 +52,16 @@ public class SeriesService {
     }
 
     @Transactional
-    public Series findById(long seriesId) {
-        Series series = seriesRepository.findById(seriesId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
+    public Series get(long seriesId) {
+        Series series = findById(seriesId);
         series.addViews();
 
         return seriesRepository.save(series);
+    }
+
+    @Transactional(readOnly = true)
+    public Series findById(long seriesId) {
+        return seriesRepository.findById(seriesId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
     }
 
     @Transactional(readOnly = true)

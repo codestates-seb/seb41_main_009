@@ -65,7 +65,7 @@ public class SeriesController {
     @GetMapping("/series/{series-id}")
     public ResponseEntity get(@PathVariable("series-id") long seriesId,
                               CustomPageRequest pageRequest) {
-        Series series = seriesService.findById(seriesId);
+        Series series = seriesService.get(seriesId);
 
         SeriesDto.SimpleResponse response = seriesMapper.SeriesToSimpleResponseDto(series);
 
