@@ -30,7 +30,7 @@ const PostInSeriesPage = () => {
       <PostHeaderLayer post={post} />
       <PostSubHeaderLayer post={post} />
       <PostContentLayer post={post} />
-      <Comments id={currentPostId} />
+      <Comments basePath="posts" id={currentPostId} />
     </Container>
   );
 };

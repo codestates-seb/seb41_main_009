@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
  * @param {string | number} postId
  * @returns {post{}, boolean, boolean}
  */
-const useGetPost = ({ id }) => {
+const useGetPost = id => {
   const [post, setPost] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
@@ -19,7 +19,7 @@ const useGetPost = ({ id }) => {
     axios
       .get(url)
       .then(({ data }) => {
-        console.log(data);
+        // console.log(data);
         setPost(data);
         setIsLoading(false);
       })
@@ -28,7 +28,7 @@ const useGetPost = ({ id }) => {
         setIsLoading(false);
         setIsLoadingError(true);
       });
-  }, []);
+  }, [id]);
 
   return { post, isLoading, isLoadingError };
 };

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import SeriesHeader from '../organisms/SeriesHeader';
 import useGetSeries from '../../hooks/useGetSeries';
 import PostInSeriesPage from './PostInSeriesPage';
@@ -15,11 +15,12 @@ const Container = styled.div`
 `;
 
 const SeriesPage = () => {
-  const [seriesId] = useSearchParams();
+  const { id } = useParams('id');
 
   // `${HOST}/series/${postId}` 해당하는 정보를 가져옴
-  const { series } = useGetSeries(seriesId);
+  const { series } = useGetSeries(id);
 
+  // console.log(series, 'series in SeriesPage');
   return (
     <Container>
       <SeriesHeader series={series} />

@@ -24,6 +24,7 @@ const PostEditPage = () => {
   const [description, setDescription] = useState('');
   const [body, setBody] = useState('');
   const [seriesId, setSeriesId] = useState(0);
+  const [image, setImage] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,6 +33,7 @@ const PostEditPage = () => {
     setDescription(post.description);
     setBody(post.content);
     setSeriesId(post.seriesId);
+    setImage(post.imgUrls);
   }, [post]);
 
   const editPost = () => {
@@ -42,6 +44,7 @@ const PostEditPage = () => {
       description,
       content: body,
     };
+    if (image.length) postData.imgUrls = image;
 
     if (seriesId) postData.seriesId = seriesId;
 
@@ -60,7 +63,7 @@ const PostEditPage = () => {
     <Container>
       <PostCreateHeader title={title} setTitle={setTitle} curCategory={category} setCategory={setCategory} />
       <PostCreateDescription description={description} setDescription={setDescription} />
-      <PostCreateBody body={body} setBody={setBody} />
+      <PostCreateBody body={body} setBody={setBody} setImage={setImage} />
       <PostCreateButtons submitNewPost={editPost} />
     </Container>
   );

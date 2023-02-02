@@ -7,9 +7,9 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
-    @Mapping(target = "profileUrl", expression = "java(member.getDefaultProfile())")
+    @Mapping(target = "profileUrl", source = "image.fileURL", defaultValue = "https://cdn-icons-png.flaticon.com/512/1946/1946429.png")
     MemberDto.Response MemberToResponseDto(Member member);
 
-    @Mapping(target = "profileUrl", expression = "java(member.getDefaultProfile())")
+    @Mapping(target = "profileUrl", source = "image.fileURL", defaultValue = "https://cdn-icons-png.flaticon.com/512/1946/1946429.png")
     MemberDto.SimpleResponse MemberToSimpleResponseDto(Member member);
 }

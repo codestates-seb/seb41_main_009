@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { LabelListTitle, LabelMedium, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
-import { PARAGRAPH, TITLE } from '../../../constants/Paragraph';
 import useGetPost from '../../../hooks/useGetPost';
 
 const Container = styled.div`
@@ -114,28 +113,26 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
   // 현재는postId와 관계없이 PostDummy에 있는 데이터를 가져옴
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
-  const { title, desc, createdAt, modifiedAt, views, comments } = post;
+  const { title, description, createdAt, modifiedAt, writer } = post;
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
   // currentPost 일때 시각적으로 달라지는 부분이 필요할듯
-
   console.log(isLoading, isLoadingError);
   return (
     <Container boxShadow={boxShadow} selected={selected}>
       <InfoLayer selected={selected}>
         <Layer onClick={handleClick}>
-          <Title width={width}>{title || TITLE}</Title>
-          <Paragraph width={width}>{desc || PARAGRAPH}</Paragraph>
+          <Title width={width}>{title || 'No TItle'} </Title>
+          <Paragraph width={width}>{description || 'No Description'}</Paragraph>
         </Layer>
         <ContextLayer>
           <Box>
-            <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
+            <UserInfoSmall id={writer?.id} name={writer?.nickname} image={writer?.profileUrl} />
             <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>
           </Box>
           <Box>
-            <span> viewed {Number(views)}</span>
-            <span> comments {Number(comments)}</span>
+            <span> viewed {Number(post?.views)}</span>
           </Box>
         </ContextLayer>
       </InfoLayer>
@@ -153,7 +150,7 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
 const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId, imgWidth = '100px' }) => {
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
-  const { title, desc, createdAt, modifiedAt } = post;
+  const { title, description, createdAt, modifiedAt, writer } = post;
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   console.log(isLoading, isLoadingError);
@@ -161,11 +158,11 @@ const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', 
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
-        <Title width={width}>{title || '.....'} </Title>
-        <Paragraph width={width}>{desc || '.....'}</Paragraph>
+        <Title width={width}>{title || 'No TItle'} </Title>
+        <Paragraph width={width}>{description || 'No Description'}</Paragraph>
         <ContextLayer>
           <Box>
-            <UserInfoSmall name="UserName" image="https://unsplash.it/1920/1080/?random" />
+            <UserInfoSmall id={writer?.id} name={writer?.nickname} image={writer?.profileUrl} />
             <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>
           </Box>
         </ContextLayer>

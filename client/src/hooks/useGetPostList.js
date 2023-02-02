@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { postListDummy } from '../constants/dummyData';
-import HOST from '../constants/URL';
+// import { postListDummy } from '../constants/dummyData';
 
 /**
  *
@@ -9,19 +8,20 @@ import HOST from '../constants/URL';
  * @param {string} page
  * @returns {postList[], postPageInfo{}, boolean, boolean}
  */
-const useGetPostList = (category, page) => {
+const useGetPostList = (category, page = 1) => {
   const [postList, setPostList] = useState([]);
   const [postPageInfo, setPostPageInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `${HOST}/categories/${category}/posts?page=${page}&size=10`;
+  const URL = `categories/${category}/posts?page=${page}&size=10`;
   useEffect(() => {
     setIsLoading(true);
 
     axios
       .get(URL)
-      .then(({ data, pageInfo }) => {
+      .then(res => {
+        const { data, pageInfo } = res.data;
         setPostList(data);
         setPostPageInfo(pageInfo);
         setIsLoading(false);
@@ -30,15 +30,8 @@ const useGetPostList = (category, page) => {
         console.log(err);
         setIsLoading(false);
         setIsLoadingError(true);
-      })
-      .finally(() => {
-        const { data, pageInfo } = postListDummy;
-        setPostList(data);
-        setPostPageInfo(pageInfo);
-        setIsLoading(false);
-        setIsLoadingError(false);
       });
-  }, []);
+  }, [category, page]);
 
   return { postList, postPageInfo, isLoading, isLoadingError };
 };

@@ -14,10 +14,5 @@ cloud:
     gcs:
       bucket-name: intorest-store
 
-logging:
-  level:
-    org: info
-    com: info
-
 server:
   port: 80
