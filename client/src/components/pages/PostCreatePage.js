@@ -37,8 +37,7 @@ const PostCreatePage = () => {
       axios
         .post(url, postData)
         .then(res => {
-          console.log(res);
-          navigate(`/posts/${category}/${res.data.id}`);
+          navigate(`/posts/${category}/${res.data}`);
         })
         .catch(err => console.log(err));
     }
