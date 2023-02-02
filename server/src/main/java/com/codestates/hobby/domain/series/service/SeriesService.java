@@ -51,6 +51,14 @@ public class SeriesService {
         seriesRepository.delete(series);
     }
 
+    @Transactional
+    public Series get(long seriesId) {
+        Series series = findById(seriesId);
+        series.addViews();
+
+        return seriesRepository.save(series);
+    }
+
     @Transactional(readOnly = true)
     public Series findById(long seriesId) {
         return seriesRepository.findById(seriesId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
@@ -73,13 +81,7 @@ public class SeriesService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Series> search() {
-        return null;
-    }
-
-
-    @Transactional(readOnly = true)
-    public Series findById(Long seriesId) {
-        return seriesRepository.findById(seriesId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_SERIES));
+    public Page<Series> search(String query, PageRequest pageRequest) {
+        return seriesRepository.findByContentContainsOrderByIdDesc(query, pageRequest);
     }
 }
