@@ -22,13 +22,15 @@ const CommentInputContainer = ({ basePath, id, callback }) => {
     setContent(e.target.value);
   };
 
-  const onClickCommentSubmit = () => {
+  const onClickCommentSubmit = e => {
     if (content.length < 10) {
       alert('Minimum 10 characters.');
     } else if (content.length > 300) {
       alert('Maximum 300 characters.');
     } else {
       postComment(basePath, id, content, callback);
+      setContent('');
+      e.target.value = '';
     }
   };
   return (
