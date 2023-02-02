@@ -39,15 +39,10 @@ const UserEdit = () => {
     if (image && size <= MAXIMAGESIZE) {
       const { fileURL, signedURL } = await getSignedUrl('members', size, type);
 
-      const base64Image = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(image);
-        reader.onload = event => resolve(event.target.result);
-        reader.onerror = error => reject(error);
-      });
+      const newBlob = new Blob([image], { type });
 
       axios
-        .put(signedURL, base64Image, {
+        .put(signedURL, newBlob, {
           headers: {
             'Content-Type': type,
             Authorization: null,
