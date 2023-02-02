@@ -36,7 +36,7 @@ public abstract class FileInfoService {
 	}
 
 	protected String generateRandomFilename(ImageType type, BasePath basePath) {
-		return String.format("%s/%s-%d.%s", basePath, UUID.randomUUID(), System.currentTimeMillis(), type.getExtension());
+		return String.format("%s/%s.%s", basePath, UUID.randomUUID(), type.getExtension());
 	}
 
 	public Set<ImageProjection> findThumbnail(BasePath basePath, Set<Long> ids) {
