@@ -22,7 +22,6 @@ const PostCreatePage = () => {
   const [body, setBody] = useState('');
   const [image, setImage] = useState([]);
   const navigate = useNavigate();
-
   const submitNewPost = () => {
     const url = 'posts';
     const postData = {

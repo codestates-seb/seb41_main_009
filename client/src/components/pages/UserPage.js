@@ -47,7 +47,7 @@ const User = () => {
             boyMessage={userInfo.nickname}
             girlMessage={userInfo.nickname}
             emailMessage={userInfo.email}
-            createdAtMessage={userInfo.createdAt}
+            createdAtMessage={new Date().toDateString(userInfo.createdAt)}
           />
         </>
       )}
