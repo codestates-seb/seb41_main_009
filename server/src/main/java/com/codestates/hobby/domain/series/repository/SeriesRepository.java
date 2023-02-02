@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SeriesRepository extends JpaRepository<Series, Long> {
+    Page<Series> findAllByOrderByIdDesc(Pageable pageable);
     Page<Series> findAllByMemberIdOrderByIdDesc(long memberId, Pageable pageable);
 
     Page<Series> findAllByCategoryOrderByIdDesc(Category category, Pageable pageable);
