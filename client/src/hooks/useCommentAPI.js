@@ -29,7 +29,7 @@ const useCommentAPI = () => {
       .then(res => {
         setcomments(res.data.data);
         setCommentCount(res.data.pageInfo.totalElements);
-        setTotalPages(res.data.pageInfo.totalpages);
+        setTotalPages(res.data.pageInfo.totalPages);
       })
       .finally(() => {
         setIsLoading(false);
