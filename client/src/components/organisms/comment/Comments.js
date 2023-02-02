@@ -16,31 +16,25 @@ const Container = styled.div`
 `;
 
 const Comments = ({ basePath, id }) => {
-  const { comments, commentCount, totalPages, getComment } = useCommentAPI();
-
-  const [nowComments, setNowComments] = useState({});
-  const [nowCommentCount, setNowCommentCount] = useState(0);
-  const [nowtotalPages, setNowtotalPages] = useState(0);
-
-  useEffect(() => {
+  const { comments, commentCount, getComment } = useCommentAPI();
+  const commentReloading = () => {
     getComment(basePath, id, {
       page: 1,
       size: 5,
     });
-    setNowComments(comments);
-    setNowCommentCount(commentCount);
-    setNowtotalPages(totalPages);
-  }, [id]);
+  };
 
-  console.log(basePath, id, 'basePath ,id in Comments');
+  useEffect(() => {
+    commentReloading();
+  }, []);
 
   // console.log(comments, 'Commentsin Comments');
   return (
     <Container>
       <CommentHeader commentsCount={nowCommentCount} />
       {/* postId -댓글을 제출 할때 어떤 POST에 속해있는지 알려주기 위함 */}
-      <CommentInputContainer basePath={basePath} postId={id} />
-      <CommentContentsContainer comments={nowComments} basePath={basePath} totalPages={nowtotalPages} />
+      <CommentInputContainer basePath={basePath} id={id} callback={commentReloading} />
+      <CommentContentsContainer comments={comments} contentId={id} basePath={basePath} callback={commentReloading} />
     </Container>
   );
 };

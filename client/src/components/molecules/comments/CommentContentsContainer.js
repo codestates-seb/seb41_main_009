@@ -8,6 +8,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
+const CommentContentsContainer = ({ basePath, contentId, comments, callback }) => {
 const NoComment = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,7 +22,7 @@ const CommentContentsContainer = ({ basePath, comments, contentId, totalPages })
     <Container>
       {comments && comments.length > 0
         ? comments.map(el => {
-            return <Comment key={el.id} contentId={contentId} comment={el} basePath={basePath} />;
+            return <Comment key={el.id} contentId={contentId} comment={el} basePath={basePath} callback={callback} />;
           })
         : ''}
       {totalPages === 0 ? <NoComment>No Comment Here</NoComment> : <Pagination totalPages={totalPages || 1} />}
