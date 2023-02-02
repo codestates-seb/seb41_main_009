@@ -12,11 +12,11 @@ const TextEditor = ({ body, setBody, setImage }) => {
 
   useEffect(() => {
     editorRef.current.getInstance().setHTML(body);
-    setImage(scanImage(body));
   }, [body]);
 
   const handleSetBody = () => {
     setBody(editorRef.current.getInstance().getHTML());
+    setImage(scanImage(body));
   };
 
   return (

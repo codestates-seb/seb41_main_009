@@ -19,7 +19,7 @@ const PostCreatePage = () => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('');
-  const [body, setBody] = useState('내용을 입력해주세요.');
+  const [body, setBody] = useState('');
   const [image, setImage] = useState([]);
   const navigate = useNavigate();
 
