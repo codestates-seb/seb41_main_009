@@ -21,7 +21,7 @@ const TextEditor = ({ body, setBody }) => {
     <div style={{ width: '100%' }}>
       <Editor
         height="auto"
-        initialEditType="wysiwyg"
+        initialEditType="markdown"
         language="ko-KR"
         hideModeSwitch="true"
         plugins={[colorSyntax]}
