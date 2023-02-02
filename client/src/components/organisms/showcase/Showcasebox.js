@@ -78,7 +78,7 @@ const Container = styled.div`
 
   &:hover {
     transform: translateY(-10px);
-    box-shadow: 1px 1px 20px #aaa;
+    box-shadow: 1px 1px 10px #aaa;
   }
 
   & > * {

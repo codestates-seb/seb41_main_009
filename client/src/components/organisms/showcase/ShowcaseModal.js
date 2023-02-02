@@ -45,30 +45,28 @@ const ShowcaseModal = ({ isModalOpen }) => {
 
   return (
     <Container isModalOpen={isModalOpen}>
-      <BlurContainer>
-        <Body ref={modalRef}>
-          <TopContainer>
-            <ImageBox width="693px" padding="0px">
-              <Image src={imageUrls[0].fileURL} />
-              {currentUserId === writer.id ? <EditButton onClick={handleDeleteShowcase}> X </EditButton> : null}
-            </ImageBox>
-            <ShowcaseContents>
-              <Box>
-                <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileUrl} />
-              </Box>
-              <Box margin="15px 0px 35px 0px">
-                <Content>{content}</Content>
-              </Box>
-              <Category id={category} padding="20px" color="rgba(51, 51, 51, 1)">
-                {category}
-              </Category>
-            </ShowcaseContents>
-          </TopContainer>
-          <CommentListContainer>
-            <Comments basePath="showcases" id={id} />
-          </CommentListContainer>
-        </Body>
-      </BlurContainer>
+      <Body ref={modalRef}>
+        <TopContainer>
+          <ImageBox width="693px" padding="0px">
+            <Image src={imageUrls[0].fileURL} />
+            {currentUserId === writer.id ? <EditButton onClick={handleDeleteShowcase}> X </EditButton> : null}
+          </ImageBox>
+          <ShowcaseContents>
+            <Box>
+              <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileUrl} />
+            </Box>
+            <Box margin="15px 0px 35px 0px">
+              <Content>{content}</Content>
+            </Box>
+            <Category id={category} padding="20px" color="rgba(51, 51, 51, 1)">
+              {category}
+            </Category>
+          </ShowcaseContents>
+        </TopContainer>
+        <CommentListContainer>
+          <Comments basePath="showcases" id={id} />
+        </CommentListContainer>
+      </Body>
     </Container>
   );
 };
@@ -77,6 +75,7 @@ export default ShowcaseModal;
 
 const Container = styled.div`
   display: ${props => (props.isModalOpen ? 'flex' : 'none')};
+  backdrop-filter: blur(20px) brightness(150%);
   position: fixed;
   top: 0;
   right: 0;
@@ -88,16 +87,10 @@ const Container = styled.div`
   overflow: auto;
 `;
 
-const BlurContainer = styled.div`
-  backdrop-filter: blur(120px) brightness(150%);
-  padding: 50px 50px 0px 50px;
-  margin-top: 100px;
-  height: 100%;
-`;
-
 const Body = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 100px;
   width: 1057px;
   height: 1000px;
   z-index: 103;
