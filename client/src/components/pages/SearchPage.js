@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import PageHeader from '../organisms/PageHeader';
 import { LnbSearch } from '../organisms/Lnb';
@@ -38,20 +38,20 @@ const InnerContainer = styled.div`
 
 // 조건 문을 통해서 하나가 켜지면 다른게 꺼지는 형태가 되도록 조건문을 작성해야함
 const Search = () => {
+  const { keyword } = useParams();
+
   const [searchParams] = useSearchParams();
   const curPage = searchParams.get('page');
-
-  const value = searchParams.get('value');
   const type = searchParams.get('type');
 
-  const { seriesList, seriesPageInfo } = useGetSeriesList(value, curPage);
-  const { postList, postPageInfo } = useGetPostList(value, curPage);
+  const { seriesList, seriesPageInfo } = useGetSeriesList(keyword, curPage);
+  const { postList, postPageInfo } = useGetPostList(keyword, curPage);
 
   return (
     <Container>
-      <PageHeader headerSubTitle="Results for Keyword" headerTitle={`Search results ${value}`} />
+      <PageHeader headerSubTitle="Results for Keyword" headerTitle={`Search results ${keyword}`} />
       <SearchResultTitle title="검색결과" amount="120" />
-      <LnbSearch value={value} />
+      <LnbSearch keyword={keyword} />
 
       {type && type === 'All' ? (
         <>
@@ -60,13 +60,13 @@ const Search = () => {
               <SearchResultTitle title="Posts" amount="60" />
               <PostListContainer postList={postList} />
             </InnerContainer>
-            <TextButton to={`/search?value=${value}&type=Posts`}>자세히 보기</TextButton>
+            <TextButton to={`/search/${keyword}?type=Posts`}>자세히 보기</TextButton>
           </ResultContainer>
 
           <ResultContainer>
             <SearchResultTitle title="Series" amount="60" />
             <SeriesListContainer seriesList={seriesList} />
-            <TextButton to={`/search?value=${value}&type=Series`}>자세히 보기</TextButton>
+            <TextButton to={`/search/${keyword}?type=Series`}>자세히 보기</TextButton>
           </ResultContainer>
         </>
       ) : (

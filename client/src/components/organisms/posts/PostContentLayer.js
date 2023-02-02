@@ -15,10 +15,10 @@ const Container = styled.div`
   margin-bottom: 5vh;
 `;
 
-const PostContentLayer = () => {
+const PostContentLayer = ({ post }) => {
   return (
     <Container>
-      <PostContentViewer />
+      <PostContentViewer post={post} />
     </Container>
   );
 };
