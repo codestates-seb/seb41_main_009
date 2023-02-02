@@ -15,11 +15,9 @@ const SeriesCreatePage = () => {
 
   const handleOnChangeTitle = event => {
     setTitle(event.target.value);
-    console.log(event.target.value);
   };
   const handleOnChangeContent = event => {
     setContent(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleToggleBlur = () => {

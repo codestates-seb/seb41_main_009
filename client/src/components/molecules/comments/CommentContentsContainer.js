@@ -3,7 +3,6 @@ import Pagination from '../Pagination';
 import Comment from './Comment';
 
 const CommentContentsContainer = ({ basePath, comments, contentId, callback, totalPages }) => {
-  console.log(totalPages, 'totalPages in CommentContentsContainer');
   return (
     <Container>
       {comments && comments.length > 0

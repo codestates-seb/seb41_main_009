@@ -17,7 +17,6 @@ const Dropdown = ({ padding }) => {
     setCategoryKey(event.target.getAttribute('data-key'));
     setCategoryName(event.target.textContent);
     setIsOpen(false);
-    console.log(event.target.textContent);
   };
 
   return (

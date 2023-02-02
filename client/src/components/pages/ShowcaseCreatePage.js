@@ -21,7 +21,6 @@ const ShowcaseCreatePage = () => {
   // save text to content state
   const handleTextOnChange = event => {
     setContent(event.target.value);
-    console.log(event.target.value);
   };
 
   const handlePostShowcase = async () => {
