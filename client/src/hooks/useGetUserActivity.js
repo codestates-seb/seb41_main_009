@@ -15,7 +15,6 @@ const useGetUserActivity = (activity, id, page) => {
     axios
       .get(url)
       .then(res => {
-        console.log(res);
         const { data, pageInfo } = res.data;
         setIsLoadingActivity(false);
         setUserContents([...userContents, ...data]);

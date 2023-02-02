@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { POST_CREATE_NOT_ENOUGH_INFORMATION } from '../../constants/Messages';
 import PostCreateBody from '../organisms/postcreate/PostCreateBody';
 import PostCreateButtons from '../organisms/postcreate/PostCreateButtons';
 import PostCreateDescription from '../organisms/postcreate/PostCreateDescription';
@@ -22,7 +23,6 @@ const PostCreatePage = () => {
   const [body, setBody] = useState('');
   const [image, setImage] = useState([]);
   const navigate = useNavigate();
-
   const submitNewPost = () => {
     const url = 'posts';
     const postData = {
@@ -37,10 +37,11 @@ const PostCreatePage = () => {
       axios
         .post(url, postData)
         .then(res => {
-          console.log(res);
-          navigate(`/posts/${category}/${res.data.id}`);
+          navigate(`/posts/${category}/${res.data}`);
         })
-        .catch(err => console.log(err));
+        .catch(err => alert(err.message));
+    } else {
+      alert(POST_CREATE_NOT_ENOUGH_INFORMATION);
     }
   };
 

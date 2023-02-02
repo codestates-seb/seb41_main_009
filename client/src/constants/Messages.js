@@ -14,6 +14,7 @@ const EMPTY_CONTENT_ERROR = '내용을 작성해주세요!';
 const EMPTY_TITLE_ERROR = '타이틀을 작성해주세요!';
 const MINIMUM_ONE_IMAGE_ERROR = '업로드 할 이미지를 최소 하나 이상 선택해주세요!';
 const INVALID_LOGIN = '댓글은 로그인후 작성할수있습니다.';
+const POST_CREATE_NOT_ENOUGH_INFORMATION = '제목, 설명, 카테고리, 본문을 모두 입력하셨는지 확인해주세요!';
 
 export {
   INVALID_EMAIL,
@@ -32,4 +33,5 @@ export {
   EMPTY_TITLE_ERROR,
   MINIMUM_ONE_IMAGE_ERROR,
   INVALID_LOGIN,
+  POST_CREATE_NOT_ENOUGH_INFORMATION,
 };
