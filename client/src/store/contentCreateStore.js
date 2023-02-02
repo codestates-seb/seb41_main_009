@@ -1,9 +1,11 @@
 import create from 'zustand';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import { SELECT_CATEGORY, EMPTY_CONTENT_ERROR, MINIMUM_ONE_IMAGE_ERROR } from '../constants/Messages';
 
-const useShowcaseCreateStore = create((set, get) => ({
+const useContentCreateStore = create((set, get) => ({
   // category
-  categoryKey: 'baseball',
+  categoryKey: '',
   categoryName: 'Category',
   setCategoryKey: categoryKey => {
     console.log(categoryKey);
@@ -27,9 +29,12 @@ const useShowcaseCreateStore = create((set, get) => ({
     set({ fileInfos });
   },
 
-  // imageBinary
-  imageBinary: '',
-  setImageBinary: imageBinary => set({ imageBinary }),
+  // imageBlob
+  imageBlob: '',
+  setImageBlob: imageBlob => {
+    console.log(imageBlob);
+    set({ imageBlob });
+  },
 
   // error handle
   errorMessage: '',
@@ -70,26 +75,43 @@ const useShowcaseCreateStore = create((set, get) => ({
 
   uploadToGCS: async sigendURL => {
     // 블롭을 리턴
-    const { imageBinary, fileInfos } = get();
+    const { imageBlob } = get();
 
-    const response = await axios.put(sigendURL, imageBinary, {
+    const response = await axios.put(sigendURL, imageBlob, {
       headers: {
-        'Content-Type': `image/${fileInfos.contentType}`,
+        'Content-Type': `${imageBlob.type}`,
+        authorization: null,
       },
       withCredentials: false,
     });
 
     return response;
   },
-  postShowcase: async () => {
+  postShowcase: async callback => {
     const { categoryKey, content, fileInfos, uploadToGCS } = get();
     try {
       // showcases 로 게시물 업로드
+      if (categoryKey === '') {
+        Swal.fire({ title: SELECT_CATEGORY, confirmButtonColor: 'Orange' });
+        return;
+      }
+
+      if (content === '') {
+        Swal.fire({ title: EMPTY_CONTENT_ERROR, confirmButtonColor: 'Orange' });
+        return;
+      }
+
+      if (fileInfos.length === 0) {
+        Swal.fire({ title: MINIMUM_ONE_IMAGE_ERROR, confirmButtonColor: 'Orange' });
+        return;
+      }
+
       const body = {
         content,
         category: categoryKey,
         fileInfos,
       };
+      console.log(body);
 
       const response = await axios.post('/showcases', body, {
         headers: {
@@ -106,8 +128,7 @@ const useShowcaseCreateStore = create((set, get) => ({
 
       await uploadToGCS(signedURL);
       console.log('쇼케이스 업로드 2차 통과');
-
-      console.log('showcase 업로드 성공');
+      callback();
     } catch (error) {
       set({ errorMessage: error });
       console.log('showcase 업로드 실패');
@@ -123,7 +144,7 @@ const useShowcaseCreateStore = create((set, get) => ({
       await uploadToGCS(signedURL);
 
       const response = await axios.post(
-        '/showcases',
+        '/series',
         {
           category: categoryKey,
           title,
@@ -143,4 +164,4 @@ const useShowcaseCreateStore = create((set, get) => ({
   },
 }));
 
-export default useShowcaseCreateStore;
+export default useContentCreateStore;
