@@ -18,9 +18,10 @@ const uploadImage = async (image, callback) => {
 
   console.log(base64Image);
 
-  const { data } = await axios.post(signedURL, base64Image, {
+  const { data } = await axios.put(signedURL, base64Image, {
     headers: {
       'Content-Type': type,
+      Authorization: null,
     },
     withCredentials: false,
   });
