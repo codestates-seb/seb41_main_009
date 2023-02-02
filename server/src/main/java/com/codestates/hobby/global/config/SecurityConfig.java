@@ -51,8 +51,8 @@ public class SecurityConfig {
 			.httpBasic().disable();
 		http.authorizeHttpRequests(authorize -> authorize
 			.mvcMatchers(HttpMethod.POST, "/members").permitAll()
-			.mvcMatchers(HttpMethod.GET, "/series", "/showcases", "/posts", "/categories").permitAll()
-			.mvcMatchers(HttpMethod.GET, "/series/**", "/showcases/**", "/posts/**", "/categories/**").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/members", "/series", "/showcases", "/posts", "/categories").permitAll()
+			.mvcMatchers(HttpMethod.GET, "/members/**", "/series/**", "/showcases/**", "/posts/**", "/categories/**").permitAll()
 			.anyRequest().authenticated());
 		http.sessionManagement()
 			.sessionFixation().changeSessionId()
