@@ -144,6 +144,6 @@ public class ShowcaseService {
 	}
 
 	private long getOffset(InfiniteScrollRequest isRequest) {
-		return isRequest.getOffset() < 0 ? showcaseRepository.count() + 1 : isRequest.getOffset();
+		return isRequest.getOffset() <= 0 ? showcaseRepository.findLastShowcaseId() + 1 : isRequest.getOffset();
 	}
 }
