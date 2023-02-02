@@ -19,7 +19,6 @@ const useInputImage = () => {
     return new Promise(res => {
       reader.onload = () => {
         setImageBase64(reader.result);
-        console.log(reader.result);
         res();
       };
     });

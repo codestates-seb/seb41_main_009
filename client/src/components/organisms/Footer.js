@@ -12,7 +12,7 @@ const Container = styled.div`
   align-items: center;
   padding: 50px;
   margin-top: 500px;
-  z-index: 9999;
+  z-index: 99;
 `;
 
 const Body = styled.div`

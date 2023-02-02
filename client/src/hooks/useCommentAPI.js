@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
+
 import { COMMENT_DUMMY2 } from '../constants/dummyData';
+import { INVALID_LOGIN } from '../constants/Messages';
+import useAuthStore from '../store/useAuthStore';
 
 const useCommentAPI = () => {
   const [comments, setcomments] = useState(COMMENT_DUMMY2);
@@ -9,6 +13,7 @@ const useCommentAPI = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
+  const { currentUserId } = useAuthStore();
 
   /**
    * 댓글을 가져올때 사용
@@ -40,6 +45,10 @@ const useCommentAPI = () => {
    */
   const postComment = (basePath, id, content, callback) => {
     const url = `/${basePath}/${id}/comments`;
+    if (!currentUserId) {
+      Swal.fire({ title: INVALID_LOGIN, confirmButtonColor: 'Orange' });
+      return;
+    }
 
     axios
       .post(
@@ -67,8 +76,18 @@ const useCommentAPI = () => {
    * @param {string} content : 댓글 내용
    * @returns {post{}, boolean, boolean}
    */
-  const patchComment = (basePath, contentId, id, content) => {
+  const patchComment = (basePath, contentId, id, content, callback) => {
     const url = `/${basePath}/${contentId}/comments/${id}`;
+
+    if (content.length < 10) {
+      alert('10글자 이상 입력해주세요.');
+      return;
+    }
+
+    if (content.length > 300) {
+      alert('300글자 이상 입력해주세요.');
+      return;
+    }
 
     axios
       .patch(
@@ -82,6 +101,7 @@ const useCommentAPI = () => {
       )
       .then(() => {
         setIsLoading(false);
+        callback();
       })
       .catch(err => {
         console.log(err);

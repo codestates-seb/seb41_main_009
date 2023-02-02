@@ -20,7 +20,6 @@ const useGetUser = id => {
     axios
       .get(url)
       .then(data => {
-        console.log(data.data);
         setUserInfo(data.data);
         setIsLoading(false);
       })

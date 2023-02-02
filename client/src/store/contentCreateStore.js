@@ -13,7 +13,6 @@ const useContentCreateStore = create((set, get) => ({
   categoryKey: '',
   categoryName: 'Category',
   setCategoryKey: categoryKey => {
-    console.log(categoryKey);
     set({ categoryKey });
   },
   setCategoryName: categoryName => set({ categoryName }),
@@ -37,7 +36,6 @@ const useContentCreateStore = create((set, get) => ({
   // imageBlob
   imageBlob: '',
   setImageBlob: imageBlob => {
-    console.log(imageBlob);
     set({ imageBlob });
   },
 
@@ -116,7 +114,6 @@ const useContentCreateStore = create((set, get) => ({
         category: categoryKey,
         fileInfos,
       };
-      console.log(body);
 
       const response = await axios.post('/showcases', body, {
         headers: {

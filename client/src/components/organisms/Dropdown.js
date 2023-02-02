@@ -17,7 +17,6 @@ const Dropdown = ({ padding }) => {
     setCategoryKey(event.target.getAttribute('data-key'));
     setCategoryName(event.target.textContent);
     setIsOpen(false);
-    console.log(event.target.textContent);
   };
 
   return (
@@ -44,7 +43,7 @@ const Container = styled.div`
   ${LabelMedium};
   cursor: pointer;
   position: relative;
-  z-index: 9999;
+  z-index: 103;
 `;
 
 const DropdownListContainer = styled.ul`

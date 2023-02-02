@@ -21,7 +21,6 @@ const ShowcaseCreatePage = () => {
   // save text to content state
   const handleTextOnChange = event => {
     setContent(event.target.value);
-    console.log(event.target.value);
   };
 
   const handlePostShowcase = async () => {
@@ -29,6 +28,10 @@ const ShowcaseCreatePage = () => {
       navigate('/');
       window.location.reload();
     });
+  };
+
+  const handleCancle = () => {
+    navigate(-1);
   };
 
   useEffect(() => {
@@ -56,7 +59,7 @@ const ShowcaseCreatePage = () => {
         </ContentInputContiner>
       </Container>
       <ButtonContainer>
-        <WhiteShadowButton>Cancel</WhiteShadowButton>
+        <WhiteShadowButton onClick={handleCancle}>Cancel</WhiteShadowButton>
         <BlackShadowButton onClick={handlePostShowcase}>Submit</BlackShadowButton>
       </ButtonContainer>
     </>
