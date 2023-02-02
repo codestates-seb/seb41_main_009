@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Box from '../atoms/Box';
-import CategoryTag from '../atoms/Category';
+import Category from '../atoms/Category';
 
 /**
  * 쇼케이스에서 사용하는 이미지 썸네일 molecules
@@ -13,7 +13,7 @@ const ImageCard = ({ id, name, thumnail, handle }) => {
   return (
     <Box padding="0px" boxShadow="null">
       <ThumnailCard src={thumnail} onClick={handle} />
-      <CategoryTag id={id}>{name}</CategoryTag>
+      <Category id={id}>{name}</Category>
     </Box>
   );
 };
