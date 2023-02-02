@@ -44,7 +44,7 @@ const CommentButton = styled.button`
   }
 `;
 
-const Comment = ({ basePath, contentId, comment }) => {
+const Comment = ({ basePath, contentId, comment, callback }) => {
   const { content, id, writer } = comment;
   const [editMode, setEditMode] = useState(false);
   const [editContent, setEditContent] = useState(content);
@@ -55,7 +55,7 @@ const Comment = ({ basePath, contentId, comment }) => {
   };
 
   const onClickDeleteComment = () => {
-    deleteComment(basePath, contentId, id);
+    deleteComment(basePath, contentId, id, callback);
   };
 
   const onChangeContent = e => {

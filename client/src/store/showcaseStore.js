@@ -65,10 +65,7 @@ const useShowcaseStore = create((set, get) => ({
         `/showcases/${id}/comments`,
         { content },
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: false,
+          'Content-Type': 'application/json',
         },
       );
       console.log('코멘트를 달았습니다.');
