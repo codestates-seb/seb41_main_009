@@ -12,9 +12,7 @@ import UserContentBox from '../organisms/user/UserContentBox';
 const User = () => {
   const params = useParams('id');
   const { userId } = params;
-  const { userInfo, isLoadingUser, isLoadingUserError } = useGetUser(userId);
-
-  console.log(isLoadingUserError);
+  const { userInfo, isLoadingUser } = useGetUser(userId);
 
   return (
     <Container>
@@ -26,7 +24,7 @@ const User = () => {
             id={userInfo.id}
             name={userInfo.nickname}
             introduction={userInfo.introduction}
-            image={userInfo.imgUrl}
+            image={userInfo.profileUrl}
           />
           <TabHeader> Stats </TabHeader>
           <TabContentContainer>
