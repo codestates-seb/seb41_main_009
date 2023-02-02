@@ -13,16 +13,14 @@ import com.codestates.hobby.domain.showcase.dto.CommentProjection;
 import com.codestates.hobby.domain.showcase.entity.ShowcaseComment;
 
 public interface ShowcaseCommentRepository extends JpaRepository<ShowcaseComment, Long> {
-	long countAllByShowcaseId(long showcaseId);
-
 	Optional<ShowcaseComment> findByIdAndMemberIdAndShowcaseId(long commentId, long memberId, long showcaseId);
 
-	@Query(value = "select c from ShowcaseComment c join fetch c.member m where c.member.id = :memberId",
-		countQuery = "select c from ShowcaseComment c where c.member.id = :memberId")
+	@Query(value = "select c from ShowcaseComment c join fetch c.member m where c.member.id = :memberId order by c.id DESC",
+		countQuery = "select count(c) from ShowcaseComment c where c.member.id = :memberId")
 	Page<ShowcaseComment> findAllByMemberIdOrderByIdDesc(long memberId, Pageable pageable);
 
-	@Query(value = "select c from ShowcaseComment c join fetch c.member m where c.showcase.id = :showcaseId",
-		countQuery = "select c from ShowcaseComment c where c.showcase.id = :showcaseId")
+	@Query(value = "select c from ShowcaseComment c join fetch c.member m where c.showcase.id = :showcaseId order by c.id DESC",
+		countQuery = "select count(c) from ShowcaseComment c where c.showcase.id = :showcaseId")
 	Page<ShowcaseComment> findAllByShowcaseIdOrderByIdDesc(long showcaseId, Pageable pageable);
 
 	@Query("select c from ShowcaseComment c join fetch c.member m where c.id in :ids")
