@@ -25,7 +25,7 @@ const PageButton = styled.button`
   }
 `;
 
-const Pagination = ({ totalPages }) => {
+const Pagination = ({ totalPages, refreshComment }) => {
   const range = (start, end) => {
     const array = [];
     for (let i = start; i < end; ++i) {
@@ -68,6 +68,7 @@ const Pagination = ({ totalPages }) => {
             setCurPage(curPage - 1);
             searchParams.set('page', curPage - 1);
             setSearchParams(searchParams);
+            refreshComment(curPage - 1);
           }}>
           Prev
         </PageButton>
@@ -79,6 +80,7 @@ const Pagination = ({ totalPages }) => {
           setCurPage(1);
           searchParams.set('page', 1);
           setSearchParams(searchParams);
+          refreshComment(1);
         }}>
         1
       </PageButton>
@@ -94,6 +96,7 @@ const Pagination = ({ totalPages }) => {
               setCurPage(el);
               searchParams.set('page', el);
               setSearchParams(searchParams);
+              refreshComment(el);
             }}>
             {el}
           </PageButton>
@@ -110,6 +113,7 @@ const Pagination = ({ totalPages }) => {
             setCurPage(totalPages);
             searchParams.set('page', totalPages);
             setSearchParams(searchParams);
+            refreshComment(totalPages);
           }}>
           {totalPages}
         </PageButton>
@@ -123,6 +127,7 @@ const Pagination = ({ totalPages }) => {
             setCurPage(curPage + 1);
             searchParams.set('page', curPage + 1);
             setSearchParams(searchParams);
+            refreshComment(curPage + 1);
           }}>
           Next
         </PageButton>

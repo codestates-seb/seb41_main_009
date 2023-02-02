@@ -24,6 +24,13 @@ const Comments = ({ basePath, id }) => {
     });
   };
 
+  const refreshComment = page => {
+    getComment(basePath, id, {
+      page,
+      size: 5,
+    });
+  };
+
   useEffect(() => {
     commentReloading();
   }, []);
@@ -39,6 +46,7 @@ const Comments = ({ basePath, id }) => {
         contentId={id}
         basePath={basePath}
         callback={commentReloading}
+        refreshComment={refreshComment}
       />
     </Container>
   );
