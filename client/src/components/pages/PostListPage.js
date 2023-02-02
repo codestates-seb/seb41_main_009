@@ -34,7 +34,7 @@ const PostListPage = () => {
         headerTitle={`Posts In ${category || 'All'}`}
         asideHeader={<CreatePostButton to="/posts/new">Create Post</CreatePostButton>}
       />
-      <Lnb currentTab="Post" category={category} />
+      <Lnb currentTab="Posts" category={category} />
 
       <PostListContainer postList={postList} />
       <Pagination totalPages={postPageInfo?.totalPages || 1} />
