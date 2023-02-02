@@ -92,7 +92,7 @@ const LeftButtonList = styled.div`
 
 const TabButton = styled.button`
   all: unset;
-  color: ${props => (props.clicked ? 'var(--gray-900)' : 'var(--gray-500)')};
+  color: ${props => (props.clicked ? 'var(--orange-400)' : 'var(--gray-500)')};
   cursor: pointer;
 `;
 

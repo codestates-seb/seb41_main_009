@@ -15,7 +15,6 @@ const useGetPostList = (category, page = 1) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  // const URL = `categories/${category}/posts?page=${page}&size=10`;
   const URL = getPostList(category, page);
 
   useEffect(() => {
