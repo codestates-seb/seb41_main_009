@@ -73,9 +73,8 @@ const PostContentViewer = ({ post }) => {
   // console.log(post, 'post in PostContentViewer');
   return (
     <Container>
-      <Viewer initialValue={post.content || ''} language="ko-KR">
-        {post.content}
-      </Viewer>
+      <Viewer initialValue={post.content} />
+      {post.content}
     </Container>
   );
 };

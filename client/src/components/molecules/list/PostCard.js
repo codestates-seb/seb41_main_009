@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { LabelListTitle, LabelMedium, ParagraphMedium } from '../../../styles/typo';
 import { UserInfoSmall } from '../UserInfo';
-import { TITLE } from '../../../constants/Paragraph';
 import useGetPost from '../../../hooks/useGetPost';
 
 const Container = styled.div`
@@ -114,6 +113,8 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
   // 현재는postId와 관계없이 PostDummy에 있는 데이터를 가져옴
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
+  const { title, description, createdAt, modifiedAt, writer } = post;
+
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
   // currentPost 일때 시각적으로 달라지는 부분이 필요할듯
@@ -122,13 +123,13 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
     <Container boxShadow={boxShadow} selected={selected}>
       <InfoLayer selected={selected}>
         <Layer onClick={handleClick}>
-          <Title width={width}>{post?.title || TITLE}</Title>
-          <Paragraph width={width}>......</Paragraph>
+          <Title width={width}>{title || 'No TItle'} </Title>
+          <Paragraph width={width}>{description || 'No Description'}</Paragraph>
         </Layer>
         <ContextLayer>
           <Box>
-            <UserInfoSmall id={post?.writer?.id} name={post?.writer?.nickname} image={post?.writer?.profileUrl} />
-            <CreatedAtText> {new Date().toDateString(post?.modifiedAt || post?.createdAt)} </CreatedAtText>
+            <UserInfoSmall id={writer?.id} name={writer?.nickname} image={writer?.profileUrl} />
+            <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>
           </Box>
           <Box>
             <span> viewed {Number(post?.views)}</span>
@@ -149,7 +150,7 @@ const PostCard = ({ boxShadow, width, postId, handleClick, selected }) => {
 const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', postId, imgWidth = '100px' }) => {
   const { post, isLoading, isLoadingError } = useGetPost(postId);
 
-  const { title, desc, createdAt, modifiedAt, writer } = post;
+  const { title, description, createdAt, modifiedAt, writer } = post;
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   console.log(isLoading, isLoadingError);
@@ -157,8 +158,8 @@ const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', 
   return (
     <Container boxShadow={boxShadow}>
       <InfoLayer>
-        <Title width={width}>{title || '.....'} </Title>
-        <Paragraph width={width}>{desc || '.....'}</Paragraph>
+        <Title width={width}>{title || 'No TItle'} </Title>
+        <Paragraph width={width}>{description || 'No Description'}</Paragraph>
         <ContextLayer>
           <Box>
             <UserInfoSmall id={writer?.id} name={writer?.nickname} image={writer?.profileUrl} />

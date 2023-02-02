@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import PostTitle from '../../molecules/posts/PostTitle';
 import { UserInfoSmall } from '../../molecules/UserInfo';
 import { LabelSmall } from '../../../styles/typo';
+import useAuthStore from '../../../store/useAuthStore';
 
 /**
  * 포스트 상세페이지와 검색결과에 활용할수 있는 포스트헤더 organism
@@ -22,6 +23,8 @@ import { LabelSmall } from '../../../styles/typo';
  * @returns {JSX.Element} -
  */
 const PostHeaderLayer = ({ post }) => {
+  const { currentUserId } = useAuthStore(state => state);
+
   const [title, setTitle] = useState('title');
   const [category, setCategory] = useState('');
   const [description, setDescription] = useState('no description');
@@ -49,7 +52,7 @@ const PostHeaderLayer = ({ post }) => {
   useEffect(() => {
     setTitle(post.title);
     setCategory(post.category);
-    setDescription('no description');
+    setDescription(post.description);
     setWriter(post.writer);
     setCreatedAt(post.createdAt);
     setModifiedAt(post.modifiedAt);
@@ -72,12 +75,18 @@ const PostHeaderLayer = ({ post }) => {
           </List>
         </List2>
         <List>
-          <Button type="button" to={`/posts/${post?.id}/edit`}>
-            Edit
-          </Button>
-          <Button type="button" onClick={handleClickRemove}>
-            Delete
-          </Button>
+          {currentUserId === writer?.id ? (
+            <>
+              <Button type="button" to={`/posts/${post?.id}/edit`}>
+                Edit
+              </Button>
+              <Button type="button" onClick={handleClickRemove}>
+                Delete
+              </Button>
+            </>
+          ) : (
+            ''
+          )}
         </List>
       </DeatilInfoList>
     </Container>

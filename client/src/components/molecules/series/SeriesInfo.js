@@ -1,9 +1,12 @@
 import styled from 'styled-components';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import SeriesTitle from './SeriesTitle';
 import { UserInfoSmall } from '../UserInfo';
 import { LabelSmall, LabelXSmall } from '../../../styles/typo';
 import { ClearBlurButton } from '../../atoms/Buttons';
 import useSeriesStore from '../../../store/seriesStore';
+import useAuthStore from '../../../store/useAuthStore';
 
 /**
  * 포스트 상세페이지와 검색결과에 활용할수 있는 포스트헤더 organism
@@ -21,6 +24,10 @@ import useSeriesStore from '../../../store/seriesStore';
  * @returns {JSX.Element} -
  */
 const SeriesInfo = ({ series }) => {
+  const navigate = useNavigate();
+
+  const { currentUserId } = useAuthStore(state => state);
+
   const { setBlur } = useSeriesStore();
   const { title, content, views, createdAt, modifiedAt, member } = series;
   // TODO: 페이지 구현시 createAt, modifiedAt 은 Date 타입으로 받아 컴포넌트 내에서 변환
@@ -28,6 +35,18 @@ const SeriesInfo = ({ series }) => {
   // console.log(series, 'series in SeriesInfo');
   const handleClickBlurButton = () => {
     setBlur();
+  };
+
+  const handleClickRemove = () => {
+    const url = `series/${series?.id}`;
+
+    axios
+      .delete(url)
+      .then(res => {
+        console.log(res);
+        navigate(`/series/`);
+      })
+      .catch(err => console.log(err));
   };
   return (
     <Container>
@@ -47,8 +66,18 @@ const SeriesInfo = ({ series }) => {
         <IconList>
           <CreatedAtText>createAt {new Date().toDateString(createdAt)}</CreatedAtText>
           <CreatedAtText>modifiedAt {new Date().toDateString(modifiedAt)}</CreatedAtText>
-          <Icon>Edit</Icon>
-          <Icon>Delete</Icon>
+          {currentUserId === member?.id ? (
+            <>
+              <Button type="button" to={`/series/${series.id}/new`}>
+                Edit
+              </Button>
+              <Button type="button" onClick={handleClickRemove}>
+                Delete
+              </Button>
+            </>
+          ) : (
+            ''
+          )}
         </IconList>
       </SeriesInfoContainer>
     </Container>
@@ -95,7 +124,22 @@ const IconList = styled.div`
   height: 36px;
   gap: 10px;
 `;
-const Icon = styled.div`
+
+const Button = styled(Link)`
+  width: ${props => (props.width ? props.width : '51px')};
+  height: ${props => (props.height ? props.height : '36px')};
+  text-decoration: none;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: none;
+  color: black;
   ${LabelSmall}
+  &:hover {
+    background-color: var(--gray-50);
+    cursor: pointer;
+  }
 `;
 export default SeriesInfo;

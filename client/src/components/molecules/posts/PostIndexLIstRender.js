@@ -1,10 +1,7 @@
 import styled from 'styled-components';
 import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-
 import { LabelXSmall } from '../../../styles/typo';
-
-// import { PostDummy } from '../../../constants/dummyData';
 
 const Container = styled.div`
   box-sizing: border-box;
