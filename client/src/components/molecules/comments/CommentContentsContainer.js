@@ -16,6 +16,7 @@ const NoComment = styled.div`
 `;
 
 const CommentContentsContainer = ({ basePath, comments, contentId, totalPages }) => {
+  console.log(totalPages, 'totalPages in CommentContentsContainer');
   return (
     <Container>
       {comments && comments.length > 0
@@ -23,7 +24,7 @@ const CommentContentsContainer = ({ basePath, comments, contentId, totalPages })
             return <Comment key={el.id} contentId={contentId} comment={el} basePath={basePath} />;
           })
         : ''}
-      {totalPages === 0 ? <NoComment>No Comment Here</NoComment> : <Pagination totalPages={totalPages} />}
+      {totalPages === 0 ? <NoComment>No Comment Here</NoComment> : <Pagination totalPages={totalPages || 1} />}
     </Container>
   );
 };

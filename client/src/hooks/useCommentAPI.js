@@ -5,6 +5,8 @@ import { COMMENT_DUMMY2 } from '../constants/dummyData';
 const useCommentAPI = () => {
   const [comments, setcomments] = useState(COMMENT_DUMMY2);
   const [commentCount, setCommentCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
@@ -22,6 +24,7 @@ const useCommentAPI = () => {
       .then(res => {
         setcomments(res.data.data);
         setCommentCount(res.data.pageInfo.totalElements);
+        setTotalPages(res.data.pageInfo.totalpages);
       })
       .finally(() => {
         setIsLoading(false);
@@ -36,7 +39,7 @@ const useCommentAPI = () => {
    * @returns {post{}, boolean, boolean}
    */
   const postComment = (basePath, id, content) => {
-    const url = `/${basePath}/comments/${id}`;
+    const url = `/${basePath}/${id}/comments`;
 
     axios
       .post(
@@ -54,10 +57,6 @@ const useCommentAPI = () => {
       .catch(() => {
         setIsLoading(false);
         setIsLoadingError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsLoadingError(false);
       });
   };
   /**
@@ -104,7 +103,17 @@ const useCommentAPI = () => {
     axios.delete(url).catch(err => console.log(err));
   };
 
-  return { comments, commentCount, isLoading, isLoadingError, getComment, postComment, patchComment, deleteComment };
+  return {
+    comments,
+    commentCount,
+    totalPages,
+    isLoading,
+    isLoadingError,
+    getComment,
+    postComment,
+    patchComment,
+    deleteComment,
+  };
 };
 
 export default useCommentAPI;

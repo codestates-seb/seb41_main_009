@@ -56,7 +56,7 @@ const SeriesHeaderPostList = ({ seriesId, page = 1 }) => {
                   />
                 ),
               )}
-              <Pagination totalPages={Number(postPageInfo.totalPage)} />
+              <Pagination totalPages={Number(postPageInfo.totalPage) || 1} />
             </PostListSection>
           )}
           {isListOpen ? (

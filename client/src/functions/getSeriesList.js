@@ -1,4 +1,4 @@
-const getSeriesLIst = (category, page) => {
+const getSeriesList = (category, page) => {
   if (category !== 'All') {
     return `categories/${category}/series?page=${page}&size=10`;
   }
@@ -6,4 +6,4 @@ const getSeriesLIst = (category, page) => {
   return `series?page=${page}&size=10`;
 };
 
-export default getSeriesLIst;
+export default getSeriesList;
