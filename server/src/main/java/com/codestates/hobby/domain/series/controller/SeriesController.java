@@ -9,8 +9,6 @@ import com.codestates.hobby.domain.series.service.SeriesService;
 
 import com.codestates.hobby.global.config.support.CustomPageRequest;
 import com.codestates.hobby.global.dto.MultiResponseDto;
-import com.codestates.hobby.global.exception.BusinessLogicException;
-import com.codestates.hobby.global.exception.ExceptionCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -109,6 +107,16 @@ public class SeriesController {
         Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
 
         log.info("\n\n--멤버에 해당하는 시리즈 조회--\n");
+        return new ResponseEntity<>(new MultiResponseDto<>(responses), HttpStatus.OK);
+    }
+
+    @GetMapping("/series/search")
+    public ResponseEntity<?> search(@RequestParam String query, CustomPageRequest pageRequest) {
+        Page<Series> series = seriesService.search(query, pageRequest.to());
+
+        Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
+
+        log.info("\n\n--쿼리가 포함된 시리즈 조회--\n");
         return new ResponseEntity<>(new MultiResponseDto<>(responses), HttpStatus.OK);
     }
 }
