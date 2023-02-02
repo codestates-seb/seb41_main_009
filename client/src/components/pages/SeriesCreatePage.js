@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+
 import TextArea from '../atoms/TextArea';
 import Dropdown from '../organisms/Dropdown';
 import { WhiteShadowButton, BlackShadowButton, ClearBlurButton } from '../atoms/Buttons';
@@ -9,6 +11,7 @@ import useContentCreateStore from '../../store/contentCreateStore';
 const SeriesCreatePage = () => {
   const [blur, setBlur] = useState(true);
   const { setTitle, setContent, initStore, postSeries } = useContentCreateStore();
+  const navigate = useNavigate();
 
   const handleOnChangeTitle = event => {
     setTitle(event.target.value);
@@ -21,6 +24,12 @@ const SeriesCreatePage = () => {
 
   const handleToggleBlur = () => {
     setBlur(!blur);
+  };
+
+  const handlePostSeries = () => {
+    postSeries(() => {
+      navigate(-1);
+    });
   };
 
   useEffect(() => {
@@ -58,7 +67,7 @@ const SeriesCreatePage = () => {
       </Container>
       <ButtonContainer>
         <WhiteShadowButton>Cancel</WhiteShadowButton>
-        <BlackShadowButton onClick={postSeries}>Submit</BlackShadowButton>
+        <BlackShadowButton onClick={handlePostSeries}>Submit</BlackShadowButton>
       </ButtonContainer>
     </BackgroundWrapper>
   );

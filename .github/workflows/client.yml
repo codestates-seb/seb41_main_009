@@ -17,14 +17,7 @@ jobs:
         env:
           CI: ""
         working-directory: ./client
-      - name: SHOW AWS CLI VERSION
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_CLIENT_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_CLIENT_SECRET_ACCESS_KEY }}
-          AWS_EC2_METADATA_DISABLED: true
-        run: |
-          aws --version
-      - name: Sync Bucket
+      - name: Sync Bucket Main
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_CLIENT_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_CLIENT_SECRET_ACCESS_KEY }}
@@ -33,5 +26,16 @@ jobs:
           aws s3 sync \
             --region ap-northeast-2 \
             build s3://intorest \
+            --delete
+        working-directory: ./client
+      - name: Sync Bucket Backup
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_CLIENT_ACCESS_KEY_ID_BACKUP }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_CLIENT_SECRET_ACCESS_KEY_BACKUP }}
+          AWS_EC2_METADATA_DISABLED: true
+        run: |
+          aws s3 sync \
+            --region ap-northeast-2 \
+            build s3://intorestbackup \
             --delete
         working-directory: ./client

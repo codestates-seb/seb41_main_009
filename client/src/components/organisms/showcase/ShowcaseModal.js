@@ -54,7 +54,7 @@ const ShowcaseModal = ({ isModalOpen }) => {
             <Box margin="15px 0px 35px 0px">
               <Content>{content}</Content>
             </Box>
-            <Category padding="20px" color="rgba(51, 51, 51, 1)">
+            <Category id={category} padding="20px" color="rgba(51, 51, 51, 1)">
               {category}
             </Category>
           </ShowcaseContents>
@@ -72,7 +72,7 @@ export default ShowcaseModal;
 const Container = styled.div`
   display: ${props => (props.isModalOpen ? 'flex' : 'none')};
   position: fixed;
-  top: 0;
+  top: var(--header-height);
   right: 0;
   bottom: 0;
   left: 0;

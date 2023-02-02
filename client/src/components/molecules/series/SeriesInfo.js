@@ -133,12 +133,12 @@ const Button = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: none;
   border: none;
-  color: black;
+  color: var(--gray-50);
   ${LabelSmall}
   &:hover {
-    background-color: var(--gray-50);
+    background-color: rgba(207, 207, 207, 20%);
     cursor: pointer;
   }
 `;

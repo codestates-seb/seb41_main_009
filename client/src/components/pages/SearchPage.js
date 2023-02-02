@@ -77,7 +77,7 @@ const Search = () => {
         <>
           <SearchResultTitle title="Post" amount="60" />
           <PostListContainer postList={postList} />
-          <Pagination totalPages={postPageInfo.totalPages} />
+          <Pagination totalPages={postPageInfo.totalPages || 1} />
         </>
       ) : (
         ''
@@ -87,7 +87,7 @@ const Search = () => {
         <>
           <SearchResultTitle title="Series" amount="60" />
           <SeriesListContainer seriesList={seriesList} />
-          <Pagination totalPages={seriesPageInfo.totalPages} />
+          <Pagination totalPages={seriesPageInfo.totalPages || 1} />
         </>
       ) : (
         ''

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Viewer } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { useRef, useEffect } from 'react';
 import { LabelXSmall } from '../../../styles/typo';
 
 const Container = styled.div`
@@ -61,12 +62,15 @@ const Container = styled.div`
 `;
 
 const PostIndexLIstRender = ({ post }) => {
-  // console.log(post, 'post in PostIndexLIstRender');
+  const viewerRef = useRef();
+
+  useEffect(() => {
+    viewerRef.current.getInstance().setMarkdown(post.content);
+  }, [post]);
 
   return (
     <Container>
-      <Viewer initialValue={post.content} />
-      {post.content}
+      <Viewer ref={viewerRef} initialValue={post.content} />
     </Container>
   );
 };
