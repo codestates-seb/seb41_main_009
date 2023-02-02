@@ -1,7 +1,7 @@
 import axios from 'axios';
 import getSignedUrl from './getSignedUrl';
 
-const uploadImage = async (image, callback) => {
+const postUploadImage = async (image, callback) => {
   const { size, type } = image;
   console.log(size, type);
 
@@ -34,4 +34,4 @@ const uploadImage = async (image, callback) => {
   return false;
 };
 
-export default uploadImage;
+export default postUploadImage;

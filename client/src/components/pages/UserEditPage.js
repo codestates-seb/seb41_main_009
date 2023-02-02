@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import UserContentBox from '../organisms/user/UserContentBox';
 import { WhiteShadowButton, BlackShadowButton } from '../atoms/Buttons';
 import { DisplayMedium } from '../../styles/typo';
@@ -10,32 +11,55 @@ import UserImage from '../atoms/UserImage';
 import { IMAGE_SIZE_LIMIT, INVALID_DESCRIPTION, INVALID_NICKNAME } from '../../constants/Messages';
 import { isValidIntroduction, isValidNickname } from '../../functions/isValid';
 import Loading from '../atoms/Loading';
+import uploadNewUserInfo from '../../functions/uploadNewUserInfo';
+import getSignedUrl from '../../functions/getSignedUrl';
 
 const UserEdit = () => {
   const params = useParams('id');
   const { userId } = params;
-  const { userInfo, isLoadingUser, isLoadingUserError } = useGetUser(userId);
+  const { userInfo, isLoadingUser } = useGetUser(userId);
   const { nickname, imgUrl, introduction } = userInfo;
-  const [newNickname, setNewNickname] = useState(nickname);
-  const [newImage, setNewImage] = useState(imgUrl);
-  const [newDescription, setNewDescription] = useState(introduction);
+  const [newNickname, setNewNickname] = useState('');
+  const [newImage, setNewImage] = useState('');
+  const [newDescription, setNewDescription] = useState('');
   const [nicknameMessage, setNicknameMessage] = useState('');
   const [descriptionMessage, setDescriptionMessage] = useState('');
   const MAXIMAGESIZE = 2097152;
 
-  console.log(isLoadingUserError);
+  useEffect(() => {
+    setNewNickname(nickname);
+    setNewDescription(introduction);
+    setNewImage(imgUrl);
+  }, [userInfo]);
 
-  const uploadNewImage = e => {
+  const uploadNewImage = async e => {
     const image = e.currentTarget.files[0];
+    const { size, type } = image;
 
-    if (image && image.size <= MAXIMAGESIZE) {
-      const imagePath = URL.createObjectURL(image);
-      // 이미지 처리 로직에 따라서 여기서 이미지 서버에 업로드할수도 있음
-      console.log(image);
-      setNewImage(imagePath);
+    if (image && size <= MAXIMAGESIZE) {
+      const { fileURL, signedURL } = await getSignedUrl('members', size, type);
+
+      const base64Image = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = event => resolve(event.target.result);
+        reader.onerror = error => reject(error);
+      });
+
+      axios
+        .put(signedURL, base64Image, {
+          headers: {
+            'Content-Type': type,
+            Authorization: null,
+          },
+          withCredentials: false,
+        })
+        .then(() => {
+          setNewImage(fileURL);
+        })
+        .catch(err => console.log(err));
     } else {
       alert(IMAGE_SIZE_LIMIT);
-      setNewImage(imgUrl);
     }
   };
 
@@ -63,8 +87,7 @@ const UserEdit = () => {
 
   const submitNewUserInfo = () => {
     if (!nicknameMessage && !descriptionMessage && newImage) {
-      // update 로직에 따라서 함수 추후 구현 예정
-      console.log(newNickname, newDescription, newImage);
+      uploadNewUserInfo(newNickname, newDescription, newImage, userId);
     }
   };
 
