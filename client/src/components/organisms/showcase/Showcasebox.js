@@ -7,6 +7,7 @@ import { ParagraphMedium } from '../../../styles/typo';
 import Nickname from '../../atoms/Nickname';
 import ImageCard from '../../molecules/ImageCard';
 import Input from '../../atoms/Input';
+import useAuthStore from '../../../store/useAuthStore';
 
 /**
  * 썸네일을 포함한 메인페이지용 쇼케이스 박스 organisms
@@ -36,10 +37,12 @@ const Showcasebox = ({
   const commentRef = useRef(null);
   const [commentInput, setCommentInput] = useState('');
   const { postComment } = useShowcaseStore();
+  const { currentUserId } = useAuthStore();
 
   const handleOnKeyEnter = e => {
     if (e.key === 'Enter') {
-      postComment(id, commentInput, () => {
+      e.preventDefault();
+      postComment(id, commentInput, currentUserId, () => {
         setCommentInput('');
         e.target.value = '';
       });

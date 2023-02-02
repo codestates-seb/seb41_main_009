@@ -1,5 +1,7 @@
 import axios from 'axios';
 import create from 'zustand';
+import Swal from 'sweetalert2';
+import { INVALID_LOGIN } from '../constants/Messages';
 
 const useShowcaseStore = create((set, get) => ({
   disabledFlag: false,
@@ -59,8 +61,13 @@ const useShowcaseStore = create((set, get) => ({
     set({ isLoading: false });
   },
 
-  postComment: async (id, content, handleInit) => {
+  postComment: async (id, content, currentUserId, handleInit) => {
     try {
+      if (!currentUserId) {
+        Swal.fire({ title: INVALID_LOGIN, confirmButtonColor: 'Orange' });
+        return;
+      }
+
       const response = await axios.post(
         `/showcases/${id}/comments`,
         { content },
