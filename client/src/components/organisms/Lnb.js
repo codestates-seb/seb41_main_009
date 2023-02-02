@@ -39,7 +39,7 @@ const Lnb = ({ currentTab, category = '' }) => {
   );
 };
 
-const LnbSearch = ({ keyword }) => {
+const LnbSearch = ({ query }) => {
   const navigate = useNavigate();
 
   const [nowTab, SetNowTab] = useState();
@@ -53,7 +53,7 @@ const LnbSearch = ({ keyword }) => {
 
   const handleTab = tab => {
     SetNowTab(tab);
-    navigate(`/search/${keyword}/?type=${tab}`);
+    navigate(`/search/${tab}?query=${query}&page=1&size=10`);
   };
 
   return (

@@ -75,6 +75,7 @@ const Title = styled.div`
 
   ${LabelListTitle}
 `;
+
 const Paragraph = styled.div`
   width: ${props => props.width || '534px'};
   height: 42px;
@@ -103,6 +104,44 @@ const Layer = styled.div`
 const CreatedAtText = styled.div`
   color: var(--gray-400);
 `;
+
+const Title2 = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px;
+`;
+
+const PostThinCard = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 880px;
+  padding-right: 10px;
+  background: ${props => (props.selected ? 'var(--gray-700)' : '#efefef')};
+  color: ${props => (props.selected ? 'var(--gray-300)' : '')};
+`;
+
+const PostSeriesCard = ({ postId, handleClick, selected }) => {
+  // 현재는postId와 관계없이 PostDummy에 있는 데이터를 가져옴
+  const { post, isLoading, isLoadingError } = useGetPost(postId);
+
+  const { title, createdAt, modifiedAt, writer } = post;
+
+  // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
+  // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
+  // currentPost 일때 시각적으로 달라지는 부분이 필요할듯
+  console.log(isLoading, isLoadingError);
+  return (
+    <PostThinCard selected={selected} onclick={handleClick}>
+      <Title2>{title || 'title'}</Title2>
+      <Box>
+        <UserInfoSmall id={writer?.id} name={writer?.nickname} image={writer?.profileUrl} />
+        <CreatedAtText> {new Date().toDateString(modifiedAt || createdAt)} </CreatedAtText>
+      </Box>
+    </PostThinCard>
+  );
+};
 /**
  * 쇼케이스에서 사용하는 이미지 썸네일 molecules
  * @param {string|number} boxShadow - 전체컨테이너의 그림자 효과
@@ -167,4 +206,4 @@ const PostListStack = ({ boxShadow = 'var(--boxShadow-stack)', width = '278px', 
     </Container>
   );
 };
-export { PostCard, PostListStack };
+export { PostCard, PostSeriesCard, PostListStack };
