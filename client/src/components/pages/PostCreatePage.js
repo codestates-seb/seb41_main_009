@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { POST_CREATE_NOT_ENOUGH_INFORMATION } from '../../constants/Messages';
 import PostCreateBody from '../organisms/postcreate/PostCreateBody';
 import PostCreateButtons from '../organisms/postcreate/PostCreateButtons';
 import PostCreateDescription from '../organisms/postcreate/PostCreateDescription';
@@ -38,7 +39,9 @@ const PostCreatePage = () => {
         .then(res => {
           navigate(`/posts/${category}/${res.data}`);
         })
-        .catch(err => console.log(err));
+        .catch(err => alert(err.message));
+    } else {
+      alert(POST_CREATE_NOT_ENOUGH_INFORMATION);
     }
   };
 
