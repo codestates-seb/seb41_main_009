@@ -103,7 +103,7 @@ const Title = styled.div`
   color: #fff;
   margin-bottom: 10px;
   &:hover {
-    color: var(--gray-100);
+    color: var(--gray-500);
   }
 `;
 const Paragraph = styled.div`
@@ -115,7 +115,7 @@ const Paragraph = styled.div`
   ${ParagraphMedium}
   color: #fff;
   &:hover {
-    color: var(--gray-100);
+    color: var(--gray-500);
   }
 `;
 

@@ -5,6 +5,8 @@ import { COMMENT_DUMMY2 } from '../constants/dummyData';
 const useCommentAPI = () => {
   const [comments, setcomments] = useState(COMMENT_DUMMY2);
   const [commentCount, setCommentCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
@@ -22,6 +24,7 @@ const useCommentAPI = () => {
       .then(res => {
         setcomments(res.data.data);
         setCommentCount(res.data.pageInfo.totalElements);
+        setTotalPages(res.data.pageInfo.totalpages);
       })
       .finally(() => {
         setIsLoading(false);
@@ -35,8 +38,8 @@ const useCommentAPI = () => {
    * @param {string} content : 댓글 내용
    * @returns {post{}, boolean, boolean}
    */
-  const postComment = (basePath, id, content) => {
-    const url = `/${basePath}/comments/${id}`;
+  const postComment = (basePath, id, content, callback) => {
+    const url = `/${basePath}/${id}/comments`;
 
     axios
       .post(
@@ -49,15 +52,13 @@ const useCommentAPI = () => {
         },
       )
       .then(() => {
+        callback();
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch(err => {
+        console.log(err);
         setIsLoading(false);
         setIsLoadingError(true);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setIsLoadingError(false);
       });
   };
   /**
@@ -99,12 +100,25 @@ const useCommentAPI = () => {
    * @param {string | number} postId
    * @returns {post{}, boolean, boolean}
    */
-  const deleteComment = (basePath, contentId, id) => {
+  const deleteComment = (basePath, contentId, id, callback) => {
     const url = `/${basePath}/${contentId}/comments/${id}`;
-    axios.delete(url).catch(err => console.log(err));
+    axios
+      .delete(url)
+      .then(() => callback())
+      .catch(err => console.log(err));
   };
 
-  return { comments, commentCount, isLoading, isLoadingError, getComment, postComment, patchComment, deleteComment };
+  return {
+    comments,
+    commentCount,
+    totalPages,
+    isLoading,
+    isLoadingError,
+    getComment,
+    postComment,
+    patchComment,
+    deleteComment,
+  };
 };
 
 export default useCommentAPI;

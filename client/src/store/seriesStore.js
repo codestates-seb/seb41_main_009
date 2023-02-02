@@ -6,7 +6,7 @@ const useSeriesStore = create(set => ({
     set(state => ({ isToggleBlur: !state.isToggleBlur }));
   },
 
-  currentPostId: 1,
+  currentPostId: 0,
   setCurrentPostId: currentPostId => set({ currentPostId }),
 }));
 
