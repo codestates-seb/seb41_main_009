@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import useShowcaseCreateStore from '../../store/showcaseCreateStore';
+import useContentCreateStore from '../../store/contentCreateStore';
 import { TAGS } from '../../constants/Categories';
 import { LabelMedium } from '../../styles/typo';
 
 const Dropdown = ({ padding }) => {
-  const { categoryName, setCategoryKey, setCategoryName } = useShowcaseCreateStore();
+  const { categoryName, setCategoryKey, setCategoryName } = useContentCreateStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => {
