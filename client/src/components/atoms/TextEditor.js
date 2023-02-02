@@ -4,7 +4,7 @@ import '@toast-ui/editor/dist/i18n/ko-kr';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import 'tui-color-picker/dist/tui-color-picker.css';
-import uploadImage from '../../functions/uploadImage';
+import postUploadImage from '../../functions/postUploadImage';
 import scanImage from '../../functions/scanImage';
 
 const TextEditor = ({ body, setBody, setImage }) => {
@@ -12,11 +12,11 @@ const TextEditor = ({ body, setBody, setImage }) => {
 
   useEffect(() => {
     editorRef.current.getInstance().setHTML(body);
-    setImage(scanImage(body));
   }, [body]);
 
   const handleSetBody = () => {
     setBody(editorRef.current.getInstance().getHTML());
+    setImage(scanImage(body));
   };
 
   return (
@@ -30,7 +30,7 @@ const TextEditor = ({ body, setBody, setImage }) => {
         ref={editorRef}
         onBlur={handleSetBody}
         hooks={{
-          addImageBlobHook: uploadImage,
+          addImageBlobHook: postUploadImage,
         }}
       />
     </div>

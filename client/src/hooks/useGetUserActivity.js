@@ -15,9 +15,8 @@ const useGetUserActivity = (activity, id, page) => {
     axios
       .get(url)
       .then(res => {
+        console.log(res);
         const { data, pageInfo } = res.data;
-        console.log(data);
-        console.log(pageInfo);
         setIsLoadingActivity(false);
         setUserContents([...userContents, ...data]);
         setTotalPages(pageInfo);

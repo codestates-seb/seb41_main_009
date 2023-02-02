@@ -24,6 +24,9 @@ const PostPage = () => {
   // `${HOST}/posts/${category}/${postId}` 해당하는 정보를 가져옴
   const { post } = useGetPost(id);
 
+  console.log(id, 'id in PostPage');
+  console.log(post, 'post in PostPage');
+
   return (
     <Container>
       <PostHeaderLayer post={post} />

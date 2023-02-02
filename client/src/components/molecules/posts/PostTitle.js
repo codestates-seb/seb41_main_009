@@ -17,7 +17,9 @@ const PostTitle = ({ title, description, categoryName }) => {
         <Title>{title || PARAGRAPH}</Title>
         {categoryName ? (
           <CategoryContainer>
-            <Category padding="10px 30px">{categoryName}</Category>
+            <Category id={categoryName} padding="10px 30px">
+              {categoryName}
+            </Category>
           </CategoryContainer>
         ) : null}
       </TitleContainer>

@@ -8,7 +8,7 @@ import useSeriesStore from '../../../store/seriesStore';
 import { WhiteTextButton } from '../../atoms/Buttons';
 import NoPost from '../list/NoPost';
 
-const SeriesHeaderPostList = ({ seriesId, page = 1 }) => {
+const SeriesHeaderPostList = ({ seriesId, page = 1, series }) => {
   const { currentPostId, setCurrentPostId } = useSeriesStore();
   const [isListOpen, setIsListOpen] = useState(false); // list 숨기기
 
@@ -18,12 +18,14 @@ const SeriesHeaderPostList = ({ seriesId, page = 1 }) => {
     setIsListOpen(!isListOpen);
   };
 
+  console.log(postPageInfo, 'postPageInfo in SeriesHeaderPostList');
+
   return (
     <Container>
       <InnerLayer>
         <UpperSection>
           <TextGroup>
-            <Title> Series Name Post List</Title>
+            <Title> {series?.title}의 PostList</Title>
             <SeriesPostNumLayer>
               <p>All Post</p>
               <p> {postPageInfo.totalPage} 개</p>
@@ -56,7 +58,7 @@ const SeriesHeaderPostList = ({ seriesId, page = 1 }) => {
                   />
                 ),
               )}
-              <Pagination totalPages={Number(postPageInfo.totalPage)} />
+              <Pagination totalPages={Number(postPageInfo.totalPage) || 1} />
             </PostListSection>
           )}
           {isListOpen ? (
@@ -100,9 +102,6 @@ const InnerLayer = styled.div`
   text-overflow: ellipsis;
   ${LabelListTitle}
   color: var(--gray-700);
-  &:hover {
-    color: var(--gray-100);
-  }
 `;
 const UpperSection = styled.div`
   display: flex;
@@ -118,7 +117,7 @@ const UpperSection = styled.div`
   ${LabelListTitle}
   color: var(--gray-700);
   &:hover {
-    color: var(--gray-100);
+    color: var(--gray-500);
   }
 `;
 

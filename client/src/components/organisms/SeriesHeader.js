@@ -55,13 +55,15 @@ const SeriesHeader = ({ series }) => {
       <Container blur={isToggleBlur}>
         <SeriesInfoContainer>
           <CategoryContainer>
-            <Category padding="10px 30px">{series.category}</Category>
+            <Category id={series.category} padding="10px 30px">
+              {series.category}
+            </Category>
           </CategoryContainer>
           <SeriesInfo series={series} />
         </SeriesInfoContainer>
 
         {/* Series Page의 갯수를 알 수있어야함 page 갯수 api response값 필요 */}
-        <SeriesHeaderPostList seriesId={series.id} page={page} />
+        <SeriesHeaderPostList seriesId={series.id} page={page} series={series} />
       </Container>
     </BackgroundWrapper>
   );

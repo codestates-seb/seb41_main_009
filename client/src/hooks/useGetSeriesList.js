@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import getSeriesList from '../functions/getSeriesList';
 
 /**
  *
@@ -13,7 +14,7 @@ const useGetSeriesList = (category, page = 1) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `categories/${category}/series?page=${page}&size=10`;
+  const URL = getSeriesList(category, page);
 
   useEffect(() => {
     setIsLoading(true);

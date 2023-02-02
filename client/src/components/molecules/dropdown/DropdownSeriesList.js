@@ -78,16 +78,26 @@ const DropdownSeriesList = ({ post }) => {
   // 로그인한 사용자의 id를 가져오도록 수정이 되어야함
   const { seriesList } = useGetSeriesListbyUser(currentUserId);
 
+  console.log(post, 'post in DropdownSeriesList');
   const toggleOpen = () => {
     setIsOpen();
   };
 
   const submitChange = () => {
     setIsOpen();
+    const body = {
+      title: post.title,
+      content: post.content,
+      category: post.category,
+      description: 'description',
+      seriesId: currentSeriesId,
+    };
+
+    console.log(body, 'body');
+
+    // if (post.imgUrls) body.imgUrls = post.imgUrls;
     axios
-      .patch(`posts/${post.id}`, {
-        seriesId: currentSeriesId,
-      })
+      .patch(`posts/${post.id}`, body, { withCredentials: true })
       .then(res => {
         console.log(res);
       })
@@ -96,11 +106,12 @@ const DropdownSeriesList = ({ post }) => {
         alert(err.message);
       });
   };
+
   return (
     <Container>
       <ComponentLabel>Add to My Series</ComponentLabel>
       <DropdownListContainer>
-        {seriesList.map(series =>
+        {seriesList?.map(series =>
           currentSeriesId === series.id ? (
             <DropdownItem
               key={series.id}
