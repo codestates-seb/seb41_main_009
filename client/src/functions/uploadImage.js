@@ -26,9 +26,7 @@ const uploadImage = async (image, callback) => {
     withCredentials: false,
   });
 
-  console.log(data.url);
-
-  callback(data.url, 'alt');
+  await callback(data.url, 'alt');
 
   return false;
 };
