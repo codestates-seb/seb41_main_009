@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { HeadingMedium, ParagraphSmall } from '../../../styles/typo';
 import Category from '../../atoms/Category';
-import { PARAGRAPH } from '../../../constants/Paragraph';
 
 /**
  * 포스트 헤더 molecule
@@ -14,7 +13,7 @@ const PostTitle = ({ title, description, categoryName }) => {
   return (
     <Container>
       <TitleContainer>
-        <Title>{title || PARAGRAPH}</Title>
+        <Title>{title || 'No Title'}</Title>
         {categoryName ? (
           <CategoryContainer>
             <Category id={categoryName} padding="10px 30px">
@@ -23,7 +22,7 @@ const PostTitle = ({ title, description, categoryName }) => {
           </CategoryContainer>
         ) : null}
       </TitleContainer>
-      <Desc>{description || PARAGRAPH}</Desc>
+      <Desc>{description || 'No Description'}</Desc>
     </Container>
   );
 };

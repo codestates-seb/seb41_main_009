@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { POST_CREATE_NOT_ENOUGH_INFORMATION } from '../../constants/Messages';
 import useGetPost from '../../hooks/useGetPost';
 import PostCreateBody from '../organisms/postcreate/PostCreateBody';
 import PostCreateButtons from '../organisms/postcreate/PostCreateButtons';
@@ -33,10 +34,11 @@ const PostEditPage = () => {
     setDescription(post.description);
     setBody(post.content);
     setSeriesId(post.seriesId);
-    setImage(post.imgUrls);
+    setImage(post.imgUrls || []);
   }, [post]);
 
-  const editPost = () => {
+  const editPost = e => {
+    e.preventDefault();
     const url = `posts/${id}`;
     const postData = {
       title,
@@ -44,8 +46,8 @@ const PostEditPage = () => {
       description,
       content: body,
     };
-    if (image.length) postData.imgUrls = image;
 
+    if (image.length) postData.imgUrls = image;
     if (seriesId) postData.seriesId = seriesId;
 
     if (title && category && description && body) {
@@ -57,6 +59,8 @@ const PostEditPage = () => {
           navigate(`/posts/${category}/${res.data}`);
         })
         .catch(err => console.log(err));
+    } else {
+      alert(POST_CREATE_NOT_ENOUGH_INFORMATION);
     }
   };
 
