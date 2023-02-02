@@ -2,21 +2,7 @@ import styled from 'styled-components';
 import Pagination from '../Pagination';
 import Comment from './Comment';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
-`;
-
 const CommentContentsContainer = ({ basePath, comments, contentId, callback, totalPages }) => {
-  const NoComment = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-  `;
-  console.log(totalPages, 'totalPages in CommentContentsContainer');
   return (
     <Container>
       {comments && comments.length > 0
@@ -28,5 +14,19 @@ const CommentContentsContainer = ({ basePath, comments, contentId, callback, tot
     </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+`;
+
+const NoComment = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+`;
 
 export default CommentContentsContainer;

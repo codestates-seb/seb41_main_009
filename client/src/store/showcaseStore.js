@@ -30,15 +30,12 @@ const useShowcaseStore = create((set, get) => ({
 
     // 더이상 불러올게 없으면 callback 실행 후 리턴
     if (disabledFlag === true) {
-      console.log('disabled flag is on');
       return;
     }
 
     try {
       set({ isLoading: true });
       const response = await axios.get('/showcases', body);
-
-      console.log(response);
 
       const { data, pageInfo } = response.data;
 
@@ -68,15 +65,13 @@ const useShowcaseStore = create((set, get) => ({
         return;
       }
 
-      const response = await axios.post(
+      await axios.post(
         `/showcases/${id}/comments`,
         { content },
         {
           'Content-Type': 'application/json',
         },
       );
-      console.log('코멘트를 달았습니다.');
-      console.log(response);
 
       const { itemList } = get();
       const targetIndex = itemList.findIndex(el => el.id === id);

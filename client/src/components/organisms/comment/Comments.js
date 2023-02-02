@@ -28,7 +28,6 @@ const Comments = ({ basePath, id }) => {
     commentReloading();
   }, []);
 
-  // console.log(comments, 'Commentsin Comments');
   return (
     <Container>
       <CommentHeader commentsCount={commentCount} />
