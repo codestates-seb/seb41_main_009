@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 // import { SeriesDummy } from '../constants/dummyData';
 
 /**
@@ -8,30 +8,22 @@ import { useState, useEffect } from 'react';
  * @returns {series{}, boolean, boolean}
  * 특정한 시리즈 정보를 리턴
  */
-const useGetSeries = seriesId => {
+const useGetSeries = () => {
   const [series, setSeries] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const url = `series/${seriesId}`;
-
-  useEffect(() => {
-    setIsLoading(true);
-
+  const getSeries = seriesId => {
+    const url = `series/${seriesId}`;
     axios
       .get(url)
-      .then(({ data }) => {
-        setSeries(data);
-        setIsLoading(false);
+      .then(res => {
+        setSeries(res.data);
       })
       .catch(err => {
         console.log(err);
-        setIsLoading(false);
-        setIsLoadingError(true);
       });
-  }, []);
+  };
 
-  return { series, isLoading, isLoadingError };
+  return { series, getSeries };
 };
 
 export default useGetSeries;

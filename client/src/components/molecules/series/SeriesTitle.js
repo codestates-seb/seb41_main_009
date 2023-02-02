@@ -13,7 +13,7 @@ const SeriesTitle = ({ title, description = '디스크림션이 없음', postCou
     <Container>
       <Title>{title}</Title>
       <Count>
-        총 Post <b>{postCount}</b>개
+        조회수 <b>{postCount}</b> 회
       </Count>
       <Desc>{description}</Desc>
     </Container>

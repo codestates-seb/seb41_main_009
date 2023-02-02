@@ -1,7 +1,5 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-// import { SeriesPostLIstDummy } from '../constants/dummyData';
-import HOST from '../constants/URL';
 
 /**
  *
@@ -14,16 +12,15 @@ const useGetSeriesPostList = (seriesId, page = 1) => {
   const [postPageInfo, setPostPageInfo] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
-
   //   Series API 명 확인필요
-  const URL = `${HOST}/series/${seriesId}/posts?page=${page}&sort=newest'`;
+  const URL = `/series/${seriesId}/posts?page=${page}&size=10&sort=newest`;
   useEffect(() => {
     setIsLoading(true);
 
     axios
       .get(URL)
       .then(({ data, pageInfo }) => {
-        setPostList(data);
+        setPostList(data.data);
         setPostPageInfo(pageInfo);
         setIsLoading(false);
       })
@@ -32,7 +29,7 @@ const useGetSeriesPostList = (seriesId, page = 1) => {
         setIsLoading(false);
         setIsLoadingError(true);
       });
-  }, []);
+  }, [seriesId]);
 
   return { postList, postPageInfo, isLoading, isLoadingError };
 };
