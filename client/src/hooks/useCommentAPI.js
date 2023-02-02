@@ -1,12 +1,17 @@
 import axios from 'axios';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
+
 import { COMMENT_DUMMY2 } from '../constants/dummyData';
+import { INVALID_LOGIN } from '../constants/Messages';
+import useAuthStore from '../store/useAuthStore';
 
 const useCommentAPI = () => {
   const [comments, setcomments] = useState(COMMENT_DUMMY2);
   const [commentCount, setCommentCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
+  const { currentUserId } = useAuthStore();
 
   /**
    * 댓글을 가져올때 사용
@@ -37,6 +42,10 @@ const useCommentAPI = () => {
    */
   const postComment = (basePath, id, content, callback) => {
     const url = `/${basePath}/${id}/comments`;
+    if (!currentUserId) {
+      Swal.fire({ title: INVALID_LOGIN, confirmButtonColor: 'Orange' });
+      return;
+    }
 
     axios
       .post(
