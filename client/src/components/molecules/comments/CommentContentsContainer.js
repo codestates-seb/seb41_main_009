@@ -15,12 +15,12 @@ const NoComment = styled.div`
   align-items: center;
 `;
 
-const CommentContentsContainer = ({ basePath, comments, totalPages }) => {
+const CommentContentsContainer = ({ basePath, comments, contentId, totalPages }) => {
   return (
     <Container>
       {comments && comments.length > 0
         ? comments.map(el => {
-            return <Comment key={el.id} comment={el} basePath={basePath} />;
+            return <Comment key={el.id} contentId={contentId} comment={el} basePath={basePath} />;
           })
         : ''}
       {totalPages === 0 ? <NoComment>No Comment Here</NoComment> : <Pagination totalPages={totalPages} />}

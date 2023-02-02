@@ -12,6 +12,8 @@ const useShowcaseStore = create((set, get) => ({
   error: null,
   itemList: [],
 
+  initializeStore: () => set({ itemList: [], offset: -1, disabledFlag: false }),
+
   getItemList: async (count, callback) => {
     const { disabledFlag, offset, isLoading } = get();
     const body = {
@@ -20,6 +22,7 @@ const useShowcaseStore = create((set, get) => ({
         size: count,
       },
     };
+
     // 중복 실행 방지
     if (isLoading) return;
 
@@ -32,6 +35,8 @@ const useShowcaseStore = create((set, get) => ({
     try {
       set({ isLoading: true });
       const response = await axios.get('/showcases', body);
+
+      console.log(response);
 
       const { data, pageInfo } = response.data;
 

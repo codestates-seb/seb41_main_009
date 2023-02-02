@@ -3,7 +3,7 @@ const getUserActivityUrl = (id, activity, page) => {
     return `members/${id}/series?page=${page}&size=5`;
   }
   if (activity === 'post') {
-    return `members/${id}/post?page=${page}&size=5&sort=newest`;
+    return `members/${id}/posts?page=${page}&size=5&sort=newest`;
   }
   return `members/${id}/showcases?offset=${page}&size=5`;
 };

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { COMMENT_DUMMY2 } from '../constants/dummyData';
 
 const useCommentAPI = () => {
   const [comments, setcomments] = useState(COMMENT_DUMMY2);
+  const [commentCount, setCommentCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
@@ -20,7 +20,8 @@ const useCommentAPI = () => {
         params,
       })
       .then(res => {
-        setcomments(res.data);
+        setcomments(res.data.data);
+        setCommentCount(res.data.pageInfo.totalElements);
       })
       .finally(() => {
         setIsLoading(false);
@@ -34,28 +35,29 @@ const useCommentAPI = () => {
    * @param {string} content : 댓글 내용
    * @returns {post{}, boolean, boolean}
    */
-  const postComment = ({ basePath, id, content }) => {
-    const url = `${basePath}/${id}/comments`;
+  const postComment = (basePath, id, content) => {
+    const url = `/${basePath}/comments/${id}`;
 
     axios
-      .post(url, {
-        content,
-      })
-      .then(({ data }) => {
-        setcomments(data);
+      .post(
+        url,
+        {
+          content,
+        },
+        {
+          'Content-Type': 'application/json',
+        },
+      )
+      .then(() => {
         setIsLoading(false);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
         setIsLoading(false);
         setIsLoadingError(true);
       })
       .finally(() => {
-        // 현재는 더미데이터에서 가져옴
-        setcomments(COMMENT_DUMMY2);
         setIsLoading(false);
         setIsLoadingError(false);
-        console.log('Comment');
       });
   };
   /**
@@ -64,15 +66,20 @@ const useCommentAPI = () => {
    * @param {string} content : 댓글 내용
    * @returns {post{}, boolean, boolean}
    */
-  const patchComment = ({ basePath, id, content }) => {
-    const url = `${basePath}/${id}/comments`;
+  const patchComment = (basePath, contentId, id, content) => {
+    const url = `/${basePath}/${contentId}/comments/${id}`;
 
     axios
-      .patch(url, {
-        content,
-      })
-      .then(({ data }) => {
-        setcomments(data);
+      .patch(
+        url,
+        {
+          content,
+        },
+        {
+          'Content-Type': 'application/json',
+        },
+      )
+      .then(() => {
         setIsLoading(false);
       })
       .catch(err => {
@@ -82,7 +89,6 @@ const useCommentAPI = () => {
       })
       .finally(() => {
         // 현재는 더미데이터에서 가져옴
-        setcomments(COMMENT_DUMMY2);
         setIsLoading(false);
         setIsLoadingError(false);
       });
@@ -93,20 +99,12 @@ const useCommentAPI = () => {
    * @param {string | number} postId
    * @returns {post{}, boolean, boolean}
    */
-  const deleteComment = ({ basePath, id }) => {
-    const navigate = useNavigate();
-    const url = `${basePath}/${id}/comments`;
-
-    axios
-      .delete(url)
-      .then(res => {
-        console.log(res);
-        navigate(basePath);
-      })
-      .catch(err => console.log(err));
+  const deleteComment = (basePath, contentId, id) => {
+    const url = `/${basePath}/${contentId}/comments/${id}`;
+    axios.delete(url).catch(err => console.log(err));
   };
 
-  return { comments, isLoading, isLoadingError, getComment, postComment, patchComment, deleteComment };
+  return { comments, commentCount, isLoading, isLoadingError, getComment, postComment, patchComment, deleteComment };
 };
 
 export default useCommentAPI;

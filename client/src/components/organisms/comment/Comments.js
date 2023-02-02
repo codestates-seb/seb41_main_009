@@ -15,7 +15,7 @@ const Container = styled.div`
 `;
 
 const Comments = ({ basePath, id }) => {
-  const { comments, getComment } = useCommentAPI();
+  const { comments, commentCount, getComment } = useCommentAPI();
 
   useEffect(() => {
     getComment(basePath, id, {
@@ -24,9 +24,10 @@ const Comments = ({ basePath, id }) => {
     });
   }, []);
 
+  console.log(comments);
   return (
     <Container>
-      <CommentHeader comments={comments?.pageInfo?.totalElements} />
+      <CommentHeader commentsCount={commentCount} />
       {/* postId -댓글을 제출 할때 어떤 POST에 속해있는지 알려주기 위함 */}
       <CommentInputContainer postId={id} />
       <CommentContentsContainer comments={comments} basePath={basePath} totalPages={comments?.pageInfo?.totalPages} />
