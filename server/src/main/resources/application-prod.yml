@@ -5,7 +5,13 @@ spring:
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
-      connection-timeout: 3000
+      maximum-pool-size: 50
+      connection-timeout: 50000
+      connection-init-sql: SELECT 1
+      validation-timeout: 20000
+      minimum-idle: 25
+      idle-timeout: 600000
+      max-lifetime: 1800000
   jpa:
     hibernate:
       ddl-auto: update
@@ -20,4 +26,11 @@ logging:
     com: info
 
 server:
+  tomcat:
+    threads:
+      max: 32
+      min-spare: 16
+      max-connections: 8192
+      accept-count: 30
+      connection-timeout: 20000
   port: 80

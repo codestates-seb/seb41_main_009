@@ -45,8 +45,7 @@ public class Post extends Writing {
 		this.description = description;
 
 		if (imageURLs == null) {
-			this.thumbnailUrl = "default image url";
-			this.images = null;
+			this.thumbnailUrl = "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg";
 		}
 		else {
 			this.thumbnailUrl = imageURLs.get(0);
@@ -56,12 +55,13 @@ public class Post extends Writing {
 
 	public void updatePost (String title, String content, String description, Category category, Series series, List<String> imageURLs) {
 		super.update(title, content, category);
-		this.series = series;
+		// Lazy에 의한 프록시 객체는 equals를 통한 비교 후 할당
+		if (!this.series.equals(series)) this.series = series;
 		this.description = description;
 
 		if (imageURLs == null) {
-			this.thumbnailUrl = "default image url";
-			this.images = null;
+			this.thumbnailUrl = "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg";
+			images.clear();
 		}
 		else {
 			this.thumbnailUrl = imageURLs.get(0);
@@ -75,10 +75,10 @@ public class Post extends Writing {
 	}
 
 	public void  updateImage(List<String> urls){
-		List<String> olds = images.stream().map(FileInfo::getFileURL).collect(Collectors.toList());
-		new ArrayList<>(images).stream().filter(image -> !urls.contains(image.getFileURL())).forEach(image -> images.remove(image));
-		urls.stream().filter(url -> !olds.contains(url)).forEach(this::addImageFromUrl);
+		images.clear();
+		urls.forEach(this::addImageFromUrl);
 	}
+
 	public void deleteSeries() {
 		this.series = null;
 	}

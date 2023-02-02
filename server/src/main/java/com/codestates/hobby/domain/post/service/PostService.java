@@ -32,6 +32,7 @@ public class PostService {
     private final MemberService memberService;
     private final CategoryService categoryService;
     private final SeriesService seriesService;
+    private final PostValidationService postValidationService;
     private final Executor executor;
 
     @Transactional
@@ -46,6 +47,11 @@ public class PostService {
                 postDto.getContent(),
                 postDto.getDescription(),
                 postDto.getImgUrls() != null ? postDto.getImgUrls():null);
+
+        if (postValidationService.isDuplicatedOrder()) {
+            throw new BusinessLogicException(ExceptionCode.EXISTS_POST);
+        }
+        postValidationService.save(post.getMember().getId());
 
         return postRepository.save(post);
     }
@@ -64,7 +70,7 @@ public class PostService {
                 patchDto.getSeriesId() != null ? series.join():null,
                 patchDto.getImgUrls() != null ? patchDto.getImgUrls():null);
 
-        return postRepository.save(findPost);
+        return findPost;
     }
     @Transactional
     public void delete(long postId, long memberId){
@@ -75,7 +81,9 @@ public class PostService {
 
     @Transactional
     public Post findById(long postId) {
-        return postRepository.findById(postId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
+        Post post = postRepository.findById(postId).orElseThrow(()-> new BusinessLogicException(ExceptionCode.NOT_FOUND_POST));
+        post.addViews();
+        return post;
     }
 
     @Transactional(readOnly = true)
