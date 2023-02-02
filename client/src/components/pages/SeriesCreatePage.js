@@ -1,18 +1,23 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TextArea from '../atoms/TextArea';
+import Dropdown from '../organisms/Dropdown';
 import { WhiteShadowButton, BlackShadowButton, ClearBlurButton } from '../atoms/Buttons';
 import ShowcaseImageInput from '../molecules/showcase/ShowcaseImageInput';
-import useShowcaseCreateStore from '../../store/showcaseCreateStore';
+import useContentCreateStore from '../../store/contentCreateStore';
 
 const SeriesCreatePage = () => {
   const [blur, setBlur] = useState(true);
-  const { setTitle, setContent, initStore, postShowcase } = useShowcaseCreateStore();
+  const { setTitle, setContent, initStore, postSeries } = useContentCreateStore();
 
-  // save text to content state
-  const handleOnChange = useCallback((event, setState) => {
-    setState(event.target.value);
-  });
+  const handleOnChangeTitle = event => {
+    setTitle(event.target.value);
+    console.log(event.target.value);
+  };
+  const handleOnChangeContent = event => {
+    setContent(event.target.value);
+    console.log(event.target.value);
+  };
 
   const handleToggleBlur = () => {
     setBlur(!blur);
@@ -32,17 +37,20 @@ const SeriesCreatePage = () => {
           height="30px"
           maxLength="50"
           padding="none"
-          handleContent={e => handleOnChange(e, setTitle)}
+          onChange={handleOnChangeTitle}
         />
         <TextArea
           placeholder="설명을 입력하세요. (최대 150자)"
           height="80px"
           padding="none"
           maxLength="150"
-          handleContent={e => handleOnChange(e, setContent)}
+          onChange={handleOnChangeContent}
         />
         <InlineButtonContainer>
           <ClearBlurButton handleClick={handleToggleBlur} />
+          <DropdownContainer>
+            <Dropdown padding="10px">Categorie</Dropdown>
+          </DropdownContainer>
         </InlineButtonContainer>
         <FileInputContainer>
           <ShowcaseImageInput>최소 한장 이상의 사진을 업로드</ShowcaseImageInput>
@@ -50,7 +58,7 @@ const SeriesCreatePage = () => {
       </Container>
       <ButtonContainer>
         <WhiteShadowButton>Cancel</WhiteShadowButton>
-        <BlackShadowButton onClick={postShowcase}>Submit</BlackShadowButton>
+        <BlackShadowButton onClick={postSeries}>Submit</BlackShadowButton>
       </ButtonContainer>
     </BackgroundWrapper>
   );
@@ -61,6 +69,10 @@ const BackgroundWrapper = styled.div`
   height: 715px;
   border-radius: 30px;
   background: url(https://unsplash.it/1920/1080/?random);
+`;
+
+const DropdownContainer = styled.div`
+  width: 150px;
 `;
 
 const Container = styled.div`
@@ -90,7 +102,9 @@ const Container = styled.div`
 
 const InlineButtonContainer = styled.div`
   padding-top: 50px;
-  width: 130px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;
 
 const ButtonContainer = styled.div`

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useSearchParams } from 'react-router-dom';
 import SeriesHeaderPostList from '../molecules/series/SeriesPostList';
 import SeriesInfo from '../molecules/series/SeriesInfo';
 import Category from '../atoms/Category';
@@ -47,6 +48,7 @@ const SeriesInfoContainer = styled.div`
 
 const SeriesHeader = ({ series }) => {
   const { isToggleBlur } = useSeriesStore();
+  const [page] = useSearchParams('page');
 
   return (
     <BackgroundWrapper>
@@ -59,7 +61,7 @@ const SeriesHeader = ({ series }) => {
         </SeriesInfoContainer>
 
         {/* Series Page의 갯수를 알 수있어야함 page 갯수 api response값 필요 */}
-        <SeriesHeaderPostList seriesId={series.id} page={series.id} />
+        <SeriesHeaderPostList seriesId={series.id} page={page} />
       </Container>
     </BackgroundWrapper>
   );

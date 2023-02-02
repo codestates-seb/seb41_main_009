@@ -59,13 +59,11 @@ const Signupbox = () => {
 
     axios
       .post(url, body)
-      .then(res => {
+      .then(() => {
         alert(SIGNUP_SUCCESS);
-        console.log(res);
         navigate('/login');
       })
       .catch(err => {
-        console.log(err);
         alert(err.message);
       });
   };

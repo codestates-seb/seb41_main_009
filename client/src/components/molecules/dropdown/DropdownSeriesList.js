@@ -4,6 +4,7 @@ import { BlackButton, WhiteButton } from '../../atoms/Buttons';
 import { LabelListTitle } from '../../../styles/typo';
 import usePostStore from '../../../store/postStore';
 import useGetSeriesListbyUser from '../../../hooks/useGetSeriesListbyUser';
+import useAuthStore from '../../../store/useAuthStore';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -72,7 +73,10 @@ const DropdownItem = styled.li`
 // writer의 정보를 못가져옴
 const DropdownSeriesList = ({ post }) => {
   const { currentSeriesId, setCurrentSeriesId, setIsOpen } = usePostStore();
-  const { seriesList } = useGetSeriesListbyUser(post.writer.id);
+  const { currentUserId } = useAuthStore(state => state);
+
+  // 로그인한 사용자의 id를 가져오도록 수정이 되어야함
+  const { seriesList } = useGetSeriesListbyUser(currentUserId);
 
   const toggleOpen = () => {
     setIsOpen();
@@ -88,7 +92,7 @@ const DropdownSeriesList = ({ post }) => {
         console.log(res);
       })
       .catch(err => {
-        console.log(err);
+        // dialog를 나타나게 하고 싶음
         alert(err.message);
       });
   };

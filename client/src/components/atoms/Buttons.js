@@ -106,19 +106,19 @@ const SidebarTagsButton = styled(TextButton)`
   }
 `;
 
-const ClearBlurButton = ({ handleClick }) => {
-  const Container = styled.div`
-    display: flex;
-    background-color: rgba(207, 207, 207, 20%);
-    color: white;
-    padding: 10px;
-    gap: 10px;
-    cursor: pointer;
-  `;
+const Container = styled.div`
+  display: flex;
+  background-color: rgba(207, 207, 207, 20%);
+  color: white;
+  padding: 10px;
+  gap: 10px;
+  cursor: pointer;
+`;
 
-  const Button = styled.button`
-    all: unset;
-  `;
+const Button = styled.button`
+  all: unset;
+`;
+const ClearBlurButton = ({ handleClick }) => {
   return (
     <Container type="button" onClick={handleClick}>
       <Icon icon="mdi:shimmer" style={{ fontSize: '20px' }} />

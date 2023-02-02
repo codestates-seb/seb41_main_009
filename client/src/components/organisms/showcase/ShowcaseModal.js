@@ -43,7 +43,7 @@ const ShowcaseModal = ({ isModalOpen }) => {
     <Container isModalOpen={isModalOpen}>
       <Body ref={modalRef}>
         <TopContainer>
-          <ImageBox padding="0px">
+          <ImageBox width="693px" padding="0px">
             <Image src={imageUrls[0].fileURL} />
             {currentUserId === writer.id ? <EditButton onClick={handleDeleteShowcase}> X </EditButton> : null}
           </ImageBox>
@@ -99,7 +99,6 @@ const TopContainer = styled.div`
 
 const ImageBox = styled(Box)`
   position: relative;
-  max-width: 693px;
   margin-right: 32px;
 `;
 
