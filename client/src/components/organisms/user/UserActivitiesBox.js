@@ -8,21 +8,15 @@ import useGetUserActivity from '../../../hooks/useGetUserActivity';
 
 const UserActivitiesBox = ({ activity, id }) => {
   const [page, setPage] = useState(1);
-  const { userContents, totalPages, isLoadingActivity, isLoadingActivityError } = useGetUserActivity(
-    activity,
-    id,
-    page,
-  );
+  const { userContents, totalPages } = useGetUserActivity(activity, id, page);
   const activityTitle = activity.slice(0, 1).toUpperCase() + activity.slice(1);
-
-  console.log(isLoadingActivity, isLoadingActivityError);
 
   return (
     <UserContentBox key={activity} tag={activityTitle}>
       <CardContainer>
         {userContents?.map(content => {
           return (
-            <ActivityButton to={`/${activity}/${content.id}`} key={content.id}>
+            <ActivityButton to="" key={content.id}>
               {content.title ? content.title : content.content}
             </ActivityButton>
           );
