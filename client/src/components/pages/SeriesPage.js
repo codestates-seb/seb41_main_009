@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import SeriesHeader from '../organisms/SeriesHeader';
 import useGetSeries from '../../hooks/useGetSeries';
 import PostInSeriesPage from './PostInSeriesPage';
+import useSeriesStore from '../../store/seriesStore';
 
 const Container = styled.div`
   display: flex;
@@ -19,12 +20,13 @@ const SeriesPage = () => {
 
   // `${HOST}/series/${postId}` 해당하는 정보를 가져옴
   const { series } = useGetSeries(id);
+  const { currentPostId } = useSeriesStore();
 
   // console.log(series, 'series in SeriesPage');
   return (
     <Container>
       <SeriesHeader series={series} />
-      <PostInSeriesPage />
+      {currentPostId === 0 ? '' : <PostInSeriesPage />}
     </Container>
   );
 };

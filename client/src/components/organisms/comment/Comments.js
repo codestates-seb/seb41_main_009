@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import styled from 'styled-components';
 
 import useCommentAPI from '../../../hooks/useCommentAPI';
@@ -15,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Comments = ({ basePath, id }) => {
-  const { comments, commentCount, getComment } = useCommentAPI();
+  const { comments, commentCount, totalPages, getComment } = useCommentAPI();
   const commentReloading = () => {
     getComment(basePath, id, {
       page: 1,
@@ -27,13 +28,19 @@ const Comments = ({ basePath, id }) => {
     commentReloading();
   }, []);
 
-  console.log(comments);
+  // console.log(comments, 'Commentsin Comments');
   return (
     <Container>
       <CommentHeader commentsCount={commentCount} />
       {/* postId -댓글을 제출 할때 어떤 POST에 속해있는지 알려주기 위함 */}
       <CommentInputContainer basePath={basePath} id={id} callback={commentReloading} />
-      <CommentContentsContainer comments={comments} contentId={id} basePath={basePath} callback={commentReloading} />
+      <CommentContentsContainer
+        totalPages={totalPages}
+        comments={comments}
+        contentId={id}
+        basePath={basePath}
+        callback={commentReloading}
+      />
     </Container>
   );
 };
