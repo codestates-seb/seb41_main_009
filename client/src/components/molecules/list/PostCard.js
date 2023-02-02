@@ -109,11 +109,8 @@ const CreatedAtText = styled.div`
  * @param {string} width - text의 길이
  * @returns {JSX.Element} - PostList 개별 항목을 나타내는 컴포넌트
  */
-const PostCard = ({ boxShadow, width, postId, handleClick, selected, thumbnailUrl }) => {
-  // 현재는postId와 관계없이 PostDummy에 있는 데이터를 가져옴
-  const { post } = useGetPost(postId);
-  console.log(post);
-  const { title, description, createdAt, modifiedAt, writer } = post;
+const PostCard = ({ boxShadow, width, post, handleClick, selected }) => {
+  const { title, description, createdAt, modifiedAt, writer, thumbnailUrl } = post;
 
   // isLoading, isLoadingError state에 따라 컴포넌트 변경 예정
   // 나중에 Title,Paragraph조건문을 제거했을 때 렌더링 속도가 어떻게 변하는지 확인해봐야함
