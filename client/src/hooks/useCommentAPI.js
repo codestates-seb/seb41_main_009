@@ -76,8 +76,18 @@ const useCommentAPI = () => {
    * @param {string} content : 댓글 내용
    * @returns {post{}, boolean, boolean}
    */
-  const patchComment = (basePath, contentId, id, content) => {
+  const patchComment = (basePath, contentId, id, content, callback) => {
     const url = `/${basePath}/${contentId}/comments/${id}`;
+
+    if (content.length < 10) {
+      alert('10글자 이상 입력해주세요.');
+      return;
+    }
+
+    if (content.length > 300) {
+      alert('300글자 이상 입력해주세요.');
+      return;
+    }
 
     axios
       .patch(
@@ -91,6 +101,7 @@ const useCommentAPI = () => {
       )
       .then(() => {
         setIsLoading(false);
+        callback();
       })
       .catch(err => {
         console.log(err);

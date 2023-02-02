@@ -67,8 +67,7 @@ const Comment = ({ basePath, contentId, comment, callback }) => {
 
   // CommentInputContainer 에 있는 submit 형태로 수정 해보기
   const onClickCommentSubmit = () => {
-    setEditMode(!editMode);
-    patchComment(basePath, contentId, id, editContent);
+    patchComment(basePath, contentId, id, editContent, () => setEditMode(!editMode));
   };
 
   const renderWriterButton = () => {
