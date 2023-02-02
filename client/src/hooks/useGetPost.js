@@ -19,7 +19,6 @@ const useGetPost = id => {
     axios
       .get(url)
       .then(({ data }) => {
-        console.log(data, 'post');
         setPost(data);
         setIsLoading(false);
       })
