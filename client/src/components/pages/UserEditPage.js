@@ -82,17 +82,16 @@ const UserEdit = () => {
   const submitNewUserInfo = () => {
     if (!nicknameMessage && !descriptionMessage && newImage) {
       const url = `members/${userId}`;
-      const body = {
-        nickname: newNickname,
-        introduction: newDescription,
-        profileUrl: newImage,
-      };
+      const body = {};
+      if (nickname !== newNickname) body.nickname = newNickname;
+      if (introduction !== newDescription) body.introduction = newDescription;
+      if (profileUrl !== newImage) body.profileUrl = newImage;
 
       axios
         .patch(url, body)
         .then(res => {
           console.log(res);
-          navigate(`users/${userId}`);
+          navigate(`/users/${userId}`);
         })
         .catch(err => {
           console.log(err);
