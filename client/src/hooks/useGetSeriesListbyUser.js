@@ -16,7 +16,7 @@ const useGetSeriesListbyUser = writer => {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingError, setIsLoadingError] = useState(false);
 
-  const URL = `/member/${writer}/series`;
+  const URL = `/members/${writer}/series?page=1&size=10`;
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,7 +24,8 @@ const useGetSeriesListbyUser = writer => {
     axios
       .get(URL)
       .then(({ data, pageInfo }) => {
-        setSeriesList(data);
+        console.log(data, 'data in useGetSeriesListbyUser');
+        setSeriesList(data.data);
         setSeriesPageInfo(pageInfo);
         setIsLoading(false);
       })
