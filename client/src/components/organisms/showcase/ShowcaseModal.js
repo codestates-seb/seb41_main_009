@@ -54,7 +54,7 @@ const ShowcaseModal = ({ isModalOpen }) => {
             </ImageBox>
             <ShowcaseContents>
               <Box>
-                <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileImageUrl} />
+                <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileUrl} />
               </Box>
               <Box margin="15px 0px 35px 0px">
                 <Content>{content}</Content>

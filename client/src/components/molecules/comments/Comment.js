@@ -101,7 +101,7 @@ const Comment = ({ basePath, contentId, comment, callback }) => {
   return (
     <Container>
       <InfoContainer>
-        <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileImageUrl} />
+        <UserInfoSmall id={writer.id} name={writer.nickname} image={writer.profileUrl} />
       </InfoContainer>
       <CommentContainer>
         {!editMode ? (
