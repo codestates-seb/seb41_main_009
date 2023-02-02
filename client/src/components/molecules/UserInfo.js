@@ -16,8 +16,6 @@ import UserImage from '../atoms/UserImage';
 const UserInfo = ({ id, name, introduction, image }) => {
   const { currentUserId } = useAuthStore(state => state);
 
-  console.log(currentUserId, id);
-
   return (
     <UserInfoBigContainer>
       <UserImage src={image} sizes="128px" />
@@ -33,7 +31,7 @@ const UserInfo = ({ id, name, introduction, image }) => {
 const UserInfoSmall = ({ id, name, image, color, size }) => {
   return (
     <Container>
-      <UserImage src={image || 'https://unsplash.it/1920/1080/?random'} sizes={size || '24px'} />
+      <UserImage src={image} sizes={size || '24px'} />
       <Nickname id={id} name={name || 'Name'} color={color} />
     </Container>
   );
