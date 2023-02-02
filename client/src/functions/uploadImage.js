@@ -18,15 +18,20 @@ const uploadImage = async (image, callback) => {
 
   console.log(base64Image);
 
-  const { data } = await axios.put(signedURL, base64Image, {
-    headers: {
-      'Content-Type': type,
-      Authorization: null,
-    },
-    withCredentials: false,
-  });
-
-  await callback(data.url, 'alt');
+  axios
+    .put(signedURL, base64Image, {
+      headers: {
+        'Content-Type': type,
+        Authorization: null,
+      },
+      withCredentials: false,
+    })
+    .then(({ data }) => {
+      console.log(data);
+      console.log(data.url);
+      callback(data.url, 'alt');
+    })
+    .catch(err => console.log(err));
 
   return false;
 };
