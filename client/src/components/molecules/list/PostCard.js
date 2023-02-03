@@ -141,7 +141,7 @@ const PostSeriesCard = ({ postId, handleClick, selected, idx }) => {
   const { title, createdAt, modifiedAt, writer } = post;
 
   return (
-    <PostThinCard selected={selected} onclick={handleClick}>
+    <PostThinCard selected={selected} onClick={handleClick}>
       <Box2>
         <Title2>{idx || '1'}</Title2>
         <Title2>{title || 'title'}</Title2>
