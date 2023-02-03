@@ -30,10 +30,9 @@ const SeriesListPage = () => {
 
   // seriesList에 seriesListDummy.data
   // seriesPageInfo에 seriesListDummy.pageInfo
-  const { seriesList, seriesPageInfo, isLoading, isLoadingError } = useGetSeriesList(category || 'All', curPage);
+  const { seriesList, seriesPageInfo, isLoading } = useGetSeriesList(category || 'All', curPage);
 
-  // isLoading, isLoadingError 값에 따라 Loading 컴포넌트 변경 예정
-  console.log(isLoading, isLoadingError);
+  console.log(seriesList);
 
   return (
     <Container>
