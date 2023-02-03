@@ -50,8 +50,6 @@ const SeriesHeader = ({ series, seriesId }) => {
   const { isToggleBlur } = useSeriesStore();
   const [page] = useSearchParams('page');
 
-  console.log('SeriesHeader_series', series);
-
   return (
     <BackgroundWrapper>
       <Container blur={isToggleBlur}>
@@ -64,7 +62,6 @@ const SeriesHeader = ({ series, seriesId }) => {
           <SeriesInfo series={series} />
         </SeriesInfoContainer>
 
-        {/* Series Page의 갯수를 알 수있어야함 page 갯수 api response값 필요 */}
         <SeriesHeaderPostList seriesId={seriesId} page={page} series={series} />
       </Container>
     </BackgroundWrapper>

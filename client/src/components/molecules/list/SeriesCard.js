@@ -147,7 +147,7 @@ const SeriesCard = ({ width, series }) => {
             </UserBox>
           </ContextLayer>
         </InfoLayer>
-        {post ? <PostListStack postId={id} /> : <NoPost />}
+        {post ? <PostListStack post={post} /> : <NoPost />}
       </AcrylicBase>
     </Container>
   );

@@ -19,11 +19,8 @@ const Container = styled.div`
 const SeriesPage = () => {
   const { id } = useParams();
 
-  // `${HOST}/series/${postId}` 해당하는 정보를 가져옴
   const { series, getSeries } = useGetSeries();
   const { currentPostId } = useSeriesStore();
-
-  console.log('SeriesPage_series: ', series);
 
   useEffect(() => {
     getSeries(id);
