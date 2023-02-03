@@ -77,7 +77,11 @@ public class SeriesController {
     public ResponseEntity getAll(CustomPageRequest pageRequest) {
         Page<Series> series = seriesService.findAll(pageRequest.to());
 
-        Page<SeriesDto.SimpleResponse> responses = series.map(seriesMapper::SeriesToSimpleResponseDto);
+        Page<SeriesDto.Response> responses = series.map(aSeries -> {
+            SeriesDto.Response response = seriesMapper.SeriesToResponseDto(aSeries);
+            response.setPost(aSeries.getPosts().isEmpty() ? null : postMapper.postToSimpleResponse(aSeries.getPosts().get(0)));
+            return response;
+        });
 
         log.info("\n\n--시리즈 전체 조회--\n");
         return new ResponseEntity(new MultiResponseDto<>(responses), HttpStatus.OK);
