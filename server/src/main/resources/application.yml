@@ -1,0 +1,48 @@
+spring:
+  jpa:
+    properties:
+      javax:
+        cache:
+          provider: org.ehcache.jsr107.EhcacheCachingProvider
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
+      hibernate:
+        cache:
+          use_query_cache: true
+          use_second_level_cache: true
+          region:
+            factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
+  redis:
+    host: localhost
+    port: 6379
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+cloud:
+  storage:
+    gcs:
+      domain: https://storage.cloud.google.com
+      duration: 15
+      bucket-name: intorest-images
+
+server:
+  port: 8080
+  servlet:
+    encoding:
+      force-response: true
+    session:
+      tracking-mode: cookie
+
+mail:
+  address:
+    admin: admin@gmail.com

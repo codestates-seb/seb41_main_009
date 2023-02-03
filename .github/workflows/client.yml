@@ -1,0 +1,42 @@
+name: Deploy Client
+on:
+  push:
+    branches:
+      - main
+      - FE/deploy
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./client
+      - name: Build
+        run: npm run build
+        env:
+          CI: ""
+        working-directory: ./client
+      - name: Sync Bucket Main
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_CLIENT_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_CLIENT_SECRET_ACCESS_KEY }}
+          AWS_EC2_METADATA_DISABLED: true
+        run: |
+          aws s3 sync \
+            --region ap-northeast-2 \
+            build s3://intorest \
+            --delete
+        working-directory: ./client
+      - name: Sync Bucket Backup
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_BACKUP }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_BACKUP }}
+          AWS_EC2_METADATA_DISABLED: true
+        run: |
+          aws s3 sync \
+            --region ap-northeast-2 \
+            build s3://intorestbackup \
+            --delete
+        working-directory: ./client
